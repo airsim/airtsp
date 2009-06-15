@@ -1,30 +1,29 @@
-#ifndef __TRAVELCCM_SVC_TRAVELCCM_SERVICE_HPP
-#define __TRAVELCCM_SVC_TRAVELCCM_SERVICE_HPP
+#ifndef __AIRSCHED_SVC_AIRSCHED_SERVICE_HPP
+#define __AIRSCHED_SVC_AIRSCHED_SERVICE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// Boost (Extended STL)
-#include <boost/date_time/gregorian/gregorian.hpp>
-// TRAVELCCM
-#include <travelccm/TRAVELCCM_Types.hpp>
+#include <ostream>
+// AIRSCHED
+#include <airsched/AIRSCHED_Types.hpp>
 
-namespace TRAVELCCM {
+namespace AIRSCHED {
 
   /** Forward declaration. */
-  class TRAVELCCM_ServiceContext;
+  class AIRSCHED_ServiceContext;
 
-  /** Interface for the TRAVELCCM Services. */
-  class TRAVELCCM_Service {
+  /** Interface for the AIRSCHED Services. */
+  class AIRSCHED_Service {
   public:
     /** Constructor. */
-    TRAVELCCM_Service (std::ostream& ioLogStream);
+    AIRSCHED_Service (std::ostream& ioLogStream);
     /** Destructor. */
-    ~TRAVELCCM_Service();
+    ~AIRSCHED_Service();
 
-    /** add a travel solution to the context */
+    /** Add a travel solution to the context */
     void addTravelSolution (const std::string& iDepartureAirport,
                             const std::string& iArrivalAirport,
                             const Date_T& iDepartureDate,
@@ -37,20 +36,13 @@ namespace TRAVELCCM {
                             const int iFlightNumber, double iFare,
                             int iStopsNumber,  bool iSNS, bool iChangeability);
 
-    /** Add a restriction to the context. */
-    void addRestriction (const std::string& iRestrictionType);
-
-    /** Add a restriction to the context. */
-    void addRestriction (const std::string& iRestrictionType,
-                         const std::string& iNamePreference);
-
     /** Perform a small simulation, which uses the Customer Choice Model.*/
     void simulate();
 
   private:
     /** Default Constructors. */
-    TRAVELCCM_Service ();
-    TRAVELCCM_Service (const TRAVELCCM_Service&);
+    AIRSCHED_Service ();
+    AIRSCHED_Service (const AIRSCHED_Service&);
 
     /** Initialise. */
     void init (std::ostream& ioLogStream);
@@ -64,7 +56,7 @@ namespace TRAVELCCM {
   private:
     // ////////// Service Context //////////
     /** Service Context. */
-    TRAVELCCM_ServiceContext* _travelccmServiceContext;
+    AIRSCHED_ServiceContext* _airschedServiceContext;
   };
 }
-#endif // __TRAVELCCM_SVC_TRAVELCCM_SERVICE_HPP
+#endif // __AIRSCHED_SVC_AIRSCHED_SERVICE_HPP

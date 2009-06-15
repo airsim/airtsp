@@ -3,23 +3,23 @@
 // CPPUNIT
 #include <cppunit/extensions/HelperMacros.h>
 
-class TravelChoiceTestSuite : public CppUnit::TestFixture {
-  CPPUNIT_TEST_SUITE (TravelChoiceTestSuite);
-  CPPUNIT_TEST (testTravelChoice);
+class AirlineScheduleTestSuite : public CppUnit::TestFixture {
+  CPPUNIT_TEST_SUITE (AirlineScheduleTestSuite);
+  CPPUNIT_TEST (testAirlineSchedule);
   //  CPPUNIT_TEST (errorCase);
   CPPUNIT_TEST_SUITE_END ();
 public:
 
   /** Test the Optimisation functionality. */
-  void testTravelChoice ();
+  void testAirlineSchedule ();
 
   /** Test some error detection functionalities. */
   //  void errorCase ();
 
   /** Constructor. */
-  TravelChoiceTestSuite ();
+  AirlineScheduleTestSuite ();
   
 protected:
   std::stringstream _describeKey;
 };
-CPPUNIT_TEST_SUITE_REGISTRATION (TravelChoiceTestSuite);
+CPPUNIT_TEST_SUITE_REGISTRATION (AirlineScheduleTestSuite);

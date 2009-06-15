@@ -68,7 +68,7 @@ AC_LANG([C++])
 AC_ARG_ENABLE(exceptions,
               [AS_HELP_STRING([--enable-exceptions],
                               [enable exceptions handling mechanism])],
-              [AC_DEFINE([TRAVEL_CCM_EXCEPTIONS], [1],
+              [AC_DEFINE([AIRSCHED_EXCEPTIONS], [1],
                          [Define if you want exceptions handling])])
 test "x$enable_exceptions" != xno && enable_exceptions=yes
 
@@ -277,6 +277,10 @@ AC_CONFIG_FILES(
 	airsched.pc
 	airsched.spec
 	airsched.m4
+	stdair/Makefile
+	stdair/bom/Makefile
+	stdair/core/Makefile
+	stdair/config/Makefile
 	airsched/Makefile
 	airsched/basic/Makefile
 	airsched/bom/Makefile

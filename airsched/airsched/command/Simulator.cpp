@@ -1,0 +1,21 @@
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+// C
+#include <assert.h>
+// STL
+#include <iostream>
+#include <iomanip>
+#include <string>
+// AIRSCHED
+#include <airsched/command/Simulator.hpp>
+#include <airsched/service/Logger.hpp>
+
+namespace AIRSCHED {
+
+  // //////////////////////////////////////////////////////////////////////
+  void Simulator::simulate () {
+    AIRSCHED_LOG_DEBUG ("Welcome to Air-Schedule");
+  }
+  
+}

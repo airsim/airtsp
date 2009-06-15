@@ -3,18 +3,18 @@
 #include <string>
 // CPPUNIT
 #include <test/com/CppUnitCore.hpp>
-// TRAVELCCM
-#include <travelccm/TRAVELCCM_Service.hpp>
-// TRAVEL-CCM Test Suite
-#include <test/TravelChoiceTestSuite.hpp>
+// AIRSCHED
+#include <airsched/AIRSCHED_Service.hpp>
+// AIRSCHED Test Suite
+#include <test/AirlineScheduleTestSuite.hpp>
 
 // //////////////////////////////////////////////////////////////////////
-void testTravelChoiceHelper() {
+void testAirlineScheduleHelper() {
 
   try {
     
     // Output log File
-    std::string lLogFilename ("TravelChoiceTestSuite.log");
+    std::string lLogFilename ("AirlineScheduleTestSuite.log");
     
     // Number of random draws to be generated (best if greater than 100)
     // const int K = 100000;
@@ -30,7 +30,7 @@ void testTravelChoiceHelper() {
     logOutputFile.clear();
     
     // Initialise the list of classes/buckets
-    // TRAVELCCM::TRAVELCCM_Service travelccmService (logOutputFile);
+    // AIRSCHED::AIRSCHED_Service airschedService (logOutputFile);
     
   } catch (const std::exception& stde) {
     std::cerr << "Standard exception: " << stde.what() << std::endl;
@@ -41,18 +41,18 @@ void testTravelChoiceHelper() {
 }
 
 // //////////////////////////////////////////////////////////////////////
-void TravelChoiceTestSuite::testTravelChoice() {
-  CPPUNIT_ASSERT_NO_THROW (testTravelChoiceHelper(););
+void AirlineScheduleTestSuite::testAirlineSchedule() {
+  CPPUNIT_ASSERT_NO_THROW (testAirlineScheduleHelper(););
 }
 
 // //////////////////////////////////////////////////////////////////////
-// void TravelChoiceTestSuite::errorCase () {
+// void AirlineScheduleTestSuite::errorCase () {
 //  CPPUNIT_ASSERT (false);
 // }
 
 // //////////////////////////////////////////////////////////////////////
-TravelChoiceTestSuite::TravelChoiceTestSuite () {
-  _describeKey << "Running test on TRAVEL-CCM Optimisation function";  
+AirlineScheduleTestSuite::AirlineScheduleTestSuite () {
+  _describeKey << "Running test on AIRSCHED Optimisation function";  
 }
 
 // /////////////// M A I N /////////////////

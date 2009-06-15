@@ -1,5 +1,5 @@
-#ifndef __AIRSCHED_AIRSCHED_TYPES_HPP
-#define __AIRSCHED_AIRSCHED_TYPES_HPP
+#ifndef __STDAIR_STDAIR_TYPES_HPP
+#define __STDAIR_STDAIR_TYPES_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -12,7 +12,7 @@
 // Boost
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-namespace AIRSCHED {
+namespace STDAIR {
 
    // ///////// Exceptions ///////////
   class RootException : public std::exception {
@@ -56,4 +56,4 @@ namespace AIRSCHED {
   typedef boost::gregorian::date Date_T;
     
 }
-#endif // __AIRSCHED_AIRSCHED_TYPES_HPP
+#endif // __STDAIR_STDAIR_TYPES_HPP

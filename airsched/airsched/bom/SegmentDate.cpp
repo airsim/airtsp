@@ -3,6 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
+// STDAIR
+#include <stdair/bom/SegmentDate.hpp>
 // AIRSCHED 
 #include <airsched/bom/SegmentDate.hpp>
 
@@ -19,6 +21,7 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void SegmentDate::toStream (std::ostream& ioOut) const {
+    ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -27,23 +30,25 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   std::string SegmentDate::toString() const {
-    std::string oString;
+    std::ostringstream oStr;
 
-    return oString;
+    // First, put the key of that level
+    oStr << describeShortKey() << std::endl;
+
+    // Then, browse the children
+    // [...] (no child for now)
+    
+    return oStr.str();
   }
     
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _segmentStructure.describeKey();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeShortKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _segmentStructure.describeShortKey();
   }
 
 }

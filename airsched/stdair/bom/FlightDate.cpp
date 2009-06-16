@@ -20,6 +20,7 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   void FlightDate::toStream (std::ostream& ioOut) const {
+    ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -28,23 +29,17 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string FlightDate::toString() const {
-    std::string oString;
-
-    return oString;
+    return describeKey();
   }
     
   // //////////////////////////////////////////////////////////////////////
   const std::string FlightDate::describeKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _key.toString();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string FlightDate::describeShortKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _key.toString();
   }
 
 }

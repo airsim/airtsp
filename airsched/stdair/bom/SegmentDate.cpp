@@ -18,7 +18,14 @@ namespace STDAIR {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  FlightDate& SegmentDate::getFlightDate() const {
+    assert (_flightDate != NULL);
+    return *_flightDate;
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
   void SegmentDate::toStream (std::ostream& ioOut) const {
+    ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -27,24 +34,17 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string SegmentDate::toString() const {
-    std::string oString;
-    // Debug
-    oString = _key.toShortString();
-    return oString;
+    return describeKey();
   }
     
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _key.toString();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeShortKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _key.toString();
   }
 
 }

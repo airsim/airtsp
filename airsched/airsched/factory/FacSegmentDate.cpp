@@ -8,6 +8,7 @@
 #include <stdair/bom/SegmentDateKey.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
+#include <stdair/factory/FacFlightDate.hpp>
 #include <stdair/factory/FacSegmentDate.hpp>
 // AIRSCHED 
 #include <airsched/factory/FacSegmentDate.hpp>
@@ -47,12 +48,13 @@ namespace AIRSCHED {
     assert (aSegmentDate_ptr != NULL);
 
     // The new object is added to the Bom pool
-    const bool hasInsertBeenSuccessful = _pool.
+    bool hasInsertBeenSuccessful = _pool.
       insert (FacBomContent::BomPool_T::value_type (aSegmentDate_ptr,
                                                     &lSegmentDateStructure)).second;
 
     if (hasInsertBeenSuccessful == false) {
-      AIRSCHED_LOG_ERROR ("The segment-date object " << *aSegmentDate_ptr
+      AIRSCHED_LOG_ERROR ("The segment-date object "
+                          << aSegmentDate_ptr->describeShortKey()
                           << " can not be added to the factory-held pool"
                           << " of segment-date objects.");
       throw new MemoryAllocationException();
@@ -67,17 +69,28 @@ namespace AIRSCHED {
         dynamic_cast<STDAIR::FlightDate*> (itFlightDateStructure->second);
 
     } else {
-      AIRSCHED_LOG_ERROR ("The flight-date object " << iFlightDate
+      AIRSCHED_LOG_ERROR ("The flight-date object "
+                          << iFlightDate.describeShortKey()
                           << " can not be retrieved from the factory-held pool"
                           << " of flight-date objects.");
       throw new MemoryAllocationException();
     }
     assert (lFlightDateStructure_ptr != NULL);
 
-    // TODO:: Link the FlightDateStructure (STDAIR::FlightDate) with the
-    // SegmentDateStructure
-    
 
+    // Link the FlightDateStructure (STDAIR::FlightDate) with the
+    // SegmentDateStructure
+    hasInsertBeenSuccessful = STDAIR::FacFlightDate::
+      linkFlightDateWithSegmentDate (*lFlightDateStructure_ptr,
+                                     lSegmentDateStructure);
+    if (hasInsertBeenSuccessful == false) {
+      AIRSCHED_LOG_ERROR ("The segment-date object " << iKey
+                          << " can not be added to the dedicated list "
+                          << " of segment-date objects within the flight-date "
+                          << iFlightDate.describeShortKey());
+      throw new MemoryAllocationException();
+    }
+    
     return *aSegmentDate_ptr;
   }
 

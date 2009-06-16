@@ -19,7 +19,7 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string SegmentDateKey::toString() const {
-    std::stringstream oStr;
+    std::ostringstream oStr;
     oStr << _boardPoint << "-" << _offPoint;
     return oStr.str();
   }

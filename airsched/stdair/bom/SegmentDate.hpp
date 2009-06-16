@@ -10,6 +10,7 @@
 namespace STDAIR {
 
   // Forward declaration
+  class FlightDate;
   class SegmentDateKey;
   
   /** Wrapper class aimed at holding the actual content, modeled
@@ -17,14 +18,32 @@ namespace STDAIR {
       in the AIRSCHED library). */
   class SegmentDate : public BomAbstract {
     friend class FacSegmentDate;
+    friend class FacFlightDate;
   public:
     // /////////// Getters /////////////
+    /** Get the (parent) FlightDate object. */
+    FlightDate* getFlightDatePtr() const {
+      return _flightDate;
+    }
+    
+    /** Get the (parent) FlightDate object. */
+    FlightDate& getFlightDate() const;
+    
     /** Get the segment-date key. */
     const SegmentDateKey& getKey() const {
       return _key;
     }
 
 
+  private:
+    // /////////// Setters /////////////
+    /** Set the (parent) FlightDate object. */
+    void setFlightDate (FlightDate& ioFlightDate) {
+      _flightDate = &ioFlightDate;
+    }
+
+    
+  public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -58,6 +77,9 @@ namespace STDAIR {
 
   private:
     // Attributes
+    /** Parent flight-date. */
+    FlightDate* _flightDate;
+    
     /** Segment-date key (e.g., allowing to specify "LHR-SYD"). */
     const SegmentDateKey& _key;
   };

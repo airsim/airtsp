@@ -19,8 +19,8 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string FlightDateKey::toString() const {
-    std::stringstream oStr;
-    oStr << _flightNumber << "-" << _flightDate;
+    std::ostringstream oStr;
+    oStr << _flightNumber << ", " << _flightDate;
     return oStr.str();
   }
     

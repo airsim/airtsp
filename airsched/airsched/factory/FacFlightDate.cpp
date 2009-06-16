@@ -36,6 +36,7 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate& FacFlightDate::create (const STDAIR::FlightDateKey& iKey) {
+    
     // Create the flight-date structure/holder
     STDAIR::FlightDate& lFlightDateStructure =
       STDAIR::FacFlightDate::instance().create (iKey);

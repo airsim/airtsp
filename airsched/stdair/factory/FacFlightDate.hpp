@@ -31,6 +31,12 @@ namespace STDAIR {
         @return FlightDate& The newly created object. */
     FlightDate& create (const FlightDateKey&);
 
+    /** Link a SegmentDate object with its parent (FlightDate object).
+        <br>The SegmentDate object is added to the dedicated list within
+        the FlightDate object.       .
+        @return bool Whether or not the operation succeeded. */
+    static bool linkFlightDateWithSegmentDate (FlightDate&, SegmentDate&);
+
   protected:
     /** Default Constructor.
         <br>This constructor is protected in order to ensure the singleton

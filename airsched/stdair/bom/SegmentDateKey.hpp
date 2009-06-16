@@ -46,19 +46,13 @@ namespace STDAIR {
     void fromStream (std::istream& ioIn);
 
    /** Get the serialised version of the Business Object Key.
-       <br>That string is unique for all the Business Objects,
-       whatever their level in the BOM hierarchy.
-       <br>For instance, "BA123/10JUN2010" and "BA123/11JUN2010" allow to
-       differentiate among two departure dates for the same flight. */
-    std::string toString() const;
-    
-   /** Get the serialised version of the Business Object Key.
        <br>That string is unique, at the level of a given Business Object,
        when among children of a given parent Business Object.
        <br>For instance, "H" and "K" allow to differentiate among two
        marketing classes for the same segment-date. */
-    std::string toShortString() const;
+    std::string toString() const;
 
+    
   private:
     // Attributes
     /** Boarding airport. */

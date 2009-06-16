@@ -9,6 +9,7 @@
 // AIRSCHED 
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/SegmentDate.hpp>
+#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
@@ -23,6 +24,7 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void FlightDate::toStream (std::ostream& ioOut) const {
+    ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -31,16 +33,20 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   std::string FlightDate::toString() const {
-    std::string oString;
+    std::ostringstream oStr;
+
+    // First, put the key of that level
+    oStr << describeShortKey() << std::endl;
 
     // Retrieve the list of flight-date holders
     const STDAIR::SegmentDateList_T& lSegmentList =
       _flightStructure.getSegmentList();
 
     // Browse the tree structure, i.e., the segment-dates
+    unsigned short idx = 0;
     for (STDAIR::SegmentDateList_T::const_iterator itSegment =
            lSegmentList.begin();
-         itSegment != lSegmentList.end(); ++itSegment) {
+         itSegment != lSegmentList.end(); ++itSegment, ++idx) {
       const STDAIR::SegmentDate* lSegmentStructure_ptr = itSegment->second;
       assert (lSegmentStructure_ptr != NULL);
 
@@ -48,24 +54,20 @@ namespace AIRSCHED {
       const SegmentDate& lSegmentDate =
         lSegmentStructure_ptr->getContent<SegmentDate>();
 
-      oString += lSegmentDate.toString();
+      oStr << "[" << idx << "]: " << lSegmentDate.toString() << std::endl;
     }
     
-    return oString;
+    return oStr.str();
   }
     
   // //////////////////////////////////////////////////////////////////////
   const std::string FlightDate::describeKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _flightStructure.describeKey();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string FlightDate::describeShortKey() const {
-    std::string oKey;
-
-    return oKey;
+    return _flightStructure.describeShortKey();
   }
 
 }

@@ -9,10 +9,21 @@
 
 namespace STDAIR {
 
-  /** Object description here. */
+  // Forward declaration
+  class SegmentDateKey;
+  
+  /** Wrapper class aimed at holding the actual content, modeled
+      by an external specific SegmentDate class (for instance,
+      in the AIRSCHED library). */
   class SegmentDate : public BomAbstract {
     friend class FacSegmentDate;
   public:
+    // /////////// Getters /////////////
+    /** Get the segment-date key. */
+    const SegmentDateKey& getKey() const {
+      return _key;
+    }
+
 
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -40,12 +51,16 @@ namespace STDAIR {
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
+    SegmentDate (const SegmentDateKey&);
 
     /** Destructor. */
     virtual ~SegmentDate();
 
+  private:
+    // Attributes
+    /** Segment-date key (e.g., allowing to specify "LHR-SYD"). */
+    const SegmentDateKey& _key;
   };
 
 }
 #endif // __STDAIR_BOM_SEGMENTDATE_HPP
-

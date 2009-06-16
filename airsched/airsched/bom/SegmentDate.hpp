@@ -1,36 +1,25 @@
-#ifndef __STDAIR_BOM_FLIGHTDATE_HPP
-#define __STDAIR_BOM_FLIGHTDATE_HPP
+#ifndef __AIRSCHED_BOM_SEGMENTDATE_HPP
+#define __AIRSCHED_BOM_SEGMENTDATE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
-#include <stdair/bom/BomAbstract.hpp>
-#include <stdair/bom/SegmentDateList.hpp>
+// AIRSCHED 
+#include <stdair/bom/BomContent.hpp>
 
+// Forward declarations
 namespace STDAIR {
+  class SegmentDate;
+}
+  
+namespace AIRSCHED {
 
-  // Forward declaration
-  class FlightDateKey;
-
-  /** Wrapper class aimed at holding the actual content, modeled
-      by an external specific FlightDate class (for instance,
-      in the AIRSCHED library). */
-  class FlightDate : public BomAbstract {
-    friend class FacFlightDate;
+  /** Class representing the actual functional/business content for a
+      segment-date. */
+  class SegmentDate : public STDAIR::BomContent {
+    friend class FacSegmentDate;
   public:
-    // /////////// Getters /////////////
-    /** Get the flight-date key. */
-    const FlightDateKey& getKey() const {
-      return _key;
-    }
 
-    /** Get the list of segment-dates. */
-    const SegmentDateList_T& getSegmentList() const {
-      return _segmentList;
-    }
-
-    
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -55,22 +44,19 @@ namespace STDAIR {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    FlightDate ();
-    FlightDate (const FlightDate&);
-    FlightDate (const FlightDateKey&);
+    SegmentDate ();
+    SegmentDate (const SegmentDate&);
+    SegmentDate (const STDAIR::SegmentDate&);
 
     /** Destructor. */
-    virtual ~FlightDate();
+    virtual ~SegmentDate();
 
   private:
     // Attributes
-    /** Flight-date key (e.g., allowing to specify "BA123/10-JUN-2010"). */
-    const FlightDateKey& _key;
-    
-    /** List of segment-dates. */
-    SegmentDateList_T _segmentList;
+    /** Reference structure. */
+    const STDAIR::SegmentDate& _segmentStructure;
   };
 
 }
-#endif // __STDAIR_BOM_FLIGHTDATE_HPP
+#endif // __AIRSCHED_BOM_SEGMENTDATE_HPP
 

@@ -5,6 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
+#include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomKey.hpp>
 
 namespace STDAIR {
@@ -13,6 +14,28 @@ namespace STDAIR {
   class SegmentDateKey : public BomKey {
   public:
 
+    // /////////// Construction ///////////
+    /** Constructor. */
+    SegmentDateKey (const AirportCode_T& iBoardPoint,
+                    const AirportCode_T& iOffPoint)
+      : _boardPoint (iBoardPoint), _offPoint (iOffPoint) {
+    }
+
+    /** Destructor. */
+    ~SegmentDateKey () {
+    }
+    
+    // /////////// Getters //////////
+    /** Get the boarding point. */
+    const AirportCode_T& getBoardPoint() const {
+      return _boardPoint;
+    }
+
+    /** Get the arrival point. */
+    const AirportCode_T& getOffPoint() const {
+      return _offPoint;
+    }
+    
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -37,7 +60,12 @@ namespace STDAIR {
     std::string toShortString() const;
 
   private:
+    // Attributes
+    /** Boarding airport. */
+    AirportCode_T _boardPoint;
 
+    /** Arrival airport. */
+    AirportCode_T _offPoint;
   };
 
 }

@@ -10,7 +10,6 @@
 namespace AIRSCHED {
 
   // Forward declarations
-  class FacBomAbstract;
   class FacServiceAbstract;
   class Logger;
 
@@ -19,19 +18,12 @@ namespace AIRSCHED {
   public:
 
     /** Define the pool (list) of factories. */
-    typedef std::vector<FacBomAbstract*> BomFactoryPool_T;
     typedef std::vector<FacServiceAbstract*> ServiceFactoryPool_T;
 
     /** Provides the unique instance.
         <br>The singleton is instantiated when first used.
         @return FacSupervisor& */
     static FacSupervisor& instance();
-
-    /** Register a newly instantiated concrete factory for the Bom layer.
-        <br>When a concrete Factory is firstly instantiated
-        this factory have to register itself to the FacSupervisor
-        @param FacAbstract& the concrete Factory to register. */
-    void registerBomFactory (FacBomAbstract*);
 
     /** Register a newly instantiated concrete factory for the Service layer.
         <br>When a concrete Factory is firstly instantiated
@@ -48,11 +40,6 @@ namespace AIRSCHED {
         @param FacServiceAbstract& the concrete Factory to
         register. */
     void registerLoggerService (Logger*);
-
-    /** Clean all created object.
-        <br>Call the clean method of all the instantiated  factories
-        for the Bom layer. */
-    void cleanBomLayer();
 
     /** Clean all created object.
         <br>Call the clean method of all the instantiated  factories
@@ -87,9 +74,6 @@ namespace AIRSCHED {
     /** Logger (singleton) instance. */
     Logger* _logger;
     
-    /** List of instantiated factories for the Bom layer. */
-    BomFactoryPool_T _bomPool;
-
     /** List of instantiated factories for the Service layer. */
     ServiceFactoryPool_T _svcPool;
     

@@ -3,25 +3,26 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
-// TRAVEL-CCM
-#include <airsched/bom/BomAbstract.hpp>
-#include <airsched/factory/FacBomAbstract.hpp>
+// STDAIR
+#include <stdair/bom/BomContent.hpp>
+#include <stdair/factory/FacBomContent.hpp>
 
-namespace AIRSCHED {
+namespace STDAIR {
   
   // //////////////////////////////////////////////////////////////////////
-  FacBomAbstract::~FacBomAbstract() {
+  FacBomContent::~FacBomContent() {
     clean ();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacBomAbstract::clean() {
+  void FacBomContent::clean() {
     for (BomPool_T::iterator itBom = _pool.begin();
 	 itBom != _pool.end(); itBom++) {
-      BomAbstract* currentBom_ptr = *itBom;
+      const STDAIR::BomContent* currentBom_ptr = itBom->first;
       assert (currentBom_ptr != NULL);
-
-      delete (currentBom_ptr); currentBom_ptr = NULL;
+      
+      _pool.erase (currentBom_ptr);
+      delete currentBom_ptr; currentBom_ptr = NULL;
     }
 
     // Empty the pool of Factories

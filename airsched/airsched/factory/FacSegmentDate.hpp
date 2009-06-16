@@ -1,5 +1,5 @@
-#ifndef __AIRSCHED_FAC_FACFLIGHTDATE_HPP
-#define __AIRSCHED_FAC_FACFLIGHTDATE_HPP
+#ifndef __AIRSCHED_FAC_FACSEGMENTDATE_HPP
+#define __AIRSCHED_FAC_FACSEGMENTDATE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -9,43 +9,44 @@
 
 // Forward declarations
 namespace STDAIR {
-  class FlightDateKey;
+  class SegmentDateKey;
 }
 
 namespace AIRSCHED {
 
   // Forward declarations.
   class FlightDate;
+  class SegmentDate;
   
-  /** Factory for FlightDate objects. */
-  class FacFlightDate : public STDAIR::FacBomContent {
+  /** Factory for SegmentDate objects. */
+  class FacSegmentDate : public STDAIR::FacBomContent {
   public:
     /** Provide the unique instance.
         <br>The singleton is instantiated when first used
-        @return FacFlightDate& */
-    static FacFlightDate& instance();
+        @return FacSegmentDate& */
+    static FacSegmentDate& instance();
 
     /** Destructor.
         <br>The Destruction put the _instance to NULL
-        in order to be clean for the next FacFlightDate::instance() */
-    virtual ~FacFlightDate();
+        in order to be clean for the next FacSegmentDate::instance() */
+    virtual ~FacSegmentDate();
 
-    /** Create a new FlightDate object.
+    /** Create a new SegmentDate object.
         <br>This new object is added to the list of instantiated objects.
-        @return FlightDate& The newly created object. */
-    FlightDate& create (const STDAIR::FlightDateKey&);
+        @return SegmentDate& The newly created object. */
+    SegmentDate& create (const FlightDate&, const STDAIR::SegmentDateKey&);
 
   protected:
     /** Default Constructor.
         <br>This constructor is protected in order to ensure the singleton
         pattern.*/
-    FacFlightDate () {}
+    FacSegmentDate () {}
 
   private:
     /** The unique instance.*/
-    static FacFlightDate* _instance;
+    static FacSegmentDate* _instance;
   };
 
 }
-#endif // __AIRSCHED_FAC_FACFLIGHTDATE_HPP
+#endif // __AIRSCHED_FAC_FACSEGMENTDATE_HPP
 

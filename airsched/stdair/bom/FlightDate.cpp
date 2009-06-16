@@ -4,12 +4,14 @@
 // C
 #include <assert.h>
 // STDAIR 
+#include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/SegmentDate.hpp>
 
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (){
+  FlightDate::FlightDate (const FlightDateKey& iKey) : _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////

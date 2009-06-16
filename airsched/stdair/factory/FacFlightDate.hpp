@@ -1,24 +1,20 @@
-#ifndef __AIRSCHED_FAC_FACFLIGHTDATE_HPP
-#define __AIRSCHED_FAC_FACFLIGHTDATE_HPP
+#ifndef __STDAIR_FAC_FACFLIGHTDATE_HPP
+#define __STDAIR_FAC_FACFLIGHTDATE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// AIRSCHED 
-#include <stdair/factory/FacBomContent.hpp>
+// STDAIR 
+#include <stdair/factory/FacBomAbstract.hpp>
 
-// Forward declarations
 namespace STDAIR {
-  class FlightDateKey;
-}
-
-namespace AIRSCHED {
 
   // Forward declarations.
   class FlightDate;
+  class FlightDateKey;
   
   /** Factory for FlightDate objects. */
-  class FacFlightDate : public STDAIR::FacBomContent {
+  class FacFlightDate : public FacBomAbstract {
   public:
     /** Provide the unique instance.
         <br>The singleton is instantiated when first used
@@ -33,7 +29,7 @@ namespace AIRSCHED {
     /** Create a new FlightDate object.
         <br>This new object is added to the list of instantiated objects.
         @return FlightDate& The newly created object. */
-    FlightDate& create (const STDAIR::FlightDateKey&);
+    FlightDate& create (const FlightDateKey&);
 
   protected:
     /** Default Constructor.
@@ -47,5 +43,5 @@ namespace AIRSCHED {
   };
 
 }
-#endif // __AIRSCHED_FAC_FACFLIGHTDATE_HPP
+#endif // __STDAIR_FAC_FACFLIGHTDATE_HPP
 

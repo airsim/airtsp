@@ -3,14 +3,14 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
-// STDAIR 
-#include <stdair/bom/SegmentDateKey.hpp>
-#include <stdair/bom/SegmentDate.hpp>
+// AIRSCHED 
+#include <airsched/bom/SegmentDate.hpp>
 
-namespace STDAIR {
+namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const SegmentDateKey& iKey) : _key (iKey) {
+  SegmentDate::SegmentDate (const STDAIR::SegmentDate& iSegmentStructure)
+    : _segmentStructure (iSegmentStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -28,8 +28,7 @@ namespace STDAIR {
   // //////////////////////////////////////////////////////////////////////
   std::string SegmentDate::toString() const {
     std::string oString;
-    // Debug
-    oString = _key.toShortString();
+
     return oString;
   }
     

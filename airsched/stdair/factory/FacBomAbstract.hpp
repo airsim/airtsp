@@ -1,5 +1,5 @@
-#ifndef __AIRSCHED_FAC_FACBOMABSTRACT_HPP
-#define __AIRSCHED_FAC_FACBOMABSTRACT_HPP
+#ifndef __STDAIR_FAC_FACBOMABSTRACT_HPP
+#define __STDAIR_FAC_FACBOMABSTRACT_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -7,7 +7,7 @@
 // STL
 #include <vector>
 
-namespace AIRSCHED {
+namespace STDAIR {
 
   // Forward declarations
   class BomAbstract;
@@ -34,4 +34,4 @@ namespace AIRSCHED {
     BomPool_T _pool;
   };
 }
-#endif // __AIRSCHED_FAC_FACBOMABSTRACT_HPP
+#endif // __STDAIR_FAC_FACBOMABSTRACT_HPP

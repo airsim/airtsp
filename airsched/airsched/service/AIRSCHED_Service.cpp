@@ -76,7 +76,7 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::simulate()  {
     // add travel solutions to the travelsolution holder
-    assert(_airschedServiceContext != NULL);
+    assert (_airschedServiceContext != NULL);
 
     // AF404, NCE-LHR, 01-JUN-09 12:00 -> 14:00 (02:00), Eco
     addTravelSolution ("NCE","LHR", Date_T(2009,06,1), Duration_T(12,00,00),

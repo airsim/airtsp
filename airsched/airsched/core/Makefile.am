@@ -20,4 +20,5 @@ lib@PACKAGE@_la_LIBADD = \
 	$(top_builddir)/@PACKAGE@/service/libsvc.la
 lib@PACKAGE@_la_LDFLAGS = \
 	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(top_builddir)/stdair/core/libstdair.la \
 	-version-info $(GENERIC_LIBRARY_VERSION)

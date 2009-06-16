@@ -10,6 +10,7 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   void FlightDateKey::toStream (std::ostream& ioOut) const {
+    ioOut << "FlightDateKey: " << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -18,14 +19,9 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string FlightDateKey::toString() const {
-    std::string oKey;
-    return oKey;
+    std::stringstream oStr;
+    oStr << _flightNumber << "-" << _flightDate;
+    return oStr.str();
   }
     
-  // //////////////////////////////////////////////////////////////////////
-  std::string FlightDateKey::toShortString() const {
-    std::string oKey;
-    return oKey;
-  }
-  
 }

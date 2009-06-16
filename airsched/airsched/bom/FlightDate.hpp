@@ -5,12 +5,18 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // AIRSCHED 
-#include <airsched/bom/BomAbstract.hpp>
+#include <stdair/bom/BomContent.hpp>
 
+// Forward declarations
+namespace STDAIR {
+  class FlightDate;
+}
+  
 namespace AIRSCHED {
 
-  /** Object description here. */
-  class FlightDate : public BomAbstract {
+  /** Class representing the actual functional/business content for a
+      flight-date. */
+  class FlightDate : public STDAIR::BomContent {
     friend class FacFlightDate;
   public:
 
@@ -40,10 +46,15 @@ namespace AIRSCHED {
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
+    FlightDate (const STDAIR::FlightDate&);
 
     /** Destructor. */
     virtual ~FlightDate();
 
+  private:
+    // Attributes
+    /** Reference structure. */
+    const STDAIR::FlightDate& _flightStructure;
   };
 
 }

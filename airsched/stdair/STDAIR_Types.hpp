@@ -5,11 +5,11 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <string>
 #include <vector>
 #include <list>
 // Boost (Extended STL)
 #include <boost/date_time/gregorian/gregorian.hpp>
-// Boost
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace STDAIR {
@@ -49,11 +49,17 @@ namespace STDAIR {
   }
 
   // //////// Type definitions /////////
-  /** Define the Duration (e.g., elapsed in-flight time). */
+  /** Define the type for flight numbers. */
+  typedef unsigned int FlightNumber_T;
+  
+  /** Define the type for durations (e.g., elapsed in-flight time). */
   typedef boost::posix_time::time_duration Duration_T;
 
-  /** Define the Date (e.g., flight-date departure date). */
+  /** Define the type for date (e.g., departure date of a flight). */
   typedef boost::gregorian::date Date_T;
     
+  /** Define the type for airport codes. */
+  typedef std::string AirportCode_T;
+  
 }
 #endif // __STDAIR_STDAIR_TYPES_HPP

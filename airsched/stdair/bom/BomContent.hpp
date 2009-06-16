@@ -1,11 +1,9 @@
-#ifndef __STDAIR_BOM_BOMABSTRACT_HPP
-#define __STDAIR_BOM_BOMABSTRACT_HPP
+#ifndef __STDAIR_BOM_BOMCONTENT_HPP
+#define __STDAIR_BOM_BOMCONTENT_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
 // STL
 #include <istream>
 #include <ostream>
@@ -14,15 +12,9 @@
 
 namespace STDAIR {
 
-  // Forward declarations
-  class BomContent;
-
-  /** Base class for the Business Object Model (BOM) tree structure.
-      <br>That class is just a holder of, on one hand, a key and, on the
-      other hand, a pointer on the functional (Business) object, which is
-      the actual content. */
-  class BomAbstract {
-    friend class FacBomAbstract;
+  /** Base class for the Business Object Model (BOM) layer. */
+  class BomContent {
+    friend class FacBomContent;
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -44,28 +36,14 @@ namespace STDAIR {
         at the same level). */
     virtual const std::string describeShortKey() const = 0;
 
-    /** Retrieve the actual functional (Business Object) content. */
-    template<typename T>
-    T& getContent() const {
-      T* oBom_ptr = NULL;
-      oBom_ptr = dynamic_cast<T*> (_content);
-      assert (oBom_ptr != NULL);
-      return *oBom_ptr;
-    }
-
     
   protected:
     /** Protected Default Constructor to ensure this class is abtract. */
-    BomAbstract() : _content (NULL) {}
-    BomAbstract(const BomAbstract&) : _content (NULL) {}
+    BomContent() {}
+    BomContent(const BomContent&) {}
 
     /** Destructor. */
-    virtual ~BomAbstract() {}
-
-  private:
-    // Attributes
-    /** The actual functional (Business Object) content. */
-    BomContent* _content;
+    virtual ~BomContent() {}
  };
 }
 
@@ -78,7 +56,7 @@ template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
-            const STDAIR::BomAbstract& iBom) {
+            const STDAIR::BomContent& iBom) {
   /**
      string stream:
       - with same format
@@ -106,10 +84,10 @@ template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&
 operator>> (std::basic_istream<charT, traits>& ioIn,
-            STDAIR::BomAbstract& ioBom) {
+            STDAIR::BomContent& ioBom) {
   // Fill Bom object with input stream
   ioBom.fromStream (ioIn);
   return ioIn;
 }
 
-#endif // __STDAIR_BOM_BOMABSTRACT_HPP
+#endif // __STDAIR_BOM_BOMCONTENT_HPP

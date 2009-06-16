@@ -5,6 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
+#include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomKey.hpp>
 
 namespace STDAIR {
@@ -13,6 +14,28 @@ namespace STDAIR {
   class FlightDateKey : public BomKey {
   public:
 
+    // /////////// Construction ///////////
+    /** Constructor. */
+    FlightDateKey (const FlightNumber_T& iFlightNumber,
+                   const Date_T& iFlightDate)
+      : _flightNumber (iFlightNumber), _flightDate (iFlightDate) {
+    }
+
+    /** Destructor. */
+    ~FlightDateKey () {
+    }
+    
+    // /////////// Getters //////////
+    /** Get the flight number. */
+    const FlightNumber_T& getFlightNumber() const {
+      return _flightNumber;
+    }
+
+    /** Get the departure date of the (first leg of the) flight. */
+    const Date_T& getFlightDate() const {
+      return _flightDate;
+    }
+    
     // /////////// Display support methods /////////
     /** Dump a Business Object Key into an output stream.
         @param ostream& the output stream. */
@@ -37,7 +60,12 @@ namespace STDAIR {
     std::string toShortString() const;
 
   private:
+    // Attributes
+    /** Flight number. */
+    FlightNumber_T _flightNumber;
 
+    /** Departure date of the (first leg of the) flight. */
+    Date_T _flightDate;
   };
 
 }

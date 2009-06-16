@@ -279,6 +279,7 @@ AC_CONFIG_FILES(
 	airsched.m4
 	stdair/Makefile
 	stdair/bom/Makefile
+	stdair/factory/Makefile
 	stdair/core/Makefile
 	stdair/config/Makefile
 	airsched/Makefile

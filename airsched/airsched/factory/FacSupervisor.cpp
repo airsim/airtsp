@@ -3,8 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
-// TRAVEL-CCM
-#include <airsched/factory/FacBomAbstract.hpp>
+// AIRSCHED
 #include <airsched/factory/FacServiceAbstract.hpp>
 #include <airsched/factory/FacSupervisor.hpp>
 #include <airsched/service/Logger.hpp>
@@ -23,11 +22,6 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::registerBomFactory (FacBomAbstract* ioFacAbstract_ptr) {
-    _bomPool.push_back (ioFacAbstract_ptr);
-  }
-
-  // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::
   registerServiceFactory (FacServiceAbstract* ioFacServiceAbstract_ptr) {
     _svcPool.push_back (ioFacServiceAbstract_ptr);
@@ -40,24 +34,9 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
-    cleanBomLayer();
     cleanServiceLayer();
     cleanLoggerService();
  }
-
-  // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanBomLayer() {
-    for (BomFactoryPool_T::const_iterator itFactory = _bomPool.begin();
-         itFactory != _bomPool.end(); itFactory++) {
-      const FacBomAbstract* currentFactory_ptr = *itFactory;
-      assert (currentFactory_ptr != NULL);
-
-      delete (currentFactory_ptr); currentFactory_ptr = NULL;
-    }
-
-    // Empty the pool of Bom Factories
-    _bomPool.clear();
-  }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanServiceLayer() {
@@ -81,7 +60,6 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanFactory () {
 	if (_instance != NULL) {
-		_instance->cleanBomLayer();
 		_instance->cleanServiceLayer();
         _instance->cleanLoggerService();
  	}

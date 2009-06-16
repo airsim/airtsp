@@ -10,6 +10,7 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   void SegmentDateKey::toStream (std::ostream& ioOut) const {
+    ioOut << "SegmentDateKey: " << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -18,14 +19,9 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   std::string SegmentDateKey::toString() const {
-    std::string oKey;
-    return oKey;
-  }
-    
-  // //////////////////////////////////////////////////////////////////////
-  std::string SegmentDateKey::toShortString() const {
-    std::string oKey;
-    return oKey;
+    std::stringstream oStr;
+    oStr << _boardPoint << "-" << _offPoint;
+    return oStr.str();
   }
   
 }

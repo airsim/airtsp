@@ -10,7 +10,7 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const SegmentDateKey& iKey) : _key (iKey) {
+  SegmentDate::SegmentDate (const SegmentDateKey& iKey) : BomAbstract (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -21,6 +21,11 @@ namespace STDAIR {
   FlightDate& SegmentDate::getFlightDate() const {
     assert (_flightDate != NULL);
     return *_flightDate;
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  const SegmentDateKey& SegmentDate::getKey() const {
+    return dynamic_cast<const SegmentDateKey&> (_key);
   }
   
   // //////////////////////////////////////////////////////////////////////

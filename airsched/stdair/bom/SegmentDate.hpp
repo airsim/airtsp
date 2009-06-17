@@ -30,9 +30,7 @@ namespace STDAIR {
     FlightDate& getFlightDate() const;
     
     /** Get the segment-date key. */
-    const SegmentDateKey& getKey() const {
-      return _key;
-    }
+    const SegmentDateKey& getKey() const;
 
 
   private:
@@ -79,9 +77,6 @@ namespace STDAIR {
     // Attributes
     /** Parent flight-date. */
     FlightDate* _flightDate;
-    
-    /** Segment-date key (e.g., allowing to specify "LHR-SYD"). */
-    const SegmentDateKey& _key;
   };
 
 }

@@ -21,9 +21,7 @@ namespace STDAIR {
   public:
     // /////////// Getters /////////////
     /** Get the flight-date key. */
-    const FlightDateKey& getKey() const {
-      return _key;
-    }
+    const FlightDateKey& getKey() const;
 
     /** Get the list of segment-dates. */
     const SegmentDateList_T& getSegmentList() const {
@@ -63,9 +61,6 @@ namespace STDAIR {
 
   private:
     // Attributes
-    /** Flight-date key (e.g., allowing to specify "BA123/10-JUN-2010"). */
-    const FlightDateKey& _key;
-    
     /** List of segment-dates. */
     SegmentDateList_T _segmentList;
   };

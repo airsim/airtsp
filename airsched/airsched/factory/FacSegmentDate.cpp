@@ -8,12 +8,14 @@
 #include <stdair/bom/SegmentDateKey.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
+#include <stdair/factory/FacBomAbstract.hpp>
 #include <stdair/factory/FacFlightDate.hpp>
 #include <stdair/factory/FacSegmentDate.hpp>
 // AIRSCHED 
-#include <airsched/factory/FacSegmentDate.hpp>
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/SegmentDate.hpp>
+#include <airsched/factory/FacFlightDate.hpp>
+#include <airsched/factory/FacSegmentDate.hpp>
 #include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
@@ -44,10 +46,16 @@ namespace AIRSCHED {
     STDAIR::SegmentDate& lSegmentDateStructure =
       STDAIR::FacSegmentDate::instance().create (iKey);
 
+    // The created segment-date content (BomContent) object gets a constant
+    // reference on its corresponding segment-date structure/holder object
     SegmentDate* aSegmentDate_ptr = new SegmentDate (lSegmentDateStructure);
     assert (aSegmentDate_ptr != NULL);
 
-    AIRSCHED_LOG_DEBUG ("Pool size = " << _pool.size());
+    // Link the segment-date structure/holder object with its corresponding
+    // content object
+    STDAIR::FacBomAbstract::setContent (lSegmentDateStructure,
+                                        *aSegmentDate_ptr);
+
     // The new object is added to the Bom pool
     bool hasInsertBeenSuccessful = _pool.
       insert (FacBomContent::BomPool_T::value_type (aSegmentDate_ptr,
@@ -62,14 +70,10 @@ namespace AIRSCHED {
     }
 
     // Retrieve the flight-date structure object (STDAIR::FlightDate)
-    STDAIR::FlightDate* lFlightDateStructure_ptr = NULL;
-    FacBomContent::BomPool_T::iterator itFlightDateStructure =
-      _pool.find (&iFlightDate);
-    if (itFlightDateStructure != _pool.end()) {
-      lFlightDateStructure_ptr =
-        dynamic_cast<STDAIR::FlightDate*> (itFlightDateStructure->second);
-
-    } else {
+    STDAIR::FlightDate* lFlightDateStructure_ptr =
+      FacFlightDate::instance().getFlightDateStructure (iFlightDate);
+    
+    if (lFlightDateStructure_ptr == NULL) {
       AIRSCHED_LOG_ERROR ("The flight-date object "
                           << iFlightDate.describeShortKey()
                           << " can not be retrieved from the factory-held pool"
@@ -77,7 +81,6 @@ namespace AIRSCHED {
       throw new MemoryAllocationException();
     }
     assert (lFlightDateStructure_ptr != NULL);
-
 
     // Link the FlightDateStructure (STDAIR::FlightDate) with the
     // SegmentDateStructure

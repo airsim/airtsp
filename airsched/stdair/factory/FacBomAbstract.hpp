@@ -11,6 +11,7 @@ namespace STDAIR {
 
   // Forward declarations
   class BomAbstract;
+  class BomContent;
 
   /** Base class for Factory layer. */
   class FacBomAbstract {
@@ -24,6 +25,10 @@ namespace STDAIR {
 
     /** Destroyed all the object instantiated by this factory. */
     void clean();
+
+    /** Link the structure/holder object with its corresponding content
+        object. */
+    static void setContent (BomAbstract&, BomContent&);
 
   protected:
     /** Default Constructor.

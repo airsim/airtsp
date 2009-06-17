@@ -5,6 +5,7 @@
 #include <assert.h>
 // STDAIR
 #include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/BomContent.hpp>
 #include <stdair/factory/FacBomAbstract.hpp>
 
 namespace STDAIR {
@@ -14,6 +15,12 @@ namespace STDAIR {
     clean ();
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  void FacBomAbstract::setContent (BomAbstract& ioBomAbstract,
+                                   BomContent& ioBomContent) {
+    ioBomAbstract._content = &ioBomContent;
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   void FacBomAbstract::clean() {
     for (BomPool_T::iterator itBom = _pool.begin();

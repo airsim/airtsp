@@ -10,6 +10,7 @@
 // Forward declarations
 namespace STDAIR {
   class FlightDateKey;
+  class FlightDate;
 }
 
 namespace AIRSCHED {
@@ -19,6 +20,7 @@ namespace AIRSCHED {
   
   /** Factory for FlightDate objects. */
   class FacFlightDate : public STDAIR::FacBomContent {
+    friend class FacSegmentDate;
   public:
     /** Provide the unique instance.
         <br>The singleton is instantiated when first used
@@ -35,11 +37,17 @@ namespace AIRSCHED {
         @return FlightDate& The newly created object. */
     FlightDate& create (const STDAIR::FlightDateKey&);
 
-  protected:
+  private:
     /** Default Constructor.
         <br>This constructor is protected in order to ensure the singleton
         pattern.*/
     FacFlightDate () {}
+    FacFlightDate (const FacFlightDate&) {}
+
+  private:
+    /** Retrieve the FlightDate structure/holder object corresponding
+        to a given FlightDate content object. */
+    STDAIR::FlightDate* getFlightDateStructure (const FlightDate&);
 
   private:
     /** The unique instance.*/

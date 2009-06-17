@@ -50,6 +50,9 @@ namespace AIRSCHED {
       const STDAIR::SegmentDate* lSegmentStructure_ptr = itSegment->second;
       assert (lSegmentStructure_ptr != NULL);
 
+      // DEBUG
+      AIRSCHED_LOG_DEBUG ("SegmentDateStructure: " << *lSegmentStructure_ptr);
+      
       // Get the content out of the structure/holder
       const SegmentDate& lSegmentDate =
         lSegmentStructure_ptr->getContent<SegmentDate>();

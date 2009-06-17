@@ -48,7 +48,7 @@ namespace AIRSCHED {
     const bool hasInsertBeenSuccessful = _pool.
       insert (FacBomContent::BomPool_T::value_type (aFlightDate_ptr,
                                                     &lFlightDateStructure)).second;
-
+    AIRSCHED_LOG_DEBUG ("Pool size = " << _pool.size());
     if (hasInsertBeenSuccessful == false) {
       AIRSCHED_LOG_ERROR ("The flight-date object " << *aFlightDate_ptr
                           << " can not be added to the factory-held pool"

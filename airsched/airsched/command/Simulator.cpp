@@ -33,6 +33,15 @@ namespace AIRSCHED {
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate);
 
+    // Create a FlightDate (BA16/10-JUN-2010)
+    const STDAIR::FlightNumber_T lFlightNumber2 = 16;
+    const STDAIR::Date_T lDate2 (2010, 6, 10);
+    const STDAIR::FlightDateKey lFlightDateKey2 (lFlightNumber2, lDate2);
+    FlightDate& lFlightDate2 =
+      FacFlightDate::instance().create (lFlightDateKey2);
+    // Display the flight-date
+    AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate2);
+
     // Create a first SegmentDate (LHR-SYD)
     const STDAIR::AirportCode_T lLHR ("LHR");
     const STDAIR::AirportCode_T lSYD ("SYD");

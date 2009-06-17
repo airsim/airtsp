@@ -47,6 +47,7 @@ namespace AIRSCHED {
     SegmentDate* aSegmentDate_ptr = new SegmentDate (lSegmentDateStructure);
     assert (aSegmentDate_ptr != NULL);
 
+    AIRSCHED_LOG_DEBUG ("Pool size = " << _pool.size());
     // The new object is added to the Bom pool
     bool hasInsertBeenSuccessful = _pool.
       insert (FacBomContent::BomPool_T::value_type (aSegmentDate_ptr,

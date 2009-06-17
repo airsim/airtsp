@@ -29,7 +29,6 @@ namespace STDAIR {
     const SegmentDateList_T& getSegmentList() const {
       return _segmentList;
     }
-
     
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.

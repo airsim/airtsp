@@ -33,36 +33,27 @@ namespace AIRSCHED {
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate);
 
-    // Create a FlightDate (BA16/10-JUN-2010)
-    const STDAIR::FlightNumber_T lFlightNumber2 = 16;
-    const STDAIR::Date_T lDate2 (2010, 6, 10);
-    const STDAIR::FlightDateKey lFlightDateKey2 (lFlightNumber2, lDate2);
-    FlightDate& lFlightDate2 =
-      FacFlightDate::instance().create (lFlightDateKey2);
-    // Display the flight-date
-    AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate2);
-
     // Create a first SegmentDate (LHR-SYD)
     const STDAIR::AirportCode_T lLHR ("LHR");
     const STDAIR::AirportCode_T lSYD ("SYD");
-    STDAIR::SegmentDateKey lSegmentDateKey (lLHR, lSYD);
+    STDAIR::SegmentDateKey lLHRSYDSegmentDateKey (lLHR, lSYD);
     SegmentDate& lLHRSYDSegment =
-      FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
+      FacSegmentDate::instance().create (lFlightDate, lLHRSYDSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRSYDSegment);
 
     // Create a second SegmentDate (LHR-BKK)
     const STDAIR::AirportCode_T lBKK ("BKK");
-    lSegmentDateKey = STDAIR::SegmentDateKey (lLHR, lBKK);
+    STDAIR::SegmentDateKey lLHRBKKSegmentDateKey (lLHR, lBKK);
     SegmentDate& lLHRBKKSegment =
-      FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
+      FacSegmentDate::instance().create (lFlightDate, lLHRBKKSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRBKKSegment);
 
     // Create a third SegmentDate (BKK-SYD)
-    lSegmentDateKey = STDAIR::SegmentDateKey (lBKK, lSYD);
+    STDAIR::SegmentDateKey lBKKSYDSegmentDateKey (lBKK, lSYD);
     SegmentDate& lBKKSYDSegment =
-      FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
+      FacSegmentDate::instance().create (lFlightDate, lBKKSYDSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lBKKSYDSegment);
 

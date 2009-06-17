@@ -87,6 +87,7 @@ namespace AIRSCHED {
     hasInsertBeenSuccessful = STDAIR::FacFlightDate::
       linkFlightDateWithSegmentDate (*lFlightDateStructure_ptr,
                                      lSegmentDateStructure);
+    
     if (hasInsertBeenSuccessful == false) {
       AIRSCHED_LOG_ERROR ("The segment-date object " << iKey
                           << " can not be added to the dedicated list "

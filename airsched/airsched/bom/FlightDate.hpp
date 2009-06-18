@@ -10,6 +10,7 @@
 // Forward declarations
 namespace STDAIR {
   class FlightDate;
+  class FacBomContent;
 }
   
 namespace AIRSCHED {
@@ -18,6 +19,7 @@ namespace AIRSCHED {
       flight-date. */
   class FlightDate : public STDAIR::BomContent {
     friend class FacFlightDate;
+    friend class STDAIR::FacBomContent;
   public:
 
     // /////////// Display support methods /////////

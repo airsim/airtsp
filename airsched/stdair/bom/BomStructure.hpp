@@ -23,6 +23,7 @@ namespace STDAIR {
       the actual content. */
   class BomStructure {
     friend class FacBomStructure;
+    friend class FacBomContent;
   public:
 
     // /////////// Display support methods /////////

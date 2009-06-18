@@ -10,13 +10,20 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const FlightDateKey& iKey) : _key (iKey) {
+  FlightDate::FlightDate (const FlightDateKey& iKey)
+    : _parent (NULL), _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
   FlightDate::~FlightDate () {
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  BomStructure& FlightDate::getParent() const {
+    assert (_parent != NULL);
+    return *_parent;
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   void FlightDate::toStream (std::ostream& ioOut) const {
     ioOut << toString() << std::endl;

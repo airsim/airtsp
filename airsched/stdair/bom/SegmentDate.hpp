@@ -17,18 +17,17 @@ namespace STDAIR {
       by an external specific SegmentDate class (for instance,
       in the AIRSCHED library). */
   class SegmentDate : public BomStructure {
-    friend class FacSegmentDate;
-    friend class FacFlightDate;
+    friend class FacBomStructure;
   public:
 
     // /////////// Getters /////////////
     /** Get the (parent) FlightDate object. */
-    FlightDate* getFlightDatePtr() const {
-      return _flightDate;
+    FlightDate* getParentPtr() const {
+      return _parent;
     }
     
     /** Get the (parent) FlightDate object. */
-    FlightDate& getFlightDate() const;
+    FlightDate& getParent() const;
     
     /** Get the segment-date key. */
     const SegmentDateKey& getKey() const {
@@ -39,8 +38,8 @@ namespace STDAIR {
   private:
     // /////////// Setters /////////////
     /** Set the (parent) FlightDate object. */
-    void setFlightDate (FlightDate& ioFlightDate) {
-      _flightDate = &ioFlightDate;
+    void setParent (FlightDate& ioFlightDate) {
+      _parent = &ioFlightDate;
     }
 
     
@@ -79,7 +78,7 @@ namespace STDAIR {
   private:
     // Attributes
     /** Parent flight-date. */
-    FlightDate* _flightDate;
+    FlightDate* _parent;
 
     /** The key of both the structure and content objects. */
     SegmentDateKey _key;

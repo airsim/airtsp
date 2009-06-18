@@ -5,22 +5,30 @@
 #include <assert.h>
 // STDAIR
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomContent.hpp>
+#include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/factory/FacBomStructure.hpp>
 
 namespace STDAIR {
   
+  FacBomStructure* FacBomStructure::_instance = NULL;
+
   // //////////////////////////////////////////////////////////////////////
   FacBomStructure::~FacBomStructure() {
     clean ();
   }
 
-  // //////////////////////////////////////////////////////////////////////
-  void FacBomStructure::setContent (BomStructure& ioBomStructure,
-                                   BomContent& ioBomContent) {
-    ioBomStructure._content = &ioBomContent;
+  // ////////////////////////////////////////////////////////////////////
+  FacBomStructure& FacBomStructure::instance () {
+
+    if (_instance == NULL) {
+      _instance = new FacBomStructure();
+      assert (_instance != NULL);
+
+      FacSupervisor::instance().registerBomStructureFactory (_instance);
+    }
+    return *_instance;
   }
-  
+
   // //////////////////////////////////////////////////////////////////////
   void FacBomStructure::clean() {
     for (BomPool_T::iterator itBom = _structurePool.begin();
@@ -33,6 +41,9 @@ namespace STDAIR {
 
     // Empty the pool of Factories
     _structurePool.clear();
+
+    // Reset the static instance
+    _instance = NULL;
   }
 
 }

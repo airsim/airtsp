@@ -10,6 +10,7 @@
 // Forward declarations
 namespace STDAIR {
   class SegmentDate;
+  class FacBomContent;
 }
   
 namespace AIRSCHED {
@@ -18,6 +19,7 @@ namespace AIRSCHED {
       segment-date. */
   class SegmentDate : public STDAIR::BomContent {
     friend class FacSegmentDate;
+    friend class STDAIR::FacBomContent;
   public:
 
     // /////////// Display support methods /////////

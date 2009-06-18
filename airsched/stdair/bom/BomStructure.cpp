@@ -2,7 +2,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
-#include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/BomStructure.hpp>
 
 namespace STDAIR {
 

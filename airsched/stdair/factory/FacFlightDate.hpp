@@ -5,7 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
-#include <stdair/factory/FacBomAbstract.hpp>
+#include <stdair/factory/FacBomStructure.hpp>
 
 namespace STDAIR {
 
@@ -14,7 +14,7 @@ namespace STDAIR {
   class FlightDateKey;
   
   /** Factory for FlightDate objects. */
-  class FacFlightDate : public FacBomAbstract {
+  class FacFlightDate : public FacBomStructure {
   public:
     /** Provide the unique instance.
         <br>The singleton is instantiated when first used

@@ -5,7 +5,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
-#include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
 
 namespace STDAIR {
@@ -16,7 +16,7 @@ namespace STDAIR {
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific SegmentDate class (for instance,
       in the AIRSCHED library). */
-  class SegmentDate : public BomAbstract {
+  class SegmentDate : public BomStructure {
     friend class FacSegmentDate;
     friend class FacFlightDate;
   public:

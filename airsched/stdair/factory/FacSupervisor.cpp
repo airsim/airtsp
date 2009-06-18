@@ -4,7 +4,7 @@
 // C
 #include <assert.h>
 // STDAIR
-#include <stdair/factory/FacBomAbstract.hpp>
+#include <stdair/factory/FacBomStructure.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
 
@@ -23,42 +23,42 @@ namespace STDAIR {
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::
-  registerBomAbstractFactory (FacBomAbstract* ioFacBomAbstract_ptr) {
-    _bomAbstractPool.push_back (ioFacBomAbstract_ptr);
+  registerBomStructureFactory (FacBomStructure* ioFacBomStructure_ptr) {
+    _facBomStructurePool.push_back (ioFacBomStructure_ptr);
   }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::
   registerBomContentFactory (FacBomContent* ioFacBomContent_ptr) {
-    _bomContentPool.push_back (ioFacBomContent_ptr);
+    _facBomContentPool.push_back (ioFacBomContent_ptr);
   }
 
   // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
-    cleanBomAbstractLayer();
+    cleanBomStructureLayer();
     cleanBomContentLayer();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanBomAbstractLayer() {
-    for (BomAbstractFactoryPool_T::const_iterator itFactory =
-           _bomAbstractPool.begin();
-         itFactory != _bomAbstractPool.end(); itFactory++) {
-      const FacBomAbstract* currentFactory_ptr = *itFactory;
+  void FacSupervisor::cleanBomStructureLayer() {
+    for (BomStructureFactoryPool_T::const_iterator itFactory =
+           _facBomStructurePool.begin();
+         itFactory != _facBomStructurePool.end(); itFactory++) {
+      const FacBomStructure* currentFactory_ptr = *itFactory;
       assert (currentFactory_ptr != NULL);
 
       delete (currentFactory_ptr); currentFactory_ptr = NULL;
     }
 
-    // Empty the pool of BomAbstract Factories
-    _bomAbstractPool.clear();
+    // Empty the pool of BomStructure Factories
+    _facBomStructurePool.clear();
   }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanBomContentLayer() {
     for (BomContentFactoryPool_T::const_iterator itFactory =
-           _bomContentPool.begin();
-         itFactory != _bomContentPool.end(); itFactory++) {
+           _facBomContentPool.begin();
+         itFactory != _facBomContentPool.end(); itFactory++) {
       const FacBomContent* currentFactory_ptr = *itFactory;
       assert (currentFactory_ptr != NULL);
 
@@ -66,13 +66,13 @@ namespace STDAIR {
     }
 
     // Empty the pool of BomContent Factories
-    _bomContentPool.clear();
+    _facBomContentPool.clear();
   }
 
   // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanFactory () {
 	if (_instance != NULL) {
-		_instance->cleanBomAbstractLayer();
+		_instance->cleanBomStructureLayer();
 		_instance->cleanBomContentLayer();
  	}
     delete _instance; _instance = NULL;

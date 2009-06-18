@@ -24,7 +24,7 @@ namespace STDAIR {
       _instance = new FacSegmentDate();
       assert (_instance != NULL);
 
-      FacSupervisor::instance().registerBomAbstractFactory (_instance);
+      FacSupervisor::instance().registerBomStructureFactory (_instance);
     }
     return *_instance;
   }
@@ -37,7 +37,7 @@ namespace STDAIR {
     assert (aSegmentDate_ptr != NULL);
 
     // The new object is added to the Bom pool
-    _pool.push_back (aSegmentDate_ptr);
+    _structurePool.push_back (aSegmentDate_ptr);
 
     return *aSegmentDate_ptr;
   }

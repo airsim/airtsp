@@ -10,7 +10,7 @@
 namespace STDAIR {
 
   // Forward declarations
-  class FacBomAbstract;
+  class FacBomStructure;
   class FacBomContent;
 
   /** Singleton class to register and clean all Factories. */
@@ -18,7 +18,7 @@ namespace STDAIR {
   public:
 
     /** Define the pool (list) of factories. */
-    typedef std::vector<FacBomAbstract*> BomAbstractFactoryPool_T;
+    typedef std::vector<FacBomStructure*> BomStructureFactoryPool_T;
     typedef std::vector<FacBomContent*> BomContentFactoryPool_T;
 
     /** Provides the unique instance.
@@ -26,11 +26,11 @@ namespace STDAIR {
         @return FacSupervisor& */
     static FacSupervisor& instance();
 
-    /** Register a newly instantiated concrete factory for the BomAbstract layer.
+    /** Register a newly instantiated concrete factory for the BomStructure layer.
         <br>When a concrete Factory is firstly instantiated
         this factory have to register itself to the FacSupervisor
-        @param FacBomAbstract& the concrete Factory to register. */
-    void registerBomAbstractFactory (FacBomAbstract*);
+        @param FacBomStructure& the concrete Factory to register. */
+    void registerBomStructureFactory (FacBomStructure*);
 
     /** Register a newly instantiated concrete factory for the BomContent layer.
         <br>When a concrete Factory is firstly instantiated
@@ -40,8 +40,8 @@ namespace STDAIR {
 
     /** Clean all created object.
         <br>Call the clean method of all the instantiated  factories
-        for the BomAbstract layer. */
-    void cleanBomAbstractLayer();
+        for the BomStructure layer. */
+    void cleanBomStructureLayer();
 
     /** Clean all created object.
         <br>Call the clean method of all the instantiated  factories
@@ -70,11 +70,11 @@ namespace STDAIR {
     /** The unique instance.*/
     static FacSupervisor* _instance;
 
-    /** List of instantiated factories for the BomAbstract layer. */
-    BomAbstractFactoryPool_T _bomAbstractPool;
+    /** List of instantiated factories for the BomStructure layer. */
+    BomStructureFactoryPool_T _facBomStructurePool;
 
     /** List of instantiated factories for the BomContent layer. */
-    BomContentFactoryPool_T _bomContentPool;
+    BomContentFactoryPool_T _facBomContentPool;
   };
 }  
 #endif // __STDAIR_FAC_FACSUPERVISOR_HPP

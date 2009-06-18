@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_BOMABSTRACT_HPP
-#define __STDAIR_BOM_BOMABSTRACT_HPP
+#ifndef __STDAIR_BOM_BOMSTRUCTURE_HPP
+#define __STDAIR_BOM_BOMSTRUCTURE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -21,8 +21,8 @@ namespace STDAIR {
       <br>That class is just a holder of, on one hand, a key and, on the
       other hand, a pointer on the functional (Business) object, which is
       the actual content. */
-  class BomAbstract {
-    friend class FacBomAbstract;
+  class BomStructure {
+    friend class FacBomStructure;
   public:
 
     // /////////// Display support methods /////////
@@ -57,11 +57,11 @@ namespace STDAIR {
     
   protected:
     /** Protected Default Constructor to ensure this class is abtract. */
-    BomAbstract() : _content (NULL) {}
-    BomAbstract(const BomAbstract&) : _content (NULL) {}
+    BomStructure() : _content (NULL) {}
+    BomStructure(const BomStructure&) : _content (NULL) {}
 
     /** Destructor. */
-    virtual ~BomAbstract() {}
+    virtual ~BomStructure() {}
 
   protected:
     // Attributes
@@ -79,7 +79,7 @@ template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
-            const STDAIR::BomAbstract& iBom) {
+            const STDAIR::BomStructure& iBom) {
   /**
      string stream:
       - with same format
@@ -107,10 +107,10 @@ template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&
 operator>> (std::basic_istream<charT, traits>& ioIn,
-            STDAIR::BomAbstract& ioBom) {
+            STDAIR::BomStructure& ioBom) {
   // Fill Bom object with input stream
   ioBom.fromStream (ioIn);
   return ioIn;
 }
 
-#endif // __STDAIR_BOM_BOMABSTRACT_HPP
+#endif // __STDAIR_BOM_BOMSTRUCTURE_HPP

@@ -7,7 +7,7 @@
 #include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
-#include <stdair/factory/FacBomAbstract.hpp>
+#include <stdair/factory/FacBomStructure.hpp>
 #include <stdair/factory/FacFlightDate.hpp>
 // AIRSCHED 
 #include <airsched/factory/FacFlightDate.hpp>
@@ -49,7 +49,7 @@ namespace AIRSCHED {
 
     // Link the flight-date structure/holder object with its corresponding
     // content object
-    STDAIR::FacBomAbstract::setContent (lFlightDateStructure, *aFlightDate_ptr);
+    STDAIR::FacBomStructure::setContent (lFlightDateStructure, *aFlightDate_ptr);
 
     // The new object is added to the Bom pool
     const bool hasInsertBeenSuccessful = _pool.

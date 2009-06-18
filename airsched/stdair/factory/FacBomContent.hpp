@@ -10,7 +10,7 @@
 namespace STDAIR {
 
   // Forward declarations
-  class BomAbstract;
+  class BomStructure;
   class BomContent;
   
   /** Base class for Factory layer. */
@@ -18,7 +18,7 @@ namespace STDAIR {
   public:
 
     /** Define the list (pool) of Bom objects. */
-    typedef std::map<const STDAIR::BomContent*, STDAIR::BomAbstract*> BomPool_T;
+    typedef std::map<const STDAIR::BomContent*, STDAIR::BomStructure*> BomPool_T;
 
     /** Destructor. */
     virtual ~FacBomContent();

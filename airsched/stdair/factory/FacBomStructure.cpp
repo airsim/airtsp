@@ -4,35 +4,35 @@
 // C
 #include <assert.h>
 // STDAIR
-#include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/BomContent.hpp>
-#include <stdair/factory/FacBomAbstract.hpp>
+#include <stdair/factory/FacBomStructure.hpp>
 
 namespace STDAIR {
   
   // //////////////////////////////////////////////////////////////////////
-  FacBomAbstract::~FacBomAbstract() {
+  FacBomStructure::~FacBomStructure() {
     clean ();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacBomAbstract::setContent (BomAbstract& ioBomAbstract,
+  void FacBomStructure::setContent (BomStructure& ioBomStructure,
                                    BomContent& ioBomContent) {
-    ioBomAbstract._content = &ioBomContent;
+    ioBomStructure._content = &ioBomContent;
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void FacBomAbstract::clean() {
-    for (BomPool_T::iterator itBom = _pool.begin();
-	 itBom != _pool.end(); itBom++) {
-      BomAbstract* currentBom_ptr = *itBom;
+  void FacBomStructure::clean() {
+    for (BomPool_T::iterator itBom = _structurePool.begin();
+	 itBom != _structurePool.end(); itBom++) {
+      BomStructure* currentBom_ptr = *itBom;
       assert (currentBom_ptr != NULL);
 
       delete currentBom_ptr; currentBom_ptr = NULL;
     }
 
     // Empty the pool of Factories
-    _pool.clear();
+    _structurePool.clear();
   }
 
 }

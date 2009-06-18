@@ -8,7 +8,7 @@
 #include <stdair/bom/SegmentDateKey.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
-#include <stdair/factory/FacBomAbstract.hpp>
+#include <stdair/factory/FacBomStructure.hpp>
 #include <stdair/factory/FacFlightDate.hpp>
 #include <stdair/factory/FacSegmentDate.hpp>
 // AIRSCHED 
@@ -53,7 +53,7 @@ namespace AIRSCHED {
 
     // Link the segment-date structure/holder object with its corresponding
     // content object
-    STDAIR::FacBomAbstract::setContent (lSegmentDateStructure,
+    STDAIR::FacBomStructure::setContent (lSegmentDateStructure,
                                         *aSegmentDate_ptr);
 
     // The new object is added to the Bom pool

@@ -4,46 +4,40 @@
 // C
 #include <assert.h>
 // STDAIR 
-#include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/BomStructureRoot.hpp>
 
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const FlightDateKey& iKey)
-    : _parent (NULL), _key (iKey) {
+  BomStructureRoot::BomStructureRoot (const BomStructureRootKey& iKey)
+    : _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::~FlightDate () {
+  BomStructureRoot::~BomStructureRoot () {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  BomStructureRoot& FlightDate::getParent() const {
-    assert (_parent != NULL);
-    return *_parent;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  void FlightDate::toStream (std::ostream& ioOut) const {
+  void BomStructureRoot::toStream (std::ostream& ioOut) const {
     ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FlightDate::fromStream (std::istream& ioIn) {
+  void BomStructureRoot::fromStream (std::istream& ioIn) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string FlightDate::toString() const {
+  std::string BomStructureRoot::toString() const {
     return describeKey();
   }
     
   // //////////////////////////////////////////////////////////////////////
-  const std::string FlightDate::describeKey() const {
+  const std::string BomStructureRoot::describeKey() const {
     return _key.toString();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  const std::string FlightDate::describeShortKey() const {
+  const std::string BomStructureRoot::describeShortKey() const {
     return _key.toString();
   }
 

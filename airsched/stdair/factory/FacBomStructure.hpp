@@ -73,8 +73,8 @@ namespace STDAIR {
       
       // Insert the child structure object in the dedicated list
       const bool hasInsertBeenSuccessful = ioBomParent._childrenList1.
-        insert (BOM_CHILDREN_LIST::value_type (lBomChildKeyStr,
-                                               &ioBomChild)).second;
+        insert (typename BOM_CHILDREN_LIST::value_type (lBomChildKeyStr,
+                                                        &ioBomChild)).second;
       if (hasInsertBeenSuccessful == false) {
         return hasInsertBeenSuccessful;
       }

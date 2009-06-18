@@ -15,56 +15,61 @@ namespace STDAIR {
   // Forward declarations
   class BomStructure;
   class BomContent;
+  class BomContentRoot;
   
   /** Base class for Factory layer. */
   class FacBomContent {
+    friend class FacSupervisor;
   public:
 
     /** Define the list (pool) of Bom objects. */
     typedef std::map<const STDAIR::BomContent*,
                      STDAIR::BomStructure*> StructureMapFromContent_T;
 
-    /** Destructor. */
-    virtual ~FacBomContent();
-
-    /** Destroyed all the object instantiated by this factory. */
-    void clean();
-
   public:
-    /** Create a content object, given a key.
+    /** Create the root of the BOM tree, i.e., a pair of linked
+        BomStructureRoot and BomContentRoot objects. */
+    BomContentRoot& createBomRoot ();
+    
+    /** Create a (child) content object, given a key.
         <br>A structure object is created, under the hood, with the given key.
         That structure object then gets a pointer on the content object. */
-    template <typename BOM_KEY, typename BOM_STRUCTURE_PARENT,
-              typename BOM_STRUCTURE_CHILD, typename BOM_CHILDREN_LIST,
-              typename BOM_CONTENT>
-    BOM_CONTENT& create (const BOM_KEY& iKey) {
+    template <typename BOM_KEY,
+              typename BOM_STRUCTURE_PARENT, typename BOM_STRUCTURE_CHILD,
+              typename BOM_CHILDREN_LIST,
+              typename BOM_CONTENT_PARENT, typename BOM_CONTENT_CHILD>
+    BOM_CONTENT_CHILD& create (BOM_CONTENT_PARENT& ioContentChild,
+                               const BOM_KEY& iKey) {
 
       // Create the child structure object for the given key
-      BOM_CONTENT& lBomChild =
-        createInternal<BOM_KEY, BOM_STRUCTURE_CHILD, BOM_CONTENT> (iKey);
+      BOM_CONTENT_CHILD& lBomContentChild =
+        createInternal<BOM_KEY, BOM_STRUCTURE_CHILD, BOM_CONTENT_CHILD> (iKey);
 
       // Retrieve the child structure object
       BOM_STRUCTURE_CHILD* lBomStructureChild_ptr =
-        getBomStructure<BOM_STRUCTURE_CHILD, BOM_CONTENT> (lBomChild);
+        getBomStructure<BOM_STRUCTURE_CHILD,
+                        BOM_CONTENT_CHILD> (lBomContentChild);
       assert (lBomStructureChild_ptr != NULL);
 
-      // Retrieve the parent structure object, which can be null (when the child
-      // is the root of the structure Bom tree)
+      // Retrieve the parent structure object
       BOM_STRUCTURE_PARENT* lBomStructureParent_ptr =
-        lBomStructureChild_ptr->getParentPtr();
+        getBomStructure<BOM_STRUCTURE_PARENT,
+                        BOM_CONTENT_PARENT> (ioContentChild);
+      assert (lBomStructureParent_ptr != NULL);
 
-      if (lBomStructureParent_ptr != NULL) {
-        // Link both the parent and child structure objects
-        const bool hasLinkBeenSuccessful = FacBomStructure::
-          linkBomParentWithBomChild<BOM_STRUCTURE_PARENT, BOM_STRUCTURE_CHILD,
-          BOM_KEY, BOM_CHILDREN_LIST>  (*lBomStructureParent_ptr,
-                                        *lBomStructureChild_ptr);
+      // Link both the parent and child structure objects
+      const bool hasLinkBeenSuccessful = FacBomStructure::
+        linkBomParentWithBomChild<BOM_STRUCTURE_PARENT, BOM_STRUCTURE_CHILD,
+        BOM_KEY, BOM_CHILDREN_LIST>  (*lBomStructureParent_ptr,
+                                      *lBomStructureChild_ptr);
 
-        if (hasLinkBeenSuccessful == false) {
-          throw new MemoryAllocationException();
-        }
+      if (hasLinkBeenSuccessful == false) {
+        throw new MemoryAllocationException();
       }
+
+      return lBomContentChild;
     }
+
     
   private:
     /** Create a content object, given a key.
@@ -90,19 +95,12 @@ namespace STDAIR {
         insert (StructureMapFromContent_T::value_type (aBomContent_ptr,
                                                        &lBomStructure)).second;
       if (hasInsertBeenSuccessful == false) {
-        // TODO: remove the log
-        /*
-        AIRSCHED_LOG_ERROR ("The flight-date object " << *aBomContent_ptr
-                            << " can not be added to the factory-held pool"
-                            << " of flight-date objects.");
-        */
         throw new MemoryAllocationException();
       }
     
       return *aBomContent_ptr;
     }
 
-  private:
     /** Retrieve the structure object associated to the given content object. */
     template <typename BOM_STRUCTURE, typename BOM_CONTENT>
     BOM_STRUCTURE* getBomStructure (const BOM_CONTENT& iBomContent) {
@@ -116,23 +114,32 @@ namespace STDAIR {
       return oBomStructure_ptr;
     }
   
-    
-  protected:
-    /** Default Constructor.
-        <br>This constructor is protected to ensure the class is content. */
-    FacBomContent() {}
 
   public:
     /** Provide the unique instance.
         <br>The singleton is instantiated when first used.
         @return FacBomContent& */
     static FacBomContent& instance();
+
+    
+  private:
+    /** Default Constructor.
+        <br>This constructor is protected to ensure the class is content. */
+    FacBomContent() {}
+
+    /** Destructor. */
+    virtual ~FacBomContent();
+
+    /** Destroyed all the object instantiated by this factory. */
+    void clean();
+
     
   private:
     /** Link the structure/holder object with its corresponding content
         object. */
     static void setContent (BomStructure&, BomContent&);
 
+    
   private:
     /** The unique instance.*/
     static FacBomContent* _instance;

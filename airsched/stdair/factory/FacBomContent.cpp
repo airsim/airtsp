@@ -5,7 +5,9 @@
 #include <assert.h>
 // STDAIR
 #include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/BomStructureRoot.hpp>
 #include <stdair/bom/BomContent.hpp>
+#include <stdair/bom/BomContentRoot.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 
@@ -52,6 +54,25 @@ namespace STDAIR {
 
     // Reset the static instance
     _instance = NULL;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  BomContentRoot& FacBomContent::createBomRoot () {
+
+    // Create the BOM root object.
+    // Note that its object key has got no importance, as that BOM root class
+    // is actually (only) a marker.
+    BomStructureRootKey lBomStructureRootKey;
+    BomContentRoot& lBomContentRoot =
+      createInternal<BomStructureRootKey, BomStructureRoot,
+                     BomContentRoot> (lBomStructureRootKey);
+
+    // Retrieve the BOM root structure object
+    BomStructureRoot* lBomStructureRoot_ptr =
+      getBomStructure<BomStructureRoot, BomContentRoot> (lBomContentRoot);
+    assert (lBomStructureRoot_ptr != NULL);
+
+    return lBomContentRoot;
   }
 
 }

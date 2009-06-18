@@ -1,56 +1,36 @@
-#ifndef __STDAIR_BOM_FLIGHTDATE_HPP
-#define __STDAIR_BOM_FLIGHTDATE_HPP
+#ifndef __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
+#define __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/FlightDateKey.hpp>
-#include <stdair/bom/SegmentDateList.hpp>
+#include <stdair/bom/BomStructureRootKey.hpp>
+#include <stdair/bom/FlightDateList.hpp>
 
 namespace STDAIR {
 
   // Forward declaration
-  class BomStructureRoot;
+  //
   
   /** Wrapper class aimed at holding the actual content, modeled
-      by an external specific FlightDate class (for instance,
-      in the AIRSCHED library). */
-  class FlightDate : public BomStructure {
+      by a specific BomContentRoot class. */
+  class BomStructureRoot : public BomStructure {
     friend class FacBomStructure;
   public:
 
     // /////////// Getters /////////////
-    /** Get the (parent) BomStructureRoot object. */
-    BomStructureRoot* getParentPtr() const {
-      return _parent;
-    }
-    
-    /** Get the (parent) BomStructureRoot object. */
-    BomStructureRoot& getParent() const;
-    
-    /** Get the flight-date key. */
-    const FlightDateKey& getKey() const {
+    /** Get the BomStructureRoot key. */
+    const BomStructureRootKey& getKey() const {
       return _key;
     }
 
-    /** Get the list of segment-dates. */
-    const SegmentDateList_T& getSegmentList() const {
+    /** Get the list of flight-dates. */
+    const FlightDateList_T& getFlightList() const {
       return _childrenList1;
     }
     
-  private:
-    // /////////// Setters /////////////
-    /** Set the (parent) FlightDate object.
-        <br>IMPORTANT NOTE: For now, that class has no parent.
-        That attribute (_parent) and method exist only for the
-        template methods to compile correctly, but that code should never
-        be called. So, obviously, do not use that method. */
-    void setParent (BomStructureRoot& ioParent) {
-      _parent = &ioParent;
-    }
-
 
   public:
     // /////////// Display support methods /////////
@@ -77,25 +57,22 @@ namespace STDAIR {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    FlightDate ();
-    FlightDate (const FlightDate&);
-    FlightDate (const FlightDateKey&);
+    BomStructureRoot ();
+    BomStructureRoot (const BomStructureRoot&);
+    BomStructureRoot (const BomStructureRootKey&);
 
     /** Destructor. */
-    virtual ~FlightDate();
+    virtual ~BomStructureRoot();
 
   private:
     // Attributes
-    /** Parent root. */
-    BomStructureRoot* _parent;
-
     /** The key of both the structure and content objects. */
-    FlightDateKey _key;
+    BomStructureRootKey _key;
     
-    /** List of segment-dates. */
-    SegmentDateList_T _childrenList1;
+    /** List of flight-dates. */
+    FlightDateList_T _childrenList1;
   };
 
 }
-#endif // __STDAIR_BOM_FLIGHTDATE_HPP
+#endif // __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
 

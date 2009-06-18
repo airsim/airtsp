@@ -57,7 +57,8 @@ namespace STDAIR {
         // Link both the parent and child structure objects
         const bool hasLinkBeenSuccessful = FacBomStructure::
           linkBomParentWithBomChild<BOM_STRUCTURE_PARENT, BOM_STRUCTURE_CHILD,
-          BOM_KEY, BOM_CHILDREN_LIST>  (*lBomStructureParent_ptr, lBomChild);
+          BOM_KEY, BOM_CHILDREN_LIST>  (*lBomStructureParent_ptr,
+                                        *lBomStructureChild_ptr);
 
         if (hasLinkBeenSuccessful == false) {
           throw new MemoryAllocationException();

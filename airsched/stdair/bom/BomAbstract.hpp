@@ -11,8 +11,6 @@
 #include <ostream>
 #include <sstream>
 #include <string>
-// STDAIR
-#include <stdair/bom/BomKey.hpp>
 
 namespace STDAIR {
 
@@ -27,13 +25,6 @@ namespace STDAIR {
     friend class FacBomAbstract;
   public:
 
-    // /////////// Getters /////////////
-    /** Get the flight-date key. */
-    const BomKey& getKey() const {
-      return _key;
-    }
-
-    
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -68,16 +59,12 @@ namespace STDAIR {
     /** Protected Default Constructor to ensure this class is abtract. */
     BomAbstract() : _content (NULL) {}
     BomAbstract(const BomAbstract&) : _content (NULL) {}
-    BomAbstract(const BomKey&);
 
     /** Destructor. */
     virtual ~BomAbstract() {}
 
   protected:
     // Attributes
-    /** The key of both the structure and content objects. */
-    BomKey _key;
-    
     /** The actual functional (Business Object) content. */
     BomContent* _content;
  };

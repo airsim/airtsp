@@ -6,13 +6,14 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/SegmentDateList.hpp>
 
 namespace STDAIR {
 
   // Forward declaration
-  class FlightDateKey;
-
+  //
+  
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific FlightDate class (for instance,
       in the AIRSCHED library). */
@@ -21,7 +22,9 @@ namespace STDAIR {
   public:
     // /////////// Getters /////////////
     /** Get the flight-date key. */
-    const FlightDateKey& getKey() const;
+    const FlightDateKey& getKey() const {
+      return _key;
+    }
 
     /** Get the list of segment-dates. */
     const SegmentDateList_T& getSegmentList() const {
@@ -61,6 +64,9 @@ namespace STDAIR {
 
   private:
     // Attributes
+    /** The key of both the structure and content objects. */
+    FlightDateKey _key;
+    
     /** List of segment-dates. */
     SegmentDateList_T _segmentList;
   };

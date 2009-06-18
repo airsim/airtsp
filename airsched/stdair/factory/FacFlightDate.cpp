@@ -7,6 +7,7 @@
 #include <iostream>
 // STDAIR 
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/SegmentDateKey.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/factory/FacFlightDate.hpp>
@@ -54,11 +55,12 @@ namespace STDAIR {
     ioSegmentDate.setFlightDate (ioFlightDate);
 
     // Retrieve the short key
-    const std::string& lSegmentDateKey = ioSegmentDate.describeShortKey();
+    const SegmentDateKey& lSegmentDateKey = ioSegmentDate.getKey();
+    const std::string& lSegmentDateKeyStr = lSegmentDateKey.toString();
 
     // Insert the SegmentDate object in the dedicated list
     const bool hasInsertBeenSuccessful = ioFlightDate._segmentList.
-      insert (SegmentDateList_T::value_type (lSegmentDateKey,
+      insert (SegmentDateList_T::value_type (lSegmentDateKeyStr,
                                              &ioSegmentDate)).second;
 
     if (hasInsertBeenSuccessful == false) {

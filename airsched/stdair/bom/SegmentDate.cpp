@@ -4,13 +4,12 @@
 // C
 #include <assert.h>
 // STDAIR 
-#include <stdair/bom/SegmentDateKey.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const SegmentDateKey& iKey) : BomAbstract (iKey) {
+  SegmentDate::SegmentDate (const SegmentDateKey& iKey) : _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -21,11 +20,6 @@ namespace STDAIR {
   FlightDate& SegmentDate::getFlightDate() const {
     assert (_flightDate != NULL);
     return *_flightDate;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  const SegmentDateKey& SegmentDate::getKey() const {
-    return dynamic_cast<const SegmentDateKey&> (_key);
   }
   
   // //////////////////////////////////////////////////////////////////////

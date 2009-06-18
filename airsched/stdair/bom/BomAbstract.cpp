@@ -6,8 +6,4 @@
 
 namespace STDAIR {
 
-  // ////////////////////////////////////////////////////////////////////
-  BomAbstract::BomAbstract (const BomKey& iKey) : _key (iKey) {
-  }
-  
 }

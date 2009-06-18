@@ -6,12 +6,12 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomAbstract.hpp>
+#include <stdair/bom/SegmentDateKey.hpp>
 
 namespace STDAIR {
 
   // Forward declaration
   class FlightDate;
-  class SegmentDateKey;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific SegmentDate class (for instance,
@@ -20,6 +20,7 @@ namespace STDAIR {
     friend class FacSegmentDate;
     friend class FacFlightDate;
   public:
+
     // /////////// Getters /////////////
     /** Get the (parent) FlightDate object. */
     FlightDate* getFlightDatePtr() const {
@@ -30,7 +31,9 @@ namespace STDAIR {
     FlightDate& getFlightDate() const;
     
     /** Get the segment-date key. */
-    const SegmentDateKey& getKey() const;
+    const SegmentDateKey& getKey() const {
+      return _key;
+    }
 
 
   private:
@@ -77,6 +80,9 @@ namespace STDAIR {
     // Attributes
     /** Parent flight-date. */
     FlightDate* _flightDate;
+
+    /** The key of both the structure and content objects. */
+    SegmentDateKey _key;
   };
 
 }

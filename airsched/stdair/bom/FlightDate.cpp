@@ -4,25 +4,19 @@
 // C
 #include <assert.h>
 // STDAIR 
-#include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const FlightDateKey& iKey) : BomAbstract (iKey) {
+  FlightDate::FlightDate (const FlightDateKey& iKey) : _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
   FlightDate::~FlightDate () {
   }
 
-  // //////////////////////////////////////////////////////////////////////
-  const FlightDateKey& FlightDate::getKey() const {
-    return dynamic_cast<const FlightDateKey&> (_key);
-  }
-  
   // //////////////////////////////////////////////////////////////////////
   void FlightDate::toStream (std::ostream& ioOut) const {
     ioOut << toString() << std::endl;

@@ -9,6 +9,7 @@
 
 // Forward declarations
 namespace STDAIR {
+  class BomContentRoot;
   class FlightDate;
   class FacBomContent;
 }
@@ -18,10 +19,21 @@ namespace AIRSCHED {
   /** Class representing the actual functional/business content for a
       flight-date. */
   class FlightDate : public STDAIR::BomContent {
-    friend class FacFlightDate;
     friend class STDAIR::FacBomContent;
-  public:
 
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated parent
+        BOM content type. */
+    typedef STDAIR::BomContentRoot ParentBomContent_T;
+
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef STDAIR::FlightDate BomStructure_T;
+
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef STDAIR::FlightDateKey BomKey_T;
+
+  public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -48,7 +60,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
-    FlightDate (const STDAIR::FlightDate&);
+    FlightDate (const BomStructure_T&);
 
     /** Destructor. */
     virtual ~FlightDate();
@@ -56,7 +68,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** Reference structure. */
-    const STDAIR::FlightDate& _flightStructure;
+    const BomStructure_T& _flightStructure;
   };
 
 }

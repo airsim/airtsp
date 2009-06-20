@@ -18,8 +18,16 @@ namespace STDAIR {
       of the Bom tree. */
   class BomContentRoot : public BomContent {
     friend class FacBomContent;
-  public:
 
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef BomStructureRoot BomStructure_T;
+
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef BomStructureRootKey BomKey_T;
+    
+  public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -46,7 +54,7 @@ namespace STDAIR {
     /** Default constructors. */
     BomContentRoot ();
     BomContentRoot (const BomContentRoot&);
-    BomContentRoot (const BomStructureRoot&);
+    BomContentRoot (const BomStructure_T&);
 
     /** Destructor. */
     virtual ~BomContentRoot();
@@ -54,7 +62,7 @@ namespace STDAIR {
   private:
     // Attributes
     /** Reference structure. */
-    const BomStructureRoot& _bomStructure;
+    const BomStructure_T& _bomStructure;
   };
 
 }

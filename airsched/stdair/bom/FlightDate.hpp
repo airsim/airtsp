@@ -19,19 +19,32 @@ namespace STDAIR {
       in the AIRSCHED library). */
   class FlightDate : public BomStructure {
     friend class FacBomStructure;
-  public:
+    friend class FacBomContent;
 
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef FlightDateKey BomKey_T;
+
+    /** Definition allowing to retrieve the associated parent
+        BOM structure type. */
+    typedef BomStructureRoot ParentBomStructure_T;
+
+    /** Definition allowing to retrieve the associated children BOM type. */
+    typedef SegmentDateList_T ChildrenBomList_T;
+
+  public:
     // /////////// Getters /////////////
     /** Get the (parent) BomStructureRoot object. */
-    BomStructureRoot* getParentPtr() const {
+    ParentBomStructure_T* getBomStructureRootPtr() const {
       return _parent;
     }
     
     /** Get the (parent) BomStructureRoot object. */
-    BomStructureRoot& getParent() const;
+    ParentBomStructure_T& getBomStructureRoot() const;
     
     /** Get the flight-date key. */
-    const FlightDateKey& getKey() const {
+    const BomKey_T& getKey() const {
       return _key;
     }
 
@@ -47,7 +60,7 @@ namespace STDAIR {
         That attribute (_parent) and method exist only for the
         template methods to compile correctly, but that code should never
         be called. So, obviously, do not use that method. */
-    void setParent (BomStructureRoot& ioParent) {
+    void setBomStructureRoot (ParentBomStructure_T& ioParent) {
       _parent = &ioParent;
     }
 
@@ -79,7 +92,7 @@ namespace STDAIR {
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
-    FlightDate (const FlightDateKey&);
+    FlightDate (const BomKey_T&);
 
     /** Destructor. */
     virtual ~FlightDate();
@@ -87,10 +100,10 @@ namespace STDAIR {
   private:
     // Attributes
     /** Parent root. */
-    BomStructureRoot* _parent;
+    ParentBomStructure_T* _parent;
 
     /** The key of both the structure and content objects. */
-    FlightDateKey _key;
+    BomKey_T _key;
     
     /** List of segment-dates. */
     SegmentDateList_T _childrenList1;

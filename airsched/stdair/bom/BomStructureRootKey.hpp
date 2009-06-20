@@ -10,10 +10,20 @@
 
 namespace STDAIR {
 
+  // Forward declarations
+  class BomStructureRoot;
+
   /** Key of the BOM structure root. */
   class BomStructureRootKey : public BomKey {
-  public:
+    friend class FacBomStructure;
+    friend class FacBomContent;
+    
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef BomStructureRoot BomStructure_T;
 
+  public:
     // /////////// Construction ///////////
     /** Constructor. */
     BomStructureRootKey () {}

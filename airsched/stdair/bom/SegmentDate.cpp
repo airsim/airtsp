@@ -9,7 +9,7 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const SegmentDateKey& iKey)
+  SegmentDate::SegmentDate (const BomKey_T& iKey)
     : _parent (NULL), _key (iKey) {
   }
   
@@ -18,7 +18,7 @@ namespace STDAIR {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  FlightDate& SegmentDate::getParent() const {
+  SegmentDate::ParentBomStructure_T& SegmentDate::getFlightDate() const {
     assert (_parent != NULL);
     return *_parent;
   }

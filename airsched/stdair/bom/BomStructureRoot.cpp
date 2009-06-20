@@ -9,7 +9,7 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  BomStructureRoot::BomStructureRoot (const BomStructureRootKey& iKey)
+  BomStructureRoot::BomStructureRoot (const BomKey_T& iKey)
     : _key (iKey) {
   }
   

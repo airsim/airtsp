@@ -9,7 +9,7 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const FlightDateKey& iKey)
+  FlightDate::FlightDate (const BomKey_T& iKey)
     : _parent (NULL), _key (iKey) {
   }
   
@@ -18,7 +18,7 @@ namespace STDAIR {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  BomStructureRoot& FlightDate::getParent() const {
+  FlightDate::ParentBomStructure_T& FlightDate::getBomStructureRoot() const {
     assert (_parent != NULL);
     return *_parent;
   }

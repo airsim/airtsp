@@ -14,7 +14,7 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const STDAIR::FlightDate& iFlightStructure)
+  FlightDate::FlightDate (const BomStructure_T& iFlightStructure)
     : _flightStructure (iFlightStructure) {
   }
 

@@ -10,10 +10,20 @@
 
 namespace STDAIR {
 
+  // Forward declarations
+  class SegmentDate;
+
   /** Key of segment-date. */
   class SegmentDateKey : public BomKey {
-  public:
+    friend class FacBomStructure;
+    friend class FacBomContent;
+    
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef SegmentDate BomStructure_T;
 
+  public:
     // /////////// Construction ///////////
     /** Constructor. */
     SegmentDateKey (const AirportCode_T& iBoardPoint,

@@ -18,11 +18,21 @@ namespace STDAIR {
       by a specific BomContentRoot class. */
   class BomStructureRoot : public BomStructure {
     friend class FacBomStructure;
+    friend class FacBomContent;
+
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef BomStructureRootKey BomKey_T;
+
+    /** Definition allowing to retrieve the associated children BOM type. */
+    typedef FlightDateList_T ChildrenBomList_T;
+    
   public:
 
     // /////////// Getters /////////////
     /** Get the BomStructureRoot key. */
-    const BomStructureRootKey& getKey() const {
+    const BomKey_T& getKey() const {
       return _key;
     }
 
@@ -59,7 +69,7 @@ namespace STDAIR {
     /** Default constructors. */
     BomStructureRoot ();
     BomStructureRoot (const BomStructureRoot&);
-    BomStructureRoot (const BomStructureRootKey&);
+    BomStructureRoot (const BomKey_T&);
 
     /** Destructor. */
     virtual ~BomStructureRoot();
@@ -67,7 +77,7 @@ namespace STDAIR {
   private:
     // Attributes
     /** The key of both the structure and content objects. */
-    BomStructureRootKey _key;
+    BomKey_T _key;
     
     /** List of flight-dates. */
     FlightDateList_T _childrenList1;

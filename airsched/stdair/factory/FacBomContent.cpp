@@ -64,12 +64,11 @@ namespace STDAIR {
     // is actually (only) a marker.
     BomStructureRootKey lBomStructureRootKey;
     BomContentRoot& lBomContentRoot =
-      createInternal<BomStructureRootKey, BomStructureRoot,
-                     BomContentRoot> (lBomStructureRootKey);
+      createInternal<BomContentRoot> (lBomStructureRootKey);
 
     // Retrieve the BOM root structure object
     BomStructureRoot* lBomStructureRoot_ptr =
-      getBomStructure<BomStructureRoot, BomContentRoot> (lBomContentRoot);
+      getBomStructure<BomContentRoot> (lBomContentRoot);
     assert (lBomStructureRoot_ptr != NULL);
 
     return lBomContentRoot;

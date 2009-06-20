@@ -36,10 +36,9 @@ namespace AIRSCHED {
     const STDAIR::Date_T lDate (2010, 6, 10);
     const STDAIR::FlightDateKey lFlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lFlightDate = STDAIR::FacBomContent::instance().
-      create<STDAIR::FlightDateKey, STDAIR::BomStructureRoot,STDAIR::FlightDate,
-             STDAIR::FlightDateList_T, STDAIR::BomContentRoot,
-             FlightDate> (lBomContentRoot, lFlightDateKey);
+    FlightDate& lFlightDate =
+      STDAIR::FacBomContent::instance().create<FlightDate> (lBomContentRoot,
+                                                            lFlightDateKey);
     
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate);
@@ -51,10 +50,9 @@ namespace AIRSCHED {
     const STDAIR::AirportCode_T lSYD ("SYD");
     STDAIR::SegmentDateKey lSegmentDateKey (lLHR, lSYD);
 
-    SegmentDate& lLHRSYDSegment = STDAIR::FacBomContent::instance().
-      create<STDAIR::SegmentDateKey, STDAIR::FlightDate, STDAIR::SegmentDate, 
-             STDAIR::SegmentDateList_T, FlightDate,
-             SegmentDate> (lFlightDate, lSegmentDateKey);
+    SegmentDate& lLHRSYDSegment =
+      STDAIR::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+                                                             lSegmentDateKey);
 
     // SegmentDate& lLHRSYDSegment =
     // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
@@ -66,10 +64,9 @@ namespace AIRSCHED {
     const STDAIR::AirportCode_T lBKK ("BKK");
     lSegmentDateKey = STDAIR::SegmentDateKey (lLHR, lBKK);
 
-    SegmentDate& lLHRBKKSegment = STDAIR::FacBomContent::instance().
-      create<STDAIR::SegmentDateKey, STDAIR::FlightDate, STDAIR::SegmentDate, 
-             STDAIR::SegmentDateList_T, FlightDate,
-             SegmentDate> (lFlightDate, lSegmentDateKey);
+    SegmentDate& lLHRBKKSegment =
+      STDAIR::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+                                                             lSegmentDateKey);
 
     // SegmentDate& lLHRBKKSegment =
     // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
@@ -80,10 +77,9 @@ namespace AIRSCHED {
     // Create a third SegmentDate (BKK-SYD)
     lSegmentDateKey = STDAIR::SegmentDateKey (lBKK, lSYD);
 
-    SegmentDate& lBKKSYDSegment = STDAIR::FacBomContent::instance().
-      create<STDAIR::SegmentDateKey, STDAIR::FlightDate, STDAIR::SegmentDate, 
-             STDAIR::SegmentDateList_T, FlightDate,
-             SegmentDate> (lFlightDate, lSegmentDateKey);
+    SegmentDate& lBKKSYDSegment =
+      STDAIR::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+                                                             lSegmentDateKey);
 
     // SegmentDate& lBKKSYDSegment =
     // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);

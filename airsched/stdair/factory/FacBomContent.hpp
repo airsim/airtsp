@@ -34,34 +34,42 @@ namespace STDAIR {
     /** Create a (child) content object, given a key.
         <br>A structure object is created, under the hood, with the given key.
         That structure object then gets a pointer on the content object. */
-    template <typename BOM_KEY,
-              typename BOM_STRUCTURE_PARENT, typename BOM_STRUCTURE_CHILD,
-              typename BOM_CHILDREN_LIST,
-              typename BOM_CONTENT_PARENT, typename BOM_CONTENT_CHILD>
-    BOM_CONTENT_CHILD& create (BOM_CONTENT_PARENT& ioContentChild,
-                               const BOM_KEY& iKey) {
+    template <typename BOM_CONTENT_CHILD>
+    BOM_CONTENT_CHILD& create (typename BOM_CONTENT_CHILD::ParentBomContent_T& ioContentParent,
+                               const typename BOM_CONTENT_CHILD::BomKey_T& iKey) {
 
+      
       // Create the child structure object for the given key
       BOM_CONTENT_CHILD& lBomContentChild =
-        createInternal<BOM_KEY, BOM_STRUCTURE_CHILD, BOM_CONTENT_CHILD> (iKey);
+        createInternal<BOM_CONTENT_CHILD> (iKey);
 
       // Retrieve the child structure object
-      BOM_STRUCTURE_CHILD* lBomStructureChild_ptr =
-        getBomStructure<BOM_STRUCTURE_CHILD,
-                        BOM_CONTENT_CHILD> (lBomContentChild);
+      typename BOM_CONTENT_CHILD::BomStructure_T* lBomStructureChild_ptr =
+        getBomStructure<BOM_CONTENT_CHILD> (lBomContentChild);
       assert (lBomStructureChild_ptr != NULL);
 
+      // Type for the parent Bom content
+      typedef typename BOM_CONTENT_CHILD::ParentBomContent_T PARENT_CONTENT_T;
+      
+      // Type for the parent Bom structure
+      typedef typename PARENT_CONTENT_T::BomStructure_T PARENT_STRUCTURE_T;
+      
       // Retrieve the parent structure object
-      BOM_STRUCTURE_PARENT* lBomStructureParent_ptr =
-        getBomStructure<BOM_STRUCTURE_PARENT,
-                        BOM_CONTENT_PARENT> (ioContentChild);
+      PARENT_STRUCTURE_T* lBomStructureParent_ptr =
+        getBomStructure<PARENT_CONTENT_T> (ioContentParent);
       assert (lBomStructureParent_ptr != NULL);
 
+      // Type for the children Bom structure
+      typedef typename PARENT_STRUCTURE_T::ChildrenBomList_T CHILDREN_LIST_T;
+      
+      // Type for the child Bom structure
+      typedef typename BOM_CONTENT_CHILD::BomStructure_T CHILD_STRUCTURE_T;
+      
       // Link both the parent and child structure objects
       const bool hasLinkBeenSuccessful = FacBomStructure::
-        linkBomParentWithBomChild<BOM_STRUCTURE_PARENT, BOM_STRUCTURE_CHILD,
-        BOM_KEY, BOM_CHILDREN_LIST>  (*lBomStructureParent_ptr,
-                                      *lBomStructureChild_ptr);
+        linkBomParentWithBomChild<CHILD_STRUCTURE_T,
+                                  CHILDREN_LIST_T> (*lBomStructureParent_ptr,
+                                                    *lBomStructureChild_ptr);
 
       if (hasLinkBeenSuccessful == false) {
         throw new MemoryAllocationException();
@@ -75,12 +83,13 @@ namespace STDAIR {
     /** Create a content object, given a key.
         <br>A structure object is created, under the hood, with the given key.
         That structure object then gets a pointer on the content object. */
-    template <typename BOM_KEY, typename BOM_STRUCTURE, typename BOM_CONTENT>
-    BOM_CONTENT& createInternal (const BOM_KEY& iKey) {
+    template <typename BOM_CONTENT>
+    BOM_CONTENT& createInternal (const typename BOM_CONTENT::BomKey_T& iKey) {
     
       // Create the structure/holder object
-      BOM_STRUCTURE& lBomStructure =
-        FacBomStructure::instance().create<BOM_KEY, BOM_STRUCTURE> (iKey);
+      typename BOM_CONTENT::BomStructure_T& lBomStructure =
+        FacBomStructure::instance().
+        create<typename BOM_CONTENT::BomKey_T> (iKey);
 
       // The created flight-date content (BomContent) object gets a constant
       // reference on its corresponding flight-date structure/holder object
@@ -102,14 +111,15 @@ namespace STDAIR {
     }
 
     /** Retrieve the structure object associated to the given content object. */
-    template <typename BOM_STRUCTURE, typename BOM_CONTENT>
-    BOM_STRUCTURE* getBomStructure (const BOM_CONTENT& iBomContent) {
-      BOM_STRUCTURE* oBomStructure_ptr = NULL;
+    template <typename BOM_CONTENT>
+    typename BOM_CONTENT::BomStructure_T* getBomStructure (const BOM_CONTENT& iBomContent) {
+      typename BOM_CONTENT::BomStructure_T* oBomStructure_ptr = NULL;
     
       StructureMapFromContent_T::iterator itBomStructure =
         _structureMap.find (&iBomContent);
       if (itBomStructure != _structureMap.end()) {
-        oBomStructure_ptr= dynamic_cast<BOM_STRUCTURE*> (itBomStructure->second);
+        oBomStructure_ptr =
+          dynamic_cast<typename BOM_CONTENT::BomStructure_T*> (itBomStructure->second);
       }
       return oBomStructure_ptr;
     }

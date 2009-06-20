@@ -40,11 +40,11 @@ namespace STDAIR {
     static FacBomStructure& instance();
     
     /** Create a structure object with the given key. */
-    template <typename BOM_KEY, typename BOM_STRUCTURE>
-    BOM_STRUCTURE& create (const BOM_KEY& iKey) {
-      BOM_STRUCTURE* aBomStructure_ptr = NULL;
+    template <typename BOM_KEY>
+    typename BOM_KEY::BomStructure_T& create (const BOM_KEY& iKey) {
+      typename BOM_KEY::BomStructure_T* aBomStructure_ptr = NULL;
 
-      aBomStructure_ptr = new BOM_STRUCTURE (iKey);
+      aBomStructure_ptr = new typename BOM_KEY::BomStructure_T (iKey);
       assert (aBomStructure_ptr != NULL);
       
       // The new object is added to the pool of structure objects
@@ -59,16 +59,18 @@ namespace STDAIR {
         <br>The child structure object is added to the dedicated list within
         the parent structure object.       .
         @return bool Whether or not the operation succeeded. */
-    template <typename BOM_STRUCTURE_PARENT, typename BOM_STRUCTURE_CHILD,
-              typename BOM_KEY_CHILD, typename BOM_CHILDREN_LIST>
-    static bool linkBomParentWithBomChild (BOM_STRUCTURE_PARENT& ioBomParent,
+    template <typename BOM_STRUCTURE_CHILD,
+              typename BOM_CHILDREN_LIST>
+    static bool linkBomParentWithBomChild (typename BOM_STRUCTURE_CHILD::ParentBomStructure_T& ioBomParent,
                                            BOM_STRUCTURE_CHILD& ioBomChild) {
 
+      
       // Set the parent of the child structure object
-      ioBomChild.setParent (ioBomParent);
+      ioBomChild._parent = &ioBomParent;
 
       // Retrieve the short key
-      const BOM_KEY_CHILD& lBomChildKey = ioBomChild.getKey();
+      const typename BOM_STRUCTURE_CHILD::BomKey_T& lBomChildKey =
+        ioBomChild.getKey();
       const std::string& lBomChildKeyStr = lBomChildKey.toString();
       
       // Insert the child structure object in the dedicated list

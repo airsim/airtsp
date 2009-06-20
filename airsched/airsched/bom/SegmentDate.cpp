@@ -11,8 +11,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const STDAIR::SegmentDate& iSegmentStructure)
-    : _segmentStructure (iSegmentStructure) {
+  SegmentDate::SegmentDate (const BomStructure_T& iSegmentStructure)
+    : _bomStructure (iSegmentStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -43,12 +43,12 @@ namespace AIRSCHED {
     
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeKey() const {
-    return _segmentStructure.describeKey();
+    return _bomStructure.describeKey();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string SegmentDate::describeShortKey() const {
-    return _segmentStructure.describeShortKey();
+    return _bomStructure.describeShortKey();
   }
 
 }

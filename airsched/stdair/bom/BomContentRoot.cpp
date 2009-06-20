@@ -12,7 +12,7 @@
 namespace STDAIR {
 
   // ////////////////////////////////////////////////////////////////////
-  BomContentRoot::BomContentRoot (const BomStructureRoot& iBomStructure)
+  BomContentRoot::BomContentRoot (const BomStructure_T& iBomStructure)
     : _bomStructure (iBomStructure) {
   }
 

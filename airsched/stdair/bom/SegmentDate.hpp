@@ -18,19 +18,29 @@ namespace STDAIR {
       in the AIRSCHED library). */
   class SegmentDate : public BomStructure {
     friend class FacBomStructure;
-  public:
+    friend class FacBomContent;
 
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef SegmentDateKey BomKey_T;
+
+    /** Definition allowing to retrieve the associated parent
+        BOM structure type. */
+    typedef FlightDate ParentBomStructure_T;
+
+  public:
     // /////////// Getters /////////////
     /** Get the (parent) FlightDate object. */
-    FlightDate* getParentPtr() const {
+    ParentBomStructure_T* getFlightDatePtr() const {
       return _parent;
     }
     
     /** Get the (parent) FlightDate object. */
-    FlightDate& getParent() const;
+    ParentBomStructure_T& getFlightDate() const;
     
     /** Get the segment-date key. */
-    const SegmentDateKey& getKey() const {
+    const BomKey_T& getKey() const {
       return _key;
     }
 
@@ -38,7 +48,7 @@ namespace STDAIR {
   private:
     // /////////// Setters /////////////
     /** Set the (parent) FlightDate object. */
-    void setParent (FlightDate& ioFlightDate) {
+    void setFlightDate (ParentBomStructure_T& ioFlightDate) {
       _parent = &ioFlightDate;
     }
 
@@ -70,7 +80,7 @@ namespace STDAIR {
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
-    SegmentDate (const SegmentDateKey&);
+    SegmentDate (const BomKey_T&);
 
     /** Destructor. */
     virtual ~SegmentDate();
@@ -78,10 +88,10 @@ namespace STDAIR {
   private:
     // Attributes
     /** Parent flight-date. */
-    FlightDate* _parent;
+    ParentBomStructure_T* _parent;
 
     /** The key of both the structure and content objects. */
-    SegmentDateKey _key;
+    BomKey_T _key;
   };
 
 }

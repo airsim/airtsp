@@ -10,10 +10,20 @@
 
 namespace STDAIR {
 
+  // Forward declarations
+  class FlightDate;
+
   /** Key of flight-date. */
   class FlightDateKey : public BomKey {
-  public:
+    friend class FacBomStructure;
+    friend class FacBomContent;
+    
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef FlightDate BomStructure_T;
 
+  public:
     // /////////// Construction ///////////
     /** Constructor. */
     FlightDateKey (const FlightNumber_T& iFlightNumber,

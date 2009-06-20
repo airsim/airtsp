@@ -15,11 +15,26 @@ namespace STDAIR {
   
 namespace AIRSCHED {
 
+  // Forward declarations
+  class FlightDate;
+
   /** Class representing the actual functional/business content for a
       segment-date. */
   class SegmentDate : public STDAIR::BomContent {
-    friend class FacSegmentDate;
     friend class STDAIR::FacBomContent;
+
+  private:
+    // Type definitions
+    /** Definition allowing to retrieve the associated parent
+        BOM content type. */
+    typedef FlightDate ParentBomContent_T;
+
+    /** Definition allowing to retrieve the associated BOM structure type. */
+    typedef STDAIR::SegmentDate BomStructure_T;
+
+    /** Definition allowing to retrieve the associated BOM key type. */
+    typedef STDAIR::SegmentDateKey BomKey_T;
+    
   public:
 
     // /////////// Display support methods /////////
@@ -48,7 +63,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
-    SegmentDate (const STDAIR::SegmentDate&);
+    SegmentDate (const BomStructure_T&);
 
     /** Destructor. */
     virtual ~SegmentDate();
@@ -56,7 +71,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** Reference structure. */
-    const STDAIR::SegmentDate& _segmentStructure;
+    const BomStructure_T& _bomStructure;
   };
 
 }

@@ -4,6 +4,6 @@
 // STDAIR
 #include <stdair/bom/BomContent.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
 }

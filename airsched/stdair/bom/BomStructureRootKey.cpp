@@ -6,7 +6,7 @@
 // STDAIR
 #include <stdair/bom/BomStructureRootKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void BomStructureRootKey::toStream (std::ostream& ioOut) const {

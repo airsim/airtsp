@@ -6,7 +6,7 @@
 // STDAIR
 #include <stdair/bom/FlightDateKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void FlightDateKey::toStream (std::ostream& ioOut) const {

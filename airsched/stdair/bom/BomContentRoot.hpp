@@ -7,7 +7,7 @@
 // STDAIR 
 #include <stdair/bom/BomContent.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declarations
   class BomStructureRoot;

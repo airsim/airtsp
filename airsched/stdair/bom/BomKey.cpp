@@ -4,6 +4,6 @@
 // STDAIR
 #include <stdair/bom/BomKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
 }

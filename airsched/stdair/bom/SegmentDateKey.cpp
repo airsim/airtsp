@@ -6,7 +6,7 @@
 // STDAIR
 #include <stdair/bom/SegmentDateKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void SegmentDateKey::toStream (std::ostream& ioOut) const {

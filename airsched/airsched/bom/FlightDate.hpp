@@ -8,7 +8,7 @@
 #include <stdair/bom/BomContent.hpp>
 
 // Forward declarations
-namespace STDAIR {
+namespace stdair {
   class BomContentRoot;
   class FlightDate;
   class FacBomContent;
@@ -18,20 +18,20 @@ namespace AIRSCHED {
 
   /** Class representing the actual functional/business content for a
       flight-date. */
-  class FlightDate : public STDAIR::BomContent {
-    friend class STDAIR::FacBomContent;
+  class FlightDate : public stdair::BomContent {
+    friend class stdair::FacBomContent;
 
   private:
     // Type definitions
     /** Definition allowing to retrieve the associated parent
         BOM content type. */
-    typedef STDAIR::BomContentRoot ParentBomContent_T;
+    typedef stdair::BomContentRoot ParentBomContent_T;
 
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef STDAIR::FlightDate BomStructure_T;
+    typedef stdair::FlightDate BomStructure_T;
 
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef STDAIR::FlightDateKey BomKey_T;
+    typedef stdair::FlightDateKey BomKey_T;
 
   public:
     // /////////// Display support methods /////////

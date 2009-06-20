@@ -12,7 +12,7 @@
 #include <sstream>
 #include <string>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declarations
   class BomContent;
@@ -80,7 +80,7 @@ template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
-            const STDAIR::BomStructure& iBom) {
+            const stdair::BomStructure& iBom) {
   /**
      string stream:
       - with same format
@@ -108,7 +108,7 @@ template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&
 operator>> (std::basic_istream<charT, traits>& ioIn,
-            STDAIR::BomStructure& ioBom) {
+            stdair::BomStructure& ioBom) {
   // Fill Bom object with input stream
   ioBom.fromStream (ioIn);
   return ioIn;

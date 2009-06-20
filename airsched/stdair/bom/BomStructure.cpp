@@ -4,6 +4,6 @@
 // STDAIR
 #include <stdair/bom/BomStructure.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
 }

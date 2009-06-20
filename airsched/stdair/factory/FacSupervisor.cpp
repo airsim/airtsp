@@ -8,7 +8,7 @@
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   FacSupervisor* FacSupervisor::_instance = NULL;
 

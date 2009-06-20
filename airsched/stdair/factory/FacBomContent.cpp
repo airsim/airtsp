@@ -11,7 +11,7 @@
 #include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 
-namespace STDAIR {
+namespace stdair {
   
   FacBomContent* FacBomContent::_instance = NULL;
 

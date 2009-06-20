@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 
-namespace STDAIR {
+namespace stdair {
 
   /** Base class for the keys of Business Object Model (BOM) layer.
       <br>Note that that key allows to differentiate two objects
@@ -48,7 +48,7 @@ template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
-            const STDAIR::BomKey& iBom) {
+            const stdair::BomKey& iBom) {
   /**
      string stream:
       - with same format
@@ -76,7 +76,7 @@ template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&
 operator>> (std::basic_istream<charT, traits>& ioIn,
-            STDAIR::BomKey& ioBom) {
+            stdair::BomKey& ioBom) {
   // Fill Bom object with input stream
   ioBom.fromStream (ioIn);
   return ioIn;

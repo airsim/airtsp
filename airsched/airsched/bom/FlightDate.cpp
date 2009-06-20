@@ -39,15 +39,15 @@ namespace AIRSCHED {
     oStr << describeShortKey() << std::endl;
 
     // Retrieve the list of flight-date holders
-    const STDAIR::SegmentDateList_T& lSegmentList =
+    const stdair::SegmentDateList_T& lSegmentList =
       _flightStructure.getSegmentList();
 
     // Browse the tree structure, i.e., the segment-dates
     unsigned short idx = 0;
-    for (STDAIR::SegmentDateList_T::const_iterator itSegment =
+    for (stdair::SegmentDateList_T::const_iterator itSegment =
            lSegmentList.begin();
          itSegment != lSegmentList.end(); ++itSegment, ++idx) {
-      const STDAIR::SegmentDate* lSegmentStructure_ptr = itSegment->second;
+      const stdair::SegmentDate* lSegmentStructure_ptr = itSegment->second;
       assert (lSegmentStructure_ptr != NULL);
 
       // Get the content out of the structure/holder

@@ -9,7 +9,7 @@
 #include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/SegmentDateList.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declaration
   class BomStructureRoot;

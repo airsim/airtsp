@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 
-namespace STDAIR {
+namespace stdair {
 
   /** Base class for the Business Object Model (BOM) layer. */
   class BomContent {
@@ -56,7 +56,7 @@ template <class charT, class traits>
 inline
 std::basic_ostream<charT, traits>&
 operator<< (std::basic_ostream<charT, traits>& ioOut,
-            const STDAIR::BomContent& iBom) {
+            const stdair::BomContent& iBom) {
   /**
      string stream:
       - with same format
@@ -84,7 +84,7 @@ template <class charT, class traits>
 inline
 std::basic_istream<charT, traits>&
 operator>> (std::basic_istream<charT, traits>& ioIn,
-            STDAIR::BomContent& ioBom) {
+            stdair::BomContent& ioBom) {
   // Fill Bom object with input stream
   ioBom.fromStream (ioIn);
   return ioIn;

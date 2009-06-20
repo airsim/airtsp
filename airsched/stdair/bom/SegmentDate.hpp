@@ -8,7 +8,7 @@
 #include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/SegmentDateKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declaration
   class FlightDate;

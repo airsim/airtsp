@@ -10,7 +10,7 @@
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/factory/FacBomStructure.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declarations
   class BomStructure;
@@ -23,8 +23,8 @@ namespace STDAIR {
   public:
 
     /** Define the list (pool) of Bom objects. */
-    typedef std::map<const STDAIR::BomContent*,
-                     STDAIR::BomStructure*> StructureMapFromContent_T;
+    typedef std::map<const stdair::BomContent*,
+                     stdair::BomStructure*> StructureMapFromContent_T;
 
   public:
     /** Create the root of the BOM tree, i.e., a pair of linked

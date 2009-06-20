@@ -10,7 +10,7 @@
 #include <vector>
 #include <list>
 
-namespace STDAIR {
+namespace stdair {
 
   /** Forward declarations. */
   class SegmentDate;

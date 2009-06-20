@@ -7,7 +7,7 @@
 // STL
 #include <vector>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declarations
   class FacBomStructure;

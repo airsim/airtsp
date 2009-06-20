@@ -6,7 +6,7 @@
 // STDAIR 
 #include <stdair/bom/FlightDate.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate (const BomKey_T& iKey)

@@ -9,7 +9,7 @@
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/FlightDateList.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   BomContentRoot::BomContentRoot (const BomStructure_T& iBomStructure)

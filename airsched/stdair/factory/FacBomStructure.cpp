@@ -8,7 +8,7 @@
 #include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/factory/FacBomStructure.hpp>
 
-namespace STDAIR {
+namespace stdair {
   
   FacBomStructure* FacBomStructure::_instance = NULL;
 

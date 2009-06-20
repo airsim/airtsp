@@ -9,7 +9,7 @@
 #include <stdair/bom/BomStructureRootKey.hpp>
 #include <stdair/bom/FlightDateList.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declaration
   //

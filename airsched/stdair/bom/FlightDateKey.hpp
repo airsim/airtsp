@@ -8,7 +8,7 @@
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomKey.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // Forward declarations
   class FlightDate;

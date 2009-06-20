@@ -6,7 +6,7 @@
 // STDAIR 
 #include <stdair/bom/SegmentDate.hpp>
 
-namespace STDAIR {
+namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   SegmentDate::SegmentDate (const BomKey_T& iKey)

@@ -31,7 +31,7 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void FacBomStructure::clean() {
-    for (BomPool_T::iterator itBom = _structurePool.begin();
+    for (BomStructurePool_T::iterator itBom = _structurePool.begin();
 	 itBom != _structurePool.end(); itBom++) {
       BomStructure* currentBom_ptr = *itBom;
       assert (currentBom_ptr != NULL);

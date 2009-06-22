@@ -20,7 +20,7 @@ namespace stdair {
   public:
 
     /** Define the list (pool) of Bom objects. */
-    typedef std::vector<BomStructure*> BomPool_T;
+    typedef std::vector<BomStructure*> BomStructurePool_T;
 
     /** Destructor. */
     virtual ~FacBomStructure();
@@ -90,7 +90,7 @@ namespace stdair {
     
   private:
     /** List of instantiated Business Objects*/
-    BomPool_T _structurePool;
+    BomStructurePool_T _structurePool;
   };
 }
 #endif // __STDAIR_FAC_FACBOMSTRUCTURE_HPP

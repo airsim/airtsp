@@ -1,70 +1,58 @@
-#ifndef __STDAIR_BOM_FLIGHTDATE_HPP
-#define __STDAIR_BOM_FLIGHTDATE_HPP
+#ifndef __STDAIR_BOM_LEGDATE_HPP
+#define __STDAIR_BOM_LEGDATE_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/FlightDateKey.hpp>
-#include <stdair/bom/BomStructureList.hpp>
+#include <stdair/bom/LegDateKey.hpp>
 
 namespace stdair {
 
   // Forward declaration
-  class BomStructureRoot;
+  class FlightDate;
   
   /** Wrapper class aimed at holding the actual content, modeled
-      by an external specific FlightDate class (for instance,
+      by an external specific LegDate class (for instance,
       in the AIRSCHED library). */
-  class FlightDate : public BomStructure {
+  class LegDate : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
 
   private:
     // Type definitions
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef FlightDateKey BomKey_T;
+    typedef LegDateKey BomKey_T;
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
-    typedef BomStructureRoot ParentBomStructure_T;
-
-    /** Definition allowing to retrieve the associated children BOM type. */
-    typedef BomStructureList_T ChildrenBomList_T;
+    typedef FlightDate ParentBomStructure_T;
 
   public:
     // /////////// Getters /////////////
-    /** Get the (parent) BomStructureRoot object. */
-    ParentBomStructure_T* getBomStructureRootPtr() const {
+    /** Get the (parent) FlightDate object. */
+    ParentBomStructure_T* getFlightDatePtr() const {
       return _parent;
     }
     
-    /** Get the (parent) BomStructureRoot object. */
-    ParentBomStructure_T& getBomStructureRoot() const;
+    /** Get the (parent) FlightDate object. */
+    ParentBomStructure_T& getFlightDate() const;
     
-    /** Get the flight-date key. */
+    /** Get the leg-date key. */
     const BomKey_T& getKey() const {
       return _key;
     }
 
-    /** Get the list of leg-dates and segment-dates. */
-    const BomStructureList_T& getChildrenList() const {
-      return _childrenList1;
-    }
-    
+
   private:
     // /////////// Setters /////////////
-    /** Set the (parent) FlightDate object.
-        <br>IMPORTANT NOTE: For now, that class has no parent.
-        That attribute (_parent) and method exist only for the
-        template methods to compile correctly, but that code should never
-        be called. So, obviously, do not use that method. */
-    void setBomStructureRoot (ParentBomStructure_T& ioParent) {
-      _parent = &ioParent;
+    /** Set the (parent) FlightDate object. */
+    void setFlightDate (ParentBomStructure_T& ioFlightDate) {
+      _parent = &ioFlightDate;
     }
 
-
+    
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -90,25 +78,21 @@ namespace stdair {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    FlightDate ();
-    FlightDate (const FlightDate&);
-    FlightDate (const BomKey_T&);
+    LegDate ();
+    LegDate (const LegDate&);
+    LegDate (const BomKey_T&);
 
     /** Destructor. */
-    virtual ~FlightDate();
+    virtual ~LegDate();
 
   private:
     // Attributes
-    /** Parent root. */
+    /** Parent flight-date. */
     ParentBomStructure_T* _parent;
 
     /** The key of both the structure and content objects. */
     BomKey_T _key;
-    
-    /** List of leg-dates and segment-dates. */
-    BomStructureList_T _childrenList1;
   };
 
 }
-#endif // __STDAIR_BOM_FLIGHTDATE_HPP
-
+#endif // __STDAIR_BOM_LEGDATE_HPP

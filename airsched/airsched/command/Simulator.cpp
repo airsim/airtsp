@@ -8,11 +8,13 @@
 // STDAIR
 #include <stdair/bom/BomStructureRoot.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightDate.hpp>
+#include <airsched/bom/LegDate.hpp>
 #include <airsched/bom/SegmentDate.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/service/Logger.hpp>
@@ -54,8 +56,6 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
-    // SegmentDate& lLHRSYDSegment =
-    // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRSYDSegment);
 
@@ -68,8 +68,6 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
-    // SegmentDate& lLHRBKKSegment =
-    // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRBKKSegment);
 
@@ -81,13 +79,32 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
-    // SegmentDate& lBKKSYDSegment =
-    // FacSegmentDate::instance().create (lFlightDate, lSegmentDateKey);
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lBKKSYDSegment);
 
     
-    // Step 0.3: Initialisation results
+    // Step 0.3: Leg-date level
+    // Create a first LegDate (LHR)
+    stdair::LegDateKey lLegDateKey (lLHR);
+
+    LegDate& lLHRLeg =
+      stdair::FacBomContent::instance().create<LegDate> (lFlightDate,
+                                                         lLegDateKey);
+
+    // Display the leg-date
+    AIRSCHED_LOG_DEBUG ("LegDate: " << lLHRLeg);
+    
+    // Create a second LegDate (BKK)
+    lLegDateKey = stdair::LegDateKey (lBKK);
+
+    LegDate& lBKKLeg =
+      stdair::FacBomContent::instance().create<LegDate> (lFlightDate,
+                                                         lLegDateKey);
+
+    // Display the leg-date
+    AIRSCHED_LOG_DEBUG ("LegDate: " << lBKKLeg);
+    
+    // Step 0.4: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full FlightDate: " << lFlightDate);
   }

@@ -6,8 +6,8 @@
 // STDAIR
 #include <stdair/bom/BomStructureRoot.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
-#include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/FlightDateList.hpp>
+#include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/InventoryList.hpp>
 
 namespace stdair {
 
@@ -36,21 +36,21 @@ namespace stdair {
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
 
-    // Retrieve the list of flight-date holders
-    const FlightDateList_T& lFlightList = _bomStructure.getFlightList();
+    // Retrieve the list of inventory holders
+    const InventoryList_T& lInventoryList = _bomStructure.getInventoryList();
 
-    // Browse the tree structure, i.e., the flight-dates
+    // Browse the tree structure, i.e., the inventories
     unsigned short idx = 0;
-    for (FlightDateList_T::const_iterator itFlight = lFlightList.begin();
-         itFlight != lFlightList.end(); ++itFlight, ++idx) {
-      const FlightDate* lFlightStructure_ptr = itFlight->second;
-      assert (lFlightStructure_ptr != NULL);
+    for (InventoryList_T::const_iterator itInventory = lInventoryList.begin();
+         itInventory != lInventoryList.end(); ++itInventory, ++idx) {
+      const Inventory* lInventoryStructure_ptr = itInventory->second;
+      assert (lInventoryStructure_ptr != NULL);
 
       // Get the content out of the structure/holder
-      const FlightDate& lFlightDate =
-        lFlightStructure_ptr->getContent<FlightDate>();
+      const Inventory& lInventory =
+        lInventoryStructure_ptr->getContent<Inventory>();
 
-      oStr << "[" << idx << "]: " << lFlightDate.toString() << std::endl;
+      oStr << "[" << idx << "]: " << lInventory.toString() << std::endl;
     }
     
     return oStr.str();

@@ -49,6 +49,9 @@ namespace stdair {
   }
 
   // //////// Type definitions /////////
+  /** Define the type for airline codes. */
+  typedef std::string AirlineCode_T;
+
   /** Define the type for flight numbers. */
   typedef unsigned int FlightNumber_T;
   

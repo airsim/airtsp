@@ -1,5 +1,5 @@
-#ifndef __AIRSCHED_BOM_FLIGHTDATE_HPP
-#define __AIRSCHED_BOM_FLIGHTDATE_HPP
+#ifndef __AIRSCHED_BOM_INVENTORY_HPP
+#define __AIRSCHED_BOM_INVENTORY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -9,31 +9,29 @@
 
 // Forward declarations
 namespace stdair {
-  class FlightDate;
+  class BomContentRoot;
+  class Inventory;
   class FacBomContent;
 }
   
 namespace AIRSCHED {
 
-  // Forward declarations
-  class Inventory;
-  
-  /** Class representing the actual functional/business content for a
-      flight-date. */
-  class FlightDate : public stdair::BomContent {
+  /** Class representing the actual functional/business content for
+      an airline inventory. */
+  class Inventory : public stdair::BomContent {
     friend class stdair::FacBomContent;
 
   private:
     // Type definitions
     /** Definition allowing to retrieve the associated parent
         BOM content type. */
-    typedef Inventory ParentBomContent_T;
+    typedef stdair::BomContentRoot ParentBomContent_T;
 
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::FlightDate BomStructure_T;
+    typedef stdair::Inventory BomStructure_T;
 
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef stdair::FlightDateKey BomKey_T;
+    typedef stdair::InventoryKey BomKey_T;
 
   public:
     // /////////// Display support methods /////////
@@ -60,19 +58,19 @@ namespace AIRSCHED {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    FlightDate ();
-    FlightDate (const FlightDate&);
-    FlightDate (const BomStructure_T&);
+    Inventory ();
+    Inventory (const Inventory&);
+    Inventory (const BomStructure_T&);
 
     /** Destructor. */
-    virtual ~FlightDate();
+    virtual ~Inventory();
 
   private:
     // Attributes
     /** Reference structure. */
-    const BomStructure_T& _flightStructure;
+    const BomStructure_T& _inventoryStructure;
   };
 
 }
-#endif // __AIRSCHED_BOM_FLIGHTDATE_HPP
+#endif // __AIRSCHED_BOM_INVENTORY_HPP
 

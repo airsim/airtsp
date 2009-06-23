@@ -1,46 +1,65 @@
-#ifndef __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
-#define __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
+#ifndef __STDAIR_BOM_INVENTORY_HPP
+#define __STDAIR_BOM_INVENTORY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureRootKey.hpp>
-#include <stdair/bom/InventoryList.hpp>
+#include <stdair/bom/InventoryKey.hpp>
+#include <stdair/bom/BomStructureList.hpp>
 
 namespace stdair {
 
   // Forward declaration
-  //
+  class BomStructureRoot;
   
   /** Wrapper class aimed at holding the actual content, modeled
-      by a specific BomContentRoot class. */
-  class BomStructureRoot : public BomStructure {
+      by an external specific Inventory class (for instance,
+      in the AIRSCHED library). */
+  class Inventory : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
 
   private:
     // Type definitions
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef BomStructureRootKey BomKey_T;
+    typedef InventoryKey BomKey_T;
+
+    /** Definition allowing to retrieve the associated parent
+        BOM structure type. */
+    typedef BomStructureRoot ParentBomStructure_T;
 
     /** Definition allowing to retrieve the associated children BOM type. */
-    typedef InventoryList_T ChildrenBomList_T;
-    
-  public:
+    typedef BomStructureList_T ChildrenBomList_T;
 
+  public:
     // /////////// Getters /////////////
-    /** Get the BomStructureRoot key. */
+    /** Get the (parent) BomStructureRoot object. */
+    ParentBomStructure_T* getBomStructureRootPtr() const {
+      return _parent;
+    }
+    
+    /** Get the (parent) BomStructureRoot object. */
+    ParentBomStructure_T& getBomStructureRoot() const;
+    
+    /** Get the flight-date key. */
     const BomKey_T& getKey() const {
       return _key;
     }
 
-    /** Get the list of inventories. */
-    const ChildrenBomList_T& getInventoryList() const {
+    /** Get the list of leg-dates and segment-dates. */
+    const BomStructureList_T& getChildrenList() const {
       return _childrenList;
     }
     
+  private:
+    // /////////// Setters /////////////
+    /** Set the (parent) Inventory object. */
+    void setBomStructureRoot (ParentBomStructure_T& ioParent) {
+      _parent = &ioParent;
+    }
+
 
   public:
     // /////////// Display support methods /////////
@@ -67,22 +86,25 @@ namespace stdair {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    BomStructureRoot ();
-    BomStructureRoot (const BomStructureRoot&);
-    BomStructureRoot (const BomKey_T&);
+    Inventory ();
+    Inventory (const Inventory&);
+    Inventory (const BomKey_T&);
 
     /** Destructor. */
-    virtual ~BomStructureRoot();
+    virtual ~Inventory();
 
   private:
     // Attributes
+    /** Parent root. */
+    ParentBomStructure_T* _parent;
+
     /** The key of both the structure and content objects. */
     BomKey_T _key;
     
-    /** List of inventories. */
-    ChildrenBomList_T _childrenList;
+    /** List of flight-dates. */
+    BomStructureList_T _childrenList;
   };
 
 }
-#endif // __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
+#endif // __STDAIR_BOM_INVENTORY_HPP
 

@@ -4,46 +4,46 @@
 // C
 #include <assert.h>
 // STDAIR 
-#include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/Inventory.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const BomKey_T& iKey)
+  Inventory::Inventory (const BomKey_T& iKey)
     : _parent (NULL), _key (iKey) {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::~FlightDate () {
+  Inventory::~Inventory () {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  FlightDate::ParentBomStructure_T& FlightDate::getInventory() const {
+  Inventory::ParentBomStructure_T& Inventory::getBomStructureRoot() const {
     assert (_parent != NULL);
     return *_parent;
   }
   
   // //////////////////////////////////////////////////////////////////////
-  void FlightDate::toStream (std::ostream& ioOut) const {
+  void Inventory::toStream (std::ostream& ioOut) const {
     ioOut << toString() << std::endl;
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FlightDate::fromStream (std::istream& ioIn) {
+  void Inventory::fromStream (std::istream& ioIn) {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  std::string FlightDate::toString() const {
+  std::string Inventory::toString() const {
     return describeKey();
   }
     
   // //////////////////////////////////////////////////////////////////////
-  const std::string FlightDate::describeKey() const {
+  const std::string Inventory::describeKey() const {
     return _key.toString();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  const std::string FlightDate::describeShortKey() const {
+  const std::string Inventory::describeShortKey() const {
     return _key.toString();
   }
 

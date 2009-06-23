@@ -12,7 +12,7 @@
 namespace stdair {
 
   // Forward declaration
-  class BomStructureRoot;
+  class Inventory;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific FlightDate class (for instance,
@@ -28,20 +28,20 @@ namespace stdair {
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
-    typedef BomStructureRoot ParentBomStructure_T;
+    typedef Inventory ParentBomStructure_T;
 
     /** Definition allowing to retrieve the associated children BOM type. */
     typedef BomStructureList_T ChildrenBomList_T;
 
   public:
     // /////////// Getters /////////////
-    /** Get the (parent) BomStructureRoot object. */
-    ParentBomStructure_T* getBomStructureRootPtr() const {
+    /** Get the (parent) Inventory object. */
+    ParentBomStructure_T* getInventoryPtr() const {
       return _parent;
     }
     
-    /** Get the (parent) BomStructureRoot object. */
-    ParentBomStructure_T& getBomStructureRoot() const;
+    /** Get the (parent) Inventory object. */
+    ParentBomStructure_T& getInventory() const;
     
     /** Get the flight-date key. */
     const BomKey_T& getKey() const {
@@ -50,16 +50,12 @@ namespace stdair {
 
     /** Get the list of leg-dates and segment-dates. */
     const BomStructureList_T& getChildrenList() const {
-      return _childrenList1;
+      return _childrenList;
     }
     
   private:
     // /////////// Setters /////////////
-    /** Set the (parent) FlightDate object.
-        <br>IMPORTANT NOTE: For now, that class has no parent.
-        That attribute (_parent) and method exist only for the
-        template methods to compile correctly, but that code should never
-        be called. So, obviously, do not use that method. */
+    /** Set the (parent) FlightDate object. */
     void setBomStructureRoot (ParentBomStructure_T& ioParent) {
       _parent = &ioParent;
     }
@@ -106,7 +102,7 @@ namespace stdair {
     BomKey_T _key;
     
     /** List of leg-dates and segment-dates. */
-    BomStructureList_T _childrenList1;
+    BomStructureList_T _childrenList;
   };
 
 }

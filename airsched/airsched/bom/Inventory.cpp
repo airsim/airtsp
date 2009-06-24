@@ -6,6 +6,7 @@
 // STDAIR
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/PrintBomContent.hpp>
 // AIRSCHED 
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
@@ -45,20 +46,13 @@ namespace AIRSCHED {
     // Browse the tree structure, i.e., the flight-dates
     oStr << "FlightDates:" << std::endl;
     unsigned short idx = 0;
+    stdair::PrintBomContent lPrintBomContent (oStr, idx);
+    
     for (stdair::BomStructureList_T::const_iterator itBomStructure =
            lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure, ++idx) {
-      const stdair::BomStructure* lBomStructure_ptr = itBomStructure->second;
-
-      const stdair::FlightDate* lFlightStructure_ptr =
-        dynamic_cast<const stdair::FlightDate*> (lBomStructure_ptr);
-      assert (lFlightStructure_ptr != NULL);
-
-      // Get the content out of the structure/holder
-      const FlightDate& lFlightDate =
-        lFlightStructure_ptr->getContent<FlightDate>();
-
-      oStr << "[" << idx << "]: " << lFlightDate.toString();
+         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
+    lPrintBomContent.
+        printBomContent<stdair::FlightDate, FlightDate> (*itBomStructure);  
     }
     
     return oStr.str();

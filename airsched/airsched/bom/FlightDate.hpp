@@ -4,6 +4,8 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// STDAIR
+#include <stdair/bom/BomStructureList.hpp>
 // AIRSCHED 
 #include <stdair/bom/BomContent.hpp>
 
@@ -11,6 +13,7 @@
 namespace stdair {
   class FlightDate;
   class FacBomContent;
+  class BomStructure;
 }
   
 namespace AIRSCHED {
@@ -45,7 +48,7 @@ namespace AIRSCHED {
         @param istream& the input stream. */
     void fromStream (std::istream& ioIn);
 
-   /** Get the serialised version of the Business Object. */
+    /** Get the serialised version of the Business Object. */
     std::string toString() const;
     
     /** Get a string describing the whole key (differentiating two objects

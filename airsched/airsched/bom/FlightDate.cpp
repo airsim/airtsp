@@ -3,10 +3,14 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
+// STL
+#include <iostream>
+#include <algorithm>
 // STDAIR
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/PrintBomContent.hpp>
 // AIRSCHED 
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/LegDate.hpp>
@@ -32,11 +36,11 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void FlightDate::fromStream (std::istream& ioIn) {
   }
-
+  
   // //////////////////////////////////////////////////////////////////////
   std::string FlightDate::toString() const {
     std::ostringstream oStr;
-
+    
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
 
@@ -47,23 +51,16 @@ namespace AIRSCHED {
     // Browse the tree structure, i.e., the segment-dates
     oStr << "SegmentDates:" << std::endl;
     unsigned short idx = 0;
+    stdair::PrintBomContent lPrintBomContent (oStr, idx);
+
+   //  for_each (lBomStructureList.begin(), lBomStructureList.end(),
+//               lPrintBomContent.printBomContent<stdair::SegmentDate,SegmentDate>);
+    
     for (stdair::BomStructureList_T::const_iterator itBomStructure =
            lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure, ++idx) {
-      const stdair::BomStructure* lBomStructure_ptr = itBomStructure->second;
-
-      const stdair::SegmentDate* lSegmentStructure_ptr =
-        dynamic_cast<const stdair::SegmentDate*> (lBomStructure_ptr);
-      if (lSegmentStructure_ptr == NULL) {
-        continue;
-      }
-      assert (lSegmentStructure_ptr != NULL);
-
-      // Get the content out of the structure/holder
-      const SegmentDate& lSegmentDate =
-        lSegmentStructure_ptr->getContent<SegmentDate>();
-
-      oStr << "[" << idx << "]: " << lSegmentDate.toString();
+         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
+      lPrintBomContent.
+        printBomContent<stdair::SegmentDate, SegmentDate> (*itBomStructure);
     }
     
     // Browse the tree structure, i.e., the leg-dates
@@ -71,21 +68,9 @@ namespace AIRSCHED {
     idx = 0;
     for (stdair::BomStructureList_T::const_iterator itBomStructure =
            lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure, ++idx) {
-      const stdair::BomStructure* lBomStructure_ptr = itBomStructure->second;
-
-      const stdair::LegDate* lLegStructure_ptr =
-        dynamic_cast<const stdair::LegDate*> (lBomStructure_ptr);
-      if (lLegStructure_ptr == NULL) {
-        continue;
-      }
-      assert (lLegStructure_ptr != NULL);
-
-      // Get the content out of the structure/holder
-      const LegDate& lLegDate =
-        lLegStructure_ptr->getContent<LegDate>();
-
-      oStr << "[" << idx << "]: " << lLegDate.toString();
+         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
+      lPrintBomContent.
+        printBomContent<stdair::LegDate, LegDate> (*itBomStructure);
     }
 
     return oStr.str();

@@ -292,7 +292,8 @@ AC_CONFIG_FILES(
 	airsched/config/Makefile
 	airsched/batches/Makefile
 	test/Makefile
-	test/com/Makefile)
+	test/com/Makefile
+	test/architecture/Makefile)
 AC_OUTPUT
 
 echo "

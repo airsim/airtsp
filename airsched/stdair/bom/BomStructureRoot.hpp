@@ -6,14 +6,16 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/BomStructureList.hpp>
 #include <stdair/bom/BomStructureRootKey.hpp>
-#include <stdair/bom/InventoryList.hpp>
+// MPL
+#include <boost/mpl/vector.hpp>
 
 namespace stdair {
 
   // Forward declaration
-  //
-  
+  class Inventory;
+
   /** Wrapper class aimed at holding the actual content, modeled
       by a specific BomContentRoot class. */
   class BomStructureRoot : public BomStructure {
@@ -25,8 +27,11 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef BomStructureRootKey BomKey_T;
 
-    /** Definition allowing to retrieve the associated children BOM type. */
-    typedef InventoryList_T ChildrenBomList_T;
+    /** Definition allowing to retrieve the associated children BOM structure. */
+    typedef BomStructureOrderedList_T ChildrenBomList_T;
+
+    /** Definition allowing to retrieve the associated children type. */
+    typedef boost::mpl::vector <Inventory> ChildrenBomTypeList_T;
     
   public:
 

@@ -6,13 +6,17 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/FlightDateKey.hpp>
 #include <stdair/bom/BomStructureList.hpp>
+#include <stdair/bom/FlightDateKey.hpp>
+// MPL
+#include <boost/mpl/vector.hpp>
 
 namespace stdair {
 
   // Forward declaration
   class Inventory;
+  class SegmentDate;
+  class LegDate;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific FlightDate class (for instance,
@@ -30,9 +34,12 @@ namespace stdair {
         BOM structure type. */
     typedef Inventory ParentBomStructure_T;
 
-    /** Definition allowing to retrieve the associated children BOM type. */
-    typedef BomStructureList_T ChildrenBomList_T;
+    /** Definition allowing to retrieve the associated children BOM structure. */
+    typedef BomStructureOrderedList_T ChildrenBomList_T;
 
+    /** Definition allowing to retrieve the associated children type. */
+    typedef boost::mpl::vector<SegmentDate, LegDate> ChildrenBomTypeList_T;
+    
   public:
     // /////////// Getters /////////////
     /** Get the (parent) Inventory object. */
@@ -49,7 +56,7 @@ namespace stdair {
     }
 
     /** Get the list of leg-dates and segment-dates. */
-    const BomStructureList_T& getChildrenList() const {
+    const BomStructureOrderedList_T& getChildrenList() const {
       return _childrenList;
     }
     
@@ -102,7 +109,7 @@ namespace stdair {
     BomKey_T _key;
     
     /** List of leg-dates and segment-dates. */
-    BomStructureList_T _childrenList;
+    ChildrenBomList_T _childrenList;
   };
 
 }

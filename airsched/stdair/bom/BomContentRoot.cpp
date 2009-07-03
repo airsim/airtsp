@@ -36,22 +36,22 @@ namespace stdair {
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
 
-    // Retrieve the list of inventory holders
-    const InventoryList_T& lInventoryList = _bomStructure.getInventoryList();
+    // // Retrieve the list of inventory holders
+//     const InventoryList_T& lInventoryList = _bomStructure.getInventoryList();
 
-    // Browse the tree structure, i.e., the inventories
-    unsigned short idx = 0;
-    for (InventoryList_T::const_iterator itInventory = lInventoryList.begin();
-         itInventory != lInventoryList.end(); ++itInventory, ++idx) {
-      const Inventory* lInventoryStructure_ptr = itInventory->second;
-      assert (lInventoryStructure_ptr != NULL);
+//     // Browse the tree structure, i.e., the inventories
+//     unsigned short idx = 0;
+//     for (InventoryList_T::const_iterator itInventory = lInventoryList.begin();
+//          itInventory != lInventoryList.end(); ++itInventory, ++idx) {
+//       const Inventory* lInventoryStructure_ptr = itInventory->second;
+//       assert (lInventoryStructure_ptr != NULL);
 
-      // Get the content out of the structure/holder
-      const Inventory& lInventory =
-        lInventoryStructure_ptr->getContent<Inventory>();
+//       // Get the content out of the structure/holder
+//       const Inventory& lInventory =
+//         lInventoryStructure_ptr->getContent<Inventory>();
 
-      oStr << "[" << idx << "]: " << lInventory.toString() << std::endl;
-    }
+//       oStr << "[" << idx << "]: " << lInventory.toString() << std::endl;
+//     }
     
     return oStr.str();
   }

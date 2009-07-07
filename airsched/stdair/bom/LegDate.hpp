@@ -6,7 +6,10 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/BomStructureList.hpp>
 #include <stdair/bom/LegDateKey.hpp>
+// MPL
+#include <boost/mpl/vector.hpp>
 
 namespace stdair {
 
@@ -28,6 +31,12 @@ namespace stdair {
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef FlightDate ParentBomStructure_T;
+
+    /** Definition allowing to retrieve the associated children BOM structure. */
+    typedef BomStructureOrderedList_T ChildrenBomList_T;
+
+     /** Definition allowing to retrieve the associated children type. */
+    typedef boost::mpl::vector <> ChildrenBomTypeList_T;
 
   public:
     // /////////// Getters /////////////
@@ -92,6 +101,9 @@ namespace stdair {
 
     /** The key of both the structure and content objects. */
     BomKey_T _key;
+
+    /** List of children. */
+    ChildrenBomList_T _childrenList;
   };
 
 }

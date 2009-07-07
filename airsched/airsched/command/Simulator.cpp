@@ -45,7 +45,7 @@ namespace AIRSCHED {
     
     // Display the inventory
     AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());
-
+    
     // Step 0.2: Flight-date level
     // Create a FlightDate (BA15/10-JUN-2010)
     const stdair::FlightNumber_T lFlightNumber = 15;
@@ -59,7 +59,6 @@ namespace AIRSCHED {
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate.toString());
 
-    
     // Step 0.3: Segment-date level
     // Create a first SegmentDate (LHR-SYD)
     const stdair::AirportCode_T lLHR ("LHR");
@@ -121,6 +120,7 @@ namespace AIRSCHED {
     // Step 0.5: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
+    
   }
   
 }

@@ -44,34 +44,31 @@ namespace AIRSCHED {
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
 
-    // Retrieve the list of flight-date holders
-    const stdair::BomStructureList_T& lBomStructureList =
-      _flightStructure.getChildrenList();
+//     // Retrieve the list of flight-date holders
+//     const stdair::BomStructureList_T& lBomStructureList =
+//       _flightStructure.getChildrenList();
 
-    // Browse the tree structure, i.e., the segment-dates
-    oStr << "SegmentDates:" << std::endl;
-    unsigned short idx = 0;
-    stdair::PrintBomContent lPrintBomContent (oStr, idx);
-
-   //  for_each (lBomStructureList.begin(), lBomStructureList.end(),
-//               lPrintBomContent.printBomContent<stdair::SegmentDate,SegmentDate>);
+//     // Browse the tree structure, i.e., the segment-dates
+//     oStr << "SegmentDates:" << std::endl;
+//     unsigned short idx = 0;
+//     stdair::PrintBomContent lPrintBomContent (oStr, idx);
     
-    for (stdair::BomStructureList_T::const_iterator itBomStructure =
-           lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
-      lPrintBomContent.
-        printBomContent<stdair::SegmentDate, SegmentDate> (*itBomStructure);
-    }
+//     for (stdair::BomStructureList_T::const_iterator itBomStructure =
+//            lBomStructureList.begin();
+//          itBomStructure != lBomStructureList.end(); ++itBomStructure) {
+//       lPrintBomContent.
+//         printBomContent<stdair::SegmentDate, SegmentDate> (*itBomStructure);
+//     }
     
-    // Browse the tree structure, i.e., the leg-dates
-    oStr << "LegDates:" << std::endl;
-    idx = 0;
-    for (stdair::BomStructureList_T::const_iterator itBomStructure =
-           lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
-      lPrintBomContent.
-        printBomContent<stdair::LegDate, LegDate> (*itBomStructure);
-    }
+//     // Browse the tree structure, i.e., the leg-dates
+//     oStr << "LegDates:" << std::endl;
+//     idx = 0;
+//     for (stdair::BomStructureList_T::const_iterator itBomStructure =
+//            lBomStructureList.begin();
+//          itBomStructure != lBomStructureList.end(); ++itBomStructure) {
+//       lPrintBomContent.
+//         printBomContent<stdair::LegDate, LegDate> (*itBomStructure);
+//     }
 
     return oStr.str();
   }

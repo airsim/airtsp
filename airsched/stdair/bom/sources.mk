@@ -32,7 +32,5 @@ bom_cc_sources = \
 				$(top_srcdir)/stdair/bom/FlightDate.cpp \
 				$(top_srcdir)/stdair/bom/LegDate.cpp \
 				$(top_srcdir)/stdair/bom/SegmentDate.cpp \
-				$(top_srcdir)/stdair/bom/BomChildrenHolder.cpp \
 				$(top_srcdir)/stdair/bom/BomContent.cpp \
-				$(top_srcdir)/stdair/bom/PrintBomContent.cpp \
 				$(top_srcdir)/stdair/bom/BomContentRoot.cpp

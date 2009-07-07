@@ -39,22 +39,12 @@ namespace AIRSCHED {
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
 
-    // Retrieve the list of flight-date holders
-    const stdair::BomStructureList_T& lBomStructureList =
-      _inventoryStructure.getChildrenList();
-
     // Browse the tree structure, i.e., the flight-dates
     oStr << "FlightDates:" << std::endl;
     unsigned short idx = 0;
-    stdair::PrintBomContent lPrintBomContent (oStr, idx);
-    
-    for (stdair::BomStructureList_T::const_iterator itBomStructure =
-           lBomStructureList.begin();
-         itBomStructure != lBomStructureList.end(); ++itBomStructure) {
-    lPrintBomContent.
-        printBomContent<stdair::FlightDate, FlightDate> (*itBomStructure);  
-    }
-    
+
+    stdair::PrintBomContent::printContent (_inventoryStructure, oStr, idx);
+      
     return oStr.str();
   }
     

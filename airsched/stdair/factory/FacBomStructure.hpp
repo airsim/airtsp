@@ -4,6 +4,8 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
+// C
+#include <assert.h>
 // STL
 #include <string>
 #include <vector>
@@ -11,6 +13,7 @@
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/at.hpp>
+#include <boost/mpl/find.hpp>
 // STDAIR
 #include <stdair/bom/BomChildrenHolder.hpp>
 
@@ -65,6 +68,51 @@ namespace stdair {
       return *aBomStructure_ptr;
     }
 
+    /** Link a child structure object with its parent.
+        <br>For instance, link a SegmentDate structure object with its parent
+        FlightDate structure object.
+        <br>The child structure object is added to the dedicated list within
+        the parent structure object.       .
+        @return bool Whether or not the operation succeeded. */
+    template <typename BOM_STRUCTURE_CHILD,
+              typename BOM_CHILDREN_TYPE_LIST>
+    static bool linkBomParentWithBomChild (typename BOM_STRUCTURE_CHILD::ParentBomStructure_T& ioBomParent,
+                                           BOM_STRUCTURE_CHILD& ioBomChild) {
+
+      // Set the parent of the child structure object
+      ioBomChild._parent = &ioBomParent;
+
+      // Find the position of the BOM_STRUCTURE_CHILD type in the
+      // BOM_CHILDREN_TYPE_LIST.
+      const unsigned int pos = boost::mpl::find<BOM_CHILDREN_TYPE_LIST, BOM_STRUCTURE_CHILD>::type::pos::value;
+
+      // Retrive the bom children holder corresponding the the children type.
+      typedef BomChildrenHolder<BOM_STRUCTURE_CHILD> BOM_CHILDREN_HOLDER_T;
+      BOM_CHILDREN_HOLDER_T* lBomChildrenHolder_ptr =
+        dynamic_cast<BOM_CHILDREN_HOLDER_T*>(ioBomParent._childrenList.at (pos));
+      assert (lBomChildrenHolder_ptr != NULL);
+      
+      // Retrieve the short key
+      const typename BOM_STRUCTURE_CHILD::BomKey_T& lBomChildKey =
+        ioBomChild.getKey();
+      const std::string& lBomChildKeyStr = lBomChildKey.toString();
+      
+      // Insert the child structure object in the dedicated lists
+      typedef typename BOM_CHILDREN_HOLDER_T::BomChildrenList_T BOM_CHILDREN_LIST_T;
+      const bool hasInsertBeenSuccessful =
+        lBomChildrenHolder_ptr->_bomChildrenList.
+        insert (typename BOM_CHILDREN_LIST_T::value_type (lBomChildKeyStr,
+                                                          &ioBomChild)).second;
+      if (hasInsertBeenSuccessful == false) {
+        return hasInsertBeenSuccessful;
+      }
+
+      lBomChildrenHolder_ptr->_bomChildrenOrderedList.push_back (&ioBomChild);
+      
+      return true;
+    }
+
+  private:
     /** Create a bom children holder object with the given children type. */
     template <typename BOM_CHILD>
     BomChildrenHolder<BOM_CHILD>& create () {
@@ -80,36 +128,6 @@ namespace stdair {
       return *aBomChildrenHolder_ptr;
     }
 
-    /** Link a child structure object with its parent.
-        <br>For instance, link a SegmentDate structure object with its parent
-        FlightDate structure object.
-        <br>The child structure object is added to the dedicated list within
-        the parent structure object.       .
-        @return bool Whether or not the operation succeeded. */
-    template <typename BOM_STRUCTURE_CHILD,
-              typename BOM_CHILDREN_LIST>
-    static bool linkBomParentWithBomChild (typename BOM_STRUCTURE_CHILD::ParentBomStructure_T& ioBomParent,
-                                           BOM_STRUCTURE_CHILD& ioBomChild) {
-
-      // Set the parent of the child structure object
-      ioBomChild._parent = &ioBomParent;
-
-      // Retrieve the short key
-      const typename BOM_STRUCTURE_CHILD::BomKey_T& lBomChildKey =
-        ioBomChild.getKey();
-      const std::string& lBomChildKeyStr = lBomChildKey.toString();
-      
-      // Insert the child structure object in the dedicated list
-      const bool hasInsertBeenSuccessful = ioBomParent._childrenList.
-        insert (typename BOM_CHILDREN_LIST::value_type (lBomChildKeyStr,
-                                                        &ioBomChild)).second;
-      if (hasInsertBeenSuccessful == false) {
-        return hasInsertBeenSuccessful;
-      }
-      return true;
-    }
-
-  private:
     /** Initialise the list of children for a given BOM structure.
         <br>Create the BomChildrenHolder objects corresponding to the
         list of children types of the given BOM structure. */

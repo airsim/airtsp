@@ -93,6 +93,10 @@ namespace stdair {
         at the same level). */
     const std::string describeShortKey() const;
 
+    /** Dump the flight-date children list in to an output stream.
+        @param ostream& the output stream. */
+    void displayFlightDateList (std::ostringstream& ioOut) const;
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */

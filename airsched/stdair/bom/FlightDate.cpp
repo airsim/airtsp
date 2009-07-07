@@ -39,10 +39,20 @@ namespace stdair {
     ioOut << describeShortKey () << std::endl;
     
     // Display the segment-date list.
+    displaySegmentDateList (ioOut);
+    
+    // Display the leg-date list.
+    displayLegDateList (ioOut);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void FlightDate::displaySegmentDateList (std::ostringstream& ioOut) const {
+
+    // Display the segment-date list.
     ioOut << "SegmentDates: " << std::endl;
     
     // Get the position of the SegmentDate type in the list of children
-    // types of Inventory.
+    // types of FlightDate.
     const unsigned int segmentDatePos =
       boost::mpl::find<ChildrenBomTypeList_T, SegmentDate>::type::pos::value;
 
@@ -53,13 +63,16 @@ namespace stdair {
     assert (lSegmentDateHolder_ptr != NULL);
 
     lSegmentDateHolder_ptr->describeFull (ioOut);
+  }
 
-    
+  // //////////////////////////////////////////////////////////////////////
+  void FlightDate::displayLegDateList (std::ostringstream& ioOut) const {
+
     // Display the leg-date list.
     ioOut << "LegDates: " << std::endl;
     
     // Get the position of the LegDate type in the list of children
-    // types of Inventory.
+    // types of FlightDate.
     const unsigned int legDatePos =
       boost::mpl::find<ChildrenBomTypeList_T, LegDate>::type::pos::value;
 

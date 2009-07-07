@@ -38,7 +38,14 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   void Inventory::describeFull (std::ostringstream& ioOut) const {
     ioOut << describeShortKey () << std::endl;
+    
+    // Display the flight-date list.
+    displayFlightDateList (ioOut);
+  }
 
+  // //////////////////////////////////////////////////////////////////////
+  void Inventory::displayFlightDateList (std::ostringstream& ioOut) const {
+    
     // Display the flight-date list.
     ioOut << "FlightDates: " << std::endl;
     

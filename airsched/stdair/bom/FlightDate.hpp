@@ -61,6 +61,14 @@ namespace stdair {
       return _childrenList;
     }
     
+    /** Dump the segment-date children list in to an output stream.
+        @param ostream& the output stream. */
+    void displaySegmentDateList (std::ostringstream& ioOut) const;
+
+    /** Dump the leg-date children list in to an output stream.
+        @param ostream& the output stream. */
+    void displayLegDateList (std::ostringstream& ioOut) const;
+    
   private:
     // /////////// Setters /////////////
     /** Set the (parent) FlightDate object. */

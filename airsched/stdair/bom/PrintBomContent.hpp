@@ -14,9 +14,8 @@
 
 namespace stdair {
   
-  /** .*/
+  /** Helper class for pretty printing the Business (BOM) objects. */
   class PrintBomContent {
-
   public:
     /** Dump a BomContent object into an output stream.*/
     template <typename BOM_STRUCTURE>
@@ -49,10 +48,12 @@ namespace stdair {
         assert (lFirstChildrenHolder_ptr != NULL);
 
 
-      if (lNbOfTypes > 1) {
+        if (lNbOfTypes > 1) {
 
+        }
       }
     }
+    
   };
 
 }

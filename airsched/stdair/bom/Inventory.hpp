@@ -23,6 +23,7 @@ namespace stdair {
   class Inventory : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
+    friend class PrintBomContent;
 
   private:
     // Type definitions
@@ -72,6 +73,10 @@ namespace stdair {
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
     void toStream (std::ostream& ioOut) const;
+
+    /** Dump a Business Object with all its children into an output stream.
+        @param ostream& the output stream. */
+    void describeFull (std::ostringstream& ioOut) const;
 
     /** Read a Business Object from an input stream.
         @param istream& the input stream. */

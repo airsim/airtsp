@@ -5,11 +5,8 @@
 #include <assert.h>
 // STDAIR
 #include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/PrintBomContent.hpp>
 // AIRSCHED 
 #include <airsched/bom/Inventory.hpp>
-#include <airsched/bom/FlightDate.hpp>
 #include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
@@ -36,14 +33,7 @@ namespace AIRSCHED {
   std::string Inventory::toString() const {
     std::ostringstream oStr;
 
-    // First, put the key of that level
-    oStr << describeShortKey() << std::endl;
-
-    // Browse the tree structure, i.e., the flight-dates
-    oStr << "FlightDates:" << std::endl;
-    unsigned short idx = 0;
-
-    stdair::PrintBomContent::printContent (_inventoryStructure, oStr, idx);
+    _inventoryStructure.describeFull (oStr);
       
     return oStr.str();
   }

@@ -20,7 +20,8 @@ namespace stdair {
   template <typename BOM_CHILD>
   class BomChildrenHolder : public BomStructure {
     friend class FacBomStructure;
-
+    friend class PrintBomContent;
+    
   public:
     /** Define lists of children BOM structures. */
     typedef std::vector<BOM_CHILD*> BomChildrenOrderedList_T;
@@ -46,6 +47,22 @@ namespace stdair {
     /** Get a string describing the short key (differentiating two objects
         at the same level). */
     const std::string describeShortKey() const { return std::string (""); }
+
+    /** Dump a Business Object into an output stream.
+        @param ostream& the output stream. */
+    void describeFull (std::ostringstream& ioOut) const {
+      // Initialise the index
+      unsigned short lIdx = 0;
+      
+      for (typename BomChildrenOrderedList_T::const_iterator itChild =
+             _bomChildrenOrderedList.begin();
+           itChild != _bomChildrenOrderedList.end(); ++itChild) {
+        const BOM_CHILD* lCurrentChild_ptr = *itChild;
+        ioOut << "[" << lIdx << "]: ";
+        lCurrentChild_ptr->describeFull (ioOut);
+        ++lIdx;
+      }
+    }
 
   private:
     /** Constructors are private so as to force the usage of the Factory

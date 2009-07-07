@@ -17,7 +17,6 @@ bom_h_sources = \
 				$(top_srcdir)/stdair/bom/SegmentDate.hpp \
 				$(top_srcdir)/stdair/bom/BomChildrenHolder.hpp \
 				$(top_srcdir)/stdair/bom/BomContent.hpp \
-				$(top_srcdir)/stdair/bom/PrintBomContent.hpp \
 				$(top_srcdir)/stdair/bom/BomContentRoot.hpp
 bom_cc_sources = \
 				$(top_srcdir)/stdair/bom/BomKey.cpp \

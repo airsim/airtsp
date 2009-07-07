@@ -8,13 +8,8 @@
 #include <algorithm>
 // STDAIR
 #include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/LegDate.hpp>
-#include <stdair/bom/SegmentDate.hpp>
-#include <stdair/bom/PrintBomContent.hpp>
 // AIRSCHED 
 #include <airsched/bom/FlightDate.hpp>
-#include <airsched/bom/LegDate.hpp>
-#include <airsched/bom/SegmentDate.hpp>
 #include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
@@ -43,32 +38,6 @@ namespace AIRSCHED {
     
     // First, put the key of that level
     oStr << describeShortKey() << std::endl;
-
-//     // Retrieve the list of flight-date holders
-//     const stdair::BomStructureList_T& lBomStructureList =
-//       _flightStructure.getChildrenList();
-
-//     // Browse the tree structure, i.e., the segment-dates
-//     oStr << "SegmentDates:" << std::endl;
-//     unsigned short idx = 0;
-//     stdair::PrintBomContent lPrintBomContent (oStr, idx);
-    
-//     for (stdair::BomStructureList_T::const_iterator itBomStructure =
-//            lBomStructureList.begin();
-//          itBomStructure != lBomStructureList.end(); ++itBomStructure) {
-//       lPrintBomContent.
-//         printBomContent<stdair::SegmentDate, SegmentDate> (*itBomStructure);
-//     }
-    
-//     // Browse the tree structure, i.e., the leg-dates
-//     oStr << "LegDates:" << std::endl;
-//     idx = 0;
-//     for (stdair::BomStructureList_T::const_iterator itBomStructure =
-//            lBomStructureList.begin();
-//          itBomStructure != lBomStructureList.end(); ++itBomStructure) {
-//       lPrintBomContent.
-//         printBomContent<stdair::LegDate, LegDate> (*itBomStructure);
-//     }
 
     return oStr.str();
   }

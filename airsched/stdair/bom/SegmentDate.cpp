@@ -29,6 +29,11 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  void SegmentDate::describeFull (std::ostringstream& ioOut) const {
+    ioOut << describeShortKey() << std::endl;
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
   void SegmentDate::fromStream (std::istream& ioIn) {
   }
 

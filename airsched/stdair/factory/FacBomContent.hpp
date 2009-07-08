@@ -60,17 +60,14 @@ namespace stdair {
       PARENT_STRUCTURE_T* lBomStructureParent_ptr =
         getBomStructure<PARENT_CONTENT_T> (ioContentParent);
       assert (lBomStructureParent_ptr != NULL);
-
-      // Type for the children Bom type list
-      typedef typename PARENT_STRUCTURE_T::ChildrenBomTypeList_T CHILDREN_TYPE_LIST_T;
       
       // Type for the child Bom structure
       typedef typename BOM_CONTENT_CHILD::BomStructure_T CHILD_STRUCTURE_T;
       
       // Link both the parent and child structure objects
       const bool hasLinkBeenSuccessful = FacBomStructure::
-        linkBomParentWithBomChild<CHILD_STRUCTURE_T,
-        CHILDREN_TYPE_LIST_T> (*lBomStructureParent_ptr,*lBomStructureChild_ptr);
+        linkBomParentWithBomChild<CHILD_STRUCTURE_T> (*lBomStructureParent_ptr,
+                                                      *lBomStructureChild_ptr);
 
       if (hasLinkBeenSuccessful == false) {
         throw new MemoryAllocationException();

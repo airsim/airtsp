@@ -4,12 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
-#include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureList.hpp>
-#include <stdair/bom/FlightDateKey.hpp>
 // MPL
 #include <boost/mpl/vector.hpp>
+// STDAIR 
+#include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/FlightDateKey.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
 
 namespace stdair {
 
@@ -24,7 +24,6 @@ namespace stdair {
   class FlightDate : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
-    friend class PrintBomContent;
     
   private:
     // Type definitions
@@ -34,12 +33,18 @@ namespace stdair {
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef Inventory ParentBomStructure_T;
-
-    /** Definition allowing to retrieve the associated children BOM structure. */
-    typedef BomStructureOrderedList_T ChildrenBomList_T;
-
+    
     /** Definition allowing to retrieve the associated children type. */
     typedef boost::mpl::vector<SegmentDate, LegDate> ChildrenBomTypeList_T;
+
+    /** Definition allowing to retrive the default children bom holder type. */
+    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
+
+    /** Definition allowing to retrive the first children bom holder type. */
+    typedef BomChildrenHolderImp<SegmentDate> FirstChildrenBomHolder_T;
+
+    /** Definition allowing to retrive the second children bom holder type. */
+    typedef BomChildrenHolderImp<LegDate> SecondChildrenBomHolder_T;
     
   public:
     // /////////// Getters /////////////
@@ -56,11 +61,26 @@ namespace stdair {
       return _key;
     }
 
-    /** Get the list of leg-dates and segment-dates. */
-    const BomStructureOrderedList_T& getChildrenList() const {
-      return _childrenList;
+    /** Get the list of segment-dates. */
+    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
+      return *_firstChildrenList;
     }
-    
+
+    /** Get the list of leg-dates. */
+    const SecondChildrenBomHolder_T& getSecondChildrenList() const {
+      return *_secondChildrenList;
+    }
+
+    /** Get the list of segment-dates. */
+    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _firstChildrenList;
+    }
+
+    /** Get the list of leg-dates. */
+    void getChildrenList (SecondChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _secondChildrenList;
+    }
+
     /** Dump the segment-date children list in to an output stream.
         @param ostream& the output stream. */
     void displaySegmentDateList (std::ostringstream& ioOut) const;
@@ -75,6 +95,15 @@ namespace stdair {
     void setBomStructureRoot (ParentBomStructure_T& ioParent) {
       _parent = &ioParent;
     }
+    
+    /** Default children list setter. */
+    void setChildrenList (DefaultChildrenBomHolder_T&) { }
+    
+    /** Set the segment-date children list. */
+    void setChildrenList (FirstChildrenBomHolder_T&);
+
+    /** Set the leg-date children list. */
+    void setChildrenList (SecondChildrenBomHolder_T&);
 
 
   public:
@@ -102,6 +131,7 @@ namespace stdair {
         at the same level). */
     const std::string describeShortKey() const;
 
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
@@ -121,8 +151,12 @@ namespace stdair {
     /** The key of both the structure and content objects. */
     BomKey_T _key;
     
-    /** List of leg-dates and segment-dates. */
-    ChildrenBomList_T _childrenList;
+    /** List of segment-dates. */
+    FirstChildrenBomHolder_T* _firstChildrenList;
+
+    /** List of leg-dates. */
+    SecondChildrenBomHolder_T* _secondChildrenList;
+
   };
 
 }

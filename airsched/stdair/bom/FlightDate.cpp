@@ -10,13 +10,13 @@
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/bom/LegDate.hpp>
-#include <stdair/bom/BomChildrenHolder.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   FlightDate::FlightDate (const BomKey_T& iKey)
-    : _parent (NULL), _key (iKey) {
+    : _parent (NULL), _key (iKey), _firstChildrenList (NULL),
+      _secondChildrenList (NULL) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -50,19 +50,9 @@ namespace stdair {
 
     // Display the segment-date list.
     ioOut << "SegmentDates: " << std::endl;
-    
-    // Get the position of the SegmentDate type in the list of children
-    // types of FlightDate.
-    const unsigned int segmentDatePos =
-      boost::mpl::find<ChildrenBomTypeList_T, SegmentDate>::type::pos::value;
 
-    // Retrive the bom children holder corresponding to the segment-date type.
-    BomChildrenHolder<SegmentDate>* lSegmentDateHolder_ptr =
-      dynamic_cast<BomChildrenHolder<SegmentDate>*>(_childrenList.
-                                                   at (segmentDatePos));
-    assert (lSegmentDateHolder_ptr != NULL);
-
-    lSegmentDateHolder_ptr->describeFull (ioOut);
+    assert (_firstChildrenList != NULL);
+    _firstChildrenList->describeFull (ioOut);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -71,18 +61,8 @@ namespace stdair {
     // Display the leg-date list.
     ioOut << "LegDates: " << std::endl;
     
-    // Get the position of the LegDate type in the list of children
-    // types of FlightDate.
-    const unsigned int legDatePos =
-      boost::mpl::find<ChildrenBomTypeList_T, LegDate>::type::pos::value;
-
-    // Retrive the bom children holder corresponding to the leg-date type.
-    BomChildrenHolder<LegDate>* lLegDateHolder_ptr =
-      dynamic_cast<BomChildrenHolder<LegDate>*>(_childrenList.
-                                                   at (legDatePos));
-    assert (lLegDateHolder_ptr != NULL);
-
-    lLegDateHolder_ptr->describeFull (ioOut);
+    assert (_secondChildrenList != NULL);
+    _secondChildrenList->describeFull (ioOut);
   }
   
   // //////////////////////////////////////////////////////////////////////
@@ -102,6 +82,18 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string FlightDate::describeShortKey() const {
     return _key.toString();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void FlightDate::
+  setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
+    _firstChildrenList = &ioChildrenList;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void FlightDate::
+  setChildrenList (SecondChildrenBomHolder_T& ioChildrenList) {
+    _secondChildrenList = &ioChildrenList;
   }
 
 }

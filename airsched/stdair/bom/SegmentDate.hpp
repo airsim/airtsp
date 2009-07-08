@@ -4,12 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
-#include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureList.hpp>
-#include <stdair/bom/SegmentDateKey.hpp>
 // MPL
 #include <boost/mpl/vector.hpp>
+// STDAIR 
+#include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/SegmentDateKey.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
 
 namespace stdair {
 
@@ -22,7 +22,6 @@ namespace stdair {
   class SegmentDate : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
-    friend class PrintBomContent;
     
   private:
     // Type definitions
@@ -33,10 +32,7 @@ namespace stdair {
         BOM structure type. */
     typedef FlightDate ParentBomStructure_T;
     
-    /** Definition allowing to retrieve the associated children BOM structure. */
-    typedef BomStructureOrderedList_T ChildrenBomList_T;
-
-     /** Definition allowing to retrieve the associated children type. */
+    /** Definition allowing to retrieve the associated children type. */
     typedef boost::mpl::vector <> ChildrenBomTypeList_T;
 
   public:
@@ -53,18 +49,17 @@ namespace stdair {
     const BomKey_T& getKey() const {
       return _key;
     }
-
-    /** Get the list of children. */
-    const BomStructureOrderedList_T& getChildrenList() const {
-      return _childrenList;
-    }
-
+    
+    
   private:
     // /////////// Setters /////////////
     /** Set the (parent) FlightDate object. */
     void setFlightDate (ParentBomStructure_T& ioFlightDate) {
       _parent = &ioFlightDate;
     }
+    
+    /** Default children list setter. */
+    void setChildrenList (BomChildrenHolderImp<mpl_::void_>&) { }
 
     
   public:
@@ -110,9 +105,6 @@ namespace stdair {
 
     /** The key of both the structure and content objects. */
     BomKey_T _key;
-
-    /** List of children. */
-    ChildrenBomList_T _childrenList;
   };
 
 }

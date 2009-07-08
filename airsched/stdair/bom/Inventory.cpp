@@ -3,21 +3,18 @@
 // //////////////////////////////////////////////////////////////////////
 // C
 #include <assert.h>
-// STL
-#include <iostream>
 // MPL
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/find.hpp>
 // STDAIR 
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/BomChildrenHolder.hpp>
 
 namespace stdair {
 
   // ////////////////////////////////////////////////////////////////////
   Inventory::Inventory (const BomKey_T& iKey)
-    : _parent (NULL), _key (iKey) {
+    : _parent (NULL), _key (iKey), _firstChildrenList (NULL) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -48,19 +45,9 @@ namespace stdair {
     
     // Display the flight-date list.
     ioOut << "FlightDates: " << std::endl;
-    
-    // Get the position of the FlightDate type in the list of children
-    // types of Inventory.
-    const unsigned int flightDatePos =
-      boost::mpl::find<ChildrenBomTypeList_T, FlightDate>::type::pos::value;
 
-    // Retrive the bom children holder corresponding to the flight-date type.
-    BomChildrenHolder<FlightDate>* lFlightDateHolder_ptr =
-      dynamic_cast<BomChildrenHolder<FlightDate>*>(_childrenList.
-                                                   at (flightDatePos));
-    assert (lFlightDateHolder_ptr != NULL);
-
-    lFlightDateHolder_ptr->describeFull (ioOut);
+    assert (_firstChildrenList != NULL);
+    _firstChildrenList->describeFull (ioOut);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -80,6 +67,12 @@ namespace stdair {
   // //////////////////////////////////////////////////////////////////////
   const std::string Inventory::describeShortKey() const {
     return _key.toString();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  void Inventory::
+  setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
+    _firstChildrenList = &ioChildrenList;
   }
 
 }

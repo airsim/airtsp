@@ -15,7 +15,8 @@
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/find.hpp>
 // STDAIR
-#include <stdair/bom/BomChildrenHolder.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
+#include <stdair/bom/BomStructureRoot.hpp>
 
 namespace stdair {
 
@@ -74,22 +75,17 @@ namespace stdair {
         <br>The child structure object is added to the dedicated list within
         the parent structure object.       .
         @return bool Whether or not the operation succeeded. */
-    template <typename BOM_STRUCTURE_CHILD,
-              typename BOM_CHILDREN_TYPE_LIST>
+    template <typename BOM_STRUCTURE_CHILD>
     static bool linkBomParentWithBomChild (typename BOM_STRUCTURE_CHILD::ParentBomStructure_T& ioBomParent,
                                            BOM_STRUCTURE_CHILD& ioBomChild) {
 
       // Set the parent of the child structure object
       ioBomChild._parent = &ioBomParent;
-
-      // Find the position of the BOM_STRUCTURE_CHILD type in the
-      // BOM_CHILDREN_TYPE_LIST.
-      const unsigned int pos = boost::mpl::find<BOM_CHILDREN_TYPE_LIST, BOM_STRUCTURE_CHILD>::type::pos::value;
-
+      
       // Retrive the bom children holder corresponding the the children type.
-      typedef BomChildrenHolder<BOM_STRUCTURE_CHILD> BOM_CHILDREN_HOLDER_T;
-      BOM_CHILDREN_HOLDER_T* lBomChildrenHolder_ptr =
-        dynamic_cast<BOM_CHILDREN_HOLDER_T*>(ioBomParent._childrenList.at (pos));
+      typedef BomChildrenHolderImp<BOM_STRUCTURE_CHILD> BOM_CHILDREN_HOLDER_T;
+      BOM_CHILDREN_HOLDER_T* lBomChildrenHolder_ptr = NULL;
+      ioBomParent.getChildrenList (lBomChildrenHolder_ptr);
       assert (lBomChildrenHolder_ptr != NULL);
       
       // Retrieve the short key
@@ -115,11 +111,11 @@ namespace stdair {
   private:
     /** Create a bom children holder object with the given children type. */
     template <typename BOM_CHILD>
-    BomChildrenHolder<BOM_CHILD>& create () {
+    BomChildrenHolderImp<BOM_CHILD>& create () {
       
-      BomChildrenHolder<BOM_CHILD>* aBomChildrenHolder_ptr = NULL;
+      BomChildrenHolderImp<BOM_CHILD>* aBomChildrenHolder_ptr = NULL;
       
-      aBomChildrenHolder_ptr = new BomChildrenHolder<BOM_CHILD> ();
+      aBomChildrenHolder_ptr = new BomChildrenHolderImp<BOM_CHILD> ();
       assert (aBomChildrenHolder_ptr != NULL);
       
       // The new object is added to the pool of structure objects
@@ -142,16 +138,18 @@ namespace stdair {
 
       if (lNbOfTypes > 0) {
         typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,0>::type FIRST_CHILDREN_TYPE_T;
-        BomChildrenHolder<FIRST_CHILDREN_TYPE_T>& lFirstBomChildrenHolder =
+        BomChildrenHolderImp<FIRST_CHILDREN_TYPE_T>& lFirstBomChildrenHolder =
           instance().create<FIRST_CHILDREN_TYPE_T>();
-        ioBomStructure._childrenList.push_back (&lFirstBomChildrenHolder);
+
+        ioBomStructure.setChildrenList (lFirstBomChildrenHolder);
       }
       
       if (lNbOfTypes > 1) {
         typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,1>::type SECOND_CHILDREN_TYPE_T;
-        BomChildrenHolder<SECOND_CHILDREN_TYPE_T>& lSecondBomChildrenHolder =
+        BomChildrenHolderImp<SECOND_CHILDREN_TYPE_T>& lSecondBomChildrenHolder =
           instance().create<SECOND_CHILDREN_TYPE_T>();
-        ioBomStructure._childrenList.push_back (&lSecondBomChildrenHolder);
+
+        ioBomStructure.setChildrenList (lSecondBomChildrenHolder);
       }
     }
     

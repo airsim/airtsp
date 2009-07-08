@@ -6,8 +6,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureList.hpp>
 #include <stdair/bom/BomStructureRootKey.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
 // MPL
 #include <boost/mpl/vector.hpp>
 
@@ -27,12 +27,15 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef BomStructureRootKey BomKey_T;
 
-    /** Definition allowing to retrieve the associated children BOM structure. */
-    typedef BomStructureOrderedList_T ChildrenBomList_T;
-
     /** Definition allowing to retrieve the associated children type. */
     typedef boost::mpl::vector <Inventory> ChildrenBomTypeList_T;
+
+    /** Definition allowing to retrive the default children bom holder type. */
+    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
     
+    /** Definition allowing to retrive the first children bom holder type. */
+    typedef BomChildrenHolderImp<Inventory> FirstChildrenBomHolder_T;
+
   public:
 
     // /////////// Getters /////////////
@@ -40,12 +43,24 @@ namespace stdair {
     const BomKey_T& getKey() const {
       return _key;
     }
+    
+    /** Get the list of inventories. */
+    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
+      return *_firstChildrenList;
+    }
 
     /** Get the list of inventories. */
-    const ChildrenBomList_T& getInventoryList() const {
-      return _childrenList;
+    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _firstChildrenList;
     }
+
+  private: 
+    /////////////// Setters ////////////////
+    /** Default children list setter. */
+    void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
+    /** Set the first children list. */
+    void setChildrenList (FirstChildrenBomHolder_T&);
 
   public:
     // /////////// Display support methods /////////
@@ -68,6 +83,7 @@ namespace stdair {
         at the same level). */
     const std::string describeShortKey() const;
 
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
@@ -83,9 +99,9 @@ namespace stdair {
     // Attributes
     /** The key of both the structure and content objects. */
     BomKey_T _key;
-    
+
     /** List of inventories. */
-    ChildrenBomList_T _childrenList;
+    FirstChildrenBomHolder_T* _firstChildrenList;
   };
 
 }

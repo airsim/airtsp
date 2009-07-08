@@ -41,5 +41,11 @@ namespace stdair {
     return _key.toString();
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  void BomStructureRoot::
+  setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
+    _firstChildrenList = &ioChildrenList;
+  }
+
 }
 

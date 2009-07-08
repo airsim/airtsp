@@ -4,12 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR 
-#include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureList.hpp>
-#include <stdair/bom/InventoryKey.hpp>
 // MPL
 #include <boost/mpl/vector.hpp>
+// STDAIR 
+#include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/InventoryKey.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
 
 namespace stdair {
 
@@ -23,7 +23,6 @@ namespace stdair {
   class Inventory : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
-    friend class PrintBomContent;
 
   private:
     // Type definitions
@@ -34,11 +33,14 @@ namespace stdair {
         BOM structure type. */
     typedef BomStructureRoot ParentBomStructure_T;
 
-    /** Definition allowing to retrieve the associated children BOM structure. */
-    typedef BomStructureOrderedList_T ChildrenBomList_T;
+    /** Definition allowing to retrieve the associated children type. */
+    typedef boost::mpl::vector<FlightDate> ChildrenBomTypeList_T;
 
-     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector <FlightDate> ChildrenBomTypeList_T;
+    /** Definition allowing to retrive the default children bom holder type. */
+    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
+
+    /** Definition allowing to retrive the first children bom holder type. */
+    typedef BomChildrenHolderImp<FlightDate> FirstChildrenBomHolder_T;
   
   public:
     // /////////// Getters /////////////
@@ -56,8 +58,13 @@ namespace stdair {
     }
 
     /** Get the list of flight-dates. */
-    const BomStructureOrderedList_T& getChildrenList() const {
-      return _childrenList;
+    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
+      return *_firstChildrenList;
+    }
+
+     /** Get the list of flight-dates. */
+    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _firstChildrenList;
     }
     
   private:
@@ -66,6 +73,12 @@ namespace stdair {
     void setBomStructureRoot (ParentBomStructure_T& ioParent) {
       _parent = &ioParent;
     }
+
+    /** Default children list setter. */
+    void setChildrenList (DefaultChildrenBomHolder_T&) { }
+    
+    /** Set the first children list. */
+    void setChildrenList (FirstChildrenBomHolder_T&);
 
 
   public:
@@ -117,7 +130,7 @@ namespace stdair {
     BomKey_T _key;
     
     /** List of flight-dates. */
-    ChildrenBomList_T _childrenList;
+    FirstChildrenBomHolder_T* _firstChildrenList;
   };
 
 }

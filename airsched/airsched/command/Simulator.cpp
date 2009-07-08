@@ -33,7 +33,7 @@ namespace AIRSCHED {
     stdair::BomContentRoot& lBomContentRoot =
       stdair::FacBomContent::instance().createBomRoot();
     
-
+    
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
     const stdair::AirlineCode_T lAirlineCode ("BA");

@@ -38,6 +38,14 @@ namespace AIRSCHED {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef stdair::FlightDateKey BomKey_T;
 
+    /** Definition allowing to retrieve the associated first
+         BOM content child type. */
+    typedef SegmentDate FirstContentChild_T;
+
+    /** Definition allowing to retrieve the associated second
+         BOM content child type. */
+    typedef LegDate SecondContentChild_T;
+
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.

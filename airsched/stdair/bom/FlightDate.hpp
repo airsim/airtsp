@@ -21,6 +21,7 @@ namespace stdair {
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific FlightDate class (for instance,
       in the AIRSCHED library). */
+  template <class BOM_CONTENT>
   class FlightDate : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
@@ -32,7 +33,7 @@ namespace stdair {
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
-    typedef Inventory ParentBomStructure_T;
+    typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
     
     /** Definition allowing to retrieve the associated children type. */
     typedef boost::mpl::vector<SegmentDate, LegDate> ChildrenBomTypeList_T;
@@ -41,10 +42,10 @@ namespace stdair {
     typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
 
     /** Definition allowing to retrive the first children bom holder type. */
-    typedef BomChildrenHolderImp<SegmentDate> FirstChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<typename BOM_CONTENT::FirstContentChild_T> FirstChildrenBomHolder_T;
 
     /** Definition allowing to retrive the second children bom holder type. */
-    typedef BomChildrenHolderImp<LegDate> SecondChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<typename BOM_CONTENT::SecondContentChild_T> SecondChildrenBomHolder_T;
     
   public:
     // /////////// Getters /////////////
@@ -54,7 +55,10 @@ namespace stdair {
     }
     
     /** Get the (parent) Inventory object. */
-    ParentBomStructure_T& getInventory() const;
+    ParentBomStructure_T& getInventory() const {
+      assert (_parent != NULL);
+      return *_parent;
+    }
     
     /** Get the flight-date key. */
     const BomKey_T& getKey() const {
@@ -81,14 +85,6 @@ namespace stdair {
       ioChildrenList = _secondChildrenList;
     }
 
-    /** Dump the segment-date children list in to an output stream.
-        @param ostream& the output stream. */
-    void displaySegmentDateList (std::ostringstream& ioOut) const;
-
-    /** Dump the leg-date children list in to an output stream.
-        @param ostream& the output stream. */
-    void displayLegDateList (std::ostringstream& ioOut) const;
-    
   private:
     // /////////// Setters /////////////
     /** Set the (parent) FlightDate object. */
@@ -100,54 +96,83 @@ namespace stdair {
     void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
     /** Set the segment-date children list. */
-    void setChildrenList (FirstChildrenBomHolder_T&);
+    void setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
+      _firstChildrenList = &ioChildrenList;
+    }
 
     /** Set the leg-date children list. */
-    void setChildrenList (SecondChildrenBomHolder_T&);
-
+    void setChildrenList (SecondChildrenBomHolder_T& ioChildrenList) {
+      _secondChildrenList = &ioChildrenList;
+    }
 
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
-    void toStream (std::ostream& ioOut) const;
+    void toStream (std::ostream& ioOut) const { 
+      ioOut << toString() << std::endl;
+    }
 
     /** Dump a Business Object with all its children into an output stream.
         @param ostream& the output stream. */
-    void describeFull (std::ostringstream& ioOut) const;
+    void describeFull (std::ostringstream& ioOut) const {
+      ioOut << describeShortKey () << std::endl;
+      displaySegmentDateList (ioOut);
+      displayLegDateList (ioOut);
+    }
 
     /** Read a Business Object from an input stream.
         @param istream& the input stream. */
-    void fromStream (std::istream& ioIn);
+    void fromStream (std::istream& ioIn) { }
 
    /** Get the serialised version of the Business Object. */
-    std::string toString() const;
+    std::string toString() const { return describeKey(); }
     
     /** Get a string describing the whole key (differentiating two objects
         at any level). */
-    const std::string describeKey() const;
+    const std::string describeKey() const { return _key.toString(); }
 
     /** Get a string describing the short key (differentiating two objects
         at the same level). */
-    const std::string describeShortKey() const;
+    const std::string describeShortKey() const { return _key.toString(); }
 
+    /** Dump the segment-date children list in to an output stream.
+        @param ostream& the output stream. */
+    void displaySegmentDateList (std::ostringstream& ioOut) const {
+      ioOut << "SegmentDates: " << std::endl;
+      assert (_firstChildrenList != NULL);
+      _firstChildrenList->describeFull (ioOut);
+    }
 
+    /** Dump the leg-date children list in to an output stream.
+        @param ostream& the output stream. */
+    void displayLegDateList (std::ostringstream& ioOut) const {
+      ioOut << "LegDates: " << std::endl;
+      assert (_secondChildrenList != NULL);
+      _secondChildrenList->describeFull (ioOut);
+    }
+    
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
-    FlightDate (const BomKey_T&);
+    FlightDate (const BomKey_T&)
+      : _parent (NULL), _key (iKey), _firstChildrenList (NULL),
+        _secondChildrenList (NULL) { }
 
     /** Destructor. */
-    virtual ~FlightDate();
+    virtual ~FlightDate() { }
 
   private:
     // Attributes
     /** Parent root. */
     ParentBomStructure_T* _parent;
 
+     /** The actual functional (Business Object) content. */
+    BOM_CONTENT* _content;
+    
     /** The key of both the structure and content objects. */
     BomKey_T _key;
     

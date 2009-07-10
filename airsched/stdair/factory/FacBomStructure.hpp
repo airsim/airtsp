@@ -17,12 +17,13 @@
 // STDAIR
 #include <stdair/bom/BomChildrenHolderImp.hpp>
 #include <stdair/bom/BomStructureRoot.hpp>
+#include <stdair/bom/BomStructure.hpp>
 
 namespace stdair {
 
   // Forward declarations
-  class BomStructure;
   class BomContent;
+  class BomStructure;
 
   /** Base class for Factory layer. */
   class FacBomStructure {

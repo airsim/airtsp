@@ -10,6 +10,10 @@
 #include <boost/mpl/vector.hpp>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
+#include <stdair/bom/BomStructure.hpp>
+#include <stdair/bom/BomContentRoot.hpp>
+#include <stdair/bom/BomStructureRoot.hpp>
+#include <stdair/bom/BomStructureRootKey.hpp>
 #include <stdair/factory/FacBomStructure.hpp>
 
 namespace stdair {
@@ -17,7 +21,6 @@ namespace stdair {
   // Forward declarations
   class BomStructure;
   class BomContent;
-  class BomContentRoot;
   
   /** Base class for Factory layer. */
   class FacBomContent {
@@ -31,15 +34,31 @@ namespace stdair {
   public:
     /** Create the root of the BOM tree, i.e., a pair of linked
         BomStructureRoot and BomContentRoot objects. */
-    BomContentRoot& createBomRoot ();
+    template <typename BOM_CONTENT_CHILD>
+    BomContentRoot<BOM_CONTENT_CHILD>& createBomRoot () {
+
+      // Type for the BomContentRoot.
+      typedef BomContentRoot<BOM_CONTENT_CHILD> BOM_CONTENT_ROOT_T;
+      // Create the BOM root object.
+      // Note that its object key has got no importance, as that BOM root class
+      // is actually (only) a marker.
+      BomStructureRootKey lBomStructureRootKey;
+      BOM_CONTENT_ROOT_T& lBomContentRoot =
+        createInternal<BOM_CONTENT_ROOT_T>(lBomStructureRootKey);
+      
+      // Retrieve the BOM root structure object
+      BomStructureRoot<BOM_CONTENT_ROOT_T>* lBomStructureRoot_ptr =
+        getBomStructure<BOM_CONTENT_ROOT_T> (lBomContentRoot);
+      assert (lBomStructureRoot_ptr != NULL);
+      
+      return lBomContentRoot;
+    }
     
     /** Create a (child) content object, given a key.
         <br>A structure object is created, under the hood, with the given key.
         That structure object then gets a pointer on the content object. */
     template <typename BOM_CONTENT_CHILD>
-    BOM_CONTENT_CHILD& create (typename BOM_CONTENT_CHILD::ParentBomContent_T& ioContentParent,
-                               const typename BOM_CONTENT_CHILD::BomKey_T& iKey) {
-
+    BOM_CONTENT_CHILD& create (typename BOM_CONTENT_CHILD::ParentBomContent_T& ioContentParent, const typename BOM_CONTENT_CHILD::BomKey_T& iKey) {
       
       // Create the child structure object for the given key
       BOM_CONTENT_CHILD& lBomContentChild =
@@ -85,7 +104,8 @@ namespace stdair {
     BOM_CONTENT& createInternal (const typename BOM_CONTENT::BomKey_T& iKey) {
     
       // Create the structure/holder object
-      typename BOM_CONTENT::BomStructure_T& lBomStructure =
+      typedef typename BOM_CONTENT::BomStructure_T BOM_STRUCTURE_T;
+      BOM_STRUCTURE_T& lBomStructure =
         FacBomStructure::instance().
         create<typename BOM_CONTENT::BomKey_T> (iKey);
 
@@ -95,7 +115,7 @@ namespace stdair {
       assert (aBomContent_ptr != NULL);
 
       // Link the structure/holder object with its corresponding content object
-      setContent (lBomStructure, *aBomContent_ptr);
+      setContent<BOM_STRUCTURE_T, BOM_CONTENT> (lBomStructure, *aBomContent_ptr);
 
       // The new content object is added to the pool of content objects
       const bool hasInsertBeenSuccessful = _structureMap.
@@ -110,7 +130,9 @@ namespace stdair {
 
     /** Retrieve the structure object associated to the given content object. */
     template <typename BOM_CONTENT>
-    typename BOM_CONTENT::BomStructure_T* getBomStructure (const BOM_CONTENT& iBomContent) {
+    typename BOM_CONTENT::BomStructure_T*
+    getBomStructure (const BOM_CONTENT& iBomContent) {
+
       typename BOM_CONTENT::BomStructure_T* oBomStructure_ptr = NULL;
     
       StructureMapFromContent_T::iterator itBomStructure =
@@ -145,8 +167,11 @@ namespace stdair {
   private:
     /** Link the structure/holder object with its corresponding content
         object. */
-    static void setContent (BomStructure&, BomContent&);
-
+    template<typename BOM_STRUCTURE, typename BOM_CONTENT>
+    static void setContent (BOM_STRUCTURE& ioBomStructure,
+                            BOM_CONTENT& ioBomContent) {
+      ioBomStructure._content = &ioBomContent;
+    }
     
   private:
     /** The unique instance.*/

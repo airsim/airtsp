@@ -33,12 +33,6 @@ namespace stdair {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacBomContent::setContent (BomStructure& ioBomStructure,
-                                  BomContent& ioBomContent) {
-    ioBomStructure._content = &ioBomContent;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
   void FacBomContent::clean() {
     for (StructureMapFromContent_T::iterator itBom = _structureMap.begin();
 	 itBom != _structureMap.end(); itBom++) {
@@ -54,24 +48,6 @@ namespace stdair {
 
     // Reset the static instance
     _instance = NULL;
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  BomContentRoot& FacBomContent::createBomRoot () {
-
-    // Create the BOM root object.
-    // Note that its object key has got no importance, as that BOM root class
-    // is actually (only) a marker.
-    BomStructureRootKey lBomStructureRootKey;
-    BomContentRoot& lBomContentRoot =
-      createInternal<BomContentRoot> (lBomStructureRootKey);
-
-    // Retrieve the BOM root structure object
-    BomStructureRoot* lBomStructureRoot_ptr =
-      getBomStructure<BomContentRoot> (lBomContentRoot);
-    assert (lBomStructureRoot_ptr != NULL);
-
-    return lBomContentRoot;
   }
 
 }

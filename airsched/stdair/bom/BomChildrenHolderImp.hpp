@@ -12,20 +12,22 @@
 #include <map>
 //STDAIR 
 #include <stdair/bom/BomChildrenHolder.hpp>
-#include <stdair/bom/BomStructure.hpp>
 
 namespace stdair {
   
   /** Template class aimed at holding a list and a map of children BOM
       structure of a dedicated type. */
-  template <typename BOM_CHILD>
+  template <typename BOM_CONTENT_CHILD>
   class BomChildrenHolderImp : public BomChildrenHolder {
     friend class FacBomStructure;
+
+    /** Retrieve associated bom structure type. */
+    typedef typename BOM_CONTENT_CHILD::BomStructure_T BomStructure_T;
     
   public:
     /** Define lists of children BOM structures. */
-    typedef std::vector<BOM_CHILD*> BomChildrenOrderedList_T;
-    typedef std::map<const std::string, BOM_CHILD*> BomChildrenList_T;
+    typedef std::vector<BomStructure_T*> BomChildrenOrderedList_T;
+    typedef std::map<const std::string, BomStructure_T*> BomChildrenList_T;
 
   public:
     // /////////// Display support methods /////////
@@ -57,7 +59,7 @@ namespace stdair {
       for (typename BomChildrenOrderedList_T::const_iterator itChild =
              _bomChildrenOrderedList.begin();
            itChild != _bomChildrenOrderedList.end(); ++itChild) {
-        const BOM_CHILD* lCurrentChild_ptr = *itChild;
+        const BomStructure_T* lCurrentChild_ptr = *itChild;
         ioOut << "[" << lIdx << "]: ";
         lCurrentChild_ptr->describeFull (ioOut);
         ++lIdx;

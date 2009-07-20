@@ -42,7 +42,7 @@ namespace stdair {
       // Create the BOM root object.
       // Note that its object key has got no importance, as that BOM root class
       // is actually (only) a marker.
-      BomStructureRootKey lBomStructureRootKey;
+      BomStructureRootKey<BOM_CONTENT_ROOT_T> lBomStructureRootKey;
       BOM_CONTENT_ROOT_T& lBomContentRoot =
         createInternal<BOM_CONTENT_ROOT_T>(lBomStructureRootKey);
       

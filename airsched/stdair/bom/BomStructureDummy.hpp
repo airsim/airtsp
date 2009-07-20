@@ -1,67 +1,46 @@
-#ifndef __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
-#define __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
+#ifndef __STDAIR_BOM_BOMSTRUCTUREDUMMY_HPP
+#define __STDAIR_BOM_BOMSTRUCTUREDUMMY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
-#include <stdair/bom/BomStructureRootKey.hpp>
 #include <stdair/bom/BomChildrenHolderImp.hpp>
 // MPL
 #include <boost/mpl/vector.hpp>
 
 namespace stdair {
   // Forward declarations.
-  template <typename BOM_CONTENT> class Inventory;
-  class BomStructureDummy;
   class BomContentDummy;
+  class BomKey;
 
   /** Wrapper class aimed at holding the actual content, modeled
-      by a specific BomContentRoot class. */
-  template <typename BOM_CONTENT>
-  class BomStructureRoot : public BomStructure {
+      by a specific BomContentDummy class. */
+  class BomStructureDummy : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
 
-    // Type definitions
-    /** Definition allowing to retrieve the associated BOM content type. */
-    typedef BOM_CONTENT Content_T;
-
-    /** Definition allowing to retrieve the first children type of the
-        BOM_CONTENT. */
-    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
-    
   private:
     // Type definitions
+    /** Definition allowing to retrieve the associated BOM content type. */
+    typedef BomContentDummy Content_T;
+
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef BomStructureRootKey<BOM_CONTENT> BomKey_T;
+    typedef BomKey BomKey_T;
 
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<Inventory<FirstContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector<> ChildrenBomTypeList_T;
 
     /** Definition allowing to retrive the default children bom holder type. */
-    typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
     
-    /** Definition allowing to retrive the first children bom holder type. */
-    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
-
   public:
 
     // /////////// Getters /////////////
-    /** Get the BomStructureRoot key. */
+    /** Get the BomStructureDummy key. */
     const BomKey_T& getKey() const {
       return _key;
-    }
-    
-    /** Get the list of inventories. */
-    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
-      return *_firstChildrenList;
-    }
-
-    /** Get the list of inventories. */
-    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
-      ioChildrenList = _firstChildrenList;
     }
 
   private: 
@@ -69,11 +48,6 @@ namespace stdair {
     /** Default children list setter. */
     void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
-    /** Set the first children list. */
-    void setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
-      _firstChildrenList = &ioChildrenList;
-    }
-
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -102,12 +76,12 @@ namespace stdair {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    BomStructureRoot ();
-    BomStructureRoot (const BomStructureRoot&);
-    BomStructureRoot (const BomKey_T& iKey) { _key = iKey; }
+    BomStructureDummy ();
+    BomStructureDummy (const BomStructureDummy&);
+    BomStructureDummy (const BomKey_T& iKey) { _key = iKey; }
 
     /** Destructor. */
-    ~BomStructureRoot () { }
+    ~BomStructureDummy () { }
 
   private:
     // Attributes
@@ -115,12 +89,9 @@ namespace stdair {
     BomKey_T _key; 
 
     /** The actual functional (Business Object) content. */
-    BOM_CONTENT* _content;
-
-    /** List of inventories. */
-    FirstChildrenBomHolder_T* _firstChildrenList;
+    Content_T* _content;
   };
 
 }
-#endif // __STDAIR_BOM_BOMSTRUCTUREROOT_HPP
+#endif // __STDAIR_BOM_BOMSTRUCTUREDUMMY_HPP
 

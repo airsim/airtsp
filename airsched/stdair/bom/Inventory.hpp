@@ -14,8 +14,10 @@
 namespace stdair {
 
   // Forward declaration
-  class BomStructureRoot;
-  class FlightDate;
+  template <typename BOM_CONTENT> class BomStructureRoot;
+  template <typename BOM_CONTENT> class FlightDate;
+  class BomStructureDummy;
+  class BomContentDummy;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific Inventory class (for instance,
@@ -25,23 +27,30 @@ namespace stdair {
     friend class FacBomStructure;
     friend class FacBomContent;
 
-  private:
+  public:
     // Type definitions
+    /** Definition allowing to retrieve the associated BOM content type. */
+    typedef BOM_CONTENT Content_T;
+
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef InventoryKey BomKey_T;
+    typedef InventoryKey<BOM_CONTENT> BomKey_T;
+
+    /** Definition allowing to retrieve the first children type of the
+        BOM_CONTENT. */
+    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
 
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<FlightDate> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector<FlightDate<FirstContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
 
     /** Definition allowing to retrieve the default children bom holder type. */
-    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
     /** Definition allowing to retrieve the first children bom holder type. */
-    typedef BomChildrenHolderImp<BOM_CONTENT::FirstContentChild_T> FirstChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
   
   public:
     // /////////// Getters /////////////

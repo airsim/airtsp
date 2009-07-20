@@ -13,8 +13,10 @@
 
 namespace stdair {
 
-  // Forward declaration
-  class FlightDate;
+  // Forward declarations
+  template <typename BOM_CONTENT> class FlightDate;
+  class BomStructureDummy;
+  class BomContentDummy;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific SegmentDate class (for instance,
@@ -24,17 +26,23 @@ namespace stdair {
     friend class FacBomStructure;
     friend class FacBomContent;
     
-  private:
+  public:
     // Type definitions
+    /** Definition allowing to retrieve the associated BOM content type. */
+    typedef BOM_CONTENT Content_T;
+
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef SegmentDateKey BomKey_T;
+    typedef SegmentDateKey<BOM_CONTENT> BomKey_T;
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
     
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector <> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector <BomStructureDummy, BomStructureDummy> ChildrenBomTypeList_T;
+
+    /** Definition allowing to retrieve the default children bom holder type. */
+    typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
   public:
     // /////////// Getters /////////////
@@ -59,7 +67,7 @@ namespace stdair {
     }
     
     /** Default children list setter. */
-    void setChildrenList (BomChildrenHolderImp<mpl_::void_>&) { }
+    void setChildrenList (DefaultChildrenBomHolder_T&) { }
 
     
   public:

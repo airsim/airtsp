@@ -1,5 +1,5 @@
-#ifndef __STDAIR_BOM_BOMCONTENTROOT_HPP
-#define __STDAIR_BOM_BOMCONTENTROOT_HPP
+#ifndef __STDAIR_BOM_BOMCONTENTDUMMY_HPP
+#define __STDAIR_BOM_BOMCONTENTDUMMY_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
@@ -9,29 +9,24 @@
 
 namespace stdair {
   // Forward declarations.
-  template <typename BOM_CONTENT> class BomStructureRoot;
-  template <typename BOM_CONTENT> class BomStructureRootKey;
+  class BomStructureDummy;
+  class BomKey;
 
   /** Class representing the actual functional/business content
-      for the Bom root.
-      <br>That class is just an utility tool to mark the root
+      for the Bom dummy.
+      <br>That class is just an utility tool to mark the dummy
       of the Bom tree. */
-  template <typename BOM_CHILD>
-  class BomContentRoot : public BomContent {
+  class BomContentDummy : public BomContent {
     friend class FacBomContent;
 
   public:
     // Type definitions
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef BomStructureRoot<BomContentRoot> BomStructure_T;
+    typedef BomStructureDummy BomStructure_T;
 
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef BomStructureRootKey<BomContentRoot> BomKey_T;
+    typedef BomKey BomKey_T;
 
-    /** Definition allowing to retrieve the associated first
-         BOM content child type. */
-    typedef BOM_CHILD FirstContentChild_T;
-    
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -57,13 +52,13 @@ namespace stdair {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
-    BomContentRoot ();
-    BomContentRoot (const BomContentRoot&);
-    BomContentRoot (const BomStructure_T& iBomStructure)
+    BomContentDummy ();
+    BomContentDummy (const BomContentDummy&);
+    BomContentDummy (const BomStructure_T& iBomStructure)
       : _bomStructure (iBomStructure) { }
 
     /** Destructor. */
-    virtual ~BomContentRoot() { }
+    virtual ~BomContentDummy() { }
 
   private:
     // Attributes
@@ -72,4 +67,4 @@ namespace stdair {
   };
 
 }
-#endif // __STDAIR_BOM_BOMCONTENTROOT_HPP
+#endif // __STDAIR_BOM_BOMCONTENTDUMMY_HPP

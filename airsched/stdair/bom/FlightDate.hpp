@@ -14,9 +14,10 @@
 namespace stdair {
 
   // Forward declaration
-  class Inventory;
-  class SegmentDate;
-  class LegDate;
+  template <typename BOM_CONTENT> class Inventory;
+  template <typename BOM_CONTENT> class SegmentDate;
+  template <typename BOM_CONTENT> class LegDate;
+  class BomContentDummy;
   
   /** Wrapper class aimed at holding the actual content, modeled
       by an external specific FlightDate class (for instance,
@@ -26,26 +27,38 @@ namespace stdair {
     friend class FacBomStructure;
     friend class FacBomContent;
     
-  private:
+  public:
     // Type definitions
+    /** Definition allowing to retrieve the associated BOM content type. */
+    typedef BOM_CONTENT Content_T;
+
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef FlightDateKey BomKey_T;
+    typedef FlightDateKey<BOM_CONTENT> BomKey_T;
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
+
+    /** Definition allowing to retrieve the first children type of the
+        BOM_CONTENT. */
+    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
+
+    /** Definition allowing to retrieve the second children type of the
+        BOM_CONTENT. */
+    typedef typename BOM_CONTENT::SecondContentChild_T SecondContentChild_T;
     
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<SegmentDate, LegDate> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector<SegmentDate<FirstContentChild_T>,
+                               LegDate<SecondContentChild_T> > ChildrenBomTypeList_T;
 
     /** Definition allowing to retrive the default children bom holder type. */
-    typedef BomChildrenHolderImp<mpl_::void_> DefaultChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
     /** Definition allowing to retrive the first children bom holder type. */
-    typedef BomChildrenHolderImp<typename BOM_CONTENT::FirstContentChild_T> FirstChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
 
     /** Definition allowing to retrive the second children bom holder type. */
-    typedef BomChildrenHolderImp<typename BOM_CONTENT::SecondContentChild_T> SecondChildrenBomHolder_T;
+    typedef BomChildrenHolderImp<SecondContentChild_T> SecondChildrenBomHolder_T;
     
   public:
     // /////////// Getters /////////////
@@ -158,7 +171,7 @@ namespace stdair {
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
-    FlightDate (const BomKey_T&)
+    FlightDate (const BomKey_T& iKey)
       : _parent (NULL), _key (iKey), _firstChildrenList (NULL),
         _secondChildrenList (NULL) { }
 

@@ -14,6 +14,7 @@
 #include <boost/mpl/size.hpp>
 #include <boost/mpl/at.hpp>
 #include <boost/mpl/find.hpp>
+#include <boost/type_traits/is_same.hpp>
 // STDAIR
 #include <stdair/bom/BomChildrenHolderImp.hpp>
 #include <stdair/bom/BomStructureRoot.hpp>
@@ -84,7 +85,7 @@ namespace stdair {
       ioBomChild._parent = &ioBomParent;
       
       // Retrive the bom children holder corresponding the the children type.
-      typedef BomChildrenHolderImp<BOM_STRUCTURE_CHILD> BOM_CHILDREN_HOLDER_T;
+      typedef BomChildrenHolderImp<typename BOM_STRUCTURE_CHILD::Content_T> BOM_CHILDREN_HOLDER_T;
       BOM_CHILDREN_HOLDER_T* lBomChildrenHolder_ptr = NULL;
       ioBomParent.getChildrenList (lBomChildrenHolder_ptr);
       assert (lBomChildrenHolder_ptr != NULL);
@@ -111,12 +112,12 @@ namespace stdair {
 
   private:
     /** Create a bom children holder object with the given children type. */
-    template <typename BOM_CHILD>
-    BomChildrenHolderImp<BOM_CHILD>& create () {
+    template <typename BOM_CONTENT_CHILD>
+    BomChildrenHolderImp<BOM_CONTENT_CHILD>& create () {
       
-      BomChildrenHolderImp<BOM_CHILD>* aBomChildrenHolder_ptr = NULL;
+      BomChildrenHolderImp<BOM_CONTENT_CHILD>* aBomChildrenHolder_ptr = NULL;
       
-      aBomChildrenHolder_ptr = new BomChildrenHolderImp<BOM_CHILD> ();
+      aBomChildrenHolder_ptr = new BomChildrenHolderImp<BOM_CONTENT_CHILD> ();
       assert (aBomChildrenHolder_ptr != NULL);
       
       // The new object is added to the pool of structure objects
@@ -133,25 +134,21 @@ namespace stdair {
       // Type for the childrend type list.
       typedef typename BOM_STRUCTURE::ChildrenBomTypeList_T CHILDREN_TYPE_LIST_T;
 
-      // Get the number of children types and create necessary number of
-      // bom children holders.
-      const int lNbOfTypes = boost::mpl::size<CHILDREN_TYPE_LIST_T>::type::value;
-
-      if (lNbOfTypes > 0) {
-        typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,0>::type FIRST_CHILDREN_TYPE_T;
-        BomChildrenHolderImp<FIRST_CHILDREN_TYPE_T>& lFirstBomChildrenHolder =
-          instance().create<FIRST_CHILDREN_TYPE_T>();
-
-        ioBomStructure.setChildrenList (lFirstBomChildrenHolder);
-      }
+      typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,0>::type FIRST_CHILDREN_TYPE_T;
       
-      if (lNbOfTypes > 1) {
-        typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,1>::type SECOND_CHILDREN_TYPE_T;
-        BomChildrenHolderImp<SECOND_CHILDREN_TYPE_T>& lSecondBomChildrenHolder =
-          instance().create<SECOND_CHILDREN_TYPE_T>();
-
-        ioBomStructure.setChildrenList (lSecondBomChildrenHolder);
-      }
+      typedef typename FIRST_CHILDREN_TYPE_T::Content_T FIRST_CONTENT_CHILDREN_T;
+      BomChildrenHolderImp<FIRST_CONTENT_CHILDREN_T>& lFirstBomChildrenHolder=
+        instance().create<FIRST_CONTENT_CHILDREN_T>();
+      
+      ioBomStructure.setChildrenList (lFirstBomChildrenHolder);
+      
+      typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,1>::type SECOND_CHILDREN_TYPE_T;
+      
+      typedef typename SECOND_CHILDREN_TYPE_T::Content_T SECOND_CONTENT_CHILDREN_T;
+      BomChildrenHolderImp<SECOND_CONTENT_CHILDREN_T>& lSecondBomChildrenHolder =
+        instance().create<SECOND_CONTENT_CHILDREN_T>();
+      
+      ioBomStructure.setChildrenList (lSecondBomChildrenHolder);
     }
     
   private:

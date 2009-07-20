@@ -34,6 +34,17 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void FacBomContent::clean() {
+    for (BomContentPool_T::iterator itBom = _contentPool.begin();
+	 itBom != _contentPool.end(); itBom++) {
+      BomContent* currentBom_ptr = *itBom;
+      assert (currentBom_ptr != NULL);
+
+      delete currentBom_ptr; currentBom_ptr = NULL;
+    }
+
+    // Empty the pool of Factories
+    _contentPool.clear();
+
     // Reset the static instance
     _instance = NULL;
   }

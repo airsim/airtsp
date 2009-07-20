@@ -26,6 +26,9 @@ namespace stdair {
   class FacBomContent {
     friend class FacSupervisor;
   public:
+    /** Define the list (pool) of Bom objects. */
+    typedef std::vector<BomContent*> BomContentPool_T;
+  public:
     /** Create the root of the BOM tree, i.e., a pair of linked
         BomStructureRoot and BomContentRoot objects. */
     template <typename BOM_CONTENT_CHILD>
@@ -101,6 +104,9 @@ namespace stdair {
       BOM_CONTENT* aBomContent_ptr = new BOM_CONTENT (lBomStructure);
       assert (aBomContent_ptr != NULL);
 
+      // The new object is added to the pool of content objects
+      _contentPool.push_back (aBomContent_ptr);
+
       // Link the structure/holder object with its corresponding content object
       setContent<BOM_STRUCTURE_T, BOM_CONTENT> (lBomStructure, *aBomContent_ptr);
 
@@ -139,6 +145,9 @@ namespace stdair {
     /** The unique instance.*/
     static FacBomContent* _instance;
     
+  private:
+    /** List of instantiated Business Objects*/
+    BomContentPool_T _contentPool;
   };
 }
 #endif // __STDAIR_FAC_FACBOMCONTENT_HPP

@@ -7,6 +7,7 @@
 #include <stdair/bom/Inventory.hpp>
 // AIRSCHED 
 #include <airsched/bom/Inventory.hpp>
+#include <airsched/bom/FlightDate.hpp>
 #include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
@@ -33,7 +34,7 @@ namespace AIRSCHED {
   std::string Inventory::toString() const {
     std::ostringstream oStr;
 
-    _inventoryStructure.describeFull (oStr);
+    //_inventoryStructure.describeFull (oStr);
       
     return oStr.str();
   }

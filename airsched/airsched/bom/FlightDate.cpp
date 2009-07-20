@@ -9,7 +9,10 @@
 // STDAIR
 #include <stdair/bom/FlightDate.hpp>
 // AIRSCHED 
+#include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
+#include <airsched/bom/SegmentDate.hpp>
+#include <airsched/bom/LegDate.hpp>
 #include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {

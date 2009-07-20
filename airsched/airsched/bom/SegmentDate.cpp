@@ -6,6 +6,7 @@
 // STDAIR
 #include <stdair/bom/SegmentDate.hpp>
 // AIRSCHED 
+#include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/SegmentDate.hpp>
 
 namespace AIRSCHED {

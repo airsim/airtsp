@@ -6,11 +6,12 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR 
 #include <stdair/bom/BomContent.hpp>
+#include <stdair/bom/BomContentRoot.hpp>
+// AIRSCHED
+#include <airsched/AIRSCHED_Types.hpp>
 
 // Forward declarations
 namespace stdair {
-  class BomContentRoot;
-  class Inventory;
   class FacBomContent;
 }
   
@@ -21,17 +22,21 @@ namespace AIRSCHED {
   class Inventory : public stdair::BomContent {
     friend class stdair::FacBomContent;
 
-  private:
+  public:
     // Type definitions
     /** Definition allowing to retrieve the associated parent
         BOM content type. */
-    typedef stdair::BomContentRoot ParentBomContent_T;
+    typedef BomContentRoot_T ParentBomContent_T;
 
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::Inventory BomStructure_T;
+    typedef InventoryStructure_T BomStructure_T;
 
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef stdair::InventoryKey BomKey_T;
+    typedef InventoryKey_T BomKey_T;
+
+    /** Definition allowing to retrieve the associated first
+         BOM content child type. */
+    typedef FlightDate FirstContentChild_T;
 
   public:
     // /////////// Display support methods /////////

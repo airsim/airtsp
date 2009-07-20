@@ -7,13 +7,17 @@
 #include <string>
 // STDAIR
 #include <stdair/bom/BomStructureRoot.hpp>
+#include <stdair/bom/BomStructureDummy.hpp>
+#include <stdair/bom/BomContentDummy.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/BomContentRoot.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
 // AIRSCHED
+#include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/LegDate.hpp>
@@ -30,14 +34,14 @@ namespace AIRSCHED {
 
     // Step 0.0: initialisation
     // Create the root of the Bom tree (i.e., a BomContentRoot object)
-    stdair::BomContentRoot& lBomContentRoot =
-      stdair::FacBomContent::instance().createBomRoot();
+    BomContentRoot_T& lBomContentRoot =
+      stdair::FacBomContent::instance().createBomRoot<Inventory>();
     
     
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
     const stdair::AirlineCode_T lAirlineCode ("BA");
-    const stdair::InventoryKey lInventoryKey (lAirlineCode);
+    const InventoryKey_T lInventoryKey (lAirlineCode);
 
     Inventory& lInventory =
       stdair::FacBomContent::instance().create<Inventory> (lBomContentRoot,
@@ -50,7 +54,7 @@ namespace AIRSCHED {
     // Create a FlightDate (BA15/10-JUN-2010)
     const stdair::FlightNumber_T lFlightNumber = 15;
     const stdair::Date_T lDate (2010, 6, 10);
-    const stdair::FlightDateKey lFlightDateKey (lFlightNumber, lDate);
+    const FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
 
     FlightDate& lFlightDate =
       stdair::FacBomContent::instance().create<FlightDate> (lInventory,
@@ -58,12 +62,12 @@ namespace AIRSCHED {
     
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate.toString());
-
+    
     // Step 0.3: Segment-date level
     // Create a first SegmentDate (LHR-SYD)
     const stdair::AirportCode_T lLHR ("LHR");
     const stdair::AirportCode_T lSYD ("SYD");
-    stdair::SegmentDateKey lSegmentDateKey (lLHR, lSYD);
+    SegmentDateKey_T lSegmentDateKey (lLHR, lSYD);
 
     SegmentDate& lLHRSYDSegment =
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
@@ -75,7 +79,7 @@ namespace AIRSCHED {
 
     // Create a second SegmentDate (LHR-BKK)
     const stdair::AirportCode_T lBKK ("BKK");
-    lSegmentDateKey = stdair::SegmentDateKey (lLHR, lBKK);
+    lSegmentDateKey = SegmentDateKey_T (lLHR, lBKK);
 
     SegmentDate& lLHRBKKSegment =
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
@@ -86,7 +90,7 @@ namespace AIRSCHED {
 
 
     // Create a third SegmentDate (BKK-SYD)
-    lSegmentDateKey = stdair::SegmentDateKey (lBKK, lSYD);
+    lSegmentDateKey = SegmentDateKey_T (lBKK, lSYD);
 
     SegmentDate& lBKKSYDSegment =
       stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
@@ -98,7 +102,7 @@ namespace AIRSCHED {
     
     // Step 0.4: Leg-date level
     // Create a first LegDate (LHR)
-    stdair::LegDateKey lLegDateKey (lLHR);
+    LegDateKey_T lLegDateKey (lLHR);
 
     LegDate& lLHRLeg =
       stdair::FacBomContent::instance().create<LegDate> (lFlightDate,
@@ -108,7 +112,7 @@ namespace AIRSCHED {
     AIRSCHED_LOG_DEBUG ("LegDate: " << lLHRLeg.toString());
     
     // Create a second LegDate (BKK)
-    lLegDateKey = stdair::LegDateKey (lBKK);
+    lLegDateKey = LegDateKey_T (lBKK);
 
     LegDate& lBKKLeg =
       stdair::FacBomContent::instance().create<LegDate> (lFlightDate,

@@ -4,12 +4,13 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// AIRSCHED 
+// STDAIR 
 #include <stdair/bom/BomContent.hpp>
+// AIRSCHED
+#include <airsched/AIRSCHED_Types.hpp>
 
 // Forward declarations
 namespace stdair {
-  class LegDate;
   class FacBomContent;
 }
   
@@ -23,17 +24,17 @@ namespace AIRSCHED {
   class LegDate : public stdair::BomContent {
     friend class stdair::FacBomContent;
 
-  private:
+  public:
     // Type definitions
     /** Definition allowing to retrieve the associated parent
         BOM content type. */
     typedef FlightDate ParentBomContent_T;
 
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::LegDate BomStructure_T;
+    typedef LegDateStructure_T BomStructure_T;
 
     /** Definition allowing to retrieve the associated BOM key type. */
-    typedef stdair::LegDateKey BomKey_T;
+    typedef LegDateKey_T BomKey_T;
     
   public:
 

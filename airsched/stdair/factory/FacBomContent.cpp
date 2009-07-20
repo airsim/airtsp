@@ -34,18 +34,6 @@ namespace stdair {
 
   // //////////////////////////////////////////////////////////////////////
   void FacBomContent::clean() {
-    for (StructureMapFromContent_T::iterator itBom = _structureMap.begin();
-	 itBom != _structureMap.end(); itBom++) {
-      const BomContent* currentBom_ptr = itBom->first;
-      assert (currentBom_ptr != NULL);
-      
-      _structureMap.erase (currentBom_ptr);
-      delete currentBom_ptr; currentBom_ptr = NULL;
-    }
-
-    // Empty the pool of Factories
-    _structureMap.clear();
-
     // Reset the static instance
     _instance = NULL;
   }

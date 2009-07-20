@@ -26,12 +26,6 @@ namespace stdair {
   class FacBomContent {
     friend class FacSupervisor;
   public:
-
-    /** Define the list (pool) of Bom objects. */
-    typedef std::map<const stdair::BomContent*,
-                     stdair::BomStructure*> StructureMapFromContent_T;
-
-  public:
     /** Create the root of the BOM tree, i.e., a pair of linked
         BomStructureRoot and BomContentRoot objects. */
     template <typename BOM_CONTENT_CHILD>
@@ -110,14 +104,6 @@ namespace stdair {
       // Link the structure/holder object with its corresponding content object
       setContent<BOM_STRUCTURE_T, BOM_CONTENT> (lBomStructure, *aBomContent_ptr);
 
-      // The new content object is added to the pool of content objects
-      const bool hasInsertBeenSuccessful = _structureMap.
-        insert (StructureMapFromContent_T::value_type (aBomContent_ptr,
-                                                       &lBomStructure)).second;
-      if (hasInsertBeenSuccessful == false) {
-        throw new MemoryAllocationException();
-      }
-    
       return *aBomContent_ptr;
     }
 
@@ -153,10 +139,6 @@ namespace stdair {
     /** The unique instance.*/
     static FacBomContent* _instance;
     
-  private:
-    /** Map of the structure objects corresponding to content objects (they
-        both get a copy of the same key). */
-    StructureMapFromContent_T _structureMap;
   };
 }
 #endif // __STDAIR_FAC_FACBOMCONTENT_HPP

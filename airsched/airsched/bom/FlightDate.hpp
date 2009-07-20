@@ -67,7 +67,7 @@ namespace AIRSCHED {
         at the same level). */
     const std::string describeShortKey() const;
 
-    private:
+  private:
     /** Retrieve the BOM structure object. */
     BomStructure_T& getBomStructure () {
       return _flightStructure;

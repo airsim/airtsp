@@ -10,12 +10,12 @@
 #include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/BomChildrenHolderImp.hpp>
+#include <stdair/bom/FlightDate.hpp>
 
 namespace stdair {
 
   // Forward declaration
   template <typename BOM_CONTENT> class BomStructureRoot;
-  template <typename BOM_CONTENT> class FlightDate;
   class BomStructureDummy;
   class BomContentDummy;
   

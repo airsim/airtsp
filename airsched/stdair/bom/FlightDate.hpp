@@ -9,14 +9,14 @@
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/FlightDateKey.hpp>
+#include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/BomChildrenHolderImp.hpp>
 
 namespace stdair {
 
   // Forward declaration
   template <typename BOM_CONTENT> class Inventory;
-  template <typename BOM_CONTENT> class SegmentDate;
-  template <typename BOM_CONTENT> class LegDate;
   class BomContentDummy;
   
   /** Wrapper class aimed at holding the actual content, modeled

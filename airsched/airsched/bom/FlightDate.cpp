@@ -18,8 +18,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const BomStructure_T& iFlightStructure)
-    : _flightStructure (iFlightStructure) {
+  FlightDate::FlightDate (BomStructure_T& ioFlightStructure)
+    : _flightStructure (ioFlightStructure) {
   }
 
   // ////////////////////////////////////////////////////////////////////

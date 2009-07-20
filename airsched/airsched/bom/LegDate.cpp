@@ -12,8 +12,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  LegDate::LegDate (const BomStructure_T& iLegStructure)
-    : _bomStructure (iLegStructure) {
+  LegDate::LegDate (BomStructure_T& ioLegStructure)
+    : _legDateStructure (ioLegStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -44,12 +44,12 @@ namespace AIRSCHED {
     
   // //////////////////////////////////////////////////////////////////////
   const std::string LegDate::describeKey() const {
-    return _bomStructure.describeKey();
+    return _legDateStructure.describeKey();
   }
 
   // //////////////////////////////////////////////////////////////////////
   const std::string LegDate::describeShortKey() const {
-    return _bomStructure.describeShortKey();
+    return _legDateStructure.describeShortKey();
   }
 
 }

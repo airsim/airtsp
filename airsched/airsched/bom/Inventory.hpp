@@ -48,7 +48,7 @@ namespace AIRSCHED {
         @param istream& the input stream. */
     void fromStream (std::istream& ioIn);
 
-   /** Get the serialised version of the Business Object. */
+    /** Get the serialised version of the Business Object. */
     std::string toString() const;
     
     /** Get a string describing the whole key (differentiating two objects
@@ -59,13 +59,19 @@ namespace AIRSCHED {
         at the same level). */
     const std::string describeShortKey() const;
 
+    private:
+    /** Retrieve the BOM structure object. */
+    BomStructure_T& getBomStructure () {
+      return _inventoryStructure;
+    }
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
     Inventory ();
     Inventory (const Inventory&);
-    Inventory (const BomStructure_T&);
+    Inventory (BomStructure_T&);
 
     /** Destructor. */
     virtual ~Inventory();
@@ -73,7 +79,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** Reference structure. */
-    const BomStructure_T& _inventoryStructure;
+    BomStructure_T& _inventoryStructure;
   };
 
 }

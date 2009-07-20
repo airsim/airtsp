@@ -53,14 +53,20 @@ namespace stdair {
         at the same level). */
     const std::string describeShortKey() const { return std::string (""); }
 
+    private:
+    /** Retrieve the BOM structure object. */
+    BomStructure_T& getBomStructure () {
+      return _bomStructure;
+    }
+    
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
     BomContentRoot ();
     BomContentRoot (const BomContentRoot&);
-    BomContentRoot (const BomStructure_T& iBomStructure)
-      : _bomStructure (iBomStructure) { }
+    BomContentRoot (BomStructure_T& ioBomStructure)
+      : _bomStructure (ioBomStructure) { }
 
     /** Destructor. */
     virtual ~BomContentRoot() { }
@@ -68,7 +74,7 @@ namespace stdair {
   private:
     // Attributes
     /** Reference structure. */
-    const BomStructure_T& _bomStructure;
+    BomStructure_T& _bomStructure;
   };
 
 }

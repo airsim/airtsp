@@ -58,13 +58,19 @@ namespace AIRSCHED {
         at the same level). */
     const std::string describeShortKey() const;
 
+    private:
+    /** Retrieve the BOM structure object. */
+    BomStructure_T& getBomStructure () {
+      return _segmentDateStructure;
+    }
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
-    SegmentDate (const BomStructure_T&);
+    SegmentDate (BomStructure_T&);
 
     /** Destructor. */
     virtual ~SegmentDate();
@@ -72,7 +78,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** Reference structure. */
-    const BomStructure_T& _bomStructure;
+    BomStructure_T& _segmentDateStructure;
   };
 
 }

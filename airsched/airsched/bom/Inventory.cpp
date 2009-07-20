@@ -15,8 +15,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const BomStructure_T& iInventoryStructure)
-    : _inventoryStructure (iInventoryStructure) {
+  Inventory::Inventory (BomStructure_T& ioInventoryStructure)
+    : _inventoryStructure (ioInventoryStructure) {
   }
 
   // ////////////////////////////////////////////////////////////////////

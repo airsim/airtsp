@@ -124,7 +124,21 @@ namespace AIRSCHED {
     // Step 0.5: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
-    
+
+
+    testIteratorInventory (lInventory);
+  }
+
+  // ////////////////////////////////////////////////////////////////
+  void Simulator::testIteratorInventory (const Inventory& iInventory) {
+    AIRSCHED_LOG_DEBUG ("Test iterator.");
+    for (iInventory.flightDateListBegin ();
+         iInventory.flightDateListHasNotReachedEnd ();
+         iInventory.flightDateListIterate ()) {
+      const FlightDate& lCurrentFlightDate = iInventory.getCurrentFlightDate ();
+      // Display the flight-date
+      AIRSCHED_LOG_DEBUG ("FlightDate: " << lCurrentFlightDate.toString());
+    }
   }
   
 }

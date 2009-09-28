@@ -66,6 +66,34 @@ namespace stdair {
       }
     }
 
+    // /////////// Iteration methods //////////
+    /** Initialise the internal iterator on bom children structures:
+        The current iterator is set on the first bom child structure,
+        the next iterator is set on the second one. */
+    void bomChildrenListBegin () {
+      _itCurrentBomObject = _bomChildrenList.begin ();
+    }
+    
+    /** Iterate for one element (bom child structure). */
+    void bomChildrenListIterate () {
+      ++_itCurrentBomObject;
+    }
+    
+    /** States whether or not the end of the (bom child structure)
+        list has been reached. */
+    const bool bomChildrenListHasNotReachedEnd () const {
+      return _itCurrentBomObject != _bomChildrenList.end();
+    }
+
+    /** Get the current element (bom child structure). */
+    BOM_CONTENT_CHILD& getCurrentBomChildrenContent () const {
+      const BomStructure_T* lCurrentBomStructure_ptr =
+        _itCurrentBomObject->second;
+      BOM_CONTENT_CHILD* lCurrentBomContent_ptr =
+        lCurrentBomStructure_ptr->getBomContentPtr();
+      return *lCurrentBomContent_ptr;
+    }
+
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
@@ -83,6 +111,9 @@ namespace stdair {
 
     /** Map of children BOM structures with their key. */
     BomChildrenOrderedList_T _bomChildrenOrderedList;
+
+    /** Iterator for the current BOM structure on the non-ordered list. */
+    typename BomChildrenList_T::const_iterator _itCurrentBomObject;
   };
   
 }

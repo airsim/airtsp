@@ -9,6 +9,8 @@
 
 namespace AIRSCHED {
 
+  class Inventory;
+
   /** Class implementing a small simulation, which uses the Airline Schedule. */
   class Simulator : public CmdAbstract {
   public:
@@ -16,7 +18,9 @@ namespace AIRSCHED {
     // ////////// Business Methods /////////
     /** Perform a small simulation, which uses the Airline Schedule. */
     static void simulate ();
-    
+
+    /** Test the iterator. */
+    static void testIteratorInventory (const Inventory&);
   };
 
 }

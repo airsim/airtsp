@@ -5,6 +5,7 @@
 #include <assert.h>
 // STDAIR
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/BomIterator.hpp>
 // AIRSCHED 
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
@@ -50,6 +51,27 @@ namespace AIRSCHED {
   const std::string Inventory::describeShortKey() const {
     return _inventoryStructure.describeShortKey();
   }
+  
+  // //////////////////////////////////////////////////////////////////////
+  void Inventory::flightDateListBegin () const {
+    _inventoryStructure.flightDateListBegin ();
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  void Inventory::flightDateListIterate () const {
+    _inventoryStructure.flightDateListIterate ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const bool Inventory::flightDateListHasNotReachedEnd () const {
+    return _inventoryStructure.flightDateListHasNotReachedEnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  FlightDate& Inventory::getCurrentFlightDate () const {
+    return _inventoryStructure.getCurrentFlightDate ();
+  }
+  
 
 }
 

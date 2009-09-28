@@ -59,6 +59,22 @@ namespace AIRSCHED {
         at the same level). */
     const std::string describeShortKey() const;
 
+    // /////////// Iteration methods //////////
+    /** Get the current element (flight date). */
+    FlightDate& getCurrentFlightDate () const;
+    
+    /** Initialise the internal iterators on flight date:
+        The current iterator is set on the first flight
+        date, the next iterator is set on the second one. */
+    void flightDateListBegin () const;
+    
+    /** Iterate for one element (flight date). */
+    void flightDateListIterate () const;
+    
+    /** States whether or not the end of the (flight date)
+        list has been reached. */
+    const bool flightDateListHasNotReachedEnd () const;
+
   private:
     /** Retrieve the BOM structure object. */
     BomStructure_T& getBomStructure () {

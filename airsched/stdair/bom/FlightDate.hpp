@@ -78,6 +78,12 @@ namespace stdair {
       return _key;
     }
 
+    /** Get the Flight-Date Content object. */
+    Content_T* getBomContentPtr () const {
+      assert (_content != NULL);
+      return _content;
+    }
+
     /** Get the list of segment-dates. */
     const FirstChildrenBomHolder_T& getFirstChildrenList() const {
       return *_firstChildrenList;

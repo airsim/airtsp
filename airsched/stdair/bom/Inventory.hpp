@@ -114,7 +114,7 @@ namespace stdair {
         @param istream& the input stream. */
     void fromStream (std::istream& ioIn) { }
 
-   /** Get the serialised version of the Business Object. */
+    /** Get the serialised version of the Business Object. */
     std::string toString() const { return describeKey(); }
     
     /** Get a string describing the whole key (differentiating two objects
@@ -133,6 +133,30 @@ namespace stdair {
       _firstChildrenList->describeFull (ioOut);
     }
 
+    // /////////// Iteration methods //////////
+    /** Initialise the internal iterators on flight date:
+        The current iterator is set on the first flight
+        date, the next iterator is set on the second one. */
+    void flightDateListBegin () {
+      _firstChildrenList->bomChildrenListBegin ();
+    }
+
+    /** Iterate for one element (flight date). */
+    void flightDateListIterate () const {
+      _firstChildrenList->bomChildrenListIterate ();
+    }
+    
+    /** States whether or not the end of the (flight date)
+        list has been reached. */
+    const bool flightDateListHasNotReachedEnd () const {
+      return _firstChildrenList->bomChildrenListHasNotReachedEnd ();
+    }
+
+    /** Get the current element (flight date). */
+    FirstContentChild_T& getCurrentFlightDate () const {
+      return _firstChildrenList->getCurrentBomChildrenContent ();
+    }
+    
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */

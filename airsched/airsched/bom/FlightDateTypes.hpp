@@ -1,0 +1,31 @@
+// //////////////////////////////////////////////////////////////////////
+#ifndef __AIRSCHED_BOM_FLIGHTDATETYPES_HPP
+#define __AIRSCHED_BOM_FLIGHTDATETYPES_HPP
+
+// //////////////////////////////////////////////////////////////////////
+// Import section
+// //////////////////////////////////////////////////////////////////////
+
+// Forward declarations.
+namespace stdair {
+  template <typename BOM_CONTENT> class FlightDate;
+  template <typename BOM_CONTENT> class FlightDateKey;
+}
+
+namespace AIRSCHED {
+
+  // Forward declarations.
+  class FlightDate;
+  
+  /** Define the FlightDate structure. */
+  typedef stdair::FlightDate<FlightDate> FlightDateStructure_T;
+  
+  /** Define the FlightDate key. */
+  typedef stdair::FlightDateKey<FlightDate> FlightDateKey_T;
+  
+  /** Define the flight-date structure list. */
+  typedef std::vector<FlightDateStructure_T*> FlightDateStructureList_T;
+
+}
+#endif // __AIRSCHED_BOM_FLIGHTDATETYPES_HPP
+

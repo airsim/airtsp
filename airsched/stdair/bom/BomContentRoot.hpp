@@ -59,6 +59,19 @@ namespace stdair {
     typedef BOM_CHILD FirstContentChild_T;
     // /////////////////////////////////////////////////////////////////////////
 
+
+    // /////////////////////////////////////////////////////////////////////////
+    // In order to enable STL-iterator-like browsing of children objects,
+    // extra type definitions may be specified, such as the ones commented
+    // below. Hence, although those type definitions may appear not so simple
+    // (some will say "idiomatic"), they allow for a very simple use.
+    // /////////////////////////////////////////////////////////////////////////
+    /** Define the const iterator on the list of children objects . */
+    // typedef stdair::BomIterator_T<BomContent,
+    //                        BomStructureList_T::const_iterator> const_iterator;
+    // where BomStructureList_T is defined as std::vector<BomStructure_T*>
+    // /////////////////////////////////////////////////////////////////////////
+
     
   public:
     // /////////// Display support methods /////////

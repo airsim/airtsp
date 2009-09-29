@@ -10,7 +10,6 @@
 namespace stdair {
   template <typename BOM_CONTENT> class Inventory;
   template <typename BOM_CONTENT> class InventoryKey;
-  template <typename BOM_CONTENT, typename ITERATOR> struct BomIterator_T;
 }
 
 namespace AIRSCHED {

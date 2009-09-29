@@ -25,7 +25,6 @@ namespace stdair {
   template <typename BOM_CONTENT> class SegmentDateKey;
   template <typename BOM_CONTENT> class LegDate;
   template <typename BOM_CONTENT> class LegDateKey;
-  template <typename BOM_CONTENT, typename ITERATOR> struct BomIterator_T;
 }
 
 namespace AIRSCHED {
@@ -104,9 +103,5 @@ namespace AIRSCHED {
   /** Define the leg-date key. */
   typedef stdair::LegDateKey<LegDate> LegDateKey_T;
 
-  /** Define the flight-date list const iterator. */
-  typedef stdair::BomIterator_T<FlightDate,
-                                std::vector<FlightDateStructure_T*>::const_iterator> FlightDateListConstIterator_T;
-  
 }
 #endif // __AIRSCHED_AIRSCHED_TYPES_HPP

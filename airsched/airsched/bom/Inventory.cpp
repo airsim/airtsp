@@ -53,12 +53,12 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  FlightDateListConstIterator_T Inventory::flightDateListBegin () const {
+  Inventory::const_iterator Inventory::flightDateListBegin () const {
     return _inventoryStructure.flightDateListBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  FlightDateListConstIterator_T Inventory::flightDateListEnd () const {
+  Inventory::const_iterator Inventory::flightDateListEnd () const {
     return _inventoryStructure.flightDateListEnd ();
   }
   

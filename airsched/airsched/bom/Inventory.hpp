@@ -11,10 +11,12 @@
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/bom/InventoryTypes.hpp>
+#include <airsched/bom/FlightDateTypes.hpp>
 
 // Forward declarations
 namespace stdair {
   class FacBomContent;
+  template <typename BOM_CONTENT, typename ITERATOR> struct BomIterator_T;
 }
   
 namespace AIRSCHED {
@@ -46,10 +48,17 @@ namespace AIRSCHED {
         type. */
     typedef FlightDate FirstContentChild_T;
     // /////////////////////////////////////////////////////////////////////////
+
     
   public:
-    /** Iterator on the FlightDate objects. */
-    typedef FlightDateListConstIterator_T const_iterator;
+    // /////////////////////////////////////////////////////////////////////////
+    // See the explanations, within the stdair::BomContentRoot class, for all
+    // the iterator types specified below
+    // /////////////////////////////////////////////////////////////////////////
+    /** Define the flight-date list const iterator. */
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureList_T::const_iterator> const_iterator;
+    // /////////////////////////////////////////////////////////////////////////
 
     
   public:

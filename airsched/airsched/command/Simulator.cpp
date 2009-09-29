@@ -14,8 +14,8 @@
 #include <stdair/bom/LegDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
+#include <stdair/bom/BomIterator.hpp>
 #include <stdair/factory/FacBomContent.hpp>
-#include <stdair/bom/BomContentRoot.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/bom/Inventory.hpp>
@@ -132,12 +132,19 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////
   void Simulator::testIteratorInventory (const Inventory& iInventory) {
     AIRSCHED_LOG_DEBUG ("Test iterator.");
-    for (iInventory.flightDateListBegin ();
-         iInventory.flightDateListHasNotReachedEnd ();
-         iInventory.flightDateListIterate ()) {
-      const FlightDate& lCurrentFlightDate = iInventory.getCurrentFlightDate ();
-      // Display the flight-date
-      AIRSCHED_LOG_DEBUG ("FlightDate: " << lCurrentFlightDate.toString());
+
+    // Initialize the iterators at the begining and the end of the list.
+    FlightDateListConstIterator_T lConstIteratorBegin =
+      iInventory.flightDateListBegin ();
+    FlightDateListConstIterator_T lConstIteratorEnd =
+      iInventory.flightDateListEnd ();
+
+    // Browse the list.
+    while (lConstIteratorBegin != lConstIteratorEnd) {
+      const FlightDate& lCurrentFlightDate = *lConstIteratorBegin;
+      AIRSCHED_LOG_DEBUG ("Current flight-date: "
+                          << lCurrentFlightDate.toString ());
+      ++lConstIteratorBegin;
     }
   }
   

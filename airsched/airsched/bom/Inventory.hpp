@@ -7,6 +7,7 @@
 // STDAIR 
 #include <stdair/bom/BomContent.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
+#include <stdair/bom/BomIterator.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 
@@ -16,6 +17,9 @@ namespace stdair {
 }
   
 namespace AIRSCHED {
+
+  // Forward declarations.
+  class FlightDate;
 
   /** Class representing the actual functional/business content for
       an airline inventory. */
@@ -37,7 +41,7 @@ namespace AIRSCHED {
     /** Definition allowing to retrieve the associated first
          BOM content child type. */
     typedef FlightDate FirstContentChild_T;
-
+    
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -60,20 +64,13 @@ namespace AIRSCHED {
     const std::string describeShortKey() const;
 
     // /////////// Iteration methods //////////
-    /** Get the current element (flight date). */
-    FlightDate& getCurrentFlightDate () const;
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the begining of the list. */
+    FlightDateListConstIterator_T flightDateListBegin () const;
     
     /** Initialise the internal iterators on flight date:
-        The current iterator is set on the first flight
-        date, the next iterator is set on the second one. */
-    void flightDateListBegin () const;
-    
-    /** Iterate for one element (flight date). */
-    void flightDateListIterate () const;
-    
-    /** States whether or not the end of the (flight date)
-        list has been reached. */
-    const bool flightDateListHasNotReachedEnd () const;
+        return the iterator at the end of the list. */
+    FlightDateListConstIterator_T flightDateListEnd () const;
 
   private:
     /** Retrieve the BOM structure object. */

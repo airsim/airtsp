@@ -51,27 +51,16 @@ namespace AIRSCHED {
   const std::string Inventory::describeShortKey() const {
     return _inventoryStructure.describeShortKey();
   }
-  
+
   // //////////////////////////////////////////////////////////////////////
-  void Inventory::flightDateListBegin () const {
-    _inventoryStructure.flightDateListBegin ();
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  void Inventory::flightDateListIterate () const {
-    _inventoryStructure.flightDateListIterate ();
+  FlightDateListConstIterator_T Inventory::flightDateListBegin () const {
+    return _inventoryStructure.flightDateListBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  const bool Inventory::flightDateListHasNotReachedEnd () const {
-    return _inventoryStructure.flightDateListHasNotReachedEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate& Inventory::getCurrentFlightDate () const {
-    return _inventoryStructure.getCurrentFlightDate ();
+  FlightDateListConstIterator_T Inventory::flightDateListEnd () const {
+    return _inventoryStructure.flightDateListEnd ();
   }
   
-
 }
 

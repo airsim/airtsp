@@ -10,6 +10,7 @@
 #include <stdair/bom/BomStructure.hpp>
 #include <stdair/bom/InventoryKey.hpp>
 #include <stdair/bom/BomChildrenHolderImp.hpp>
+#include <stdair/bom/BomIterator.hpp>
 #include <stdair/bom/FlightDate.hpp>
 
 namespace stdair {
@@ -46,11 +47,14 @@ namespace stdair {
     /** Definition allowing to retrieve the associated children type. */
     typedef boost::mpl::vector<FlightDate<FirstContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
 
-    /** Definition allowing to retrieve the default children bom holder type. */
+    /** Define the default children bom holder type. */
     typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
-    /** Definition allowing to retrieve the first children bom holder type. */
+    /** Define the first children bom holder type. */
     typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
+
+    /** Define the iterator of the flight-date list. */
+    typedef typename FirstChildrenBomHolder_T::ListConstIterator_T FlightDateListConstIterator_T;
   
   public:
     // /////////// Getters /////////////
@@ -135,27 +139,16 @@ namespace stdair {
 
     // /////////// Iteration methods //////////
     /** Initialise the internal iterators on flight date:
-        The current iterator is set on the first flight
-        date, the next iterator is set on the second one. */
-    void flightDateListBegin () {
-      _firstChildrenList->bomChildrenListBegin ();
-    }
-
-    /** Iterate for one element (flight date). */
-    void flightDateListIterate () const {
-      _firstChildrenList->bomChildrenListIterate ();
+        return the iterator at the begining of the list. */
+    FlightDateListConstIterator_T flightDateListBegin () const {
+      return _firstChildrenList->listBegin ();
     }
     
-    /** States whether or not the end of the (flight date)
-        list has been reached. */
-    const bool flightDateListHasNotReachedEnd () const {
-      return _firstChildrenList->bomChildrenListHasNotReachedEnd ();
-    }
-
-    /** Get the current element (flight date). */
-    FirstContentChild_T& getCurrentFlightDate () const {
-      return _firstChildrenList->getCurrentBomChildrenContent ();
-    }
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the end of the list. */
+    FlightDateListConstIterator_T flightDateListEnd () const {
+      return _firstChildrenList->listEnd ();
+   } 
     
   private:
     /** Constructors are private so as to force the usage of the Factory

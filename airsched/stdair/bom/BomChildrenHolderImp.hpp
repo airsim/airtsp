@@ -12,6 +12,7 @@
 #include <map>
 //STDAIR 
 #include <stdair/bom/BomChildrenHolder.hpp>
+#include <stdair/bom/BomIterator.hpp>
 
 namespace stdair {
   
@@ -28,6 +29,10 @@ namespace stdair {
     /** Define lists of children BOM structures. */
     typedef std::vector<BomStructure_T*> BomChildrenOrderedList_T;
     typedef std::map<const std::string, BomStructure_T*> BomChildrenList_T;
+
+    /** Define the different types of iterators. */
+    typedef BomIterator_T<BOM_CONTENT_CHILD,
+                          typename BomChildrenOrderedList_T::const_iterator> ListConstIterator_T;
 
   public:
     // /////////// Display support methods /////////
@@ -67,32 +72,17 @@ namespace stdair {
     }
 
     // /////////// Iteration methods //////////
-    /** Initialise the internal iterator on bom children structures:
-        The current iterator is set on the first bom child structure,
-        the next iterator is set on the second one. */
-    void bomChildrenListBegin () {
-      _itCurrentBomObject = _bomChildrenList.begin ();
+    /** Initialise the internal iterators on bom objects:
+        return the iterator at the begining of the list. */
+    ListConstIterator_T listBegin () const {
+      return ListConstIterator_T (_bomChildrenOrderedList.begin());
     }
     
-    /** Iterate for one element (bom child structure). */
-    void bomChildrenListIterate () {
-      ++_itCurrentBomObject;
-    }
-    
-    /** States whether or not the end of the (bom child structure)
-        list has been reached. */
-    const bool bomChildrenListHasNotReachedEnd () const {
-      return _itCurrentBomObject != _bomChildrenList.end();
-    }
-
-    /** Get the current element (bom child structure). */
-    BOM_CONTENT_CHILD& getCurrentBomChildrenContent () const {
-      const BomStructure_T* lCurrentBomStructure_ptr =
-        _itCurrentBomObject->second;
-      BOM_CONTENT_CHILD* lCurrentBomContent_ptr =
-        lCurrentBomStructure_ptr->getBomContentPtr();
-      return *lCurrentBomContent_ptr;
-    }
+    /** Initialise the internal iterators on bom objects:
+        return the iterator at the end of the list. */
+    ListConstIterator_T listEnd () const {
+      return ListConstIterator_T (_bomChildrenOrderedList.end());
+   } 
 
   private:
     /** Constructors are private so as to force the usage of the Factory
@@ -111,9 +101,6 @@ namespace stdair {
 
     /** Map of children BOM structures with their key. */
     BomChildrenOrderedList_T _bomChildrenOrderedList;
-
-    /** Iterator for the current BOM structure on the non-ordered list. */
-    typename BomChildrenList_T::const_iterator _itCurrentBomObject;
   };
   
 }

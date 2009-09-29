@@ -20,7 +20,8 @@ bom_h_sources = \
 				$(top_srcdir)/stdair/bom/BomChildrenHolderImp.hpp \
 				$(top_srcdir)/stdair/bom/BomContent.hpp \
 				$(top_srcdir)/stdair/bom/BomContentRoot.hpp \
-				$(top_srcdir)/stdair/bom/BomContentDummy.hpp
+				$(top_srcdir)/stdair/bom/BomContentDummy.hpp \
+				$(top_srcdir)/stdair/bom/BomIterator.hpp
 bom_cc_sources = \
 				$(top_srcdir)/stdair/bom/BomKey.cpp \
 				$(top_srcdir)/stdair/bom/BomStructure.cpp \

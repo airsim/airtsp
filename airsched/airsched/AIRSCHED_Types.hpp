@@ -86,12 +86,6 @@ namespace AIRSCHED {
   /** Define the BomStructureRootKey. */
   typedef stdair::BomStructureRootKey<BomContentRoot_T> BomStructureRootKey_T;
 
-  /** Define the Inventory structure. */
-  typedef stdair::Inventory<Inventory> InventoryStructure_T;
-
-  /** Define the Inventory key. */
-  typedef stdair::InventoryKey<Inventory> InventoryKey_T;
-  
   /** Define the flight-date structure. */
   typedef stdair::FlightDate<FlightDate> FlightDateStructure_T;
 
@@ -110,7 +104,7 @@ namespace AIRSCHED {
   /** Define the leg-date key. */
   typedef stdair::LegDateKey<LegDate> LegDateKey_T;
 
- /** Define the flight-date liste const iterator. */
+  /** Define the flight-date list const iterator. */
   typedef stdair::BomIterator_T<FlightDate,
                                 std::vector<FlightDateStructure_T*>::const_iterator> FlightDateListConstIterator_T;
   

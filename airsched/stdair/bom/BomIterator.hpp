@@ -25,14 +25,14 @@ namespace stdair {
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Normal constructor. */
-    BomIterator_T (ITERATOR iIterator) : _itCurrentBomObject (iIterator) { }
+    BomIterator_T (ITERATOR iIterator) : _itBomStructureObject (iIterator) { }
 
     /** Default constructor. */
     BomIterator_T () { }
     
     /** Default copy constructor. */
     BomIterator_T (const BomIterator_T& iBomIterator)
-      : _itCurrentBomObject (iBomIterator._itCurrentBomObject) { }
+      : _itBomStructureObject (iBomIterator._itBomStructureObject) { }
     
     /** Destructor. */
     ~BomIterator_T() { }
@@ -40,19 +40,19 @@ namespace stdair {
   public:
     // ///////////// Operators //////////////
     /** Increment operator. */
-    void operator++ () { ++_itCurrentBomObject; }
+    void operator++ () { ++_itBomStructureObject; }
 
     /** Equality operators. */
     bool operator== (const BomIterator_T& iIt) {
-      return _itCurrentBomObject == iIt._itCurrentBomObject;
+      return _itBomStructureObject == iIt._itBomStructureObject;
     }
 
     bool operator!= (const BomIterator_T& iIt) {
-      return _itCurrentBomObject != iIt._itCurrentBomObject;
+      return _itBomStructureObject != iIt._itBomStructureObject;
     }
 
     BOM_CONTENT& operator* () {
-      BomStructure_T* lBomStruct_ptr = *_itCurrentBomObject;
+      BomStructure_T* lBomStruct_ptr = *_itBomStructureObject;
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       return *lBomContent_ptr;
     }
@@ -60,7 +60,7 @@ namespace stdair {
   private:
     ///////////// Attributes //////////////
     /** Iterator for the current BOM structure on the non-ordered list. */
-    ITERATOR _itCurrentBomObject;
+    ITERATOR _itBomStructureObject;
   };
   
 }

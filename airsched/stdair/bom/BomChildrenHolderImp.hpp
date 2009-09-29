@@ -63,11 +63,10 @@ namespace stdair {
       
       for (typename BomChildrenOrderedList_T::const_iterator itChild =
              _bomChildrenOrderedList.begin();
-           itChild != _bomChildrenOrderedList.end(); ++itChild) {
+           itChild != _bomChildrenOrderedList.end(); ++itChild, ++lIdx) {
         const BomStructure_T* lCurrentChild_ptr = *itChild;
         ioOut << "[" << lIdx << "]: ";
         lCurrentChild_ptr->describeFull (ioOut);
-        ++lIdx;
       }
     }
 
@@ -75,13 +74,13 @@ namespace stdair {
     /** Initialise the internal iterators on bom objects:
         return the iterator at the begining of the list. */
     ListConstIterator_T listBegin () const {
-      return ListConstIterator_T (_bomChildrenOrderedList.begin());
+      return _bomChildrenOrderedList.begin();
     }
     
     /** Initialise the internal iterators on bom objects:
-        return the iterator at the end of the list. */
+        return the iterator past the end of the list. */
     ListConstIterator_T listEnd () const {
-      return ListConstIterator_T (_bomChildrenOrderedList.end());
+      return _bomChildrenOrderedList.end();
    } 
 
   private:

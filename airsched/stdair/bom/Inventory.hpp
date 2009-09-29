@@ -4,7 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// MPL
+// STL
+#include <cassert>
+// (Boost) MPL
 #include <boost/mpl/vector.hpp>
 // STDAIR 
 #include <stdair/bom/BomStructure.hpp>
@@ -45,7 +47,8 @@ namespace stdair {
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
 
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<FlightDate<FirstContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector<FlightDate<FirstContentChild_T>,
+                               BomStructureDummy> ChildrenBomTypeList_T;
 
     /** Define the default children bom holder type. */
     typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
@@ -76,6 +79,7 @@ namespace stdair {
 
     /** Get the list of flight-dates. */
     const FirstChildrenBomHolder_T& getFirstChildrenList() const {
+      assert (_firstChildrenList != NULL);
       return *_firstChildrenList;
     }
 
@@ -141,12 +145,14 @@ namespace stdair {
     /** Initialise the internal iterators on flight date:
         return the iterator at the begining of the list. */
     FlightDateListConstIterator_T flightDateListBegin () const {
+      assert (_firstChildrenList != NULL);
       return _firstChildrenList->listBegin ();
     }
     
     /** Initialise the internal iterators on flight date:
         return the iterator at the end of the list. */
     FlightDateListConstIterator_T flightDateListEnd () const {
+      assert (_firstChildrenList != NULL);
       return _firstChildrenList->listEnd ();
    } 
     

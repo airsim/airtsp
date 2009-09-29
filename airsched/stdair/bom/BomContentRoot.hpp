@@ -20,8 +20,34 @@ namespace stdair {
   class BomContentRoot : public BomContent {
     friend class FacBomContent;
 
+    // /////////////////////////////////////////////////////////////////////////
+    // Type definitions, compulsary for the STDAIR library to work correctly
+    // /////////////////////////////////////////////////////////////////////////
+    /** The following types must be defined:
+        <ul>
+          <li>ParentBomContent_T: Type corresponding to the parent BOM
+          class within that namespace (e.g., AIRSCHED here)</li>
+          <li>BomStructure_T: Type of the corresponding BOM class within
+          the stdair namespace</li>
+          <li>BomKey_T: Type of the corresponding BOM Key structure within
+          the stdair namespace</li>
+          <li>FirstContentChild_T: Type corresponding to the child BOM
+          class within that namespace (e.g., AIRSCHED here)</li>
+        </ul>
+        <br><br>
+        Note that the BomContentRoot has no parent. So, there is no need for
+        that class to define a ParentBomContent_T type.
+        <br><br>
+        Note that when there is a second type of children (for instance,
+        the FlightDate object contains two types of children, namely LegDate
+        and SegmentDate), an additional type definition must be given, namely
+        SecondContentChild_T. As, by default, there is a single type of
+        children, there is no need to specify "First" in the ContentChild_T
+        type.
+    */
+    
   public:
-    // Type definitions
+    // /////////////////////////////////////////////////////////////////////////
     /** Definition allowing to retrieve the associated BOM structure type. */
     typedef BomStructureRoot<BomContentRoot> BomStructure_T;
 
@@ -31,6 +57,8 @@ namespace stdair {
     /** Definition allowing to retrieve the associated first
          BOM content child type. */
     typedef BOM_CHILD FirstContentChild_T;
+    // /////////////////////////////////////////////////////////////////////////
+
     
   public:
     // /////////// Display support methods /////////

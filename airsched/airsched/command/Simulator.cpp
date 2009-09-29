@@ -133,18 +133,11 @@ namespace AIRSCHED {
   void Simulator::testIteratorInventory (const Inventory& iInventory) {
     AIRSCHED_LOG_DEBUG ("Test iterator.");
 
-    // Initialize the iterators at the begining and the end of the list.
-    FlightDateListConstIterator_T lConstIteratorBegin =
-      iInventory.flightDateListBegin ();
-    FlightDateListConstIterator_T lConstIteratorEnd =
-      iInventory.flightDateListEnd ();
-
-    // Browse the list.
-    while (lConstIteratorBegin != lConstIteratorEnd) {
-      const FlightDate& lCurrentFlightDate = *lConstIteratorBegin;
-      AIRSCHED_LOG_DEBUG ("Current flight-date: "
-                          << lCurrentFlightDate.toString ());
-      ++lConstIteratorBegin;
+    // Browse the list with a for-loop
+    AIRSCHED_LOG_DEBUG ("For loop");
+    for (Inventory::const_iterator itInv = iInventory.flightDateListBegin();
+         itInv != iInventory.flightDateListEnd(); ++itInv) {
+      AIRSCHED_LOG_DEBUG ("Current flight-date: " << *itInv);
     }
   }
   

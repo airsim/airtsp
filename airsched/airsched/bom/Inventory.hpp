@@ -10,6 +10,7 @@
 #include <stdair/bom/BomIterator.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
+#include <airsched/bom/InventoryTypes.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -27,7 +28,10 @@ namespace AIRSCHED {
     friend class stdair::FacBomContent;
 
   public:
-    // Type definitions
+    // /////////////////////////////////////////////////////////////////////////
+    // See the explanations, within the stdair::BomContentRoot class, for all
+    // the types which require to be specified below
+    // /////////////////////////////////////////////////////////////////////////
     /** Definition allowing to retrieve the associated parent
         BOM content type. */
     typedef BomContentRoot_T ParentBomContent_T;
@@ -38,9 +42,15 @@ namespace AIRSCHED {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef InventoryKey_T BomKey_T;
 
-    /** Definition allowing to retrieve the associated first
-         BOM content child type. */
+    /** Definition allowing to retrieve the associated first BOM content child
+        type. */
     typedef FlightDate FirstContentChild_T;
+    // /////////////////////////////////////////////////////////////////////////
+    
+  public:
+    /** Iterator on the FlightDate objects. */
+    typedef FlightDateListConstIterator_T const_iterator;
+
     
   public:
     // /////////// Display support methods /////////
@@ -66,11 +76,11 @@ namespace AIRSCHED {
     // /////////// Iteration methods //////////
     /** Initialise the internal iterators on flight date:
         return the iterator at the begining of the list. */
-    FlightDateListConstIterator_T flightDateListBegin () const;
+    const_iterator flightDateListBegin () const;
     
     /** Initialise the internal iterators on flight date:
         return the iterator at the end of the list. */
-    FlightDateListConstIterator_T flightDateListEnd () const;
+    const_iterator flightDateListEnd () const;
 
   private:
     /** Retrieve the BOM structure object. */

@@ -18,11 +18,14 @@ namespace stdair {
   struct BomIterator_T {
 
   public:
-    // Definition allowing to retrieve the pointer type of the iterator.
-    typedef typename ITERATOR::pointer pointer;
-    
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
+
+    // Define the map of key and pointer of BOM_CONTENT.
+    typedef typename std::map<const std::string, BOM_CONTENT*> ContentMap_T;
+    
+    // Define the pointer type of ContentMap_T;
+    typedef typename ContentMap_T::pointer pointer;
     
   public:
     /** Constructors are private so as to force the usage of the Factory
@@ -55,17 +58,35 @@ namespace stdair {
     }
 
     /** Dereferencing operators. */
-    BOM_CONTENT& operator* () const {
+    BOM_CONTENT& operator* () {
       BomStructure_T* lBomStruct_ptr = *_itBomStructureObject;
+      assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
+      assert (lBomContent_ptr != NULL);
       return *lBomContent_ptr;
     }
-    pointer operator-> () const { return &(*_itBomStructureObject); }
+    pointer operator-> () {
+      const std::string& lKey = _itBomStructureObject->first;
+      BomStructure_T* lBomStruct_ptr = _itBomStructureObject->second;
+      assert (lBomStruct_ptr != NULL);
+      BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
+      assert (lBomContent_ptr != NULL);
+
+      _tempMap.clear();
+      const bool insertSucceded =
+        _tempMap.insert (typename ContentMap_T::value_type (lKey,
+                                                            lBomContent_ptr)).second;
+      typename ContentMap_T::iterator itContent = _tempMap.begin();
+      
+      return &(*itContent);
+    }
     
   private:
     ///////////// Attributes //////////////
     /** Iterator for the current BOM structure on the non-ordered list. */
     ITERATOR _itBomStructureObject;
+
+    ContentMap_T _tempMap;
   };
   
 }

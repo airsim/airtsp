@@ -144,11 +144,9 @@ namespace AIRSCHED {
     AIRSCHED_LOG_DEBUG ("Browse the map");
     for (Inventory::map_const_iterator itInv = iInventory.flightDateMapBegin();
          itInv != iInventory.flightDateMapEnd(); ++itInv) {
-      const FlightDateStructure_T* lCurrentFlightDateStructure_ptr=itInv->second;
-      const FlightDate& lCurrentFlightDate =
-        *(lCurrentFlightDateStructure_ptr->getBomContentPtr());
+      const FlightDate* lCurrentFlightDate = itInv->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
-                          << lCurrentFlightDate.toString());
+                          << lCurrentFlightDate->toString());
     }
   }
   

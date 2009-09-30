@@ -21,11 +21,8 @@ namespace stdair {
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
 
-    // Define the map of key and BOM_CONTENT.
-    typedef typename std::map<const std::string, BOM_CONTENT&> ContentMap_T;
-    
-    // Define the pointer type of ContentMap_T;
-    typedef typename ContentMap_T::pointer pointer;
+    // Define the pair of string and pointer of BOM_CONTENT.
+    typedef typename std::pair<std::string, BOM_CONTENT*> value_type;
     
   public:
     /** Constructors are private so as to force the usage of the Factory
@@ -65,22 +62,17 @@ namespace stdair {
       assert (lBomContent_ptr != NULL);
       return *lBomContent_ptr;
     }
-    pointer operator-> () {
+    value_type* operator-> () {
       const std::string& lKey = _itBomStructureObject->first;
       BomStructure_T* lBomStruct_ptr = _itBomStructureObject->second;
       assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       assert (lBomContent_ptr != NULL);
-
-      _tempMap.clear();
-      const bool insertSucceded =
-        _tempMap.insert (typename ContentMap_T::
-                         value_type (lKey, *lBomContent_ptr)).second;
-      assert (insertSucceded == true);
       
-      typename ContentMap_T::iterator itContent = _tempMap.begin();
+      _tempPair.first = lKey;
+      _tempPair.second = lBomContent_ptr;
       
-      return &(*itContent);
+      return &_tempPair;
     }
     
   private:
@@ -88,8 +80,8 @@ namespace stdair {
     /** Iterator for the current BOM structure on the non-ordered list. */
     ITERATOR _itBomStructureObject;
 
-    /** The map which contains the temporary pair of bom key and bom content. */
-    ContentMap_T _tempMap;
+    /** Temporary value of value_type. */
+    value_type _tempPair;
   };
   
 }

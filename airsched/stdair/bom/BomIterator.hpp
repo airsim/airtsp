@@ -21,8 +21,8 @@ namespace stdair {
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
 
-    // Define the map of key and pointer of BOM_CONTENT.
-    typedef typename std::map<const std::string, BOM_CONTENT*> ContentMap_T;
+    // Define the map of key and BOM_CONTENT.
+    typedef typename std::map<const std::string, BOM_CONTENT&> ContentMap_T;
     
     // Define the pointer type of ContentMap_T;
     typedef typename ContentMap_T::pointer pointer;
@@ -74,8 +74,10 @@ namespace stdair {
 
       _tempMap.clear();
       const bool insertSucceded =
-        _tempMap.insert (typename ContentMap_T::value_type (lKey,
-                                                            lBomContent_ptr)).second;
+        _tempMap.insert (typename ContentMap_T::
+                         value_type (lKey, *lBomContent_ptr)).second;
+      assert (insertSucceded == true);
+      
       typename ContentMap_T::iterator itContent = _tempMap.begin();
       
       return &(*itContent);
@@ -86,6 +88,7 @@ namespace stdair {
     /** Iterator for the current BOM structure on the non-ordered list. */
     ITERATOR _itBomStructureObject;
 
+    /** The map which contains the temporary pair of bom key and bom content. */
     ContentMap_T _tempMap;
   };
   

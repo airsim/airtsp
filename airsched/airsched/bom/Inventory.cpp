@@ -53,13 +53,23 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Inventory::const_iterator Inventory::flightDateListBegin () const {
+  Inventory::list_const_iterator Inventory::flightDateListBegin () const {
     return _inventoryStructure.flightDateListBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Inventory::const_iterator Inventory::flightDateListEnd () const {
+  Inventory::list_const_iterator Inventory::flightDateListEnd () const {
     return _inventoryStructure.flightDateListEnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::map_const_iterator Inventory::flightDateMapBegin () const {
+    return _inventoryStructure.flightDateMapBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::map_const_iterator Inventory::flightDateMapEnd () const {
+    return _inventoryStructure.flightDateMapEnd ();
   }
   
 }

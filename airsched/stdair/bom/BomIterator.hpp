@@ -18,6 +18,9 @@ namespace stdair {
   struct BomIterator_T {
 
   public:
+    // Definition allowing to retrieve the pointer type of the iterator.
+    typedef typename ITERATOR::pointer pointer;
+    
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
     
@@ -39,23 +42,25 @@ namespace stdair {
 
   public:
     // ///////////// Operators //////////////
-    /** Increment operator. */
+    /** Incrementing (prefix and postfix) operators. */
     void operator++ () { ++_itBomStructureObject; }
+    void operator++ (int) { ++_itBomStructureObject; }
 
     /** Equality operators. */
     bool operator== (const BomIterator_T& iIt) {
       return _itBomStructureObject == iIt._itBomStructureObject;
     }
-
     bool operator!= (const BomIterator_T& iIt) {
       return _itBomStructureObject != iIt._itBomStructureObject;
     }
 
-    BOM_CONTENT& operator* () {
+    /** Dereferencing operators. */
+    BOM_CONTENT& operator* () const {
       BomStructure_T* lBomStruct_ptr = *_itBomStructureObject;
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       return *lBomContent_ptr;
     }
+    pointer operator-> () const { return &(*_itBomStructureObject); }
     
   private:
     ///////////// Attributes //////////////

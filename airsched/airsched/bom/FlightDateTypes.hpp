@@ -26,6 +26,9 @@ namespace AIRSCHED {
   /** Define the flight-date structure list. */
   typedef std::vector<FlightDateStructure_T*> FlightDateStructureList_T;
 
+  /** Define the flight-date structure map. */
+  typedef std::map<const std::string, FlightDateStructure_T*> FlightDateStructureMap_T;
+
 }
 #endif // __AIRSCHED_BOM_FLIGHTDATETYPES_HPP
 

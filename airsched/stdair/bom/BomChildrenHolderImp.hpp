@@ -33,6 +33,8 @@ namespace stdair {
     /** Define the different types of iterators. */
     typedef BomIterator_T<BOM_CONTENT_CHILD,
                           typename BomChildrenOrderedList_T::const_iterator> ListConstIterator_T;
+    typedef BomIterator_T<BOM_CONTENT_CHILD,
+                          typename BomChildrenList_T::const_iterator> MapConstIterator_T;
 
   public:
     // /////////// Display support methods /////////
@@ -81,6 +83,18 @@ namespace stdair {
         return the iterator past the end of the list. */
     ListConstIterator_T listEnd () const {
       return _bomChildrenOrderedList.end();
+   }
+
+    /** Initialise the internal iterators on bom objects:
+        return the iterator at the begining of the map. */
+    MapConstIterator_T mapBegin () const {
+      return _bomChildrenList.begin();
+    }
+    
+    /** Initialise the internal iterators on bom objects:
+        return the iterator past the end of the map. */
+    MapConstIterator_T mapEnd () const {
+      return _bomChildrenList.end();
    } 
 
   private:

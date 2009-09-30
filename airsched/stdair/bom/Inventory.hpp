@@ -58,6 +58,9 @@ namespace stdair {
 
     /** Define the iterator of the flight-date list. */
     typedef typename FirstChildrenBomHolder_T::ListConstIterator_T FlightDateListConstIterator_T;
+
+    /** Define the iterator of the flight-date map. */
+    typedef typename FirstChildrenBomHolder_T::MapConstIterator_T FlightDateMapConstIterator_T;
   
   public:
     // /////////// Getters /////////////
@@ -154,7 +157,21 @@ namespace stdair {
     FlightDateListConstIterator_T flightDateListEnd () const {
       assert (_firstChildrenList != NULL);
       return _firstChildrenList->listEnd ();
-   } 
+    }
+
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the begining of the map. */
+    FlightDateMapConstIterator_T flightDateMapBegin () const {
+      assert (_firstChildrenList != NULL);
+      return _firstChildrenList->mapBegin ();
+    }
+    
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the end of the map. */
+    FlightDateMapConstIterator_T flightDateMapEnd () const {
+      assert (_firstChildrenList != NULL);
+      return _firstChildrenList->mapEnd ();
+    } 
     
   private:
     /** Constructors are private so as to force the usage of the Factory

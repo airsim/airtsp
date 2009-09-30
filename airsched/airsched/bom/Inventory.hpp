@@ -57,7 +57,11 @@ namespace AIRSCHED {
     // /////////////////////////////////////////////////////////////////////////
     /** Define the flight-date list const iterator. */
     typedef stdair::BomIterator_T<FlightDate,
-                                  FlightDateStructureList_T::const_iterator> const_iterator;
+                                  FlightDateStructureList_T::const_iterator> list_const_iterator;
+
+    /** Define the flight-date map const iterator. */
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureMap_T::const_iterator> map_const_iterator;
     // /////////////////////////////////////////////////////////////////////////
 
     
@@ -85,11 +89,19 @@ namespace AIRSCHED {
     // /////////// Iteration methods //////////
     /** Initialise the internal iterators on flight date:
         return the iterator at the begining of the list. */
-    const_iterator flightDateListBegin () const;
+    list_const_iterator flightDateListBegin () const;
     
     /** Initialise the internal iterators on flight date:
         return the iterator at the end of the list. */
-    const_iterator flightDateListEnd () const;
+    list_const_iterator flightDateListEnd () const;
+
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the begining of the map. */
+    map_const_iterator flightDateMapBegin () const;
+    
+    /** Initialise the internal iterators on flight date:
+        return the iterator at the end of the map. */
+    map_const_iterator flightDateMapEnd () const;
 
   private:
     /** Retrieve the BOM structure object. */

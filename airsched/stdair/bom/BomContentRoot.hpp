@@ -31,7 +31,7 @@ namespace stdair {
           the stdair namespace</li>
           <li>BomKey_T: Type of the corresponding BOM Key structure within
           the stdair namespace</li>
-          <li>FirstContentChild_T: Type corresponding to the child BOM
+          <li>ContentChild_T: Type corresponding to the child BOM
           class within that namespace (e.g., AIRSCHED here)</li>
         </ul>
         <br><br>
@@ -54,9 +54,9 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef BomStructureRootKey<BomContentRoot> BomKey_T;
 
-    /** Definition allowing to retrieve the associated first
+    /** Definition allowing to retrieve the associated 
          BOM content child type. */
-    typedef BOM_CHILD FirstContentChild_T;
+    typedef BOM_CHILD ContentChild_T;
     // /////////////////////////////////////////////////////////////////////////
 
 

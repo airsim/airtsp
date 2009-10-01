@@ -28,9 +28,9 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM content type. */
     typedef BOM_CONTENT Content_T;
 
-    /** Definition allowing to retrieve the first children type of the
+    /** Definition allowing to retrieve the  children type of the
         BOM_CONTENT. */
-    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
+    typedef typename BOM_CONTENT::ContentChild_T ContentChild_T;
     
   private:
     // Type definitions
@@ -38,13 +38,13 @@ namespace stdair {
     typedef BomStructureRootKey<BOM_CONTENT> BomKey_T;
 
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<Inventory<FirstContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
+    typedef boost::mpl::vector<Inventory<ContentChild_T>, BomStructureDummy> ChildrenBomTypeList_T;
 
     /** Definition allowing to retrive the default children bom holder type. */
     typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
     
-    /** Definition allowing to retrive the first children bom holder type. */
-    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
+    /** Definition allowing to retrive the  children bom holder type. */
+    typedef BomChildrenHolderImp<ContentChild_T> ChildrenBomHolder_T;
 
   public:
 
@@ -55,13 +55,13 @@ namespace stdair {
     }
     
     /** Get the list of inventories. */
-    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
-      return *_firstChildrenList;
+    const ChildrenBomHolder_T& getChildrenList() const {
+      return *_childrenList;
     }
 
     /** Get the list of inventories. */
-    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
-      ioChildrenList = _firstChildrenList;
+    void getChildrenList (ChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _childrenList;
     }
 
   private: 
@@ -69,9 +69,9 @@ namespace stdair {
     /** Default children list setter. */
     void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
-    /** Set the first children list. */
-    void setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
-      _firstChildrenList = &ioChildrenList;
+    /** Set the  children list. */
+    void setChildrenList (ChildrenBomHolder_T& ioChildrenList) {
+      _childrenList = &ioChildrenList;
     }
 
   public:
@@ -118,7 +118,7 @@ namespace stdair {
     BOM_CONTENT* _content;
 
     /** List of inventories. */
-    FirstChildrenBomHolder_T* _firstChildrenList;
+    ChildrenBomHolder_T* _childrenList;
   };
 
 }

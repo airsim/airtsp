@@ -44,9 +44,9 @@ namespace AIRSCHED {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef InventoryKey_T BomKey_T;
 
-    /** Definition allowing to retrieve the associated first BOM content child
+    /** Definition allowing to retrieve the associated  BOM content child
         type. */
-    typedef FlightDate FirstContentChild_T;
+    typedef FlightDate ContentChild_T;
     // /////////////////////////////////////////////////////////////////////////
 
     
@@ -57,7 +57,7 @@ namespace AIRSCHED {
     // /////////////////////////////////////////////////////////////////////////
     /** Define the flight-date list const iterator. */
     typedef stdair::BomConstIterator_T<FlightDate,
-                                  FlightDateStructureList_T::const_iterator> list_const_iterator;
+                                       FlightDateStructureList_T::const_iterator> list_const_iterator;
 
     /** Define the flight-date map const iterator. */
     typedef stdair::BomConstIterator_T<FlightDate,

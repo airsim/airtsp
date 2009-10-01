@@ -38,9 +38,9 @@ namespace AIRSCHED {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef FlightDateKey_T BomKey_T;
 
-    /** Definition allowing to retrieve the associated first
+    /** Definition allowing to retrieve the associated 
          BOM content child type. */
-    typedef SegmentDate FirstContentChild_T;
+    typedef SegmentDate ContentChild_T;
 
         /** Definition allowing to retrieve the associated second
          BOM content child type. */

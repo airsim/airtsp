@@ -39,23 +39,23 @@ namespace stdair {
         BOM structure type. */
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
 
-    /** Definition allowing to retrieve the first children type of the
+    /** Definition allowing to retrieve the  children type of the
         BOM_CONTENT. */
-    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
+    typedef typename BOM_CONTENT::ContentChild_T ContentChild_T;
 
     /** Definition allowing to retrieve the second children type of the
         BOM_CONTENT. */
     typedef typename BOM_CONTENT::SecondContentChild_T SecondContentChild_T;
     
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<SegmentDate<FirstContentChild_T>,
+    typedef boost::mpl::vector<SegmentDate<ContentChild_T>,
                                LegDate<SecondContentChild_T> > ChildrenBomTypeList_T;
 
     /** Definition allowing to retrive the default children bom holder type. */
     typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
-    /** Definition allowing to retrive the first children bom holder type. */
-    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
+    /** Definition allowing to retrive the  children bom holder type. */
+    typedef BomChildrenHolderImp<ContentChild_T> ChildrenBomHolder_T;
 
     /** Definition allowing to retrive the second children bom holder type. */
     typedef BomChildrenHolderImp<SecondContentChild_T> SecondChildrenBomHolder_T;
@@ -85,8 +85,8 @@ namespace stdair {
     }
 
     /** Get the list of segment-dates. */
-    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
-      return *_firstChildrenList;
+    const ChildrenBomHolder_T& getChildrenList() const {
+      return *_childrenList;
     }
 
     /** Get the list of leg-dates. */
@@ -95,8 +95,8 @@ namespace stdair {
     }
 
     /** Get the list of segment-dates. */
-    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
-      ioChildrenList = _firstChildrenList;
+    void getChildrenList (ChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _childrenList;
     }
 
     /** Get the list of leg-dates. */
@@ -115,8 +115,8 @@ namespace stdair {
     void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
     /** Set the segment-date children list. */
-    void setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
-      _firstChildrenList = &ioChildrenList;
+    void setChildrenList (ChildrenBomHolder_T& ioChildrenList) {
+      _childrenList = &ioChildrenList;
     }
 
     /** Set the leg-date children list. */
@@ -159,8 +159,8 @@ namespace stdair {
         @param ostream& the output stream. */
     void displaySegmentDateList (std::ostringstream& ioOut) const {
       ioOut << "SegmentDates: " << std::endl;
-      assert (_firstChildrenList != NULL);
-      _firstChildrenList->describeFull (ioOut);
+      assert (_childrenList != NULL);
+      _childrenList->describeFull (ioOut);
     }
 
     /** Dump the leg-date children list in to an output stream.
@@ -178,7 +178,7 @@ namespace stdair {
     FlightDate ();
     FlightDate (const FlightDate&);
     FlightDate (const BomKey_T& iKey)
-      : _parent (NULL), _key (iKey), _firstChildrenList (NULL),
+      : _parent (NULL), _key (iKey), _childrenList (NULL),
         _secondChildrenList (NULL) { }
 
     /** Destructor. */
@@ -196,7 +196,7 @@ namespace stdair {
     BomKey_T _key;
     
     /** List of segment-dates. */
-    FirstChildrenBomHolder_T* _firstChildrenList;
+    ChildrenBomHolder_T* _childrenList;
 
     /** List of leg-dates. */
     SecondChildrenBomHolder_T* _secondChildrenList;

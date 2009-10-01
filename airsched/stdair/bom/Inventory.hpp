@@ -38,29 +38,29 @@ namespace stdair {
     /** Definition allowing to retrieve the associated BOM key type. */
     typedef InventoryKey<BOM_CONTENT> BomKey_T;
 
-    /** Definition allowing to retrieve the first children type of the
+    /** Definition allowing to retrieve the  children type of the
         BOM_CONTENT. */
-    typedef typename BOM_CONTENT::FirstContentChild_T FirstContentChild_T;
+    typedef typename BOM_CONTENT::ContentChild_T ContentChild_T;
 
     /** Definition allowing to retrieve the associated parent
         BOM structure type. */
     typedef typename BOM_CONTENT::ParentBomContent_T::BomStructure_T ParentBomStructure_T;
 
     /** Definition allowing to retrieve the associated children type. */
-    typedef boost::mpl::vector<FlightDate<FirstContentChild_T>,
+    typedef boost::mpl::vector<FlightDate<ContentChild_T>,
                                BomStructureDummy> ChildrenBomTypeList_T;
 
     /** Define the default children bom holder type. */
     typedef BomChildrenHolderImp<BomContentDummy> DefaultChildrenBomHolder_T;
 
-    /** Define the first children bom holder type. */
-    typedef BomChildrenHolderImp<FirstContentChild_T> FirstChildrenBomHolder_T;
+    /** Define the  children bom holder type. */
+    typedef BomChildrenHolderImp<ContentChild_T> ChildrenBomHolder_T;
 
     /** Define the iterator of the flight-date list. */
-    typedef typename FirstChildrenBomHolder_T::ListConstIterator_T FlightDateListConstIterator_T;
+    typedef typename ChildrenBomHolder_T::ListConstIterator_T FlightDateListConstIterator_T;
 
     /** Define the iterator of the flight-date map. */
-    typedef typename FirstChildrenBomHolder_T::MapConstIterator_T FlightDateMapConstIterator_T;
+    typedef typename ChildrenBomHolder_T::MapConstIterator_T FlightDateMapConstIterator_T;
   
   public:
     // /////////// Getters /////////////
@@ -81,14 +81,14 @@ namespace stdair {
     }
 
     /** Get the list of flight-dates. */
-    const FirstChildrenBomHolder_T& getFirstChildrenList() const {
-      assert (_firstChildrenList != NULL);
-      return *_firstChildrenList;
+    const ChildrenBomHolder_T& getChildrenList() const {
+      assert (_childrenList != NULL);
+      return *_childrenList;
     }
 
      /** Get the list of flight-dates. */
-    void getChildrenList (FirstChildrenBomHolder_T*& ioChildrenList) {
-      ioChildrenList = _firstChildrenList;
+    void getChildrenList (ChildrenBomHolder_T*& ioChildrenList) {
+      ioChildrenList = _childrenList;
     }
     
   private:
@@ -101,9 +101,9 @@ namespace stdair {
     /** Default children list setter. */
     void setChildrenList (DefaultChildrenBomHolder_T&) { }
     
-    /** Set the first children list. */
-    void setChildrenList (FirstChildrenBomHolder_T& ioChildrenList) {
-      _firstChildrenList = &ioChildrenList;
+    /** Set the  children list. */
+    void setChildrenList (ChildrenBomHolder_T& ioChildrenList) {
+      _childrenList = &ioChildrenList;
     }
 
   public:
@@ -140,37 +140,37 @@ namespace stdair {
         @param ostream& the output stream. */
     void displayFlightDateList (std::ostringstream& ioOut) const {
       ioOut << "FlightDates: " << std::endl;
-      assert (_firstChildrenList != NULL);
-      _firstChildrenList->describeFull (ioOut);
+      assert (_childrenList != NULL);
+      _childrenList->describeFull (ioOut);
     }
 
     // /////////// Iteration methods //////////
     /** Initialise the internal const iterator on flight date:
         return the const iterator at the begining of the list. */
     FlightDateListConstIterator_T flightDateListConstIteratorBegin () const {
-      assert (_firstChildrenList != NULL);
-      return _firstChildrenList->listConstIteratorBegin ();
+      assert (_childrenList != NULL);
+      return _childrenList->listConstIteratorBegin ();
     }
     
     /** Initialise the internal const iterator on flight date:
         return the const iterator at the end of the list. */
     FlightDateListConstIterator_T flightDateListConstIteratorEnd () const {
-      assert (_firstChildrenList != NULL);
-      return _firstChildrenList->listConstIteratorEnd ();
+      assert (_childrenList != NULL);
+      return _childrenList->listConstIteratorEnd ();
     }
 
     /** Initialise the internal const iteratorson flight date:
         return the const iterator at the begining of the map. */
     FlightDateMapConstIterator_T flightDateMapConstIteratorBegin () const {
-      assert (_firstChildrenList != NULL);
-      return _firstChildrenList->mapConstIteratorBegin ();
+      assert (_childrenList != NULL);
+      return _childrenList->mapConstIteratorBegin ();
     }
     
     /** Initialise the internal const iterator on flight date:
         return the const iterator at the end of the map. */
     FlightDateMapConstIterator_T flightDateMapConstIteratorEnd () const {
-      assert (_firstChildrenList != NULL);
-      return _firstChildrenList->mapConstIteratorEnd ();
+      assert (_childrenList != NULL);
+      return _childrenList->mapConstIteratorEnd ();
     } 
     
   private:
@@ -180,7 +180,7 @@ namespace stdair {
     Inventory ();
     Inventory (const Inventory&);
     Inventory (const BomKey_T& iKey)
-      : _parent (NULL), _key (iKey), _firstChildrenList (NULL) { }
+      : _parent (NULL), _key (iKey), _childrenList (NULL) { }
 
     /** Destructor. */
     virtual ~Inventory() { }
@@ -197,7 +197,7 @@ namespace stdair {
     BomKey_T _key;
     
     /** List of flight-dates. */
-    FirstChildrenBomHolder_T* _firstChildrenList;
+    ChildrenBomHolder_T* _childrenList;
   };
 
 }

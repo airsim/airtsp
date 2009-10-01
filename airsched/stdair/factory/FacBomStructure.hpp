@@ -134,13 +134,13 @@ namespace stdair {
       // Type for the childrend type list.
       typedef typename BOM_STRUCTURE::ChildrenBomTypeList_T CHILDREN_TYPE_LIST_T;
 
-      typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,0>::type FIRST_CHILDREN_TYPE_T;
+      typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,0>::type CHILDREN_TYPE_T;
       
-      typedef typename FIRST_CHILDREN_TYPE_T::Content_T FIRST_CONTENT_CHILDREN_T;
-      BomChildrenHolderImp<FIRST_CONTENT_CHILDREN_T>& lFirstBomChildrenHolder=
-        instance().create<FIRST_CONTENT_CHILDREN_T>();
+      typedef typename CHILDREN_TYPE_T::Content_T CONTENT_CHILDREN_T;
+      BomChildrenHolderImp<CONTENT_CHILDREN_T>& lBomChildrenHolder=
+        instance().create<CONTENT_CHILDREN_T>();
       
-      ioBomStructure.setChildrenList (lFirstBomChildrenHolder);
+      ioBomStructure.setChildrenList (lBomChildrenHolder);
       
       typedef typename boost::mpl::at_c<CHILDREN_TYPE_LIST_T,1>::type SECOND_CHILDREN_TYPE_T;
       

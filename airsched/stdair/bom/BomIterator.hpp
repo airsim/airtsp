@@ -4,11 +4,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
 // STL
+#include <cassert>
 #include <vector>
 #include <map>
+// STDAIR
+#include <stdair/basic/BasTypes.hpp>
 
 namespace stdair {
   
@@ -63,16 +64,18 @@ namespace stdair {
       return *lBomContent_ptr;
     }
     value_type* operator-> () {
-      const std::string& lKey = _itBomStructureObject->first;
+      const MapKey_T& lKey = _itBomStructureObject->first;
       BomStructure_T* lBomStruct_ptr = _itBomStructureObject->second;
       assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       assert (lBomContent_ptr != NULL);
+
+      // See the comment below, at the definition of the _intermediateValue
+      // attribute
+      _intermediateValue.first = lKey;
+      _intermediateValue.second = lBomContent_ptr;
       
-      _tempPair.first = lKey;
-      _tempPair.second = lBomContent_ptr;
-      
-      return &_tempPair;
+      return &_intermediateValue;
     }
     
   private:
@@ -80,8 +83,13 @@ namespace stdair {
     /** Iterator for the current BOM structure on the non-ordered list. */
     ITERATOR _itBomStructureObject;
 
-    /** Temporary value of value_type. */
-    value_type _tempPair;
+    /** Helper attribute.
+        <br>It is necessary to define that value at the attribute
+        level, because the operator->() method needs to return a
+        pointer on it. If that value be temporary, i.e., created at
+        the fly when the operator->() method returns, we would return
+        a pointer on a temporary value, which is not good. */
+    value_type _intermediateValue;
   };
   
 }

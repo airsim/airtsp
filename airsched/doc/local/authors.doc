@@ -1,32 +1,32 @@
 /*!
-\page authors OpenTrep People
+\page authors Air-Sched People
 
 
 \section admins Project Admins
 
 - Denis Arnaud <denis_arnaud@users.sourceforge.net> (\ref N)
-- Patrick Grandjean <pgrandjean@users.sourceforge.net> (\ref N)
+- Anh Quan Nguyen <quannaus@users.sourceforge.net> (\ref N)
 
 
 \section developers Developers
 
-- Karim Duval <duvalkarim@users.sourceforge.net> (\ref N)
-- Ngoc-Thach Hoang <hoangngocthach@users.sourceforge.net> (\ref N)
+- Daniel Perez <daniperez@users.sourceforge.net> (\ref N)
+- Christophe Lacombe <clacombe@users.sourceforge.net> (\ref N)
 
 
 \section retired Retired Developers
 
-- Fabrice Bellard
+- Rémi Casacci (\ref N)
 
 
 \section contributors Contributors
 
-- Simon Martin (\ref N)
+- Emmanuel Bastien (\ref N)
 
 
 \section distributors Distribution Maintainers
 
--  Christopher Gragsone <maetrics@users.sourceforge.net> 
+-  Denis Arnaud <denis_arnaud@users.sourceforge.net> 
 
 \note
 \anchor N

@@ -1,5 +1,5 @@
 /*!
-\mainpage OpenTrep Documentation
+\mainpage Air-Sched Documentation
 
 \htmlonly
 <!-- start of main block -->
@@ -11,32 +11,32 @@
 <ul>
 <li><a href="features.html">Features</a></li>
 <li><a href="installation.html">Installation</a></li>
-<li><a href="linking.html">Linking with OpenTrep</a></li>
-<li><a href="users_guide.html">Short Introduction to OpenTrep</a></li>
+<li><a href="linking.html">Linking with Air-Sched</a></li>
+<li><a href="users_guide.html">Short Introduction to Air-Sched</a></li>
 <li><a href="tutorial.html">Some Tutorial Examples</a></li>
-<li><a href="verification.html">OpenTrep Verification</a></li>
+<li><a href="verification.html">Air-Sched Verification</a></li>
 <li><a href="copyright.html">Copyright and License</a></li>
 <li><a href="help_wanted.html">Make a Difference</a></li>
 <li><a href="authors.html">Authors</a></li>
 </ul>
 
-<a href="http://sourceforge.net/projects/opentrep/"><b>OpenTrep at SourceForge:</b></a>
+<a href="http://sourceforge.net/projects/air-sched/"><b>Air-Sched at SourceForge:</b></a>
 <ul>
-<li><a href="http://sourceforge.net/project/showfiles.php?group_id=177703">Download OpenTrep</a></li>
-<li><a href="http://opentrep.sourceforge.net/RPM-GPG-KEY-freshrpms-free">RPM-GPG-Key</a> for OpenTrep RPMs (save the file, and type 'rpm --import RPM-GPG-KEY-freshrpms-free' as root)</li>
-<li><a href="http://sourceforge.net/tracker/?group_id=177703&atid=882290">Bug Reports</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=177703&atid=882293">Feature Requests</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=177703&atid=882292">Submit Patches</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=177703&atid=882291">Support Request</a></li>
-<li><a href="http://sourceforge.net/mail/?group_id=177703">Mailing lists</a></li>
+<li><a href="http://sourceforge.net/project/showfiles.php?group_id=261633">Download Air-Sched</a></li>
+<li><a href="http://air-sched.sourceforge.net/RPM-GPG-KEY-freshrpms-free">RPM-GPG-Key</a> for Air-Sched RPMs (save the file, and type 'rpm --import RPM-GPG-KEY-freshrpms-free' as root)</li>
+<li><a href="http://sourceforge.net/tracker/?group_id=261633&atid=882290">Bug Reports</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=261633&atid=882293">Feature Requests</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=261633&atid=882292">Submit Patches</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=261633&atid=882291">Support Request</a></li>
+<li><a href="http://sourceforge.net/mail/?group_id=261633">Mailing lists</a></li>
 <li><a href="http://sourceforge.net/forum/forum.php?forum_id=613897">Discuss about Development issues</a></li>
 <li><a href="http://sourceforge.net/forum/forum.php?forum_id=613896">Ask for Help</a></li>
-<li><a href="http://sourceforge.net/forum/forum.php?forum_id=613895">Discuss OpenTrep</a></li>
+<li><a href="http://sourceforge.net/forum/forum.php?forum_id=613895">Discuss Air-Sched</a></li>
 </ul>
 
-<b>OpenTrep Development:</b>
+<b>Air-Sched Development:</b>
 <ul>
-<li><a href="http://opentrep.svn.sourceforge.net/viewvc/opentrep/">SVN Repository</a></li>
+<li><a href="http://air-sched.svn.sourceforge.net/viewvc/air-sched/">SVN Repository</a></li>
 <li><a href="codingrules.html">Coding Rules</a></li>
 <li><a href="documentation.html">Documentation Rules</a></li>
 <li><a href="test.html">Test Rules</a></li>
@@ -51,24 +51,25 @@
 <!-- end of left margin -->
 \endhtmlonly
 
-\section about About OpenTrep
+\section about About Air-Sched
 
-OpenTrep is a C++ library of revenue management and optimisation classes
-and functions.
+Air-Sched is a C++ library of classes and functions modeling airline schedules,
+for instance allowing to retrieve all the flight-based travel solutions
+corresponding to a given pair of origin and destination points.
 
-OpenTrep makes an extensive use of existing open-source libraries for
+Air-Sched makes an extensive use of existing open-source libraries for
 increased functionality, speed and accuracy. In particular <a
-href="http://www.gnu.org/software/gsl">GSL</a> (<em>GNU Scientific
-Library</em>) library is used.
+href="http://www.boost.org">Boost</a> (<em>C++ STL Extensions</em>) library is
+used.
 
-The OpenTrep library originates from the department of Operational
+The Air-Sched library originates from the department of Operational
 Research and Innovation at <a
 href="http://www.amadeus.com">Amadeus</a>, Sophia Antipolis,
-France. OpenTrep is released under the terms of the <a
+France. Air-Sched is released under the terms of the <a
 href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public
 License</a> (LGPL) for you to enjoy.
 
-OpenTrep should work on
+Air-Sched should work on
 <a href="http://en.wikipedia.org/wiki/GNU/Linux">GNU/Linux</a>,
 <a href="http://www.sun.com/software/solaris/">Sun Solaris</a>,
 Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,

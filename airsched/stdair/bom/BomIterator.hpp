@@ -16,30 +16,31 @@ namespace stdair {
   /** Template class aimed at iterating a list or a map of children BOM
       structure of a dedicated type. */
   template <typename BOM_CONTENT, typename ITERATOR>
-  struct BomIterator_T {
+  struct BomConstIterator_T {
 
   public:
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
 
     // Define the pair of string and pointer of BOM_CONTENT.
-    typedef typename std::pair<std::string, BOM_CONTENT*> value_type;
+    typedef typename std::pair<std::string, const BOM_CONTENT*> value_type;
     
   public:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Normal constructor. */
-    BomIterator_T (ITERATOR iIterator) : _itBomStructureObject (iIterator) { }
+    BomConstIterator_T (ITERATOR iIterator)
+      : _itBomStructureObject (iIterator) { }
 
     /** Default constructor. */
-    BomIterator_T () { }
+    BomConstIterator_T () { }
     
     /** Default copy constructor. */
-    BomIterator_T (const BomIterator_T& iBomIterator)
+    BomConstIterator_T (const BomConstIterator_T& iBomIterator)
       : _itBomStructureObject (iBomIterator._itBomStructureObject) { }
     
     /** Destructor. */
-    ~BomIterator_T() { }
+    ~BomConstIterator_T() { }
 
   public:
     // ///////////// Operators //////////////
@@ -48,15 +49,15 @@ namespace stdair {
     void operator++ (int) { ++_itBomStructureObject; }
 
     /** Equality operators. */
-    bool operator== (const BomIterator_T& iIt) {
+    bool operator== (const BomConstIterator_T& iIt) {
       return _itBomStructureObject == iIt._itBomStructureObject;
     }
-    bool operator!= (const BomIterator_T& iIt) {
+    bool operator!= (const BomConstIterator_T& iIt) {
       return _itBomStructureObject != iIt._itBomStructureObject;
     }
 
     /** Dereferencing operators. */
-    BOM_CONTENT& operator* () {
+    const BOM_CONTENT& operator* () {
       BomStructure_T* lBomStruct_ptr = *_itBomStructureObject;
       assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();

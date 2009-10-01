@@ -145,32 +145,32 @@ namespace stdair {
     }
 
     // /////////// Iteration methods //////////
-    /** Initialise the internal iterators on flight date:
-        return the iterator at the begining of the list. */
-    FlightDateListConstIterator_T flightDateListBegin () const {
+    /** Initialise the internal const iterator on flight date:
+        return the const iterator at the begining of the list. */
+    FlightDateListConstIterator_T flightDateListConstIteratorBegin () const {
       assert (_firstChildrenList != NULL);
-      return _firstChildrenList->listBegin ();
+      return _firstChildrenList->listConstIteratorBegin ();
     }
     
-    /** Initialise the internal iterators on flight date:
-        return the iterator at the end of the list. */
-    FlightDateListConstIterator_T flightDateListEnd () const {
+    /** Initialise the internal const iterator on flight date:
+        return the const iterator at the end of the list. */
+    FlightDateListConstIterator_T flightDateListConstIteratorEnd () const {
       assert (_firstChildrenList != NULL);
-      return _firstChildrenList->listEnd ();
+      return _firstChildrenList->listConstIteratorEnd ();
     }
 
-    /** Initialise the internal iterators on flight date:
-        return the iterator at the begining of the map. */
-    FlightDateMapConstIterator_T flightDateMapBegin () const {
+    /** Initialise the internal const iteratorson flight date:
+        return the const iterator at the begining of the map. */
+    FlightDateMapConstIterator_T flightDateMapConstIteratorBegin () const {
       assert (_firstChildrenList != NULL);
-      return _firstChildrenList->mapBegin ();
+      return _firstChildrenList->mapConstIteratorBegin ();
     }
     
-    /** Initialise the internal iterators on flight date:
-        return the iterator at the end of the map. */
-    FlightDateMapConstIterator_T flightDateMapEnd () const {
+    /** Initialise the internal const iterator on flight date:
+        return the const iterator at the end of the map. */
+    FlightDateMapConstIterator_T flightDateMapConstIteratorEnd () const {
       assert (_firstChildrenList != NULL);
-      return _firstChildrenList->mapEnd ();
+      return _firstChildrenList->mapConstIteratorEnd ();
     } 
     
   private:

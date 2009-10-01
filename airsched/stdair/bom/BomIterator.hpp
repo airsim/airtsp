@@ -18,7 +18,7 @@ namespace stdair {
       <br> This class aimed at implementing the "normal" operators except
       dereferencing ones.
   */
-  template <typename BOM_CONTENT, typename ITERATOR>
+  template <typename ITERATOR>
   struct BomIteratorAbstract {
 
   protected:
@@ -65,11 +65,11 @@ namespace stdair {
       const iterators.
   */
   template <typename BOM_CONTENT, typename ITERATOR>
-  struct BomConstIterator_T : public BomIteratorAbstract<BOM_CONTENT, ITERATOR> {
+  struct BomConstIterator_T : public BomIteratorAbstract<ITERATOR> {
 
   public:
     // Definition allowing to retrieve the parent type.
-    typedef BomIteratorAbstract<BOM_CONTENT, ITERATOR> Parent_T;
+    typedef BomIteratorAbstract<ITERATOR> Parent_T;
     
     // Definition allowing to retrieve the corresponding bom structure.
     typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;

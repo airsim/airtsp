@@ -26,6 +26,7 @@ namespace stdair {
   class FlightDate : public BomStructure {
     friend class FacBomStructure;
     friend class FacBomContent;
+    friend class BomStructure;
     
   public:
     // Type definitions
@@ -76,12 +77,6 @@ namespace stdair {
     /** Get the flight-date key. */
     const BomKey_T& getKey() const {
       return _key;
-    }
-
-    /** Get the Flight-Date Content object. */
-    Content_T* getBomContentPtr () const {
-      assert (_content != NULL);
-      return _content;
     }
 
     /** Get the list of segment-dates. */

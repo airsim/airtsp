@@ -95,20 +95,24 @@ namespace stdair {
     ~BomConstIterator_T() { }
     
   public:
-    // ////////////// Operators //////////////
-    /** Dereferencing operators. */
+    // ////////////// Dereferencing Operators //////////////
+    /** Dereferencing operator for iterators on a list. */
     const BOM_CONTENT& operator* () {
       BomStructure_T* lBomStruct_ptr = *Parent_T::_itBomStructureObject;
       assert (lBomStruct_ptr != NULL);
-      BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
+      BOM_CONTENT* lBomContent_ptr = 
+        BomStructure::getBomContentPtr<BOM_CONTENT> (*lBomStruct_ptr);
       assert (lBomContent_ptr != NULL);
       return *lBomContent_ptr;
     }
+
+    /** Dereferencing operator for iterators on a map. */
     value_type* operator-> () {
       const MapKey_T& lKey = Parent_T::_itBomStructureObject->first;
       BomStructure_T* lBomStruct_ptr = Parent_T::_itBomStructureObject->second;
       assert (lBomStruct_ptr != NULL);
-      BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
+      BOM_CONTENT* lBomContent_ptr = 
+        BomStructure::getBomContentPtr<BOM_CONTENT> (*lBomStruct_ptr);
       assert (lBomContent_ptr != NULL);
 
       // See the comment below, at the definition of the _intermediateValue

@@ -150,7 +150,7 @@ namespace stdair {
       
       ioBomStructure.setChildrenList (lSecondBomChildrenHolder);
     }
-    
+        
   private:
     /** The unique instance.*/
     static FacBomStructure* _instance;

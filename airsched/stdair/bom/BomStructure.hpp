@@ -47,9 +47,21 @@ namespace stdair {
 
     /** Destructor. */
     virtual ~BomStructure() {}
- };
+    
+  public:
+    /**
+       Template function aimed at retrieving the bom content pointer from a
+       bom structure.
+    */
+    template <typename BOM_CONTENT>
+    static BOM_CONTENT* getBomContentPtr (const typename BOM_CONTENT::BomStructure_T& iBomStructure) {
+      assert (iBomStructure._content != NULL);
+      return iBomStructure._content;
+    }
+    
+  };
+  
 }
-
 /**
    Piece of code given by Nicolai M. Josuttis, Section 13.12.1 "Implementing
    Output Operators" (p653) of his book "The C++ Standard Library: A Tutorial

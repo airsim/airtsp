@@ -14,33 +14,29 @@
 namespace stdair {
   
   /** Template class aimed at iterating a list or a map of children BOM
-      structure of a dedicated type. */
+      structure of a dedicated type.
+      <br> This class aimed at implementing the "normal" operators except
+      dereferencing ones.
+  */
   template <typename BOM_CONTENT, typename ITERATOR>
-  struct BomConstIterator_T {
+  struct BomIteratorAbstract {
 
-  public:
-    // Definition allowing to retrieve the corresponding bom structure.
-    typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
-
-    // Define the pair of string and pointer of BOM_CONTENT.
-    typedef typename std::pair<std::string, const BOM_CONTENT*> value_type;
-    
-  public:
+  protected:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Normal constructor. */
-    BomConstIterator_T (ITERATOR iIterator)
+    BomIteratorAbstract (ITERATOR iIterator)
       : _itBomStructureObject (iIterator) { }
 
     /** Default constructor. */
-    BomConstIterator_T () { }
+    BomIteratorAbstract () { }
     
     /** Default copy constructor. */
-    BomConstIterator_T (const BomConstIterator_T& iBomIterator)
+    BomIteratorAbstract (const BomIteratorAbstract& iBomIterator)
       : _itBomStructureObject (iBomIterator._itBomStructureObject) { }
     
     /** Destructor. */
-    ~BomConstIterator_T() { }
+    ~BomIteratorAbstract() { }
 
   public:
     // ///////////// Operators //////////////
@@ -49,24 +45,68 @@ namespace stdair {
     void operator++ (int) { ++_itBomStructureObject; }
 
     /** Equality operators. */
-    bool operator== (const BomConstIterator_T& iIt) {
+    bool operator== (const BomIteratorAbstract& iIt) {
       return _itBomStructureObject == iIt._itBomStructureObject;
     }
-    bool operator!= (const BomConstIterator_T& iIt) {
+    bool operator!= (const BomIteratorAbstract& iIt) {
       return _itBomStructureObject != iIt._itBomStructureObject;
     }
 
+  protected:
+    ///////////// Attributes //////////////
+    /** Iterator for the current BOM structure on the non-ordered list. */
+    ITERATOR _itBomStructureObject;
+
+  };
+
+  /** Template class aimed at iterating a list or a map of children BOM
+      structure of a dedicated type using const iterators.
+      <br> This class aimed at implementing the dereferencing operators for
+      const iterators.
+  */
+  template <typename BOM_CONTENT, typename ITERATOR>
+  struct BomConstIterator_T : public BomIteratorAbstract<BOM_CONTENT, ITERATOR> {
+
+  public:
+    // Definition allowing to retrieve the parent type.
+    typedef BomIteratorAbstract<BOM_CONTENT, ITERATOR> Parent_T;
+    
+    // Definition allowing to retrieve the corresponding bom structure.
+    typedef typename BOM_CONTENT::BomStructure_T BomStructure_T;
+    
+    // Define the pair of string and pointer of BOM_CONTENT.
+    typedef typename std::pair<std::string, const BOM_CONTENT*> value_type;
+
+  public:
+    /** Constructors are private so as to force the usage of the Factory
+        layer. */
+    /** Normal constructor. */
+    BomConstIterator_T (ITERATOR iIterator)
+      : Parent_T (iIterator) { }
+
+    /** Default constructor. */
+    BomConstIterator_T () { }
+    
+    /** Default copy constructor. */
+    BomConstIterator_T (const BomConstIterator_T& iBomIterator)
+      : Parent_T (iBomIterator._itBomStructureObject) { }
+    
+    /** Destructor. */
+    ~BomConstIterator_T() { }
+    
+  public:
+    // ////////////// Operators //////////////
     /** Dereferencing operators. */
     const BOM_CONTENT& operator* () {
-      BomStructure_T* lBomStruct_ptr = *_itBomStructureObject;
+      BomStructure_T* lBomStruct_ptr = *Parent_T::_itBomStructureObject;
       assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       assert (lBomContent_ptr != NULL);
       return *lBomContent_ptr;
     }
     value_type* operator-> () {
-      const MapKey_T& lKey = _itBomStructureObject->first;
-      BomStructure_T* lBomStruct_ptr = _itBomStructureObject->second;
+      const MapKey_T& lKey = Parent_T::_itBomStructureObject->first;
+      BomStructure_T* lBomStruct_ptr = Parent_T::_itBomStructureObject->second;
       assert (lBomStruct_ptr != NULL);
       BOM_CONTENT* lBomContent_ptr = lBomStruct_ptr->getBomContentPtr ();
       assert (lBomContent_ptr != NULL);
@@ -78,12 +118,8 @@ namespace stdair {
       
       return &_intermediateValue;
     }
-    
-  private:
-    ///////////// Attributes //////////////
-    /** Iterator for the current BOM structure on the non-ordered list. */
-    ITERATOR _itBomStructureObject;
 
+  protected:
     /** Helper attribute.
         <br>It is necessary to define that value at the attribute
         level, because the operator->() method needs to return a
@@ -91,6 +127,7 @@ namespace stdair {
         the fly when the operator->() method returns, we would return
         a pointer on a temporary value, which is not good. */
     value_type _intermediateValue;
+    
   };
   
 }

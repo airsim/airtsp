@@ -292,6 +292,14 @@ AC_CONFIG_FILES(
 	airsched/core/Makefile
 	airsched/config/Makefile
 	airsched/batches/Makefile
+	doc/Makefile
+	doc/images/Makefile
+	doc/tutorial/Makefile
+	doc/tutorial/src/Makefile
+	doc/local/Makefile
+	doc/local/index.doc
+	doc/doxygen_html.cfg
+	doc/sourceforge/howto_release_airsched.html
 	test/Makefile
 	test/com/Makefile
 	test/architecture/Makefile)

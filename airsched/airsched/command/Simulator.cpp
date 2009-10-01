@@ -150,6 +150,16 @@ namespace AIRSCHED {
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
     }
+
+    AIRSCHED_LOG_DEBUG ("Additive operators: ");
+    Inventory::list_const_iterator itBegin =
+      iInventory.flightDateListConstIteratorBegin();
+    Inventory::list_const_iterator itEnd =
+      iInventory.flightDateListConstIteratorEnd();
+    AIRSCHED_LOG_DEBUG ("itEnd - itBegin, should be 1: " << itEnd - itBegin);
+    AIRSCHED_LOG_DEBUG ("itBegin - itEnd, should be -1: " << itBegin - itEnd);
+    AIRSCHED_LOG_DEBUG ( *(itEnd - 1));
+    AIRSCHED_LOG_DEBUG ( *(itEnd -=1));
   }
   
 }

@@ -16,7 +16,7 @@ namespace stdair {
   /** Template class aimed at iterating a list or a map of children BOM
       structure of a dedicated type.
       <br> This class aimed at implementing the "normal" operators except
-      dereferencing ones.
+      ones that needs to return a specific type (const/non-const) of iterator.
   */
   template <typename ITERATOR>
   struct BomIteratorAbstract {
@@ -44,6 +44,10 @@ namespace stdair {
     void operator++ () { ++_itBomStructureObject; }
     void operator++ (int) { ++_itBomStructureObject; }
 
+    /** Decrementing (prefix and postfix) operators. */
+    void operator-- () { --_itBomStructureObject; }
+    void operator-- (int) { --_itBomStructureObject; }
+    
     /** Equality operators. */
     bool operator== (const BomIteratorAbstract& iIt) {
       return _itBomStructureObject == iIt._itBomStructureObject;
@@ -52,16 +56,29 @@ namespace stdair {
       return _itBomStructureObject != iIt._itBomStructureObject;
     }
 
-  protected:
+  public:
     ///////////// Attributes //////////////
     /** Iterator for the current BOM structure on the non-ordered list. */
     ITERATOR _itBomStructureObject;
 
   };
 
+
+  /**
+     Operators for BomIteratorAbstract that need to be implemented outside
+     of BomIteratorAbstract scope.
+   */
+  template<typename ITERATOR>
+  inline typename ITERATOR::difference_type
+  operator-(const BomIteratorAbstract<ITERATOR>& l, 
+            const BomIteratorAbstract<ITERATOR>& r) {
+    return l._itBomStructureObject - r._itBomStructureObject;
+  }
+  
+  
   /** Template class aimed at iterating a list or a map of children BOM
       structure of a dedicated type using const iterators.
-      <br> This class aimed at implementing the dereferencing operators for
+      <br> This class aimed at implementing the specific operators for
       const iterators.
   */
   template <typename BOM_CONTENT, typename ITERATOR>
@@ -76,6 +93,9 @@ namespace stdair {
     
     // Define the pair of string and pointer of BOM_CONTENT.
     typedef typename std::pair<std::string, const BOM_CONTENT*> value_type;
+
+    // Definition allowing the retrieve the difference type of the ITERATOR.
+    typedef typename ITERATOR::difference_type difference_type;
 
   public:
     /** Constructors are private so as to force the usage of the Factory
@@ -95,6 +115,22 @@ namespace stdair {
     ~BomConstIterator_T() { }
     
   public:
+    // ////////////// Additive Operators ///////////////
+    BomConstIterator_T operator+ (const difference_type iIndex) {
+      return BomConstIterator_T(Parent_T::_itBomStructureObject + iIndex);
+    } 
+    BomConstIterator_T& operator+= (const difference_type iIndex) {
+      Parent_T::_itBomStructureObject += iIndex;
+      return *this;
+    }
+    BomConstIterator_T operator- (const difference_type iIndex) {
+      return BomConstIterator_T(Parent_T::_itBomStructureObject - iIndex);
+    }
+    BomConstIterator_T& operator-= (const difference_type iIndex) {
+      Parent_T::_itBomStructureObject -= iIndex;
+      return *this;
+    }
+    
     // ////////////// Dereferencing Operators //////////////
     /** Dereferencing operator for iterators on a list. */
     const BOM_CONTENT& operator* () {

@@ -55,7 +55,6 @@ namespace stdair {
     */
     template <typename BOM_CONTENT>
     static BOM_CONTENT* getBomContentPtr (const typename BOM_CONTENT::BomStructure_T& iBomStructure) {
-      assert (iBomStructure._content != NULL);
       return iBomStructure._content;
     }
     

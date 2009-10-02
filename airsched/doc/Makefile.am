@@ -1,3 +1,14 @@
+# StdAir
+include $(top_srcdir)/stdair/basic/sources.mk
+include $(top_srcdir)/stdair/bom/sources.mk
+include $(top_srcdir)/stdair/factory/sources.mk
+#include $(top_srcdir)/stdair/command/sources.mk
+#include $(top_srcdir)/stdair/service/sources.mk
+include $(top_srcdir)/stdair/core/sources.mk
+stdair_sources = $(service_h_sources) $(service_cc_sources) \
+	$(bas_h_sources) $(bas_cc_sources) $(bom_h_sources) $(bom_cc_sources) \
+	$(fac_h_sources) $(fac_cc_sources)
+# Air-Sched
 include $(top_srcdir)/doc/local/sources.mk
 include $(top_srcdir)/doc/tutorial/sources.mk
 include $(top_srcdir)/doc/tutorial/src/sources.mk
@@ -25,6 +36,7 @@ html-local: html/index.html
 html/index.html: doxygen_html.cfg \
 	$(doc_local_sources) $(html_local_sources) \
 	$(doc_tutorial_sources) $(cpp_tutorial_sources) \
+	$(stdair_sources) \
 	$(service_h_sources) $(service_cc_sources) \
 	$(bas_h_sources) $(bas_cc_sources) \
 	$(bom_h_sources) $(bom_cc_sources) \

@@ -9,7 +9,7 @@
 #include <stdair/bom/BomContentRoot.hpp>
 #include <stdair/bom/BomIterator.hpp>
 // AIRSCHED
-#include <airsched/AIRSCHED_Types.hpp>
+#include <airsched/bom/BomRootTypes.hpp>
 #include <airsched/bom/InventoryTypes.hpp>
 #include <airsched/bom/FlightDateTypes.hpp>
 

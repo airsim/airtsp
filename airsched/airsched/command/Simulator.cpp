@@ -17,7 +17,6 @@
 #include <stdair/bom/BomIterator.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
-#include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/LegDate.hpp>

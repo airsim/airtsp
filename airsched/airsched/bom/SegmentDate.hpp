@@ -7,7 +7,7 @@
 // STDAIR 
 #include <stdair/bom/BomContent.hpp>
 // AIRSCHED
-#include <airsched/AIRSCHED_Types.hpp>
+#include <airsched/bom/SegmentDateTypes.hpp>
 
 // Forward declarations
 namespace stdair {

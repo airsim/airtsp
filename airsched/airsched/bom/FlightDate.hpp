@@ -6,9 +6,11 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
 #include <stdair/bom/BomStructureList.hpp>
-// AIRSCHED 
-#include <airsched/AIRSCHED_Types.hpp>
 #include <stdair/bom/BomContent.hpp>
+// AIRSCHED 
+#include <airsched/bom/FlightDateTypes.hpp>
+#include <airsched/bom/SegmentDateTypes.hpp>
+#include <airsched/bom/LegDateTypes.hpp>
 
 // Forward declarations
 namespace stdair {

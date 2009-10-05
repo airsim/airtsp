@@ -65,6 +65,40 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  Inventory::list_const_reverse_iterator Inventory::flightDateListConstIteratorRBegin () const {
+    return _inventoryStructure.flightDateListConstIteratorRBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::list_const_reverse_iterator Inventory::flightDateListConstIteratorREnd () const {
+    return _inventoryStructure.flightDateListConstIteratorREnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  list_iterator Inventory::flightDateListIteratorBegin () const {
+    return _inventoryStructure.flightDateListIteratorBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  list_iterator Inventory::flightDateListIteratorEnd () const {
+    return _inventoryStructure.flightDateListIteratorEnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  list_reverse_iterator Inventory::flightDateListIteratorRBegin () const {
+    return _inventoryStructure.flightDateListIteratorRBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  list_reverse_iterator Inventory::flightDateListIteratorREnd () const {
+    return _inventoryStructure.flightDateListIteratorREnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   Inventory::
   map_const_iterator Inventory::flightDateMapConstIteratorBegin () const {
     return _inventoryStructure.flightDateMapConstIteratorBegin ();
@@ -75,6 +109,40 @@ namespace AIRSCHED {
   map_const_iterator Inventory::flightDateMapConstIteratorEnd () const {
     return _inventoryStructure.flightDateMapConstIteratorEnd ();
   }
-  
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::map_const_reverse_iterator Inventory::flightDateMapConstIteratorRBegin () const {
+    return _inventoryStructure.flightDateMapConstIteratorRBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::map_const_reverse_iterator Inventory::flightDateMapConstIteratorREnd () const {
+    return _inventoryStructure.flightDateMapConstIteratorREnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  map_iterator Inventory::flightDateMapIteratorBegin () const {
+    return _inventoryStructure.flightDateMapIteratorBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  map_iterator Inventory::flightDateMapIteratorEnd () const {
+    return _inventoryStructure.flightDateMapIteratorEnd ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  map_reverse_iterator Inventory::flightDateMapIteratorRBegin () const {
+    return _inventoryStructure.flightDateMapIteratorRBegin ();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  Inventory::
+  map_reverse_iterator Inventory::flightDateMapIteratorREnd () const {
+    return _inventoryStructure.flightDateMapIteratorREnd ();
+  }
+
 }
 

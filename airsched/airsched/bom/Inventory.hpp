@@ -55,13 +55,25 @@ namespace AIRSCHED {
     // See the explanations, within the stdair::BomContentRoot class, for all
     // the iterator types specified below
     // /////////////////////////////////////////////////////////////////////////
-    /** Define the flight-date list const iterator. */
+    /** Define the flight-date list iterators. */
     typedef stdair::BomConstIterator_T<FlightDate,
                                        FlightDateStructureList_T::const_iterator> list_const_iterator;
+    typedef stdair::BomConstIterator_T<FlightDate,
+                                       FlightDateStructureList_T::const_reverse_iterator> list_const_reverse_iterator;
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureList_T::const_iterator> list_iterator;
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureList_T::const_reverse_iterator> list_reverse_iterator;
 
-    /** Define the flight-date map const iterator. */
+    /** Define the flight-date map iterators. */
     typedef stdair::BomConstIterator_T<FlightDate,
                                        FlightDateStructureMap_T::const_iterator> map_const_iterator;
+    typedef stdair::BomConstIterator_T<FlightDate,
+                                       FlightDateStructureMap_T::const_reverse_iterator> map_const_reverse_iterator;
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureMap_T::const_iterator> map_iterator;
+    typedef stdair::BomIterator_T<FlightDate,
+                                  FlightDateStructureMap_T::const_reverse_iterator> map_reverse_iterator;
     // /////////////////////////////////////////////////////////////////////////
 
     
@@ -95,6 +107,30 @@ namespace AIRSCHED {
         return the const iterator at the end of the list. */
     list_const_iterator flightDateListConstIteratorEnd () const;
 
+    /** Initialise the internal const reverse iterator on flight date:
+        return the const reverse iterator at the rbegining of the list. */
+    list_const_reverse_iterator flightDateListConstIteratorRBegin () const;
+    
+    /** Initialise the internal const reverse iterator on flight date:
+        return the const reverse iterator at the end of the list. */
+    list_const_reverse_iterator flightDateListConstIteratorREnd () const;
+
+    /** Initialise the internal iterator on flight date:
+        return the iterator at the begining of the list. */
+    list_iterator flightDateListIteratorBegin () const;
+    
+    /** Initialise the internal iterator on flight date:
+        return the iterator at the end of the list. */
+    list_iterator flightDateListIteratorEnd () const;
+
+    /** Initialise the internal reverse iterator on flight date:
+        return the reverse iterator at the rbegining of the list. */
+    list_reverse_iterator flightDateListIteratorRBegin () const;
+    
+    /** Initialise the internal reverse iterator on flight date:
+        return the reverse iterator at the end of the list. */
+    list_reverse_iterator flightDateListIteratorREnd () const;
+
     /** Initialise the internal const iterator on flight date:
         return the const iterator at the begining of the map. */
     map_const_iterator flightDateMapConstIteratorBegin () const;
@@ -102,6 +138,30 @@ namespace AIRSCHED {
     /** Initialise the internal const iterators on flight date:
         return the const iterator at the end of the map. */
     map_const_iterator flightDateMapConstIteratorEnd () const;
+
+    /** Initialise the internal const reverse iterator on flight date:
+        return the const reverse iterator at the rbegining of the map. */
+    map_const_reverse_iterator flightDateMapConstIteratorRBegin () const;
+    
+    /** Initialise the internal const reverse iterator on flight date:
+        return the const reverse iterator at the end of the map. */
+    map_const_reverse_iterator flightDateMapConstIteratorREnd () const;
+
+    /** Initialise the internal iterator on flight date:
+        return the iterator at the begining of the map. */
+    map_iterator flightDateMapIteratorBegin () const;
+    
+    /** Initialise the internal iterator on flight date:
+        return the iterator at the end of the map. */
+    map_iterator flightDateMapIteratorEnd () const;
+
+    /** Initialise the internal reverse iterator on flight date:
+        return the reverse iterator at the rbegining of the map. */
+    map_reverse_iterator flightDateMapIteratorRBegin () const;
+    
+    /** Initialise the internal reverse iterator on flight date:
+        return the reverse iterator at the end of the map. */
+    map_reverse_iterator flightDateMapIteratorREnd () const;
 
   private:
     /** Retrieve the BOM structure object. */

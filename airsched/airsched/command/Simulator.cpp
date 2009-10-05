@@ -142,11 +142,20 @@ namespace AIRSCHED {
     }
     
     // Browse the map with a for-loop
-    AIRSCHED_LOG_DEBUG ("Browse the map");
+    AIRSCHED_LOG_DEBUG ("Browse the map with const_iterator");
     for (Inventory::map_const_iterator itInv =
            iInventory.flightDateMapConstIteratorBegin();
          itInv != iInventory.flightDateMapConstIteratorEnd(); ++itInv) {
       const FlightDate* lCurrentFlightDate_ptr = itInv->second;
+      AIRSCHED_LOG_DEBUG ("Current flight-date: "
+                          << lCurrentFlightDate_ptr->toString());
+    }
+
+    AIRSCHED_LOG_DEBUG ("Browse the map with reverse_iterator");
+    for (Inventory::map_reverse_iterator itInv =
+           iInventory.flightDateMapIteratorRBegin();
+         itInv != iInventory.flightDateMapIteratorREnd(); ++itInv) {
+      FlightDate* lCurrentFlightDate_ptr = itInv->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
     }

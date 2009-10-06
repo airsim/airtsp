@@ -57,186 +57,98 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_const_iterator FlightDate::segmentDateListConstIteratorBegin () const {
-    return _flightDateStructure.segmentDateListConstIteratorBegin ();
+  segment_date_list_iterator FlightDate::segmentDateListBegin () const {
+    return _flightDateStructure.segmentDateListBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_const_iterator FlightDate::segmentDateListConstIteratorEnd () const {
-    return _flightDateStructure.segmentDateListConstIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::segment_date_list_const_reverse_iterator FlightDate::segmentDateListConstIteratorRBegin () const {
-    return _flightDateStructure.segmentDateListConstIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::segment_date_list_const_reverse_iterator FlightDate::segmentDateListConstIteratorREnd () const {
-    return _flightDateStructure.segmentDateListConstIteratorREnd ();
+  segment_date_list_iterator FlightDate::segmentDateListEnd () const {
+    return _flightDateStructure.segmentDateListEnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_iterator FlightDate::segmentDateListIteratorBegin () const {
-    return _flightDateStructure.segmentDateListIteratorBegin ();
+  segment_date_list_reverse_iterator FlightDate::segmentDateListRBegin () const {
+    return _flightDateStructure.segmentDateListRBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_iterator FlightDate::segmentDateListIteratorEnd () const {
-    return _flightDateStructure.segmentDateListIteratorEnd ();
+  segment_date_list_reverse_iterator FlightDate::segmentDateListREnd () const {
+    return _flightDateStructure.segmentDateListREnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_reverse_iterator FlightDate::segmentDateListIteratorRBegin () const {
-    return _flightDateStructure.segmentDateListIteratorRBegin ();
+  segment_date_map_iterator FlightDate::segmentDateMapBegin () const {
+    return _flightDateStructure.segmentDateMapBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_list_reverse_iterator FlightDate::segmentDateListIteratorREnd () const {
-    return _flightDateStructure.segmentDateListIteratorREnd ();
+  segment_date_map_iterator FlightDate::segmentDateMapEnd () const {
+    return _flightDateStructure.segmentDateMapEnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_const_iterator FlightDate::segmentDateMapConstIteratorBegin () const {
-    return _flightDateStructure.segmentDateMapConstIteratorBegin ();
+  segment_date_map_reverse_iterator FlightDate::segmentDateMapRBegin () const {
+    return _flightDateStructure.segmentDateMapRBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_const_iterator FlightDate::segmentDateMapConstIteratorEnd () const {
-    return _flightDateStructure.segmentDateMapConstIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::segment_date_map_const_reverse_iterator FlightDate::segmentDateMapConstIteratorRBegin () const {
-    return _flightDateStructure.segmentDateMapConstIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::segment_date_map_const_reverse_iterator FlightDate::segmentDateMapConstIteratorREnd () const {
-    return _flightDateStructure.segmentDateMapConstIteratorREnd ();
+  segment_date_map_reverse_iterator FlightDate::segmentDateMapREnd () const {
+    return _flightDateStructure.segmentDateMapREnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_iterator FlightDate::segmentDateMapIteratorBegin () const {
-    return _flightDateStructure.segmentDateMapIteratorBegin ();
+  leg_date_list_iterator FlightDate::legDateListBegin () const {
+    return _flightDateStructure.legDateListBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_iterator FlightDate::segmentDateMapIteratorEnd () const {
-    return _flightDateStructure.segmentDateMapIteratorEnd ();
+  leg_date_list_iterator FlightDate::legDateListEnd () const {
+    return _flightDateStructure.legDateListEnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_reverse_iterator FlightDate::segmentDateMapIteratorRBegin () const {
-    return _flightDateStructure.segmentDateMapIteratorRBegin ();
+  leg_date_list_reverse_iterator FlightDate::legDateListRBegin () const {
+    return _flightDateStructure.legDateListRBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  segment_date_map_reverse_iterator FlightDate::segmentDateMapIteratorREnd () const {
-    return _flightDateStructure.segmentDateMapIteratorREnd ();
+  leg_date_list_reverse_iterator FlightDate::legDateListREnd () const {
+    return _flightDateStructure.legDateListREnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  leg_date_list_const_iterator FlightDate::legDateListConstIteratorBegin () const {
-    return _flightDateStructure.legDateListConstIteratorBegin ();
+  leg_date_map_iterator FlightDate::legDateMapBegin () const {
+    return _flightDateStructure.legDateMapBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  leg_date_list_const_iterator FlightDate::legDateListConstIteratorEnd () const {
-    return _flightDateStructure.legDateListConstIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::leg_date_list_const_reverse_iterator FlightDate::legDateListConstIteratorRBegin () const {
-    return _flightDateStructure.legDateListConstIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::leg_date_list_const_reverse_iterator FlightDate::legDateListConstIteratorREnd () const {
-    return _flightDateStructure.legDateListConstIteratorREnd ();
+  leg_date_map_iterator FlightDate::legDateMapEnd () const {
+    return _flightDateStructure.legDateMapEnd ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  leg_date_list_iterator FlightDate::legDateListIteratorBegin () const {
-    return _flightDateStructure.legDateListIteratorBegin ();
+  leg_date_map_reverse_iterator FlightDate::legDateMapRBegin () const {
+    return _flightDateStructure.legDateMapRBegin ();
   }
 
   // //////////////////////////////////////////////////////////////////////
   FlightDate::
-  leg_date_list_iterator FlightDate::legDateListIteratorEnd () const {
-    return _flightDateStructure.legDateListIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_list_reverse_iterator FlightDate::legDateListIteratorRBegin () const {
-    return _flightDateStructure.legDateListIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_list_reverse_iterator FlightDate::legDateListIteratorREnd () const {
-    return _flightDateStructure.legDateListIteratorREnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_const_iterator FlightDate::legDateMapConstIteratorBegin () const {
-    return _flightDateStructure.legDateMapConstIteratorBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_const_iterator FlightDate::legDateMapConstIteratorEnd () const {
-    return _flightDateStructure.legDateMapConstIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::leg_date_map_const_reverse_iterator FlightDate::legDateMapConstIteratorRBegin () const {
-    return _flightDateStructure.legDateMapConstIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::leg_date_map_const_reverse_iterator FlightDate::legDateMapConstIteratorREnd () const {
-    return _flightDateStructure.legDateMapConstIteratorREnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_iterator FlightDate::legDateMapIteratorBegin () const {
-    return _flightDateStructure.legDateMapIteratorBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_iterator FlightDate::legDateMapIteratorEnd () const {
-    return _flightDateStructure.legDateMapIteratorEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_reverse_iterator FlightDate::legDateMapIteratorRBegin () const {
-    return _flightDateStructure.legDateMapIteratorRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  FlightDate::
-  leg_date_map_reverse_iterator FlightDate::legDateMapIteratorREnd () const {
-    return _flightDateStructure.legDateMapIteratorREnd ();
+  leg_date_map_reverse_iterator FlightDate::legDateMapREnd () const {
+    return _flightDateStructure.legDateMapREnd ();
   }
 
 }

@@ -135,17 +135,17 @@ namespace AIRSCHED {
 
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the list");
-    for (Inventory::list_const_iterator itInv =
-           iInventory.flightDateListConstIteratorBegin();
-         itInv != iInventory.flightDateListConstIteratorEnd(); ++itInv) {
+    for (Inventory::list_iterator itInv =
+           iInventory.flightDateListBegin();
+         itInv != iInventory.flightDateListEnd(); ++itInv) {
       AIRSCHED_LOG_DEBUG ("Current flight-date: " << *itInv);
     }
     
     // Browse the map with a for-loop
-    AIRSCHED_LOG_DEBUG ("Browse the map with const_iterator");
-    for (Inventory::map_const_iterator itInv =
-           iInventory.flightDateMapConstIteratorBegin();
-         itInv != iInventory.flightDateMapConstIteratorEnd(); ++itInv) {
+    AIRSCHED_LOG_DEBUG ("Browse the map with iterator");
+    for (Inventory::map_iterator itInv =
+           iInventory.flightDateMapBegin();
+         itInv != iInventory.flightDateMapEnd(); ++itInv) {
       const FlightDate* lCurrentFlightDate_ptr = itInv->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
@@ -153,25 +153,25 @@ namespace AIRSCHED {
 
     AIRSCHED_LOG_DEBUG ("Browse the map with reverse_iterator");
     for (Inventory::map_reverse_iterator itInv =
-           iInventory.flightDateMapIteratorRBegin();
-         itInv != iInventory.flightDateMapIteratorREnd(); ++itInv) {
+           iInventory.flightDateMapRBegin();
+         itInv != iInventory.flightDateMapREnd(); ++itInv) {
       FlightDate* lCurrentFlightDate_ptr = itInv->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
     }
 
     AIRSCHED_LOG_DEBUG ("Test operators: ");
-    Inventory::list_const_iterator itBegin =
-      iInventory.flightDateListConstIteratorBegin();
-    Inventory::list_const_iterator itEnd =
-      iInventory.flightDateListConstIteratorEnd();
+    Inventory::list_iterator itBegin =
+      iInventory.flightDateListBegin();
+    Inventory::list_iterator itEnd =
+      iInventory.flightDateListEnd();
     AIRSCHED_LOG_DEBUG ("itEnd - itBegin, should be 1: " << itEnd - itBegin);
     AIRSCHED_LOG_DEBUG ("itBegin - itEnd, should be -1: " << itBegin - itEnd);
     AIRSCHED_LOG_DEBUG ("itBegin < itEnd, should be 1: " << (itBegin < itEnd));
     AIRSCHED_LOG_DEBUG ("itEnd - (1 + itBegin), should be 0: "
                         << (itEnd - (1 + itBegin)));
     AIRSCHED_LOG_DEBUG ( *(itEnd - 1));
-    AIRSCHED_LOG_DEBUG ( *(itEnd -=1));
+    AIRSCHED_LOG_DEBUG ( *(itEnd -= 1));
   }
 
   // ////////////////////////////////////////////////////////////////
@@ -180,17 +180,17 @@ namespace AIRSCHED {
 
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the segment-date list");
-    for (FlightDate::segment_date_list_const_iterator itSD =
-           iFlightDate.segmentDateListConstIteratorBegin();
-         itSD != iFlightDate.segmentDateListConstIteratorEnd(); ++itSD) {
+    for (FlightDate::segment_date_list_iterator itSD =
+           iFlightDate.segmentDateListBegin();
+         itSD != iFlightDate.segmentDateListEnd(); ++itSD) {
       AIRSCHED_LOG_DEBUG ("Current segment-date: " << *itSD);
     }
     
     // Browse the map with a for-loop
-    AIRSCHED_LOG_DEBUG ("Browse the segment_date map with const_iterator");
-    for (FlightDate::segment_date_map_const_iterator itSD =
-           iFlightDate.segmentDateMapConstIteratorBegin();
-         itSD != iFlightDate.segmentDateMapConstIteratorEnd(); ++itSD) {
+    AIRSCHED_LOG_DEBUG ("Browse the segment_date map with iterator");
+    for (FlightDate::segment_date_map_iterator itSD =
+           iFlightDate.segmentDateMapBegin();
+         itSD != iFlightDate.segmentDateMapEnd(); ++itSD) {
       const SegmentDate* lCurrentSegmentDate_ptr = itSD->second;
       AIRSCHED_LOG_DEBUG ("Current segment-date: "
                           << lCurrentSegmentDate_ptr->toString());
@@ -198,17 +198,17 @@ namespace AIRSCHED {
 
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the leg-date list");
-    for (FlightDate::leg_date_list_const_iterator itLD =
-           iFlightDate.legDateListConstIteratorBegin();
-         itLD != iFlightDate.legDateListConstIteratorEnd(); ++itLD) {
+    for (FlightDate::leg_date_list_iterator itLD =
+           iFlightDate.legDateListBegin();
+         itLD != iFlightDate.legDateListEnd(); ++itLD) {
       AIRSCHED_LOG_DEBUG ("Current leg-date: " << *itLD);
     }
     
     // Browse the map with a for-loop
-    AIRSCHED_LOG_DEBUG ("Browse the leg_date map with const_iterator");
-    for (FlightDate::leg_date_map_const_iterator itLD =
-           iFlightDate.legDateMapConstIteratorBegin();
-         itLD != iFlightDate.legDateMapConstIteratorEnd(); ++itLD) {
+    AIRSCHED_LOG_DEBUG ("Browse the leg_date map with iterator");
+    for (FlightDate::leg_date_map_iterator itLD =
+           iFlightDate.legDateMapBegin();
+         itLD != iFlightDate.legDateMapEnd(); ++itLD) {
       const LegDate* lCurrentLegDate_ptr = itLD->second;
       AIRSCHED_LOG_DEBUG ("Current leg-date: "
                           << lCurrentLegDate_ptr->toString());

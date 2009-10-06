@@ -126,6 +126,7 @@ namespace AIRSCHED {
 
 
     testIteratorInventory (lInventory);
+    testIteratorFlightDate (lFlightDate);
   }
 
   // ////////////////////////////////////////////////////////////////
@@ -171,6 +172,47 @@ namespace AIRSCHED {
                         << (itEnd - (1 + itBegin)));
     AIRSCHED_LOG_DEBUG ( *(itEnd - 1));
     AIRSCHED_LOG_DEBUG ( *(itEnd -=1));
+  }
+
+  // ////////////////////////////////////////////////////////////////
+  void Simulator::testIteratorFlightDate (const FlightDate& iFlightDate) {
+    AIRSCHED_LOG_DEBUG ("Test iterator.");
+
+    // Browse the list with a for-loop
+    AIRSCHED_LOG_DEBUG ("Browse the segment-date list");
+    for (FlightDate::segment_date_list_const_iterator itSD =
+           iFlightDate.segmentDateListConstIteratorBegin();
+         itSD != iFlightDate.segmentDateListConstIteratorEnd(); ++itSD) {
+      AIRSCHED_LOG_DEBUG ("Current segment-date: " << *itSD);
+    }
+    
+    // Browse the map with a for-loop
+    AIRSCHED_LOG_DEBUG ("Browse the segment_date map with const_iterator");
+    for (FlightDate::segment_date_map_const_iterator itSD =
+           iFlightDate.segmentDateMapConstIteratorBegin();
+         itSD != iFlightDate.segmentDateMapConstIteratorEnd(); ++itSD) {
+      const SegmentDate* lCurrentSegmentDate_ptr = itSD->second;
+      AIRSCHED_LOG_DEBUG ("Current segment-date: "
+                          << lCurrentSegmentDate_ptr->toString());
+    }
+
+    // Browse the list with a for-loop
+    AIRSCHED_LOG_DEBUG ("Browse the leg-date list");
+    for (FlightDate::leg_date_list_const_iterator itLD =
+           iFlightDate.legDateListConstIteratorBegin();
+         itLD != iFlightDate.legDateListConstIteratorEnd(); ++itLD) {
+      AIRSCHED_LOG_DEBUG ("Current leg-date: " << *itLD);
+    }
+    
+    // Browse the map with a for-loop
+    AIRSCHED_LOG_DEBUG ("Browse the leg_date map with const_iterator");
+    for (FlightDate::leg_date_map_const_iterator itLD =
+           iFlightDate.legDateMapConstIteratorBegin();
+         itLD != iFlightDate.legDateMapConstIteratorEnd(); ++itLD) {
+      const LegDate* lCurrentLegDate_ptr = itLD->second;
+      AIRSCHED_LOG_DEBUG ("Current leg-date: "
+                          << lCurrentLegDate_ptr->toString());
+    }
   }
   
 }

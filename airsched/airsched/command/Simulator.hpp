@@ -10,6 +10,7 @@
 namespace AIRSCHED {
 
   class Inventory;
+  class FlightDate;
 
   /** Class implementing a small simulation, which uses the Airline Schedule. */
   class Simulator : public CmdAbstract {
@@ -21,6 +22,7 @@ namespace AIRSCHED {
 
     /** Test the iterator. */
     static void testIteratorInventory (const Inventory&);
+    static void testIteratorFlightDate (const FlightDate&);
   };
 
 }

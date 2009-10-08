@@ -7,7 +7,6 @@
 // STDAIR
 #include <stdair/bom/BomStructureList.hpp>
 #include <stdair/bom/BomContent.hpp>
-#include <stdair/bom/BomIterator.hpp>
 // AIRSCHED 
 #include <airsched/bom/FlightDateTypes.hpp>
 #include <airsched/bom/SegmentDateTypes.hpp>
@@ -23,6 +22,10 @@ namespace AIRSCHED {
 
   // Forward declarations
   class Inventory;
+  struct SegmentDateList_T;
+  struct SegmentDateMap_T;
+  struct LegDateList_T;
+  struct LegDateMap_T;
   
   /** Class representing the actual functional/business content for a
       flight-date. */
@@ -53,36 +56,6 @@ namespace AIRSCHED {
          BOM content child type. */
     typedef LegDate SecondContentChild_T;
 
-    public:
-    // /////////////////////////////////////////////////////////////////////////
-    // See the explanations, within the stdair::BomContentRoot class, for all
-    // the iterator types specified below
-    // /////////////////////////////////////////////////////////////////////////
-    /** Define the segment-date list iterators. */
-    typedef stdair::BomIterator_T<SegmentDate,
-                                  SegmentDateStructureList_T::const_iterator> segment_date_list_iterator;
-    typedef stdair::BomIterator_T<SegmentDate,
-                                  SegmentDateStructureList_T::const_reverse_iterator> segment_date_list_reverse_iterator;
-
-    /** Define the segment-date map iterators. */
-    typedef stdair::BomIterator_T<SegmentDate,
-                                  SegmentDateStructureMap_T::const_iterator> segment_date_map_iterator;
-    typedef stdair::BomIterator_T<SegmentDate,
-                                  SegmentDateStructureMap_T::const_reverse_iterator> segment_date_map_reverse_iterator;
-
-    /** Define the leg-date list iterators. */
-    typedef stdair::BomIterator_T<LegDate,
-                                  LegDateStructureList_T::const_iterator> leg_date_list_iterator;
-    typedef stdair::BomIterator_T<LegDate,
-                                  LegDateStructureList_T::const_reverse_iterator> leg_date_list_reverse_iterator;
-
-    /** Define the leg-date map iterators. */
-    typedef stdair::BomIterator_T<LegDate,
-                                  LegDateStructureMap_T::const_iterator> leg_date_map_iterator;
-    typedef stdair::BomIterator_T<LegDate,
-                                  LegDateStructureMap_T::const_reverse_iterator> leg_date_map_reverse_iterator;
-    // /////////////////////////////////////////////////////////////////////////
-  
   public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
@@ -103,78 +76,26 @@ namespace AIRSCHED {
     /** Get a string describing the short key (differentiating two objects
         at the same level). */
     const std::string describeShortKey() const;
+    
+  public:
+    // /////////// Getters /////////////
+    /** Get a SegmentDateList_T for iteration methods. */
+    SegmentDateList_T getSegmentDateList () const;
 
+    /** Get a SegmentDateMap_T for iteration methods. */
+    SegmentDateMap_T getSegmentDateMap () const;
+
+    /** Get a LegDateList_T for iteration methods. */
+    LegDateList_T getLegDateList () const;
+
+    /** Get a LegDateMap_T for iteration methods. */
+    LegDateMap_T getLegDateMap () const;
+  
   private:
     /** Retrieve the BOM structure object. */
     BomStructure_T& getBomStructure () {
       return _flightDateStructure;
     }
-
-  public:
-    // /////////// Iteration methods //////////
-    /** Initialise the internal iterator on segment date:
-        return the iterator at the begining of the list. */
-    segment_date_list_iterator segmentDateListBegin () const;
-    
-    /** Initialise the internal iterator on segment date:
-        return the iterator at the end of the list. */
-    segment_date_list_iterator segmentDateListEnd () const;
-
-    /** Initialise the internal reverse iterator on segment date:
-        return the reverse iterator at the rbegining of the list. */
-    segment_date_list_reverse_iterator segmentDateListRBegin () const;
-    
-    /** Initialise the internal reverse iterator on segment date:
-        return the reverse iterator at the end of the list. */
-    segment_date_list_reverse_iterator segmentDateListREnd () const;
-
-    /** Initialise the internal iterator on segment date:
-        return the iterator at the begining of the map. */
-    segment_date_map_iterator segmentDateMapBegin () const;
-    
-    /** Initialise the internal iterator on segment date:
-        return the iterator at the end of the map. */
-    segment_date_map_iterator segmentDateMapEnd () const;
-
-    /** Initialise the internal reverse iterator on segment date:
-        return the reverse iterator at the rbegining of the map. */
-    segment_date_map_reverse_iterator segmentDateMapRBegin () const;
-    
-    /** Initialise the internal reverse iterator on segment date:
-        return the reverse iterator at the end of the map. */
-    segment_date_map_reverse_iterator segmentDateMapREnd () const;
-
-    /** Initialise the internal iterator on leg date:
-        return the iterator at the begining of the list. */
-    leg_date_list_iterator legDateListBegin () const;
-    
-    /** Initialise the internal iterator on leg date:
-        return the iterator at the end of the list. */
-    leg_date_list_iterator legDateListEnd () const;
-
-    /** Initialise the internal reverse iterator on leg date:
-        return the reverse iterator at the rbegining of the list. */
-    leg_date_list_reverse_iterator legDateListRBegin () const;
-    
-    /** Initialise the internal reverse iterator on leg date:
-        return the reverse iterator at the end of the list. */
-    leg_date_list_reverse_iterator legDateListREnd () const;
-
-    /** Initialise the internal iterator on leg date:
-        return the iterator at the begining of the map. */
-    leg_date_map_iterator legDateMapBegin () const;
-    
-    /** Initialise the internal iterator on leg date:
-        return the iterator at the end of the map. */
-    leg_date_map_iterator legDateMapEnd () const;
-
-    /** Initialise the internal reverse iterator on leg date:
-        return the reverse iterator at the rbegining of the map. */
-    leg_date_map_reverse_iterator legDateMapRBegin () const;
-    
-    /** Initialise the internal reverse iterator on leg date:
-        return the reverse iterator at the end of the map. */
-    leg_date_map_reverse_iterator legDateMapREnd () const;
 
   private:
     /** Constructors are private so as to force the usage of the Factory

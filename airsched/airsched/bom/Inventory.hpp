@@ -7,7 +7,6 @@
 // STDAIR 
 #include <stdair/bom/BomContent.hpp>
 #include <stdair/bom/BomContentRoot.hpp>
-#include <stdair/bom/BomIterator.hpp>
 // AIRSCHED
 #include <airsched/bom/BomRootTypes.hpp>
 #include <airsched/bom/InventoryTypes.hpp>
@@ -16,14 +15,15 @@
 // Forward declarations
 namespace stdair {
   class FacBomContent;
-  template <typename BOM_CONTENT, typename ITERATOR> struct BomConstIterator_T;
 }
   
 namespace AIRSCHED {
 
   // Forward declarations.
   class FlightDate;
-
+  struct FlightDateList_T;
+  struct FlightDateMap_T;
+  
   /** Class representing the actual functional/business content for
       an airline inventory. */
   class Inventory : public stdair::BomContent {
@@ -50,25 +50,6 @@ namespace AIRSCHED {
     // /////////////////////////////////////////////////////////////////////////
 
   public:
-    // /////////////////////////////////////////////////////////////////////////
-    // See the explanations, within the stdair::BomContentRoot class, for all
-    // the iterator types specified below
-    // /////////////////////////////////////////////////////////////////////////
-    /** Define the flight-date list iterators. */
-    typedef stdair::BomIterator_T<FlightDate,
-                                  FlightDateStructureList_T::const_iterator> list_iterator;
-    typedef stdair::BomIterator_T<FlightDate,
-                                  FlightDateStructureList_T::const_reverse_iterator> list_reverse_iterator;
-
-    /** Define the flight-date map iterators. */
-    typedef stdair::BomIterator_T<FlightDate,
-                                  FlightDateStructureMap_T::const_iterator> map_iterator;
-    typedef stdair::BomIterator_T<FlightDate,
-                                  FlightDateStructureMap_T::const_reverse_iterator> map_reverse_iterator;
-    // /////////////////////////////////////////////////////////////////////////
-
-    
-  public:
     // /////////// Display support methods /////////
     /** Dump a Business Object into an output stream.
         @param ostream& the output stream. */
@@ -89,39 +70,14 @@ namespace AIRSCHED {
         at the same level). */
     const std::string describeShortKey() const;
 
-    // /////////// Iteration methods //////////
-    /** Initialise the internal iterator on flight date:
-        return the iterator at the begining of the list. */
-    list_iterator flightDateListBegin () const;
-    
-    /** Initialise the internal iterator on flight date:
-        return the iterator at the end of the list. */
-    list_iterator flightDateListEnd () const;
+  public:
+    // /////////// Getters /////////////
+    /** Get a FlightDateList_T for iteration methods. */
+    FlightDateList_T getFlightDateList () const;
 
-    /** Initialise the internal reverse iterator on flight date:
-        return the reverse iterator at the rbegining of the list. */
-    list_reverse_iterator flightDateListRBegin () const;
+    /** Get a FlightDateMap_T for iteration methods. */
+    FlightDateMap_T getFlightDateMap () const;
     
-    /** Initialise the internal reverse iterator on flight date:
-        return the reverse iterator at the end of the list. */
-    list_reverse_iterator flightDateListREnd () const;
-
-    /** Initialise the internal iterator on flight date:
-        return the iterator at the begining of the map. */
-    map_iterator flightDateMapBegin () const;
-    
-    /** Initialise the internal iterator on flight date:
-        return the iterator at the end of the map. */
-    map_iterator flightDateMapEnd () const;
-
-    /** Initialise the internal reverse iterator on flight date:
-        return the reverse iterator at the rbegining of the map. */
-    map_reverse_iterator flightDateMapRBegin () const;
-    
-    /** Initialise the internal reverse iterator on flight date:
-        return the reverse iterator at the end of the map. */
-    map_reverse_iterator flightDateMapREnd () const;
-
   private:
     /** Retrieve the BOM structure object. */
     BomStructure_T& getBomStructure () {

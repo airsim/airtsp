@@ -8,6 +8,8 @@
 // AIRSCHED 
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
+#include <airsched/bom/FlightDateList.hpp>
+#include <airsched/bom/FlightDateMap.hpp>
 #include <airsched/bom/SegmentDate.hpp>
 #include <airsched/bom/LegDate.hpp>
 #include <airsched/service/Logger.hpp>
@@ -52,51 +54,13 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  list_iterator Inventory::flightDateListBegin () const {
-    return _inventoryStructure.flightDateListBegin ();
+  FlightDateList_T Inventory::getFlightDateList () const {
+    return FlightDateList_T (_inventoryStructure);
   }
 
   // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  list_iterator Inventory::flightDateListEnd () const {
-    return _inventoryStructure.flightDateListEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  list_reverse_iterator Inventory::flightDateListRBegin () const {
-    return _inventoryStructure.flightDateListRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  list_reverse_iterator Inventory::flightDateListREnd () const {
-    return _inventoryStructure.flightDateListREnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  map_iterator Inventory::flightDateMapBegin () const {
-    return _inventoryStructure.flightDateMapBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  map_iterator Inventory::flightDateMapEnd () const {
-    return _inventoryStructure.flightDateMapEnd ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  map_reverse_iterator Inventory::flightDateMapRBegin () const {
-    return _inventoryStructure.flightDateMapRBegin ();
-  }
-
-  // //////////////////////////////////////////////////////////////////////
-  Inventory::
-  map_reverse_iterator Inventory::flightDateMapREnd () const {
-    return _inventoryStructure.flightDateMapREnd ();
+  FlightDateMap_T Inventory::getFlightDateMap () const {
+    return FlightDateMap_T (_inventoryStructure);
   }
 
 }

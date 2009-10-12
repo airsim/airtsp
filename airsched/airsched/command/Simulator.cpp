@@ -132,8 +132,74 @@ namespace AIRSCHED {
 
     // Display the leg-date
     AIRSCHED_LOG_DEBUG ("LegDate: " << lBKKLeg.toString());
+
+    // Step 0.5: segment-cabin level
+    // Create a SegmentCabin (Y) of the Segment LHR-BKK;
+    const stdair::CabinCode_T lY ("Y");
+    stdair::SegmentCabinKey_T lYSegmentCabinKey (lY);
+
+    stdair::SegmentCabin& lLHRBKKSegmentYCabin =
+      stdair::FacBomContent::
+      instance().create<stdair::SegmentCabin> (lLHRBKKSegment, 
+                                               lYSegmentCabinKey);
+
+    // Display the segment-cabin
+    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lLHRBKKSegmentYCabin.toString());
+
+    // Create a SegmentCabin (Y) of the Segment BKK-SYD;
+    stdair::SegmentCabin& lBKKSYDSegmentYCabin =
+      stdair::FacBomContent::
+      instance().create<stdair::SegmentCabin> (lBKKSYDSegment, 
+                                               lYSegmentCabinKey);
+
+    // Display the segment-cabin
+    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lBKKSYDSegmentYCabin.toString());
+
+    // Create a SegmentCabin (Y) of the Segment LHR-SYD;
+    stdair::SegmentCabin& lLHRSYDSegmentYCabin =
+      stdair::FacBomContent::
+      instance().create<stdair::SegmentCabin> (lLHRSYDSegment, 
+                                               lYSegmentCabinKey);
+
+    // Display the segment-cabin
+    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lLHRSYDSegmentYCabin.toString());
+
     
-    // Step 0.5: Initialisation results
+    // Step 0.6: leg-cabin level
+    // Create a LegCabin (Y) of the Leg LHR-BKK;
+    stdair::LegCabinKey_T lYLegCabinKey (lY);
+
+    stdair::LegCabin& lLHRLegYCabin =
+      stdair::FacBomContent::
+      instance().create<stdair::LegCabin> (lLHRLeg, lYLegCabinKey);
+
+    // Display the leg-cabin
+    AIRSCHED_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
+
+    // Create a LegCabin (Y) of the Leg BKK-SYD;
+    stdair::LegCabin& lBKKLegYCabin =
+      stdair::FacBomContent::
+      instance().create<stdair::LegCabin> (lBKKLeg, lYLegCabinKey);
+
+    // Display the leg-cabin
+    AIRSCHED_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
+
+    // Step 0.7: booking class level
+    // Create a BookingClass (Q) of the Segment LHR-BKK, cabin Y;
+    const stdair::ClassCode_T lQ ("Q");
+    stdair::BookingClassKey_T lQBookingClassKey (lQ);
+
+    stdair::BookingClass& lLHRBKKSegmentYCabinQClass =
+      stdair::FacBomContent::
+      instance().create<stdair::BookingClass> (lLHRBKKSegmentYCabin, 
+                                               lQBookingClassKey);
+
+    // Display the booking class
+    AIRSCHED_LOG_DEBUG ("BookingClass: "
+                        << lLHRBKKSegmentYCabinQClass.toString());
+
+        
+    // Step 0.8: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
 

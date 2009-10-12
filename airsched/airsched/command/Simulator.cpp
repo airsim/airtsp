@@ -9,24 +9,31 @@
 #include <stdair/bom/BomStructureRoot.hpp>
 #include <stdair/bom/BomStructureDummy.hpp>
 #include <stdair/bom/BomContentDummy.hpp>
+#include <stdair/bom/InventoryStructure.hpp>
+#include <stdair/bom/FlightDateStructure.hpp>
+#include <stdair/bom/LegDateStructure.hpp>
+#include <stdair/bom/SegmentDateStructure.hpp>
+#include <stdair/bom/LegCabinStructure.hpp>
+#include <stdair/bom/SegmentCabinStructure.hpp>
+#include <stdair/bom/BookingClassStructure.hpp>
+#include <stdair/bom/BomContentRoot.hpp>
+#include <stdair/bom/BomChildrenHolderImp.hpp>
+#include <stdair/bom/BomIterator.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/FlightDateList.hpp>
+#include <stdair/bom/FlightDateMap.hpp>
 #include <stdair/bom/LegDate.hpp>
+#include <stdair/bom/LegDateList.hpp>
+#include <stdair/bom/LegDateMap.hpp>
 #include <stdair/bom/SegmentDate.hpp>
-#include <stdair/bom/BomContentRoot.hpp>
-#include <stdair/bom/BomIterator.hpp>
+#include <stdair/bom/SegmentDateList.hpp>
+#include <stdair/bom/SegmentDateMap.hpp>
+#include <stdair/bom/SegmentCabin.hpp>
+#include <stdair/bom/LegCabin.hpp>
+#include <stdair/bom/BookingClass.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
-#include <airsched/bom/Inventory.hpp>
-#include <airsched/bom/FlightDate.hpp>
-#include <airsched/bom/FlightDateList.hpp>
-#include <airsched/bom/FlightDateMap.hpp>
-#include <airsched/bom/LegDate.hpp>
-#include <airsched/bom/LegDateList.hpp>
-#include <airsched/bom/LegDateMap.hpp>
-#include <airsched/bom/SegmentDate.hpp>
-#include <airsched/bom/SegmentDateList.hpp>
-#include <airsched/bom/SegmentDateMap.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/service/Logger.hpp>
 
@@ -39,18 +46,18 @@ namespace AIRSCHED {
 
     // Step 0.0: initialisation
     // Create the root of the Bom tree (i.e., a BomContentRoot object)
-    BomContentRoot_T& lBomContentRoot =
-      stdair::FacBomContent::instance().createBomRoot<Inventory>();
+    stdair::BomContentRoot_T& lBomContentRoot =
+      stdair::FacBomContent::instance().createBomRoot<stdair::Inventory>();
     
     
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
     const stdair::AirlineCode_T lAirlineCode ("BA");
-    const InventoryKey_T lInventoryKey (lAirlineCode);
+    const stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
-    Inventory& lInventory =
-      stdair::FacBomContent::instance().create<Inventory> (lBomContentRoot,
-                                                           lInventoryKey);
+    stdair::Inventory& lInventory =
+      stdair::FacBomContent::
+      instance().create<stdair::Inventory> (lBomContentRoot, lInventoryKey);
     
     // Display the inventory
     AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());
@@ -59,10 +66,10 @@ namespace AIRSCHED {
     // Create a FlightDate (BA15/10-JUN-2010)
     const stdair::FlightNumber_T lFlightNumber = 15;
     const stdair::Date_T lDate (2010, 6, 10);
-    const FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
+    const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
 
-    FlightDate& lFlightDate =
-      stdair::FacBomContent::instance().create<FlightDate> (lInventory,
+    stdair::FlightDate& lFlightDate =
+      stdair::FacBomContent::instance().create<stdair::FlightDate> (lInventory,
                                                             lFlightDateKey);
     
     // Display the flight-date
@@ -72,10 +79,10 @@ namespace AIRSCHED {
     // Create a first SegmentDate (LHR-SYD)
     const stdair::AirportCode_T lLHR ("LHR");
     const stdair::AirportCode_T lSYD ("SYD");
-    SegmentDateKey_T lSegmentDateKey (lLHR, lSYD);
+    stdair::SegmentDateKey_T lSegmentDateKey (lLHR, lSYD);
 
-    SegmentDate& lLHRSYDSegment =
-      stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+    stdair::SegmentDate& lLHRSYDSegment =
+      stdair::FacBomContent::instance().create<stdair::SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
     // Display the segment-date
@@ -84,10 +91,10 @@ namespace AIRSCHED {
 
     // Create a second SegmentDate (LHR-BKK)
     const stdair::AirportCode_T lBKK ("BKK");
-    lSegmentDateKey = SegmentDateKey_T (lLHR, lBKK);
+    lSegmentDateKey = stdair::SegmentDateKey_T (lLHR, lBKK);
 
-    SegmentDate& lLHRBKKSegment =
-      stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+    stdair::SegmentDate& lLHRBKKSegment =
+      stdair::FacBomContent::instance().create<stdair::SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
     // Display the segment-date
@@ -95,10 +102,10 @@ namespace AIRSCHED {
 
 
     // Create a third SegmentDate (BKK-SYD)
-    lSegmentDateKey = SegmentDateKey_T (lBKK, lSYD);
+    lSegmentDateKey = stdair::SegmentDateKey_T (lBKK, lSYD);
 
-    SegmentDate& lBKKSYDSegment =
-      stdair::FacBomContent::instance().create<SegmentDate> (lFlightDate,
+    stdair::SegmentDate& lBKKSYDSegment =
+      stdair::FacBomContent::instance().create<stdair::SegmentDate> (lFlightDate,
                                                              lSegmentDateKey);
 
     // Display the segment-date
@@ -107,20 +114,20 @@ namespace AIRSCHED {
     
     // Step 0.4: Leg-date level
     // Create a first LegDate (LHR)
-    LegDateKey_T lLegDateKey (lLHR);
+    stdair::LegDateKey_T lLegDateKey (lLHR);
 
-    LegDate& lLHRLeg =
-      stdair::FacBomContent::instance().create<LegDate> (lFlightDate,
+    stdair::LegDate& lLHRLeg =
+      stdair::FacBomContent::instance().create<stdair::LegDate> (lFlightDate,
                                                          lLegDateKey);
 
     // Display the leg-date
     AIRSCHED_LOG_DEBUG ("LegDate: " << lLHRLeg.toString());
     
     // Create a second LegDate (BKK)
-    lLegDateKey = LegDateKey_T (lBKK);
+    lLegDateKey = stdair::LegDateKey_T (lBKK);
 
-    LegDate& lBKKLeg =
-      stdair::FacBomContent::instance().create<LegDate> (lFlightDate,
+    stdair::LegDate& lBKKLeg =
+      stdair::FacBomContent::instance().create<stdair::LegDate> (lFlightDate,
                                                          lLegDateKey);
 
     // Display the leg-date
@@ -136,38 +143,38 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////
-  void Simulator::testIteratorInventory (const Inventory& iInventory) {
+  void Simulator::testIteratorInventory (const stdair::Inventory& iInventory) {
     AIRSCHED_LOG_DEBUG ("Test iterator.");
 
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the list");
-    FlightDateList_T lFDList = iInventory.getFlightDateList();
-    for (FlightDateList_T::iterator itFD = lFDList.begin();
+    stdair::FlightDateList_T lFDList = iInventory.getFlightDateList();
+    for (stdair::FlightDateList_T::iterator itFD = lFDList.begin();
          itFD != lFDList.end(); ++itFD) {
       AIRSCHED_LOG_DEBUG ("Current flight-date: " << *itFD);
     }
     
     // Browse the map with a for-loops
     AIRSCHED_LOG_DEBUG ("Browse the map with iterator");
-    FlightDateMap_T lFDMap = iInventory.getFlightDateMap();
-    for (FlightDateMap_T::iterator itFD = lFDMap.begin();
+    stdair::FlightDateMap_T lFDMap = iInventory.getFlightDateMap();
+    for (stdair::FlightDateMap_T::iterator itFD = lFDMap.begin();
          itFD != lFDMap.end(); ++itFD) {
-      const FlightDate* lCurrentFlightDate_ptr = itFD->second;
+      const stdair::FlightDate* lCurrentFlightDate_ptr = itFD->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
     }
 
     AIRSCHED_LOG_DEBUG ("Browse the map with reverse_iterator");
-    for (FlightDateMap_T::reverse_iterator itFD = lFDMap.rbegin();
+    for (stdair::FlightDateMap_T::reverse_iterator itFD = lFDMap.rbegin();
          itFD != lFDMap.rend(); ++itFD) {
-      const FlightDate* lCurrentFlightDate_ptr = itFD->second;
+      const stdair::FlightDate* lCurrentFlightDate_ptr = itFD->second;
       AIRSCHED_LOG_DEBUG ("Current flight-date: "
                           << lCurrentFlightDate_ptr->toString());
     }
 
     AIRSCHED_LOG_DEBUG ("Test operators: ");
-    FlightDateList_T::iterator itBegin = lFDList.begin();
-    FlightDateList_T::iterator itEnd = lFDList.end();
+    stdair::FlightDateList_T::iterator itBegin = lFDList.begin();
+    stdair::FlightDateList_T::iterator itEnd = lFDList.end();
     AIRSCHED_LOG_DEBUG ("itEnd - itBegin, should be 1: " << itEnd - itBegin);
     AIRSCHED_LOG_DEBUG ("itBegin - itEnd, should be -1: " << itBegin - itEnd);
     AIRSCHED_LOG_DEBUG ("itBegin < itEnd, should be 1: " << (itBegin < itEnd));
@@ -178,23 +185,24 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////
-  void Simulator::testIteratorFlightDate (const FlightDate& iFlightDate) {
+  void Simulator::
+  testIteratorFlightDate (const stdair::FlightDate& iFlightDate) {
     AIRSCHED_LOG_DEBUG ("Test iterator.");
 
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the segment-date list");
-    SegmentDateList_T lSDList = iFlightDate.getSegmentDateList();
-    for (SegmentDateList_T::iterator itSD = lSDList.begin();
+    stdair::SegmentDateList_T lSDList = iFlightDate.getSegmentDateList();
+    for (stdair::SegmentDateList_T::iterator itSD = lSDList.begin();
          itSD != lSDList.end(); ++itSD) {
       AIRSCHED_LOG_DEBUG ("Current segment-date: " << *itSD);
     }
     
     // Browse the map with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the segment_date map with iterator");
-    SegmentDateMap_T lSDMap = iFlightDate.getSegmentDateMap();
-    for (SegmentDateMap_T::iterator itSD = lSDMap.begin();
+    stdair::SegmentDateMap_T lSDMap = iFlightDate.getSegmentDateMap();
+    for (stdair::SegmentDateMap_T::iterator itSD = lSDMap.begin();
          itSD != lSDMap.end(); ++itSD) {
-      const SegmentDate* lCurrentSegmentDate_ptr = itSD->second;
+      const stdair::SegmentDate* lCurrentSegmentDate_ptr = itSD->second;
       AIRSCHED_LOG_DEBUG ("Current segment-date: "
                           << lCurrentSegmentDate_ptr->toString());
     }
@@ -202,18 +210,18 @@ namespace AIRSCHED {
     
     // Browse the list with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the leg-date list");
-    LegDateList_T lLDList = iFlightDate.getLegDateList();
-    for (LegDateList_T::iterator itLD = lLDList.begin();
+    stdair::LegDateList_T lLDList = iFlightDate.getLegDateList();
+    for (stdair::LegDateList_T::iterator itLD = lLDList.begin();
          itLD != lLDList.end(); ++itLD) {
       AIRSCHED_LOG_DEBUG ("Current leg-date: " << *itLD);
     }
     
     // Browse the map with a for-loop
     AIRSCHED_LOG_DEBUG ("Browse the leg-date map with iterator");
-    LegDateMap_T lLDMap = iFlightDate.getLegDateMap();
-    for (LegDateMap_T::iterator itLD = lLDMap.begin();
+    stdair::LegDateMap_T lLDMap = iFlightDate.getLegDateMap();
+    for (stdair::LegDateMap_T::iterator itLD = lLDMap.begin();
          itLD != lLDMap.end(); ++itLD) {
-      const LegDate* lCurrentLegDate_ptr = itLD->second;
+      const stdair::LegDate* lCurrentLegDate_ptr = itLD->second;
       AIRSCHED_LOG_DEBUG ("Current leg-date: "
                           << lCurrentLegDate_ptr->toString());
     }

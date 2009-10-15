@@ -6,9 +6,10 @@
 // STL
 #include <string>
 // STDAIR
-#include <stdair/bom/BomStructureRoot.hpp>
+#include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomStructureDummy.hpp>
 #include <stdair/bom/BomContentDummy.hpp>
+#include <stdair/bom/BomRootStructure.hpp>
 #include <stdair/bom/InventoryStructure.hpp>
 #include <stdair/bom/FlightDateStructure.hpp>
 #include <stdair/bom/LegDateStructure.hpp>
@@ -16,9 +17,9 @@
 #include <stdair/bom/LegCabinStructure.hpp>
 #include <stdair/bom/SegmentCabinStructure.hpp>
 #include <stdair/bom/BookingClassStructure.hpp>
-#include <stdair/bom/BomContentRoot.hpp>
 #include <stdair/bom/BomChildrenHolderImp.hpp>
 #include <stdair/bom/BomIterator.hpp>
+#include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/FlightDateList.hpp>
@@ -45,9 +46,9 @@ namespace AIRSCHED {
     AIRSCHED_LOG_DEBUG ("Welcome to Air-Schedule");
 
     // Step 0.0: initialisation
-    // Create the root of the Bom tree (i.e., a BomContentRoot object)
-    stdair::BomContentRoot_T& lBomContentRoot =
-      stdair::FacBomContent::instance().createBomRoot<stdair::Inventory>();
+    // Create the root of the Bom tree (i.e., a BomRoot object)
+    stdair::BomRoot& lBomRoot =
+      stdair::FacBomContent::instance().createBomRoot<stdair::BomRoot>();
     
     
     // Step 0.1: Inventory level
@@ -57,7 +58,7 @@ namespace AIRSCHED {
 
     stdair::Inventory& lInventory =
       stdair::FacBomContent::
-      instance().create<stdair::Inventory> (lBomContentRoot, lInventoryKey);
+      instance().create<stdair::Inventory> (lBomRoot, lInventoryKey);
     
     // Display the inventory
     AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());
@@ -202,7 +203,6 @@ namespace AIRSCHED {
     // Step 0.8: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
-
 
     testIteratorInventory (lInventory);
     testIteratorFlightDate (lFlightDate);

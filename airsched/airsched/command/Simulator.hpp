@@ -7,13 +7,10 @@
 // AIRSCHED
 #include <airsched/command/CmdAbstract.hpp>
 
-// Forward declarations.
-namespace stdair {
+namespace AIRSCHED {
+  // Forward declarations.
   class Inventory;
   class FlightDate;
-}
-
-namespace AIRSCHED {
 
   /** Class implementing a small simulation, which uses the Airline Schedule. */
   class Simulator : public CmdAbstract {
@@ -24,8 +21,8 @@ namespace AIRSCHED {
     static void simulate ();
 
     /** Test the iterator. */
-    static void testIteratorInventory (const stdair::Inventory&);
-    static void testIteratorFlightDate (const stdair::FlightDate&);
+    static void testIteratorInventory (const Inventory&);
+    static void testIteratorFlightDate (const FlightDate&);
   };
 
 }

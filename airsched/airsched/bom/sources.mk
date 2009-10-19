@@ -1,2 +1,2 @@
-bom_h_sources = 
-bom_cc_sources = 
+bom_h_sources = $(top_srcdir)/airsched/bom/Inventory.hpp 
+bom_cc_sources = $(top_srcdir)/airsched/bom/Inventory.hpp 

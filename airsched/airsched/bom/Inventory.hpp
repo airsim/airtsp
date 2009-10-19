@@ -5,7 +5,6 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
-#include <stdair/bom/InventoryTypes.hpp>
 #include <stdair/bom/Inventory.hpp>
 
 // Forward declarations
@@ -37,5 +36,4 @@ namespace AIRSCHED {
   };
 
 }
-#endif // __STDAIR_BOM_INVENTORY_HPP
-
+#endif // __AIRSCHED_BOM_INVENTORY_HPP

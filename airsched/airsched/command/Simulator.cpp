@@ -35,6 +35,7 @@
 #include <stdair/bom/BookingClass.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
+#include <airsched/bom/Inventory.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/service/Logger.hpp>
 
@@ -56,9 +57,9 @@ namespace AIRSCHED {
     const stdair::AirlineCode_T lAirlineCode ("BA");
     const stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
-    stdair::Inventory& lInventory =
+    Inventory& lInventory =
       stdair::FacBomContent::
-      instance().create<stdair::Inventory> (lBomRoot, lInventoryKey);
+      instance().create<Inventory> (lBomRoot, lInventoryKey);
     
     // Display the inventory
     AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());

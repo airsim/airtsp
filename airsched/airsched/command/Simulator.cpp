@@ -10,13 +10,6 @@
 #include <stdair/bom/BomStructureDummy.hpp>
 #include <stdair/bom/BomContentDummy.hpp>
 #include <stdair/bom/BomRootStructure.hpp>
-#include <stdair/bom/InventoryStructure.hpp>
-#include <stdair/bom/FlightDateStructure.hpp>
-#include <stdair/bom/LegDateStructure.hpp>
-#include <stdair/bom/SegmentDateStructure.hpp>
-#include <stdair/bom/LegCabinStructure.hpp>
-#include <stdair/bom/SegmentCabinStructure.hpp>
-#include <stdair/bom/BookingClassStructure.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
 #include <airsched/bom/BomRoot.hpp>

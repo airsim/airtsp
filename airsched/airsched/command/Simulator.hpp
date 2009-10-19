@@ -8,10 +8,6 @@
 #include <airsched/command/CmdAbstract.hpp>
 
 namespace AIRSCHED {
-  // Forward declarations.
-  class Inventory;
-  class FlightDate;
-
   /** Class implementing a small simulation, which uses the Airline Schedule. */
   class Simulator : public CmdAbstract {
   public:
@@ -19,10 +15,6 @@ namespace AIRSCHED {
     // ////////// Business Methods /////////
     /** Perform a small simulation, which uses the Airline Schedule. */
     static void simulate ();
-
-    /** Test the iterator. */
-    static void testIteratorInventory (const Inventory&);
-    static void testIteratorFlightDate (const FlightDate&);
   };
 
 }

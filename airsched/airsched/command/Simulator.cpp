@@ -7,8 +7,6 @@
 #include <string>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/bom/BomStructureDummy.hpp>
-#include <stdair/bom/BomContentDummy.hpp>
 #include <stdair/bom/BomRootStructure.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED

@@ -3,6 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+// STDAIR
+#include <stdair/bom/LegDate.hpp>
 // AIRSCHED
 #include <airsched/bom/LegCabin.hpp>
 

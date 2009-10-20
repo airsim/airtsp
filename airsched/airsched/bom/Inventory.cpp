@@ -3,6 +3,8 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+// STDAIR
+#include <stdair/bom/BomRoot.hpp>
 // AIRSCHED
 #include <airsched/bom/Inventory.hpp>
 

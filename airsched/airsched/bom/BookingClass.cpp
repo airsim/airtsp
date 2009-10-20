@@ -3,8 +3,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
-#include <stdair/bom/SegmentCabin.hpp>
 // AIRSCHED
 #include <airsched/bom/BookingClass.hpp>
 

@@ -9,8 +9,9 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (BomStructure_T& ioInventoryStructure)
-    : stdair::Inventory (ioInventoryStructure) {
+  Inventory::Inventory (const BomKey_T& iKey,
+                        BomStructure_T& ioInventoryStructure)
+    : stdair::Inventory (iKey, ioInventoryStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////

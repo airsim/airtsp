@@ -28,7 +28,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
-    SegmentDate (BomStructure_T&);
+    SegmentDate (const BomKey_T&, BomStructure_T&);
 
     /** Destructor. */
     virtual ~SegmentDate();

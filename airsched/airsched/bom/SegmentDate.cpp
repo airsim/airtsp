@@ -9,8 +9,9 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (BomStructure_T& ioSegmentDateStructure)
-    : stdair::SegmentDate (ioSegmentDateStructure) {
+  SegmentDate::SegmentDate (const BomKey_T& iKey,
+                            BomStructure_T& ioSegmentDateStructure)
+    : stdair::SegmentDate (iKey, ioSegmentDateStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////

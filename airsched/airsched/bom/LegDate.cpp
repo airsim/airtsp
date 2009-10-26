@@ -9,8 +9,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  LegDate::LegDate (BomStructure_T& ioLegDateStructure)
-    : stdair::LegDate (ioLegDateStructure) {
+  LegDate::LegDate (const BomKey_T& iKey, BomStructure_T& ioLegDateStructure)
+    : stdair::LegDate (iKey, ioLegDateStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////

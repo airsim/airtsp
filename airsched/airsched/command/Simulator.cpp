@@ -1,9 +1,8 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
 // STL
+#include <cassert>
 #include <string>
 // STDAIR
 #include <stdair/bom/BomRootKey.hpp>
@@ -192,7 +191,6 @@ namespace AIRSCHED {
     // Step 0.8: Initialisation results
     // Display the full structure and content
     AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
-
   }
-  
+
 }

@@ -9,8 +9,9 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (BomStructure_T& ioFlightDateStructure)
-    : stdair::FlightDate (ioFlightDateStructure) {
+  FlightDate::FlightDate (const BomKey_T& iKey,
+                          BomStructure_T& ioFlightDateStructure)
+    : stdair::FlightDate (iKey, ioFlightDateStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////

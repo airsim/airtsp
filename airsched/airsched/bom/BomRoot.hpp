@@ -28,7 +28,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     BomRoot ();
     BomRoot (const BomRoot&);
-    BomRoot (BomStructure_T&);
+    BomRoot (const BomKey_T&, BomStructure_T&);
 
     /** Destructor. */
     virtual ~BomRoot();

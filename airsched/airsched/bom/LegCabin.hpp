@@ -28,7 +28,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     LegCabin ();
     LegCabin (const LegCabin&);
-    LegCabin (BomStructure_T&);
+    LegCabin (const BomKey_T&, BomStructure_T&);
 
     /** Destructor. */
     virtual ~LegCabin();

@@ -9,8 +9,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  BomRoot::BomRoot (BomStructure_T& ioBomRootStructure)
-    : stdair::BomRoot (ioBomRootStructure) {
+  BomRoot::BomRoot (const BomKey_T& iKey, BomStructure_T& ioBomRootStructure)
+    : stdair::BomRoot (iKey, ioBomRootStructure) {
   }
   
   // ////////////////////////////////////////////////////////////////////

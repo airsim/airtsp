@@ -21,14 +21,14 @@ namespace AIRSCHED {
   public:
     /** Definition allowing to retrieve the associated BOM structure type. */
     typedef stdair::InventoryStructure_T BomStructure_T;
-
+    
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
     /** Default constructors. */
     Inventory ();
     Inventory (const Inventory&);
-    Inventory (BomStructure_T&);
+    Inventory (const BomKey_T&, BomStructure_T&);
 
     /** Destructor. */
     virtual ~Inventory();

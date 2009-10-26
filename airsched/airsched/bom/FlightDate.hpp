@@ -28,7 +28,7 @@ namespace AIRSCHED {
     /** Default constructors. */
     FlightDate ();
     FlightDate (const FlightDate&);
-    FlightDate (BomStructure_T&);
+    FlightDate (const BomKey_T&, BomStructure_T&);
 
     /** Destructor. */
     virtual ~FlightDate();

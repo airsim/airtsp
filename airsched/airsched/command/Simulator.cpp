@@ -36,7 +36,7 @@ namespace AIRSCHED {
     // Step 0.0: initialisation
     // Create the root of the Bom tree (i.e., a BomRoot object)
     BomRoot& lBomRoot =
-      stdair::FacBomContent::instance().createBomRoot<BomRoot>();
+      stdair::FacBomContent::instance().create<BomRoot>();
     
     
     // Step 0.1: Inventory level
@@ -187,10 +187,6 @@ namespace AIRSCHED {
     AIRSCHED_LOG_DEBUG ("BookingClass: "
                         << lLHRBKKSegmentYCabinQClass.toString());
 
-        
-    // Step 0.8: Initialisation results
-    // Display the full structure and content
-    AIRSCHED_LOG_DEBUG ("Full Inventory: " << lInventory.toString());
   }
 
 }

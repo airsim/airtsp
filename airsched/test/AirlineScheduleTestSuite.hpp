@@ -5,16 +5,17 @@
 
 class AirlineScheduleTestSuite : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE (AirlineScheduleTestSuite);
-  CPPUNIT_TEST (testAirlineSchedule);
-  //  CPPUNIT_TEST (errorCase);
+  CPPUNIT_TEST (testMemoryExternalManagingMode);
   CPPUNIT_TEST_SUITE_END ();
 public:
 
-  /** Test the Optimisation functionality. */
-  void testAirlineSchedule ();
-
-  /** Test some error detection functionalities. */
-  //  void errorCase ();
+  /** Test the Optimisation functionality.
+   <br> The code is aimed at testing the initialization of airline
+   inventory-related objects which are mainly implemented in the
+   stdair library. That means the memory allocation of these objects
+   will be managed by the calling project and not by the called project.
+   */
+  void testMemoryExternalManagingMode ();
 
   /** Constructor. */
   AirlineScheduleTestSuite ();

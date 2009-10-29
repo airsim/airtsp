@@ -29,7 +29,7 @@
 #include <test/AirlineScheduleTestSuite.hpp>
 
 // //////////////////////////////////////////////////////////////////////
-void testMemoryExternalManagingModeHelper() {
+void externalMemoryManagementHelper() {
   try {
     
     // Output log File
@@ -210,8 +210,8 @@ void testMemoryExternalManagingModeHelper() {
 }
 
 // //////////////////////////////////////////////////////////////////////
-void AirlineScheduleTestSuite::testMemoryExternalManagingMode() {
-  CPPUNIT_ASSERT_NO_THROW (testMemoryExternalManagingModeHelper(););
+void AirlineScheduleTestSuite::externalMemoryManagement() {
+  CPPUNIT_ASSERT_NO_THROW (externalMemoryManagementHelper(););
 }
 
 // //////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
 
 class AirlineScheduleTestSuite : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE (AirlineScheduleTestSuite);
-  CPPUNIT_TEST (testMemoryExternalManagingMode);
+  CPPUNIT_TEST (externalMemoryManagement);
   CPPUNIT_TEST_SUITE_END ();
 public:
 
@@ -15,7 +15,7 @@ public:
    stdair library. That means the memory allocation of these objects
    will be managed by the calling project and not by the called project.
    */
-  void testMemoryExternalManagingMode ();
+  void externalMemoryManagement ();
 
   /** Constructor. */
   AirlineScheduleTestSuite ();

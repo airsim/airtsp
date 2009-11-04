@@ -10,6 +10,12 @@
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 
+// Forward declarations.
+namespace stdair {
+  class AirlineFeatureSet;
+  class BomRoot;
+}
+
 namespace AIRSCHED {
 
   /** Forward declaration. */
@@ -38,6 +44,13 @@ namespace AIRSCHED {
 
     /** Perform a small simulation, which uses the Customer Choice Model.*/
     void simulate();
+
+    /** Parses the CSV file describing the airline schedules for the
+        simulator, and generates the inventories accordingly. */
+    static stdair::BomRoot&
+    generateInventories (const std::string&,
+                         const stdair::AirlineFeatureSet&, const Date_T&);
+    
 
   private:
     /** Default Constructors. */

@@ -7,10 +7,14 @@
 #include <iomanip>
 #include <sstream>
 #include <iostream>
+// STDAIR
+#include <stdair/bom/AirlineFeatureSet.hpp>
 // AIRSCHED
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
+#include <airsched/bom/BomRoot.hpp>
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
+#include <airsched/command/ScheduleParser.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
@@ -102,4 +106,24 @@ namespace AIRSCHED {
     Simulator::simulate ();
   }
 
+
+  // //////////////////////////////////////////////////////////////////////
+  stdair::BomRoot& AIRSCHED_Service::
+  generateInventories (const std::string& iScheduleInputFilename,
+                       const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+                       const Date_T& iStartAnalysisDate) {
+    
+    // Parse the schedule input file, and generate the Inventories
+    stdair::BomRoot& oBomRoot =
+      ScheduleParser::generateInventories (iScheduleInputFilename,
+                                           iAirlineFeatureSet,
+                                           iStartAnalysisDate);
+    
+    // DEBUG
+    /* AIRSCHED_LOG_DEBUG ("Generated BomRoot:");
+       oBomRoot.display();*/
+    
+    return oBomRoot;
+  }
+  
 }

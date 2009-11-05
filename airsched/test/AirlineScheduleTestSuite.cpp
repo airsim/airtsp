@@ -12,16 +12,17 @@
 #include <stdair/bom/SegmentCabinKey.hpp>
 #include <stdair/bom/LegCabinKey.hpp>
 #include <stdair/bom/BookingClassKey.hpp>
+#include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/FlightDate.hpp>
+#include <stdair/bom/SegmentDate.hpp>
+#include <stdair/bom/LegDate.hpp>
+#include <stdair/bom/SegmentCabin.hpp>
+#include <stdair/bom/LegCabin.hpp>
+#include <stdair/bom/BookingClass.hpp>
+#include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
-#include <airsched/bom/BomRoot.hpp>
-#include <airsched/bom/Inventory.hpp>
-#include <airsched/bom/FlightDate.hpp>
-#include <airsched/bom/SegmentDate.hpp>
-#include <airsched/bom/LegDate.hpp>
-#include <airsched/bom/SegmentCabin.hpp>
-#include <airsched/bom/LegCabin.hpp>
-#include <airsched/bom/BookingClass.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
@@ -47,8 +48,8 @@ void externalMemoryManagementHelper() {
 
     // Step 0.0: initialisation
     // Create the root of the Bom tree (i.e., a BomRoot object)
-    AIRSCHED::BomRoot& lBomRoot =
-      stdair::FacBomContent::instance().create<AIRSCHED::BomRoot>();
+    stdair::BomRoot& lBomRoot =
+      stdair::FacBomContent::instance().create<stdair::BomRoot>();
     
     
     // Step 0.1: Inventory level
@@ -56,9 +57,9 @@ void externalMemoryManagementHelper() {
     const stdair::AirlineCode_T lAirlineCode ("BA");
     const stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
-    AIRSCHED::Inventory& lInventory =
+    stdair::Inventory& lInventory =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::Inventory> (lBomRoot, lInventoryKey);
+      instance().create<stdair::Inventory> (lBomRoot, lInventoryKey);
     
     // Display the inventory
     AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());
@@ -69,9 +70,9 @@ void externalMemoryManagementHelper() {
     const stdair::Date_T lDate (2010, 6, 10);
     const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
 
-    AIRSCHED::FlightDate& lFlightDate =
+    stdair::FlightDate& lFlightDate =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::FlightDate> (lInventory, lFlightDateKey);
+      instance().create<stdair::FlightDate> (lInventory, lFlightDateKey);
     
     // Display the flight-date
     AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate.toString());
@@ -82,9 +83,9 @@ void externalMemoryManagementHelper() {
     const stdair::AirportCode_T lSYD ("SYD");
     stdair::SegmentDateKey_T lSegmentDateKey (lLHR, lSYD);
 
-    AIRSCHED::SegmentDate& lLHRSYDSegment =
+    stdair::SegmentDate& lLHRSYDSegment =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentDate> (lFlightDate, lSegmentDateKey);
+      instance().create<stdair::SegmentDate> (lFlightDate, lSegmentDateKey);
 
     // Display the segment-date
     AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRSYDSegment.toString());
@@ -94,9 +95,9 @@ void externalMemoryManagementHelper() {
     const stdair::AirportCode_T lBKK ("BKK");
     lSegmentDateKey = stdair::SegmentDateKey_T (lLHR, lBKK);
 
-    AIRSCHED::SegmentDate& lLHRBKKSegment =
+    stdair::SegmentDate& lLHRBKKSegment =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentDate> (lFlightDate,
+      instance().create<stdair::SegmentDate> (lFlightDate,
                                                 lSegmentDateKey);
 
     // Display the segment-date
@@ -106,9 +107,9 @@ void externalMemoryManagementHelper() {
     // Create a third SegmentDate (BKK-SYD)
     lSegmentDateKey = stdair::SegmentDateKey_T (lBKK, lSYD);
 
-    AIRSCHED::SegmentDate& lBKKSYDSegment =
+    stdair::SegmentDate& lBKKSYDSegment =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentDate> (lFlightDate,
+      instance().create<stdair::SegmentDate> (lFlightDate,
                                                 lSegmentDateKey);
 
     // Display the segment-date
@@ -119,8 +120,8 @@ void externalMemoryManagementHelper() {
     // Create a first LegDate (LHR)
     stdair::LegDateKey_T lLegDateKey (lLHR);
 
-    AIRSCHED::LegDate& lLHRLeg =
-      stdair::FacBomContent::instance().create<AIRSCHED::LegDate> (lFlightDate,
+    stdair::LegDate& lLHRLeg =
+      stdair::FacBomContent::instance().create<stdair::LegDate> (lFlightDate,
                                                                    lLegDateKey);
 
     // Display the leg-date
@@ -129,8 +130,8 @@ void externalMemoryManagementHelper() {
     // Create a second LegDate (BKK)
     lLegDateKey = stdair::LegDateKey_T (lBKK);
 
-    AIRSCHED::LegDate& lBKKLeg =
-      stdair::FacBomContent::instance().create<AIRSCHED::LegDate> (lFlightDate,
+    stdair::LegDate& lBKKLeg =
+      stdair::FacBomContent::instance().create<stdair::LegDate> (lFlightDate,
                                                                    lLegDateKey);
 
     // Display the leg-date
@@ -141,27 +142,27 @@ void externalMemoryManagementHelper() {
     const stdair::CabinCode_T lY ("Y");
     stdair::SegmentCabinKey_T lYSegmentCabinKey (lY);
 
-    AIRSCHED::SegmentCabin& lLHRBKKSegmentYCabin =
+    stdair::SegmentCabin& lLHRBKKSegmentYCabin =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentCabin> (lLHRBKKSegment, 
+      instance().create<stdair::SegmentCabin> (lLHRBKKSegment, 
                                                  lYSegmentCabinKey);
 
     // Display the segment-cabin
     AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lLHRBKKSegmentYCabin.toString());
 
     // Create a SegmentCabin (Y) of the Segment BKK-SYD;
-    AIRSCHED::SegmentCabin& lBKKSYDSegmentYCabin =
+    stdair::SegmentCabin& lBKKSYDSegmentYCabin =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentCabin> (lBKKSYDSegment, 
+      instance().create<stdair::SegmentCabin> (lBKKSYDSegment, 
                                                  lYSegmentCabinKey);
 
     // Display the segment-cabin
     AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lBKKSYDSegmentYCabin.toString());
 
     // Create a SegmentCabin (Y) of the Segment LHR-SYD;
-    AIRSCHED::SegmentCabin& lLHRSYDSegmentYCabin =
+    stdair::SegmentCabin& lLHRSYDSegmentYCabin =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::SegmentCabin> (lLHRSYDSegment, 
+      instance().create<stdair::SegmentCabin> (lLHRSYDSegment, 
                                                  lYSegmentCabinKey);
 
     // Display the segment-cabin
@@ -172,17 +173,17 @@ void externalMemoryManagementHelper() {
     // Create a LegCabin (Y) of the Leg LHR-BKK;
     stdair::LegCabinKey_T lYLegCabinKey (lY);
 
-    AIRSCHED::LegCabin& lLHRLegYCabin =
+    stdair::LegCabin& lLHRLegYCabin =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::LegCabin> (lLHRLeg, lYLegCabinKey);
+      instance().create<stdair::LegCabin> (lLHRLeg, lYLegCabinKey);
 
     // Display the leg-cabin
     AIRSCHED_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
 
     // Create a LegCabin (Y) of the Leg BKK-SYD;
-    AIRSCHED::LegCabin& lBKKLegYCabin =
+    stdair::LegCabin& lBKKLegYCabin =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::LegCabin> (lBKKLeg, lYLegCabinKey);
+      instance().create<stdair::LegCabin> (lBKKLeg, lYLegCabinKey);
 
     // Display the leg-cabin
     AIRSCHED_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
@@ -192,14 +193,25 @@ void externalMemoryManagementHelper() {
     const stdair::ClassCode_T lQ ("Q");
     stdair::BookingClassKey_T lQBookingClassKey (lQ);
 
-    AIRSCHED::BookingClass& lLHRBKKSegmentYCabinQClass =
+    stdair::BookingClass& lLHRBKKSegmentYCabinQClass =
       stdair::FacBomContent::
-      instance().create<AIRSCHED::BookingClass> (lLHRBKKSegmentYCabin, 
+      instance().create<stdair::BookingClass> (lLHRBKKSegmentYCabin, 
                                                  lQBookingClassKey);
 
     // Display the booking class
     AIRSCHED_LOG_DEBUG ("BookingClass: "
                         << lLHRBKKSegmentYCabinQClass.toString());
+
+    // Browse the BomRoot and display the created objects.
+    AIRSCHED_LOG_DEBUG ("Browse the BomRoot");
+    
+    const stdair::InventoryList_T& lInventoryList = lBomRoot.getInventoryList();
+    for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
+         itInv != lInventoryList.end(); ++itInv) {
+      const stdair::Inventory& lCurrentInventory = *itInv;
+      AIRSCHED_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
+    }
+
     
   } catch (const std::exception& stde) {
     std::cerr << "Standard exception: " << stde.what() << std::endl;

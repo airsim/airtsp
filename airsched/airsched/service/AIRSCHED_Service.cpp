@@ -111,7 +111,7 @@ namespace AIRSCHED {
   stdair::BomRoot& AIRSCHED_Service::
   generateInventories (const std::string& iScheduleInputFilename,
                        const stdair::AirlineFeatureSet& iAirlineFeatureSet,
-                       const Date_T& iStartAnalysisDate) {
+                       const stdair::Date_T& iStartAnalysisDate) {
     
     // Parse the schedule input file, and generate the Inventories
     stdair::BomRoot& oBomRoot =

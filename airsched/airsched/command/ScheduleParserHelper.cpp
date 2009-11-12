@@ -391,8 +391,8 @@ namespace AIRSCHED {
 
       // Create the FlightDate BOM objects, and potentially the intermediary
       // objects (e.g., Inventory).
-      // InventoryGenerator::createFlightDates (_bomRoot, _startAnalysisDate,
-//                                              _flightPeriod);
+      InventoryGenerator::createFlightDates (_bomRoot, _startAnalysisDate,  
+                                             _flightPeriod);
     }
 
       

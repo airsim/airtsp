@@ -36,51 +36,57 @@ namespace AIRSCHED {
     friend struct ScheduleParserHelper::doEndFlight;
     friend class ScheduleParser;
   private:
-   //  /** Generate the Flight-Date objects corresponding to the given
-//         Flight-Period, and add them to the given BomRoot. */
-//     static void createFlightDates (stdair::BomRoot&,
-//                                    const Date_T& iStartAnalysisDate,
-//                                    const FlightPeriodStruct_T&);
-//     /** Generate an Inventory. */
-//     static Inventory& createInventory (stdair::BomRoot&, const AirlineCode_T&);
-      
-//     /** Generate a FlightDate. */
-//     static FlightDate& createFlightDate (stdair::Inventory&, const Date_T&,
-//                                          const Date_T&,
-//                                          const FlightPeriodStruct_T&);
-      
-//     /** Generate a LegDate. */
-//     static LegDate& createLegDate (stdair::FlightDate&, const LegStruct_T& iLeg,
-//                                    const AnalysisStatus_T&);
+    /** Generate the Flight-Date objects corresponding to the given
+        Flight-Period, and add them to the given BomRoot. */
+    static void createFlightDates (stdair::BomRoot&,
+                                   const Date_T& iStartAnalysisDate,
+                                   const FlightPeriodStruct_T&);
 
-//     /** Generate a LegCabin. */
-//     static void createLegCabin (stdair::LegDate&, const LegCabinStruct_T&,
-//                                 const AnalysisStatus_T&);
+    /** Generate an Inventory. */
+    static stdair::Inventory& createInventory (stdair::BomRoot&,
+                                               const stdair::AirlineCode_T&);
       
-//     /** Generate a SegmentDate. */
-//     static void createSegmentDate (stdair::FlightDate&, const SegmentStruct_T&);
+    /** Generate a FlightDate. */
+    static stdair::FlightDate& createFlightDate (stdair::Inventory&,
+                                                 const Date_T&, const Date_T&,
+                                                 const FlightPeriodStruct_T&);
       
-//     /** Generate a SegmentCabin. */
-//     static void createSegmentCabin (stdair::FlightDate&,
-//                                     stdair::SegmentDate&,
-//                                     const SegmentCabinStruct_T&);
-      
-//     /** Generate a Class. */
-//     static void createClass (stdair::SegmentCabin&, const ClassCode_T&);
+    /** Generate a LegDate. */
+    static stdair::LegDate& createLegDate (stdair::FlightDate&,
+                                           const stdair::Date_T&,
+                                           const LegStruct_T&,
+                                           const stdair::AnalysisStatus_T&);
 
-//     /** Create the routing between the legs and segments for all the
-//         Inventories of the given BomRoot object. */
-//     static void createRouting (stdair::BomRoot&);
+    /** Generate a LegCabin. */
+    static void createLegCabin (stdair::LegDate&, const LegCabinStruct_T&,
+                                const stdair::AnalysisStatus_T&);
+      
+    /** Generate a SegmentDate. */
+    static void createSegmentDate (stdair::FlightDate&, const SegmentStruct_T&);
+      
+    /** Generate a SegmentCabin. */
+    static void createSegmentCabin (stdair::FlightDate&,
+                                    stdair::SegmentDate&,
+                                    const SegmentCabinStruct_T&);
+      
+    /** Generate a Class. */
+    static void createClass (stdair::SegmentCabin&, const stdair::ClassCode_T&);
+
+    /** Create the direct accesses within the invetories such as
+        links between inventory and booking class, links between
+        leg-date and segment-date, ect. */
+    static void createDirectAccesses (stdair::BomRoot&);
 
 //     /** Compute the number of available seats
 //         for all flights. */
 //     static void recalculateAvailabilities (stdair::BomRoot&);
 
-//     /** Create the list of previous built similar flights, e.g. flights
-//         departed at the same week day before.*/
-//     static void createSimilarFlightDateList (stdair::FlightDate&,
-//                                              stdair::Inventory&,
-//                                              const Date_T&, const Date_T&);
+    /** Create the list of previous built similar flights, e.g. flights
+        departed at the same week day before.*/
+    static void createSimilarFlightDateList (stdair::FlightDate&,
+                                             stdair::Inventory&,
+                                             const stdair::Date_T&,
+                                             const stdair::Date_T&);
 
 //     /** Create the list of policies and store them in the segment cabin.*/
 //     static void createPolicies (stdair::SegmentCabin&);

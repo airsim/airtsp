@@ -37,8 +37,8 @@ namespace AIRSCHED {
     lFlightPeriodParser.generateInventories ();
       
     // Complete the BomRoot BOM building: create the routings
-    // for all the flights of the (world) schedule.
-    //InventoryGenerator::createRouting (oBomRoot);
+    // for all the inventories.
+    //InventoryGenerator::createDirectAccesses (oBomRoot);
 
     // Complete the BomRoot BOM building: compute the number of
     // available seats for all flights.

@@ -42,7 +42,7 @@ namespace AIRSCHED {
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
     const stdair::AirlineCode_T lAirlineCode ("BA");
-    const stdair::InventoryKey_T lInventoryKey (lAirlineCode);
+    stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
     Inventory& lInventory =
       stdair::FacBomContent::
@@ -55,7 +55,7 @@ namespace AIRSCHED {
     // Create a FlightDate (BA15/10-JUN-2010)
     const stdair::FlightNumber_T lFlightNumber = 15;
     const stdair::Date_T lDate (2010, 6, 10);
-    const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
+    stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lDate);
 
     FlightDate& lFlightDate =
       stdair::FacBomContent::instance().create<FlightDate> (lInventory,

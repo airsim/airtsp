@@ -3,9 +3,17 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+// BOOST
+#include <boost/date_time/date_iterator.hpp>
 // STDAIR
+#include <stdair/STDAIR_Types.hpp>
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Yield.hpp>
+// #include <stdair/basic/BasConst_BOOST_DateTime.hpp>
+// #include <stdair/bom/FareFamily.hpp>
+// #include <stdair/bom/PolicyHolder.hpp>
+// #include <stdair/bom/PolicyList.hpp>
+// #include <stdair/bom/Policy.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/FlightDate.hpp>
@@ -13,76 +21,71 @@
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/bom/LegCabin.hpp>
 #include <stdair/bom/SegmentCabin.hpp>
+#include <stdair/bom/BookingClass.hpp>
 #include <stdair/bom/AirlineFeatureSet.hpp>
 #include <stdair/bom/AirlineFeature.hpp>
+#include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
-#include <boost/date_time/date_iterator.hpp>
-//#include <airsched/basic/BasConst_BOOST_DateTime.hpp>
-// #include <airsched/bom/FareFamily.hpp>
-// #include <airsched/bom/PolicyHolder.hpp>
-// #include <airsched/bom/PolicyList.hpp>
-// #include <airsched/bom/Policy.hpp>
 #include <airsched/bom/FlightPeriodStruct.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
+#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createFlightDates (stdair::BomRoot& ioBomRoot,
-//                      const Date_T& iStartAnalysisDate,
-//                      const FlightPeriodStruct_T& iFlightPeriod) {
-//     const AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
-//     //AIRSCHED_LOG_DEBUG ("Airline Code: " << lAirlineCode);
-//     stdair::Inventory* lInventory_ptr =
-//       ioBomRoot.getInventory (lAirlineCode);
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createFlightDates (stdair::BomRoot& ioBomRoot,
+                     const Date_T& iStartAnalysisDate,
+                     const FlightPeriodStruct_T& iFlightPeriod) {
+    const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
+     //AIRSCHED_LOG_DEBUG ("Airline Code: " << lAirlineCode);
+    stdair::Inventory* lInventory_ptr = ioBomRoot.getInventory (lAirlineCode);
       
-//     if (lInventory_ptr == NULL) {
-//       // Instantiate an Inventory object for the given key (airline code)
-//       lInventory_ptr = &createInventory (ioBomRoot, lAirlineCode);
-//       assert (lInventory_ptr != NULL);
-//     }
+    if (lInventory_ptr == NULL) {
+      // Instantiate an Inventory object for the given key (airline code)
+      lInventory_ptr = &createInventory (ioBomRoot, lAirlineCode);
+      assert (lInventory_ptr != NULL);
+    }
 
-//     // Generate all the dates corresponding to the period
-//     // and create the corresponding flight-dates.
-//     const DatePeriod_T lDateRange = iFlightPeriod._dateRange;
+    // Generate all the dates corresponding to the period
+    // and create the corresponding flight-dates.
+    const DatePeriod_T lDateRange = iFlightPeriod._dateRange;
 
-//     for (boost::gregorian::day_iterator itDate = lDateRange.begin();
-//          itDate != lDateRange.end(); ++itDate) {
-//       const Date_T currentDate = *itDate;
+    for (boost::gregorian::day_iterator itDate = lDateRange.begin();
+         itDate != lDateRange.end(); ++itDate) {
+      const Date_T currentDate = *itDate;
 
-//       // Retrieve, for the current day, the Day-Of-the-Week (thanks to Boost)
-//       const unsigned short currentDOW = currentDate.day_of_week().as_number();
+      // Retrieve, for the current day, the Day-Of-the-Week (thanks to Boost)
+      const unsigned short currentDoW = currentDate.day_of_week().as_number();
         
-//       // The FlightPeriod structure stores which Days (-Of-the-Week) are
-//       // active within the week. For each day (Mon., Tue., etc.), a boolean
-//       // states whether the Flight is active for that day.
-//       const DOWStruct_T& lDOWList = iFlightPeriod._dow;
-//       const bool isDOWActive = lDOWList.getStandardDayOfWeek (currentDOW);
+      // The FlightPeriod structure stores which Days (-Of-the-Week) are
+      // active within the week. For each day (Mon., Tue., etc.), a boolean
+      // states whether the Flight is active for that day.
+      const stdair::DoWStruct_T& lDoWList = iFlightPeriod._dow;
+      const bool isDoWActive = lDoWList.getStandardDayOfWeek (currentDoW);
 
-//       if (isDOWActive == true) {
-//         stdair::FlightDate& lFlightDate = createFlightDate (*lInventory_ptr,
-//                                                             currentDate,
-//                                                             iStartAnalysisDate,
-//                                                             iFlightPeriod);
+      if (isDoWActive == true) {
+        stdair::FlightDate& lFlightDate = createFlightDate (*lInventory_ptr,
+                                                            currentDate,
+                                                            iStartAnalysisDate,
+                                                            iFlightPeriod);
 
-//         // Update the number of generated flight dates
-//         ioBomRoot.updateFlightDateCounter();
+        // Update the number of generated flight dates
+        ioBomRoot.updateFlightDateCounter();
 
-//         // Create the list of references on previous built similar flight dates
-//         const Date_T& lStartDateRange = lDateRange.begin();
-//         createSimilarFlightDateList (lFlightDate, *lInventory_ptr,
-//                                      currentDate, lStartDateRange);
-//       }
-//     }
-//   }
+        // Create the list of references on previous built similar flight dates
+        const stdair::Date_T& lStartDateRange = lDateRange.begin();
+        createSimilarFlightDateList (lFlightDate, *lInventory_ptr,
+                                     currentDate, lStartDateRange);
+      }
+    }
+  }
     
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createRouting (stdair::BomRoot& ioBomRoot) {
-//     FacBomRoot::createRouting (ioBomRoot);
-//   }
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::createDirectAccesses (stdair::BomRoot& ioBomRoot) {
+    stdair::FacBomContent::createDirectAccesses (ioBomRoot);
+  }
 
 //   // //////////////////////////////////////////////////////////////////////
 //   void InventoryGenerator::
@@ -90,264 +93,220 @@ namespace AIRSCHED {
 //     ioBomRoot.recalculateAvailabilities ();      
 //   }
       
-//   // //////////////////////////////////////////////////////////////////////
-//   Inventory& InventoryGenerator::
-//   createInventory (stdair::BomRoot& ioBomRoot,
-//                    const AirlineCode_T& iAirlineCode) {
-//     const stdair::InventoryKey_T lInventoryKey (iAirlineCode);
+  // //////////////////////////////////////////////////////////////////////
+  stdair::Inventory& InventoryGenerator::
+  createInventory (stdair::BomRoot& ioBomRoot,
+                   const stdair::AirlineCode_T& iAirlineCode) {
+    stdair::InventoryKey_T lInventoryKey (iAirlineCode);
 
-//     // Instantiate an Inventory object with the given airline code
-//     stdair::Inventory& lInventory =
-//       FacBomContent::instance().create<stdair::Inventory> (ioBomRoot,
-//                                                            lInventoryKey);
+    // Instantiate an Inventory object with the given airline code
+    stdair::Inventory& lInventory =
+      stdair::FacBomContent::instance().create<stdair::Inventory>(ioBomRoot,
+                                                                  lInventoryKey);
       
-//     // Set the AirlineFeature for the inventory.
-//     const stdair::AirlineFeatureSet& lAirlineFeatureSet =
-//       ioBomRoot.getAirlineFeatureSet ();
-//     const stdair::AirlineFeature* lAirlineFeature_ptr =
-//       lAirlineFeatureSet.getAirlineFeatures(iAirlineCode);
-//     //AIRSCHED_LOG_DEBUG (lAirlineFeatureSet.display()
-//     //                 << "needed airline code: " << iAirlineCode);
-//     assert (lAirlineFeature_ptr != NULL);
+    // Set the AirlineFeature for the inventory.
+    const stdair::AirlineFeatureSet& lAirlineFeatureSet =
+      ioBomRoot.getAirlineFeatureSet ();
+    const stdair::AirlineFeature* lAirlineFeature_ptr =
+      lAirlineFeatureSet.getAirlineFeature (iAirlineCode);
+    //AIRSCHED_LOG_DEBUG (lAirlineFeatureSet.display()
+    //                 << "needed airline code: " << iAirlineCode);
+    assert (lAirlineFeature_ptr != NULL);
       
-//     lInventory.setAirlineFeature (lAirlineFeature_ptr);
+    lInventory.setAirlineFeature (lAirlineFeature_ptr);
       
-//     return lInventory;
-//   }
+    return lInventory;
+  }
       
-//   // //////////////////////////////////////////////////////////////////////
-//   stdair::FlightDate& InventoryGenerator::
-//   createFlightDate (stdair::Inventory& ioInventory,
-//                     const Date_T& iFlightDate,
-//                     const Date_T& iStartAnalysisDate,
-//                     const FlightPeriodStruct_T& iFlightPeriod) {
-//     // Create the FlightDateKey
-//     const stdair::InventoryKey_T& lInventoryKey = ioInventory.getPrimaryKey();
-//     const FlightNumber_T& lFlightNumber = iFlightPeriod._flightNumber;
-//     const FlightKey_T lFlightKey (lInventoryKey, lFlightNumber);
-//     const FlightDateKey_T lFlightDateKey (lFlightKey, iFlightDate);
+   // //////////////////////////////////////////////////////////////////////
+   stdair::FlightDate& InventoryGenerator::
+   createFlightDate (stdair::Inventory& ioInventory,
+                    const Date_T& iFlightDate,
+                    const Date_T& iStartAnalysisDate,
+                    const FlightPeriodStruct_T& iFlightPeriod) {
+    // Create the FlightDateKey
+    const stdair::FlightNumber_T& lFlightNumber = iFlightPeriod._flightNumber;
+    stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, iFlightDate);
 
-//     // Check that the FlightDate object is not already existing. If a
-//     // FlightDate object with the same key has already been created,
-//     // it means that the schedule input file is invalid (two flight-periods
-//     // are overlapping).
-//     stdair::FlightDate* lFlightDate_ptr =
-//       ioInventory.getFlightDate (lFlightNumber, iFlightDate);
+    // Check that the FlightDate object is not already existing. If a
+    // FlightDate object with the same key has already been created,
+    // it means that the schedule input file is invalid (two flight-periods
+    // are overlapping).
+    stdair::FlightDate* lFlightDate_ptr =
+      ioInventory.getFlightDate (lFlightDateKey);
 
-//     if (lFlightDate_ptr != NULL) {
-//       // TODO: transform that error into an exception (duplicated
-//       // entry in schedule input file), as there should not be any
-//       // duplicated Flight-Date.
-//       AIRSCHED_LOG_ERROR ("The flight-date: " << lFlightDateKey
-//                           << " is duplicated within the schedule input file.");
-//       //return;
-//     }
-//     assert (lFlightDate_ptr == NULL);
+    if (lFlightDate_ptr != NULL) {
+      // TODO: transform that error into an exception (duplicated
+      // entry in schedule input file), as there should not be any
+      // duplicated Flight-Date.
+      AIRSCHED_LOG_ERROR ("The flight-date: " << lFlightDateKey
+                          << " is duplicated within the schedule input file.");
+      //return;
+    }
+    assert (lFlightDate_ptr == NULL);
       
-//     // Instantiate a FlightDate object for the given key (flight number and
-//     // flight date)
-//     lFlightDate_ptr = &FacFlightDate::instance().create (lFlightDateKey);
-//     assert (lFlightDate_ptr != NULL);
+    // Instantiate a FlightDate object for the given key (flight number and
+    // flight date)
+    lFlightDate_ptr = &stdair::FacBomContent::
+      instance().create<stdair::FlightDate> (ioInventory, lFlightDateKey);
+    assert (lFlightDate_ptr != NULL);
+
+    // Define the boolean stating whether the flight date is in the
+    // analysis window or not
+    stdair::AnalysisStatus_T lAnalysisStatus = false;
+    if (iStartAnalysisDate <= iFlightDate) {
+      lAnalysisStatus = true;
+    }
+      
+    // Iterate on the Leg-Dates
+    stdair::Duration_T currentOffTime (0, 0, 0);
+    stdair::AirportCode_T previousOffPoint;
+    const LegStructList_T& lLegList = iFlightPeriod._legList;
+    for (LegStructList_T::const_iterator itLeg = lLegList.begin();
+         itLeg != lLegList.end(); ++itLeg) {
+      const LegStruct_T& lLeg = *itLeg;
+
+      // Create the Leg-branch of the FlightDate BOM
+      stdair::LegDate& lLegDate =
+        createLegDate (*lFlightDate_ptr, iFlightDate, lLeg, lAnalysisStatus);
+
+      // TODO: Check that the board date/time of the next leg is greated
+      // than the off date/time of the current leg. Throw an exception
+      // otherwise.
+
+      // TODO: specify, in the schedule input file specifications, that the
+      // legs should be given in their natural order.
+      // Then, replace the assertion by a thrown exception.
+      //
+      // Check that the legs are given in their natural order. If the schedule
+      // input does not respect that assumption, the following assertion will
+      // fail.
+      if (itLeg != lLegList.begin()) {
+        const stdair::AirportCode_T& currentBoardPoint =
+          lLegDate.getBoardPoint();
+        assert (currentBoardPoint == previousOffPoint);
+      }
         
-//     // Link the FlightDate with the Inventory
-//     FacInventory::initLinkWithFlightDate (ioInventory, *lFlightDate_ptr);
+      // Set the local variable for the next iteration
+      previousOffPoint = lLegDate.getOffPoint();
+    }
 
-//     // Link the FlightNumber with the Inventory
-//     FacInventory::initLinkWithFlightNumber (ioInventory, lFlightNumber);
+    // Iterate on the Segment structures
+    const SegmentStructList_T& lSegmentList = iFlightPeriod._segmentList;
+    for (SegmentStructList_T::const_iterator itSegment = lSegmentList.begin();
+         itSegment != lSegmentList.end(); ++itSegment) {
+      const SegmentStruct_T& lSegment = *itSegment;
 
-//     // Define the boolean stating whether the flight date is in the
-//     // analysis window or not
-//     AnalysisStatus_T lAnalysisStatus = false;
-//     if (iStartAnalysisDate <= iFlightDate) {
-//       lAnalysisStatus = true;
-//     }
+      createSegmentDate (*lFlightDate_ptr, lSegment);
+    }
+
+    assert (lFlightDate_ptr != NULL);
+
+    return *lFlightDate_ptr;
+   }
+
+  // //////////////////////////////////////////////////////////////////////
+  stdair::LegDate& InventoryGenerator::
+  createLegDate (stdair::FlightDate& ioFlightDate,
+                 const stdair::Date_T& iReferenceDate,
+                 const LegStruct_T& iLeg,
+                 const stdair::AnalysisStatus_T& iAnalysisStatus) {
+    // Set the Leg-Date primary key
+    const stdair::AirportCode_T& lBoardPoint = iLeg._boardPoint;
+    stdair::LegDateKey_T lLegDateKey (lBoardPoint);
+
+    // Create the Leg-Date object
+    stdair::LegDate& lLegDate = stdair::FacBomContent::
+      instance().create<stdair::LegDate> (ioFlightDate, lLegDateKey);
+
+    // Set the Leg-Date attributes
+    iLeg.fill (iReferenceDate, lLegDate);
       
-//     // Iterate on the Leg-Dates
-//     Duration_T currentOffTime (0, 0, 0);
-//     AirportCode_T previousOffPoint;
-//     const LegStructList_T& lLegList = iFlightPeriod._legList;
-//     for (LegStructList_T::const_iterator itLeg = lLegList.begin();
-//          itLeg != lLegList.end(); ++itLeg) {
-//       const LegStruct_T& lLeg = *itLeg;
+    // Iterate on the Cabins
+    const LegCabinStructList_T& lCabinList = iLeg._cabinList;
+    for (LegCabinStructList_T::const_iterator itCabin = lCabinList.begin();
+         itCabin != lCabinList.end(); ++itCabin) {
+      const LegCabinStruct_T& lCabin = *itCabin;
 
-//       // Create the Leg-branch of the FlightDate BOM
-//       LegDate& lLegDate =
-//         createLegDate (*lFlightDate_ptr, iFlightDate,
-//                        lLeg, lAnalysisStatus);
+      // Create the Leg-cabin-branch of the FlightDate BOM
+      createLegCabin (lLegDate, lCabin, iAnalysisStatus);
+    }
 
-//       // TODO: Check that the board date/time of the next leg is greated
-//       // than the off date/time of the current leg. Throw an exception
-//       // otherwise.
+    return lLegDate;
+  }
 
-//       // TODO: specify, in the schedule input file specifications, that the
-//       // legs should be given in their natural order.
-//       // Then, replace the assertion by a thrown exception.
-//       //
-//       // Check that the legs are given in their natural order. If the schedule
-//       // input does not respect that assumption, the following assertion will
-//       // fail.
-//       if (itLeg != lLegList.begin()) {
-//         const AirportCode_T& currentBoardPoint =
-//           lLegDate.getBoardPoint();
-//         assert (currentBoardPoint == previousOffPoint);
-//       }
-        
-//       // Set the local variable for the next iteration
-//       previousOffPoint = lLegDate.getOffPoint();
-//     }
-
-//     // Iterate on the Segment structures
-//     const SegmentStructList_T& lSegmentList = iFlightPeriod._segmentList;
-//     for (SegmentStructList_T::const_iterator itSegment = lSegmentList.begin();
-//          itSegment != lSegmentList.end(); ++itSegment) {
-//       const SegmentStruct_T& lSegment = *itSegment;
-
-//       createSegmentDate (*lFlightDate_ptr, lSegment);
-//     }
-
-//     assert (lFlightDate_ptr != NULL);
-
-//     return *lFlightDate_ptr;
-//   }
-
-//   // //////////////////////////////////////////////////////////////////////
-//   LegDate& InventoryGenerator::
-//   createLegDate (FlightDate& ioFlightDate,
-//                  const Date_T& iReferenceDate,
-//                  const LegStruct_T& iLeg,
-//                  const AnalysisStatus_T& iAnalysisStatus) {
-//     // Set the Leg-Date primary key
-//     const FlightDateKey_T& lFlightDateKey = ioFlightDate.getPrimaryKey();
-//     const AirportCode_T& lBoardPoint = iLeg._boardPoint;
-//     const LegDateKey_T lLegDateKey (lFlightDateKey, lBoardPoint);
-
-//     // Create the Leg-Date object
-//     LegDate& lLegDate =
-//       FacLegDate::instance().create (lLegDateKey);
-
-//     // Link the Flight-Date and Leg-Date objects
-//     FacFlightDate::initLinkWithLegDate (ioFlightDate, lLegDate);
-
-//     // Set the Leg-Date attributes
-//     iLeg.fill (iReferenceDate, lLegDate);
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createLegCabin (stdair::LegDate& ioLegDate,
+                  const LegCabinStruct_T& iCabin,
+                  const stdair::AnalysisStatus_T& iAnalysisStatus) {
+    // Set the Leg-Cabin primary key
+    const stdair::CabinCode_T& lCabinCode = iCabin._cabinCode;
+    stdair::LegCabinKey_T lLegCabinKey (lCabinCode);
       
-//     // Iterate on the Cabins
-//     const LegCabinStructList_T& lCabinList = iLeg._cabinList;
-//     for (LegCabinStructList_T::const_iterator itCabin = lCabinList.begin();
-//          itCabin != lCabinList.end(); ++itCabin) {
-//       const LegCabinStruct_T& lCabin = *itCabin;
-
-//       // Create the Leg-cabin-branch of the FlightDate BOM
-//       createLegCabin (lLegDate, lCabin, iAnalysisStatus);
-//     }
-
-//     return lLegDate;
-//   }
-
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createLegCabin (LegDate& ioLegDate,
-//                   const LegCabinStruct_T& iCabin,
-//                   const AnalysisStatus_T& iAnalysisStatus) {
-//     // Set the Leg-Cabin primary key
-//     const LegDateKey_T& lLegDateKey = ioLegDate.getPrimaryKey();
-//     const CabinCode_T& lCabinCode = iCabin._cabinCode;
-//     const LegCabinKey_T lLegCabinKey (lLegDateKey, lCabinCode);
+    // Create the Leg-Cabin object
+    stdair::LegCabin& lLegCabin = stdair::FacBomContent::
+      instance().create<stdair::LegCabin> (ioLegDate, lLegCabinKey);
       
-//     // Create the Leg-Cabin object
-//     LegCabin& lLegCabin =
-//       FacLegCabin::instance().create (lLegCabinKey);
-      
-//     // Link the Flight-Date and Leg-Date objects
-//     FacLegDate::initLinkWithLegCabin (ioLegDate, lLegCabin);
-
-//     // Set the Leg-Cabin attributes
-//     iCabin.fill (lLegCabin, iAnalysisStatus);
-//   }
+    // Set the Leg-Cabin attributes
+    iCabin.fill (lLegCabin, iAnalysisStatus);
+  }
     
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createSegmentDate (FlightDate& ioFlightDate,
-//                      const SegmentStruct_T& iSegment) {
-//     // Set the Segment-Date primary key
-//     const FlightDateKey_T& lFlightDateKey = ioFlightDate.getPrimaryKey();
-//     const AirportCode_T& lBoardPoint = iSegment._boardPoint;
-//     const AirportCode_T& lOffPoint = iSegment._offPoint;
-//     const AirportPairKey_T lAirportPAirKey (lBoardPoint, lOffPoint);
-//     const SegmentDateKey_T lSegmentDateKey (lFlightDateKey,
-//                                             lAirportPAirKey);
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createSegmentDate (stdair::FlightDate& ioFlightDate,
+                     const SegmentStruct_T& iSegment) {
+    // Set the Segment-Date primary key
+    const stdair::AirportCode_T& lBoardPoint = iSegment._boardPoint;
+    const stdair::AirportCode_T& lOffPoint = iSegment._offPoint;
+    stdair::SegmentDateKey_T lSegmentDateKey (lBoardPoint, lOffPoint);
 
-//     // Create the Segment-Date object
-//     SegmentDate& lSegmentDate =
-//       FacSegmentDate::instance().create (lSegmentDateKey);
+    // Create the Segment-Date object
+    stdair::SegmentDate& lSegmentDate = stdair::FacBomContent::
+      instance().create<stdair::SegmentDate> (ioFlightDate, lSegmentDateKey);
 
-//     // Link the Flight-Date and Segment-Date objects
-//     FacFlightDate::initLinkWithSegmentDate (ioFlightDate, lSegmentDate);
-
-//     // Set the Segment-Date attributes
-//     iSegment.fill (lSegmentDate);
+    // Set the Segment-Date attributes
+    iSegment.fill (lSegmentDate);
       
-//     // Iterate on the Cabins
-//     const SegmentCabinStructList_T& lCabinList = iSegment._cabinList;
-//     for (SegmentCabinStructList_T::const_iterator itCabin =
-//            lCabinList.begin(); itCabin != lCabinList.end(); ++itCabin) {
-//       const SegmentCabinStruct_T& lCabin = *itCabin;
+    // Iterate on the Cabins
+    const SegmentCabinStructList_T& lCabinList = iSegment._cabinList;
+    for (SegmentCabinStructList_T::const_iterator itCabin =
+           lCabinList.begin(); itCabin != lCabinList.end(); ++itCabin) {
+      const SegmentCabinStruct_T& lCabin = *itCabin;
 
-//       // Create the Segment-cabin-branch of the FlightDate BOM
-//       createSegmentCabin (ioFlightDate, lSegmentDate, lCabin);
-//     }
-//   }
+      // Create the Segment-cabin-branch of the FlightDate BOM
+      createSegmentCabin (ioFlightDate, lSegmentDate, lCabin);
+    }
+  }
     
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createSegmentCabin (FlightDate& ioFlightDate,
-//                       SegmentDate& ioSegmentDate,
-//                       const SegmentCabinStruct_T& iCabin) {
-//     // Set the Segment-Cabin primary key
-//     const SegmentDateKey_T& lSegmentDateKey =
-//       ioSegmentDate.getPrimaryKey();
-//     const CabinCode_T& lCabinCode = iCabin._cabinCode;
-//     const SegmentCabinKey_T lSegmentCabinKey (lSegmentDateKey,
-//                                               lCabinCode);
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createSegmentCabin (stdair::FlightDate& ioFlightDate,
+                      stdair::SegmentDate& ioSegmentDate,
+                      const SegmentCabinStruct_T& iCabin) {
+    // Set the Segment-Cabin primary key
+    const stdair::CabinCode_T& lCabinCode = iCabin._cabinCode;
+    stdair::SegmentCabinKey_T lSegmentCabinKey (lCabinCode);
       
-//     // Create the Segment-Cabin object
-//     SegmentCabin& lSegmentCabin =
-//       FacSegmentCabin::instance().create (lSegmentCabinKey);
+    // Create the Segment-Cabin object
+    stdair::SegmentCabin& lSegmentCabin = stdair::FacBomContent::
+      instance().create<stdair::SegmentCabin> (ioSegmentDate, lSegmentCabinKey);
       
-//     // Link the Flight-Date and Segment-Date objects
-//     FacSegmentDate::initLinkWithSegmentCabin (ioSegmentDate,
-//                                               lSegmentCabin);
+    // Set the Segment-Cabin attributes
+    iCabin.fill (lSegmentCabin);
 
-//     // Set the Segment-Cabin attributes
-//     iCabin.fill (lSegmentCabin);
+    // Iterate on the Classes
+    const stdair::ClassList_String_T& lClassList = iCabin._classes;
+    for (stdair::ClassList_String_T::const_iterator itClass =
+           lClassList.begin(); itClass != lClassList.end(); ++itClass) {
+      // Transform the single-character class code into a STL string
+      std::ostringstream ostr;
+      ostr << *itClass;
+      const stdair::ClassCode_T lClassCode (ostr.str());
 
-//     // Iterate on the Classes
-//     const ClassList_String_T& lClassList = iCabin._classes;
-//     for (ClassList_String_T::const_iterator itClass =
-//            lClassList.begin(); itClass != lClassList.end(); ++itClass) {
-//       // Transform the single-character class code into a STL string
-//       std::ostringstream ostr;
-//       ostr << *itClass;
-//       const ClassCode_T lClassCode (ostr.str());
-
-//       // Create the map linking each class to each SegmentCabin
-//       FacSegmentDate::initLinkClassWithSegmentCabin (ioSegmentDate,
-//                                                      lSegmentCabin,
-//                                                      lClassCode);
-
-//       // Create the Segment-class-branch of the FlightDate BOM
-//       createClass (lSegmentCabin, lClassCode);
-//     }
-
-//     // Create the map linking class short name and class structure
-//     const bool buildCabinStatus =
-//       FacSegmentCabin::buildClassMap(lSegmentCabin);
-//     assert (buildCabinStatus != false);
-
-//     // Create a map linking class name and class structure 
-//     const bool buildFlightStatus =
-//       FacFlightDate::buildClassMap(ioFlightDate, lSegmentCabin);
-//     assert (buildFlightStatus != false);
+      // Create the Segment-class-branch of the FlightDate BOM
+      createClass (lSegmentCabin, lClassCode);
+    }
 
 //     // Create the list of fare families if they exist
 //     if (iCabin._fareFamilies.size() > 0) {
@@ -417,51 +376,46 @@ namespace AIRSCHED {
 //       // Create the set of policies and store them in the Segment Cabin
 //       createPolicies(lSegmentCabin); 
 //     }
-//   }
+  }
     
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   createClass (SegmentCabin& ioSegmentCabin,
-//                const ClassCode_T& iClassCode) {
-//     // Set the Class primary key
-//     const SegmentCabinKey_T& lSegmentCabinKey =
-//       ioSegmentCabin.getPrimaryKey();      
-//     const BookingClassKey_T lClassKey (lSegmentCabinKey, iClassCode);
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::createClass (stdair::SegmentCabin& ioSegmentCabin,
+                                        const stdair::ClassCode_T& iClassCode) {
+    // Set the Class primary key
+    stdair::BookingClassKey_T lClassKey (iClassCode);
       
-//     // Create the Class structure
-//     BookingClass& lClass =
-//       FacBookingClass::instance().create (lClassKey);
-      
-//     // Link the Segment-Cabin and the BookingClass objects
-//     FacSegmentCabin::initLinkWithClass (ioSegmentCabin, lClass);
-//   }
+    // Create the Class structure
+    stdair::BookingClass& lClass = stdair::FacBomContent::
+      instance().create<stdair::BookingClass> (ioSegmentCabin, lClassKey);
+  }
 
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::createSimilarFlightDateList
-//   (FlightDate& ioFlightDate,
-//    Inventory& iInventory,
-//    const Date_T& iCurrentDate,
-//    const Date_T& iStartDateRange) {
-//     const FlightNumber_T& lFlightNumber =
-//       ioFlightDate.getFlightNumber();
-//     const DateOffSet_T lSemaine(7);
-//     Date_T lSimilarDate = iCurrentDate - lSemaine;
-//     while (!(iStartDateRange > lSimilarDate)) {
-//       FlightDate* lFlightDate_ptr =
-//         iInventory.getFlightDate (lFlightNumber, lSimilarDate);
-//       if (lFlightDate_ptr != NULL) {
-//         // Link the Flight-Date and the similar flight date
-//         FacFlightDate::
-//           initLinkWithFlightDate (ioFlightDate, *lFlightDate_ptr);
-//       }
-//       lSimilarDate = lSimilarDate - lSemaine;
-//     }
+  // //////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createSimilarFlightDateList (stdair::FlightDate& ioFlightDate,
+                               stdair::Inventory& iInventory,
+                               const stdair::Date_T& iCurrentDate,
+                               const stdair::Date_T& iStartDateRange) {
+    const stdair::FlightNumber_T& lFlightNumber =
+      ioFlightDate.getFlightNumber();
+    const stdair::DateOffSet_T lSemaine(7);
+    stdair::Date_T lSimilarDate = iCurrentDate - lSemaine;
+    while (!(iStartDateRange > lSimilarDate)) {
+      const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lSimilarDate);
+      stdair::FlightDate* lFlightDate_ptr =
+        iInventory.getFlightDate (lFlightDateKey);
+      if (lFlightDate_ptr != NULL) {
+        // Link the Flight-Date and the similar flight date
+        // stdair::FacBomContent::
+//           linkSimilarFlightDates (ioFlightDate, *lFlightDate_ptr);
+      }
+      lSimilarDate = lSimilarDate - lSemaine;
+    }
 
-//     // DEBUG
-//     /*AIRSCHED_LOG_DEBUG("FlightDate" << ioFlightDate.describeKey()
-//       << ", Similar flight date list size: "
-//       << ioFlightDate.getSimilarFlightDateListSize ());*/
-//   }
+    // DEBUG
+    /*AIRSCHED_LOG_DEBUG("FlightDate" << ioFlightDate.describeKey()
+      << ", Similar flight date list size: "
+      << ioFlightDate.getSimilarFlightDateListSize ());*/
+  }
 
 //   // //////////////////////////////////////////////////////////////////////
 //   void InventoryGenerator::createPolicies(SegmentCabin& ioSegmentCabin) {

@@ -26,6 +26,7 @@
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
+//#include <stdair/factory/FacBomStructure.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
@@ -87,12 +88,6 @@ namespace AIRSCHED {
     stdair::FacBomContent::createDirectAccesses (ioBomRoot);
   }
 
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::
-//   recalculateAvailabilities (stdair::BomRoot& ioBomRoot) {
-//     ioBomRoot.recalculateAvailabilities ();      
-//   }
-      
   // //////////////////////////////////////////////////////////////////////
   stdair::Inventory& InventoryGenerator::
   createInventory (stdair::BomRoot& ioBomRoot,

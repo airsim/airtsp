@@ -77,10 +77,6 @@ namespace AIRSCHED {
         leg-date and segment-date, ect. */
     static void createDirectAccesses (stdair::BomRoot&);
 
-//     /** Compute the number of available seats
-//         for all flights. */
-//     static void recalculateAvailabilities (stdair::BomRoot&);
-
     /** Create the list of previous built similar flights, e.g. flights
         departed at the same week day before.*/
     static void createSimilarFlightDateList (stdair::FlightDate&,

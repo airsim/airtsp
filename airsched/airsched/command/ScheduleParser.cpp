@@ -38,11 +38,7 @@ namespace AIRSCHED {
       
     // Complete the BomRoot BOM building: create the routings
     // for all the inventories.
-    //InventoryGenerator::createDirectAccesses (oBomRoot);
-
-    // Complete the BomRoot BOM building: compute the number of
-    // available seats for all flights.
-    //InventoryGenerator::recalculateAvailabilities (oBomRoot);
+    InventoryGenerator::createDirectAccesses (oBomRoot);
 
     return oBomRoot;
   }

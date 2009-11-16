@@ -336,6 +336,22 @@ void scheduleParsingHelper() {
       }
     }
 
+    // Browse the inventory for the booking classes.
+    AIRSCHED_LOG_DEBUG ("Browse the inventory for the booking classes");
+    for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
+         itInv != lInventoryList.end(); ++itInv) {
+      const stdair::Inventory& lCurrentInventory = *itInv;
+      AIRSCHED_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
+
+      // Browse the Inventory.
+      const stdair::BookingClassList_T lBCList =
+        lCurrentInventory.getBookingClassList();
+      for (stdair::BookingClassList_T::iterator itBC = lBCList.begin();
+           itBC != lBCList.end(); ++itBC) {
+        const stdair::BookingClass& lCurrentBC = *itBC;
+        AIRSCHED_LOG_DEBUG ("Booking class: " << lCurrentBC.getKey().describe());
+      }
+    }
   } catch (const std::exception& stde) {
     std::cerr << "Standard exception: " << stde.what() << std::endl;
     

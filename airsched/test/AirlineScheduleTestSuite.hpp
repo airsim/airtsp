@@ -5,7 +5,7 @@
 
 class AirlineScheduleTestSuite : public CppUnit::TestFixture {
   CPPUNIT_TEST_SUITE (AirlineScheduleTestSuite);
-  CPPUNIT_TEST (externalMemoryManagement);
+//  CPPUNIT_TEST (externalMemoryManagement);
   CPPUNIT_TEST (scheduleParsing);
   CPPUNIT_TEST_SUITE_END ();
 public:

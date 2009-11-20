@@ -29,6 +29,7 @@
 //#include <stdair/factory/FacBomStructure.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
+#include <airsched/bom/BomRoot.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
 #include <airsched/service/Logger.hpp>
 
@@ -86,6 +87,8 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void InventoryGenerator::createDirectAccesses (stdair::BomRoot& ioBomRoot) {
     stdair::FacBomContent::createDirectAccesses (ioBomRoot);
+    // Fill some attributes of segment-date with the routing legs.
+    BomRoot::fillFromRouting (ioBomRoot);
   }
 
   // //////////////////////////////////////////////////////////////////////

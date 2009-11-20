@@ -36,8 +36,8 @@ namespace AIRSCHED {
     // corresponding Inventories for the airlines.
     lFlightPeriodParser.generateInventories ();
       
-    // Complete the BomRoot BOM building: create the routings
-    // for all the inventories.
+    // Complete the BomRoot BOM building
+    // Create the routings for all the inventories.
     InventoryGenerator::createDirectAccesses (oBomRoot);
 
     return oBomRoot;

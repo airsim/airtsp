@@ -19,6 +19,12 @@ namespace AIRSCHED {
     friend class stdair::FacBomContent;
 
   public:
+    // ////////// Business Methods /////////
+    /** Fill the attributes derived from the routing legs (e.g., board
+        and off dates). */
+    static void fillFromRouting (const stdair::BomRoot&);
+    
+  public:
     /** Definition allowing to retrieve the associated BOM structure type. */
     typedef stdair::BomRootStructure_T BomStructure_T;
 

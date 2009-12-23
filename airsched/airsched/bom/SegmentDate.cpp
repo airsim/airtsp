@@ -106,13 +106,3 @@ namespace AIRSCHED {
   }
 
 }
-
-
-const ClassCodeParameters* apParam = getClassCodeParameters(iClassCode);
-
-if (apParam == NULL) {
-  lancer l exception
-  assert (apParam != NULL);
- }
-
-return computeValue(apParam->getMin(), apParam->isMinPercentage(), iOfferedCapacity);

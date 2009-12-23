@@ -250,7 +250,7 @@ namespace AIRSCHED {
 
     /** Grammar for the Flight-Period parser. */
     struct FlightPeriodParser : 
-      public boost::spirit::grammar<FlightPeriodParser> {
+      public boost::spirit::classic::grammar<FlightPeriodParser> {
 
       FlightPeriodParser (stdair::BomRoot&, const Date_T&,
                           FlightPeriodStruct_T&);
@@ -260,7 +260,7 @@ namespace AIRSCHED {
         definition (FlightPeriodParser const& self);
 
         // Instantiation of rules
-        boost::spirit::rule<ScannerT> flight_period_list, flight_period,
+        boost::spirit::classic::rule<ScannerT> flight_period_list, flight_period,
           flight_period_end, flight_key, airline_code, flight_number,
           date, dow, leg, leg_key, leg_details, time, date_offset,
           leg_cabin_details, segment, segment_key, full_segment_cabin_details,
@@ -268,7 +268,7 @@ namespace AIRSCHED {
           family_cabin_details, general_segments, specific_segments;
 
         /** Entry point of the parser. */
-        boost::spirit::rule<ScannerT> const& start() const;
+        boost::spirit::classic::rule<ScannerT> const& start() const;
       };
 
       // Parser Context

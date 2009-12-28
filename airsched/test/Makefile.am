@@ -4,21 +4,11 @@ include $(top_srcdir)/Makefile.common
 MAINTAINERCLEANFILES = Makefile.in
 
 ##
-SUBDIRS = architecture
+SUBDIRS = architecture airsched
 
 EXTRA_DIST =
 ##
 
-check_PROGRAMS = AirlineScheduleTestSuite
+check_PROGRAMS =
 TESTS = $(check_PROGRAMS)
 XFAIL_TESTS = #
-
-AirlineScheduleTestSuite_SOURCES = AirlineScheduleTestSuite.hpp \
-								AirlineScheduleTestSuite.cpp
-AirlineScheduleTestSuite_CXXFLAGS= $(BOOST_CFLAGS) $(CPPUNIT_CFLAGS)
-AirlineScheduleTestSuite_LDADD = 
-AirlineScheduleTestSuite_LDFLAGS = $(BOOST_LIBS) $(CPPUNIT_LIBS) \
-	$(top_builddir)/extracppunit/libextracc-extracppunit.la \
-	$(top_builddir)/stdair/core/libstdair.la \
-	$(top_builddir)/airsched/core/libairsched.la
-

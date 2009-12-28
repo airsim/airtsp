@@ -33,7 +33,7 @@
 #include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
 // AIRSCHED Test Suite
-#include <test/AirlineScheduleTestSuite.hpp>
+#include <test/airsched/AirlineScheduleTestSuite.hpp>
 
 // //////////////////////////////////////////////////////////////////////
 void externalMemoryManagementHelper() {
@@ -265,9 +265,9 @@ void scheduleParsingHelper() {
       stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
     const stdair::AirlineCode_T lAirlineCode ("BA");
     stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
-    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::
-      instance().create<stdair::AirlineFeature> (lAirlineFeatureSet,
-                                                 lAirlineFeatureKey);
+
+    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::instance().
+      create<stdair::AirlineFeature> (lAirlineFeatureSet, lAirlineFeatureKey);
 
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 

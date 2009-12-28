@@ -300,8 +300,8 @@ AC_CONFIG_FILES(
 	doc/local/index.doc
 	doc/doxygen_html.cfg
 	doc/sourceforge/howto_release_airsched.html
+	extracppunit/Makefile
 	test/Makefile
-	test/com/Makefile
 	test/architecture/Makefile)
 AC_OUTPUT
 

@@ -6,12 +6,19 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
+#include <cassert>
+// STDAIR
+#include <stdair/bom/BomRoot.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
 
+// Forward declarations.
+namespace stdair {
+  class BomRoot;
+}
+
 namespace AIRSCHED {
-  // Forward declarations.
 
   /** Inner class holding the context for the AIRSCHED Service object. */
   class AIRSCHED_ServiceContext : public ServiceAbstract {
@@ -32,6 +39,19 @@ namespace AIRSCHED {
     /** Destructor. */
     ~AIRSCHED_ServiceContext();
 
+    // ///////////////// GETTERS ///////////////////
+    /** Get the BomRoot object. */
+    const stdair::BomRoot& getBomRoot () const {
+      assert (_bomRoot != NULL);
+      return *_bomRoot;
+    }
+    
+    // ///////////////// SETTERS ///////////////////
+    /** Set the BomRoot attribute. */
+    void setBomRoot (stdair::BomRoot& ioBomRoot) {
+      _bomRoot = &ioBomRoot;
+    }
+
     /** Add a travel solution to the TravelSolutionHolder */
     void addTravelSolution (std::string dAirport, std::string aAirport,
                             Date_T depDate,
@@ -46,7 +66,8 @@ namespace AIRSCHED {
 
   private:
     // /////// Attributes ///////
-    
+    /** The BomRoot which contents all the inventory objects. */
+    stdair::BomRoot* _bomRoot;
   };
 
 }

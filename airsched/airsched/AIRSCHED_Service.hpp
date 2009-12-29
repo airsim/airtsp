@@ -50,6 +50,9 @@ namespace AIRSCHED {
     static stdair::BomRoot&
     generateInventories (const std::string&,
                          const stdair::AirlineFeatureSet&, const Date_T&);
+
+    /** Set the BomRoot of the context. */
+    void setBomRoot (stdair::BomRoot&);
     
 
   private:

@@ -18,7 +18,7 @@ namespace AIRSCHED {
   
   // //////////////////////////////////////////////////////////////////////
   AIRSCHED_ServiceContext::
-  AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&) {
+  AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&) : _bomRoot (NULL) {
     init ();
   }
 

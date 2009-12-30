@@ -4,7 +4,7 @@ include $(top_srcdir)/Makefile.common
 MAINTAINERCLEANFILES = Makefile.in
 
 ##
-SUBDIRS = architecture airsched
+SUBDIRS = samples architecture airsched
 
 EXTRA_DIST =
 ##

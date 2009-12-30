@@ -258,7 +258,7 @@ void scheduleParsingHelper() {
     AIRSCHED::AIRSCHED_Service airschedService (logOutputFile);
 
     // Input file name
-    std::string lInputFilename ("samples/schedule01.csv");
+    std::string lInputFilename ("../samples/schedule02.csv");
 
     // Create a dummy AirlineFeature object for the test.
     stdair::AirlineFeatureSet& lAirlineFeatureSet =

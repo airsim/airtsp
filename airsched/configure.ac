@@ -302,6 +302,8 @@ AC_CONFIG_FILES(
 	doc/sourceforge/howto_release_airsched.html
 	extracppunit/Makefile
 	test/Makefile
+	test/samples/Makefile
+	test/stdair/Makefile
 	test/architecture/Makefile
 	test/airsched/Makefile
 )

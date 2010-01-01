@@ -8,14 +8,16 @@
 #include <string>
 #include <cassert>
 // STDAIR
+#include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomRoot.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
 
-// Forward declarations.
+// Forward declarations
 namespace stdair {
   class BomRoot;
+  class AirlineFeatureSet;
 }
 
 namespace AIRSCHED {
@@ -29,45 +31,81 @@ namespace AIRSCHED {
     friend class FacAIRSCHEDServiceContext;
 
   private:
-    /** Constructors. */
+    /// //////////////// Constructors and destructors /////////////
     AIRSCHED_ServiceContext ();
     AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&);
     void init ();
-
-    /** Initialise the StudyStatManager. */
-    void initStudyStatManager ();
     /** Destructor. */
     ~AIRSCHED_ServiceContext();
 
-    // ///////////////// GETTERS ///////////////////
-    /** Get the BomRoot object. */
-    const stdair::BomRoot& getBomRoot () const {
-      assert (_bomRoot != NULL);
-      return *_bomRoot;
-    }
+    /** Initialise the StudyStatManager. */
+    void initStudyStatManager ();
+
     
-    // ///////////////// SETTERS ///////////////////
-    /** Set the BomRoot attribute. */
+    // ///////////////// Getters ///////////////////
+    /** Get a reference on the BomRoot object.
+        <br>If the service context has not been initialised, that
+        method throws an exception (failing assertion). */
+    stdair::BomRoot& getBomRoot () const;
+
+    /** Get a reference on the AirlineFeatureSet object.
+        <br>If the service context has not been initialised, that
+        method throws an exception (failing assertion). */
+    const stdair::AirlineFeatureSet& getAirlineFeatureSet () const;
+
+    /** Get the requested date for the beginning of analysis. */
+    const Date_T& getStartAnalysisDate() const {
+      return _startAnalysisDate;
+    }
+
+    
+    // ///////////////// Setters ///////////////////
+    /** Set the BomRoot object. */
     void setBomRoot (stdair::BomRoot& ioBomRoot) {
       _bomRoot = &ioBomRoot;
     }
 
-    /** Add a travel solution to the TravelSolutionHolder */
-    void addTravelSolution (std::string dAirport, std::string aAirport,
-                            Date_T depDate,
-                            Duration_T depTime, Duration_T arTime,
-                            Duration_T dur, bool Ref, std::string airline,
-                            std::string cabin, int flightNum, double fare,
-                            int lagsNum,  bool SNS, bool change);
+    /** Set the AirlineFeatureSet object. */
+    void setAirlineFeatureSet (const stdair::AirlineFeatureSet& iAirlineFeatureSet) {
+      _airlineFeatureSet = &iAirlineFeatureSet;
+    }
 
+    /** Set the requested date for the beginning of analysis. */
+    void setStartAnalysisDate (const Date_T& iStartAnalysisDate) {
+      _startAnalysisDate = iStartAnalysisDate;
+    }
+
+    
+    // ///////////// Business support methods ////////////
+    /** Add a travel solution to the TravelSolutionHolder */
+    void addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
+                            const stdair::AirportCode_T& iArrivalAirport,
+                            const stdair::Date_T& iDepartureDate,
+                            const stdair::Duration_T& iDepartureTime,
+                            const stdair::Duration_T& iArrivalTime,
+                            const stdair::Duration_T& iDuration,
+                            const bool iRefundability,
+                            const stdair::AirlineCode_T& iAirlineCode,
+                            const stdair::CabinCode_T& iCabinCode,
+                            const stdair::FlightNumber_T& iFlightNumber,
+                            const stdair::Fare_T& iFare,
+                            int iStopsNumber, bool iSNS, bool iChangeability);
+
+    
     /** Read the input data from a file */
     void readFromInputFile (const std::string& iInputFileName);
 
 
   private:
-    // /////// Attributes ///////
+    // /////////////// Attributes ///////////////
     /** The BomRoot which contents all the inventory objects. */
     stdair::BomRoot* _bomRoot;
+
+    /** Set of airline required features. */
+    const stdair::AirlineFeatureSet* _airlineFeatureSet;
+
+    /** Requested date for the beginning of analysis. */
+    stdair::Date_T _startAnalysisDate;
   };
 
 }

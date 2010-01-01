@@ -1,8 +1,8 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
+// STL
+#include <cassert>
 // AIRSCHED
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
 #include <airsched/factory/FacSupervisor.hpp>
@@ -31,13 +31,32 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  stdair::BomRoot& AIRSCHED_ServiceContext::getBomRoot () const {
+    assert (_bomRoot != NULL);
+    return *_bomRoot;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const stdair::AirlineFeatureSet& AIRSCHED_ServiceContext::
+  getAirlineFeatureSet () const {
+    assert (_airlineFeatureSet != NULL);
+    return *_airlineFeatureSet;
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void AIRSCHED_ServiceContext::
-  addTravelSolution (std::string dAirport, std::string aAirport,
-                     Date_T depDate,
-                     Duration_T depTime, Duration_T arTime, Duration_T dur,
-                     bool Ref, std::string airline, std::string cabin,
-                     int flightNum, double fare, int lagsNum, bool SNS,
-                     bool change) {
+  addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
+                     const stdair::AirportCode_T& iArrivalAirport,
+                     const stdair::Date_T& iDepartureDate,
+                     const stdair::Duration_T& iDepartureTime,
+                     const stdair::Duration_T& iArrivalTime,
+                     const stdair::Duration_T& iDuration,
+                     const bool iRefundability,
+                     const stdair::AirlineCode_T& iAirlineCode,
+                     const stdair::CabinCode_T& iCabinCode,
+                     const stdair::FlightNumber_T& iFlightNumber,
+                     const stdair::Fare_T& iFare,
+                     int iStopsNumber, bool iSNS, bool iChangeability) {
   }
 
   // //////////////////////////////////////////////////////////////////////

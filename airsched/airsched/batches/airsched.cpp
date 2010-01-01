@@ -1,6 +1,5 @@
-// C
-#include <assert.h>
 // STL
+#include <cassert>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -9,6 +8,11 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/program_options.hpp>
+// StdAir
+#include <stdair/STDAIR_Types.hpp>
+#include <stdair/factory/FacBomContent.hpp>
+#include <stdair/bom/AirlineFeatureSet.hpp>
+#include <stdair/bom/AirlineFeature.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Service.hpp>
 #include <airsched/config/airsched-paths.hpp>
@@ -19,10 +23,13 @@
 const std::string K_AIRSCHED_DEFAULT_LOG_FILENAME ("airsched.log");
 
 /** Default name and location for the (CSV) input file. */
-const std::string K_AIRSCHED_DEFAULT_INPUT_FILENAME ("class.csv");
+const std::string K_AIRSCHED_DEFAULT_INPUT_FILENAME ("../../test/samples/schedule01.csv");
 
 /** Default number of random draws to be generated (best if over 100). */
 const int K_AIRSCHED_DEFAULT_RANDOM_DRAWS = 100000;
+
+/** Default airline code. */
+const std::string K_AIRSCHED_DEFAULT_AIRLINE_CODE ("AA");
 
 
 // ///////// Parsing of Options & Configuration /////////
@@ -38,7 +45,9 @@ const int K_AIRSCHED_EARLY_RETURN_STATUS = 99;
 
 /** Read and parse the command line options. */
 int readConfiguration (int argc, char* argv[], int& lRandomDraws, 
-                       std::string& lInputFilename, std::string& lLogFilename) {
+                       stdair::Filename_T& lInputFilename,
+                       std::string& lLogFilename,
+                       stdair::AirlineCode_T& lAirlineCode) {
   
     
   // Declare a group of options that will be allowed only on command line
@@ -55,6 +64,9 @@ int readConfiguration (int argc, char* argv[], int& lRandomDraws,
     ("draws,d",
      boost::program_options::value<int>(&lRandomDraws)->default_value(K_AIRSCHED_DEFAULT_RANDOM_DRAWS), 
      "Number of to-be-generated random draws")
+    ("airline,a",
+     boost::program_options::value< std::string >(&lAirlineCode)->default_value(K_AIRSCHED_DEFAULT_AIRLINE_CODE),
+     "Airline code")
     ("input,i",
      boost::program_options::value< std::string >(&lInputFilename)->default_value(K_AIRSCHED_DEFAULT_INPUT_FILENAME),
      "(CVS) input file for the demand distributions")
@@ -132,14 +144,18 @@ int main (int argc, char* argv[]) {
     int lRandomDraws = 0;
     
     // Input file name
-    std::string lInputFilename;
+    stdair::Filename_T lInputFilename;
 
     // Output log File
     std::string lLogFilename;
 
+    // Airline code
+    stdair::AirlineCode_T lAirlineCode;
+
     // Call the command-line option parser
     const int lOptionParserStatus = 
-      readConfiguration (argc, argv, lRandomDraws, lInputFilename, lLogFilename);
+      readConfiguration (argc, argv, lRandomDraws, lInputFilename,
+                         lLogFilename, lAirlineCode);
 
     if (lOptionParserStatus == K_AIRSCHED_EARLY_RETURN_STATUS) {
       return 0;
@@ -157,8 +173,23 @@ int main (int argc, char* argv[]) {
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
     
-    // Initialise the list of classes/buckets
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile);
+    // Initialise the set of required airline features
+    stdair::AirlineFeatureSet& lAirlineFeatureSet =
+      stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
+
+    // Initialise an AirlineFeature object
+    stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
+    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::instance().
+      create<stdair::AirlineFeature> (lAirlineFeatureSet, lAirlineFeatureKey);
+
+    // The analysis starts at January 1, 2000
+    const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
+
+    // Initialise the AirSched service object
+    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+                                                lAirlineFeatureSet,
+                                                lStartAnalysisDate,
+                                                lInputFilename);
 
     // Start a mini-simulation
     airschedService.simulate();

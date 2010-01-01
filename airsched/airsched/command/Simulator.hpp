@@ -7,14 +7,20 @@
 // AIRSCHED
 #include <airsched/command/CmdAbstract.hpp>
 
+// Forward declarations
+namespace stdair {
+  class BomRoot;
+}
+
 namespace AIRSCHED {
+  
   /** Class implementing a small simulation, which uses the Airline Schedule. */
   class Simulator : public CmdAbstract {
   public:
 
     // ////////// Business Methods /////////
     /** Perform a small simulation, which uses the Airline Schedule. */
-    static void simulate ();
+    static void simulate (stdair::BomRoot&);
   };
 
 }

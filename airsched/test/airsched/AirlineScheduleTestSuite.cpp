@@ -37,7 +37,21 @@
 
 // //////////////////////////////////////////////////////////////////////
 void externalMemoryManagementHelper() {
+
+  /**
+     The standard initialisation requires an (CSV) input file to be given.
+     The initialisation then parses that file and builds the corresponding
+     inventories.
+     <br><br>
+     So, though inventories are already built by the initialisation process,
+     another one is built from scratch, in order to test the stdair object
+     construction with a fine granularity.
+  */
+  
   try {
+    
+    // Input file name
+    std::string lInputFilename ("../samples/schedule02.csv");
     
     // Output log File
     std::string lLogFilename ("AirlineScheduleTestSuite.log");
@@ -47,7 +61,24 @@ void externalMemoryManagementHelper() {
     // open and clean the log outputfile
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile);
+
+    // Initialise the set of required airline features
+    stdair::AirlineFeatureSet& lAirlineFeatureSet =
+      stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
+
+    // Initialise an AirlineFeature object
+    const stdair::AirlineCode_T lAirlineCode ("BA");
+    stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
+    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::instance().
+      create<stdair::AirlineFeature> (lAirlineFeatureSet, lAirlineFeatureKey);
+
+    // The analysis starts at January 1, 2000
+    const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
+
+    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+                                                lAirlineFeatureSet,
+                                                lStartAnalysisDate,
+                                                lInputFilename);
 
     // DEBUG
     AIRSCHED_LOG_DEBUG ("Welcome to Air-Schedule");
@@ -60,7 +91,6 @@ void externalMemoryManagementHelper() {
     
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
-    const stdair::AirlineCode_T lAirlineCode ("BA");
     stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
     stdair::Inventory& lInventory =
@@ -255,7 +285,6 @@ void scheduleParsingHelper() {
     // open and clean the log outputfile
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile);
 
     // Input file name
     std::string lInputFilename ("../samples/schedule02.csv");
@@ -271,87 +300,14 @@ void scheduleParsingHelper() {
 
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
-    stdair::BomRoot& lBomRoot =
-      AIRSCHED::AIRSCHED_Service::generateInventories (lInputFilename,
-                                                       lAirlineFeatureSet,
-                                                       lStartAnalysisDate);
+    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+                                                lAirlineFeatureSet,
+                                                lStartAnalysisDate,
+                                                lInputFilename);
 
-    // Display the all the inventories.
-    // Browse the BomRoot.
-    const stdair::InventoryList_T lInventoryList = lBomRoot.getInventoryList ();
-    for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
-         itInv != lInventoryList.end(); ++itInv) {
-      const stdair::Inventory& lCurrentInventory = *itInv;
-      AIRSCHED_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
+    // Start a mini-simulation
+    airschedService.simulate();
 
-      // Browse the Inventory.
-      const stdair::FlightDateList_T lFDList =
-        lCurrentInventory.getFlightDateList ();
-      for (stdair::FlightDateList_T::iterator itFD = lFDList.begin();
-           itFD != lFDList.end(); ++itFD) {
-        const stdair::FlightDate& lCurrentFD = *itFD;
-        AIRSCHED_LOG_DEBUG ("Flight-date: " << lCurrentFD.toString());
-
-        // Browse the FlightDate.
-        const stdair::LegDateList_T lLDList = lCurrentFD.getLegDateList();
-        for (stdair::LegDateList_T::iterator itLD = lLDList.begin();
-             itLD != lLDList.end(); ++itLD) {
-          const stdair::LegDate& lCurrentLD = *itLD;
-          AIRSCHED_LOG_DEBUG ("Leg-date: " << lCurrentLD.toString());
-          
-          // Browse the LegDate.
-          const stdair::LegCabinList_T lLCList = lCurrentLD.getLegCabinList();
-          for (stdair::LegCabinList_T::iterator itLC = lLCList.begin();
-               itLC != lLCList.end(); ++itLC) {
-            const stdair::LegCabin& lCurrentLC = *itLC;
-            AIRSCHED_LOG_DEBUG ("Leg-cabin: " << lCurrentLC.toString());
-          }
-        }
-        
-        const stdair::SegmentDateList_T lSDList =
-          lCurrentFD.getSegmentDateList();
-        for (stdair::SegmentDateList_T::iterator itSD = lSDList.begin();
-             itSD != lSDList.end(); ++itSD) {
-          const stdair::SegmentDate& lCurrentSD = *itSD;
-          AIRSCHED_LOG_DEBUG ("Segment-date: " << lCurrentSD.toString());
-
-          // Browse the SegmentDate.
-          const stdair::SegmentCabinList_T lSCList =
-            lCurrentSD.getSegmentCabinList();
-          for (stdair::SegmentCabinList_T::iterator itSC = lSCList.begin();
-               itSC != lSCList.end(); ++itSC) {
-            const stdair::SegmentCabin& lCurrentSC = *itSC;
-            AIRSCHED_LOG_DEBUG ("Segment-cabin: " << lCurrentSC.toString());
-
-            // Browse the SegmentCabin
-            const stdair::BookingClassList_T lBCList =
-              lCurrentSC.getBookingClassList ();
-            for (stdair::BookingClassList_T::iterator itBC = lBCList.begin();
-                   itBC != lBCList.end(); ++itBC) {
-              const stdair::BookingClass& lCurrentBC = *itBC;
-              AIRSCHED_LOG_DEBUG ("Booking class: " << lCurrentBC.toString());
-            }
-          }
-        }
-      }
-    }
-
-    // Browse the inventory for the booking classes.
-    AIRSCHED_LOG_DEBUG ("Browse the inventory for the booking classes");
-    for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
-         itInv != lInventoryList.end(); ++itInv) {
-      const stdair::Inventory& lCurrentInventory = *itInv;
-      AIRSCHED_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
-
-      // Browse the Inventory.
-      const stdair::BookingClassList_T lBCList =
-        lCurrentInventory.getBookingClassList();
-      for (stdair::BookingClassList_T::iterator itBC = lBCList.begin();
-           itBC != lBCList.end(); ++itBC) {
-        const stdair::BookingClass& lCurrentBC = *itBC;
-        AIRSCHED_LOG_DEBUG ("Booking class: " << lCurrentBC.getKey().describe());
-      }
-    }
   } catch (const std::exception& stde) {
     std::cerr << "Standard exception: " << stde.what() << std::endl;
     

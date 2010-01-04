@@ -29,7 +29,7 @@ const std::string K_AIRSCHED_DEFAULT_INPUT_FILENAME ("../../test/samples/schedul
 const int K_AIRSCHED_DEFAULT_RANDOM_DRAWS = 100000;
 
 /** Default airline code. */
-const std::string K_AIRSCHED_DEFAULT_AIRLINE_CODE ("AA");
+const std::string K_AIRSCHED_DEFAULT_AIRLINE_CODE ("BA");
 
 
 // ///////// Parsing of Options & Configuration /////////

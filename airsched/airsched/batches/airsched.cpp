@@ -179,9 +179,12 @@ int main (int argc, char* argv[]) {
 
     // Initialise an AirlineFeature object
     stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
-    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::instance().
-      create<stdair::AirlineFeature> (lAirlineFeatureSet, lAirlineFeatureKey);
-
+    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::
+      instance().create<stdair::AirlineFeature> (lAirlineFeatureKey);
+    stdair::FacBomContent::
+      linkWithParent<stdair::AirlineFeature> (lAirlineFeature,
+                                              lAirlineFeatureSet);
+    
     // The analysis starts at January 1, 2000
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 

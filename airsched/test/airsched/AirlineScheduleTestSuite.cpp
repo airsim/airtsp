@@ -21,6 +21,7 @@
 #include <stdair/bom/SegmentCabin.hpp>
 #include <stdair/bom/LegCabin.hpp>
 #include <stdair/bom/BookingClass.hpp>
+#include <stdair/bom/Network.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/bom/BomMap.hpp>
 #include <stdair/bom/AirlineFeatureSet.hpp>

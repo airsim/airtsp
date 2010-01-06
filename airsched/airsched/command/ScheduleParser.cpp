@@ -8,6 +8,7 @@
 // STDAIR
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
+#include <stdair/bom/Network.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
 #include <airsched/command/ScheduleParserHelper.hpp>

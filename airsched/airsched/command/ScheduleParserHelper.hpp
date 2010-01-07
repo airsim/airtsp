@@ -73,10 +73,10 @@ namespace AIRSCHED {
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
 
-    /** Store the parsed leg board point. */
-    struct storeLegBoardPoint : public ParserSemanticAction {
+    /** Store the parsed leg boarding point. */
+    struct storeLegBoardingPoint : public ParserSemanticAction {
       /** Actor Constructor. */
-      storeLegBoardPoint (FlightPeriodStruct_T&);
+      storeLegBoardingPoint (FlightPeriodStruct_T&);
       /** Actor Function (functor). */
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
@@ -89,10 +89,10 @@ namespace AIRSCHED {
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
 
-    /** Store the board time. */
-    struct storeBoardTime : public ParserSemanticAction {
+    /** Store the boarding time. */
+    struct storeBoardingTime : public ParserSemanticAction {
       /** Actor Constructor. */
-      storeBoardTime (FlightPeriodStruct_T&);
+      storeBoardingTime (FlightPeriodStruct_T&);
       /** Actor Function (functor). */
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
@@ -140,10 +140,10 @@ namespace AIRSCHED {
       void operator() (char iChar) const;
     };
   
-    /** Store the parsed segment board point. */
-    struct storeSegmentBoardPoint : public ParserSemanticAction {
+    /** Store the parsed segment boarding point. */
+    struct storeSegmentBoardingPoint : public ParserSemanticAction {
       /** Actor Constructor. */
-      storeSegmentBoardPoint (FlightPeriodStruct_T&);
+      storeSegmentBoardingPoint (FlightPeriodStruct_T&);
       /** Actor Function (functor). */
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
@@ -208,11 +208,11 @@ namespace AIRSCHED {
     /////////////////////////////////////////////////////////////////////////
     /**
        AirlineCode; FlightNumber; DateRangeStart; DateRangeEnd; DOW;
-       (list) BoardPoint; OffPoint; BoardTime; DateOffSet; OffTime;
+       (list) BoardingPoint; OffPoint; BoardingTime; DateOffSet; OffTime;
        ElapsedTime;
        (list) CabinCode; Capacity;
        SegmentSpecificty (0 or 1);
-       (list) (optional BoardPoint; OffPoint); CabinCode; Classes
+       (list) (optional BoardingPoint; OffPoint); CabinCode; Classes
        BA; 9; 2007-04-20; 2007-04-30; 0000011;
        LHR; BKK; 22:00; +1; 15:15; 11:15; C; 12; M; 300;
        BKK; SYD; 18:10; +1; 06:05; 08:55; C; 20; M; 250;
@@ -228,13 +228,13 @@ namespace AIRSCHED {
        DOW                 ::= int
        FlightKey           ::= AirlineCode ';' FlightNumber
        ';' DateRangeStart ';' DateRangeEnd ';' DOW
-       LegKey              ::= BoardPoint ';' OffPoint
-       LegDetails          ::= BoardTime ['/' BoardDateOffSet]
-       ';' OffTime ['/' BoardDateOffSet]
+       LegKey              ::= BoardingPoint ';' OffPoint
+       LegDetails          ::= BoardingTime ['/' BoardingDateOffSet]
+       ';' OffTime ['/' BoardingDateOffSet]
        ';' Elapsed
        LegCabinDetails     ::= CabinCode ';' Capacity
        Leg                 ::= LegKey ';' LegDetails (';' CabinDetails)+
-       SegmentKey          ::= BoardPoint ';' OffPoint
+       SegmentKey          ::= BoardingPoint ';' OffPoint
        SegmentCabinDetails ::= CabinCode ';' Classes
        (';' FamilyCabinDetails)*
        FamilyCabinDetails  ::= CabinCode ';' Classes

@@ -15,6 +15,7 @@
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
+#include <airsched/command/NetworkGenerator.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
@@ -75,6 +76,9 @@ namespace AIRSCHED {
                                            iAirlineFeatureSet,
                                            iStartAnalysisDate);
 
+    // Build the network from the schedule.
+    NetworkGenerator::createNetworks (oBomRoot);
+    
     // Store the BOM object tree within the service context
     lAIRSCHED_ServiceContext.setBomRoot (oBomRoot);
     

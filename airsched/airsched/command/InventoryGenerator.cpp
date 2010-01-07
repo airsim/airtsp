@@ -26,7 +26,6 @@
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
-//#include <stdair/factory/FacBomStructure.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
 #include <airsched/bom/BomRoot.hpp>
@@ -175,7 +174,7 @@ namespace AIRSCHED {
       stdair::LegDate& lLegDate =
         createLegDate (*lFlightDate_ptr, iFlightDate, lLeg, lAnalysisStatus);
 
-      // TODO: Check that the board date/time of the next leg is greated
+      // TODO: Check that the boarding date/time of the next leg is greated
       // than the off date/time of the current leg. Throw an exception
       // otherwise.
 
@@ -187,9 +186,9 @@ namespace AIRSCHED {
       // input does not respect that assumption, the following assertion will
       // fail.
       if (itLeg != lLegList.begin()) {
-        const stdair::AirportCode_T& currentBoardPoint =
-          lLegDate.getBoardPoint();
-        assert (currentBoardPoint == previousOffPoint);
+        const stdair::AirportCode_T& currentBoardingPoint =
+          lLegDate.getBoardingPoint();
+        assert (currentBoardingPoint == previousOffPoint);
       }
         
       // Set the local variable for the next iteration
@@ -217,8 +216,8 @@ namespace AIRSCHED {
                  const LegStruct_T& iLeg,
                  const stdair::AnalysisStatus_T& iAnalysisStatus) {
     // Set the Leg-Date primary key
-    const stdair::AirportCode_T& lBoardPoint = iLeg._boardPoint;
-    stdair::LegDateKey_T lLegDateKey (lBoardPoint);
+    const stdair::AirportCode_T& lBoardingPoint = iLeg._boardingPoint;
+    stdair::LegDateKey_T lLegDateKey (lBoardingPoint);
 
     // Create the Leg-Date object
     stdair::LegDate& lLegDate =
@@ -270,9 +269,9 @@ namespace AIRSCHED {
   createSegmentDate (stdair::FlightDate& ioFlightDate,
                      const SegmentStruct_T& iSegment) {
     // Set the Segment-Date primary key
-    const stdair::AirportCode_T& lBoardPoint = iSegment._boardPoint;
+    const stdair::AirportCode_T& lBoardingPoint = iSegment._boardingPoint;
     const stdair::AirportCode_T& lOffPoint = iSegment._offPoint;
-    stdair::SegmentDateKey_T lSegmentDateKey (lBoardPoint, lOffPoint);
+    stdair::SegmentDateKey_T lSegmentDateKey (lBoardingPoint, lOffPoint);
 
     // Create the Segment-Date object
     stdair::SegmentDate& lSegmentDate = stdair::FacBomContent::

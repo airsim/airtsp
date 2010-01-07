@@ -34,13 +34,13 @@ namespace AIRSCHED {
     stdair::LegDateList_T::reverse_iterator itLastLeg = lLegDateList.rbegin();
     const stdair::LegDate& lLastLeg = *itLastLeg;
     
-    // Set the Board Date
-    const stdair::Date_T& lBoardDate = lFirstLeg.getBoardDate();
-    ioSegmentDate.setBoardDate (lBoardDate);
+    // Set the Boarding Date
+    const stdair::Date_T& lBoardingDate = lFirstLeg.getBoardingDate();
+    ioSegmentDate.setBoardingDate (lBoardingDate);
 
-    // Set the Board Time
-    const stdair::Duration_T& lBoardTime = lFirstLeg.getBoardTime();
-    ioSegmentDate.setBoardTime (lBoardTime);
+    // Set the Boarding Time
+    const stdair::Duration_T& lBoardingTime = lFirstLeg.getBoardingTime();
+    ioSegmentDate.setBoardingTime (lBoardingTime);
       
     // Set the Off Date
     const stdair::Date_T& lOffDate = lLastLeg.getOffDate();
@@ -75,12 +75,12 @@ namespace AIRSCHED {
          ++itLegDate, lPreviousLegDate_ptr = lCurrentLegDate_ptr) {
       lCurrentLegDate_ptr = &*itLegDate;
       
-      // As the board point of the current leg is the same as the off point
+      // As the boarding point of the current leg is the same as the off point
       // of the previous leg (by construction), there is no time difference.
-      assert (lCurrentLegDate_ptr->getBoardPoint()
+      assert (lCurrentLegDate_ptr->getBoardingPoint()
               == lPreviousLegDate_ptr->getOffPoint());
       const stdair::Duration_T& lStopOverTime =
-        lCurrentLegDate_ptr->getBoardTime() - lPreviousLegDate_ptr->getOffTime();
+        lCurrentLegDate_ptr->getBoardingTime() - lPreviousLegDate_ptr->getOffTime();
       lElapsedTime += lStopOverTime;
 
       // Add the elapsed time of the current segment

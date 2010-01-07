@@ -23,9 +23,9 @@ namespace AIRSCHED {
   /** Utility Structure for the parsing of Leg structures. */
   struct LegStruct_T : public stdair::StructAbstract {
     // Attributes
-    stdair::AirportCode_T _boardPoint;
-    stdair::DateOffSet_T _boardDateOffSet;
-    stdair::Duration_T _boardTime;
+    stdair::AirportCode_T _boardingPoint;
+    stdair::DateOffSet_T _boardingDateOffSet;
+    stdair::Duration_T _boardingTime;
     stdair::AirportCode_T _offPoint;
     stdair::DateOffSet_T _offDateOffSet;
     stdair::Duration_T _offTime;
@@ -35,7 +35,7 @@ namespace AIRSCHED {
     /** Fill the LegDate objects with the attributes of the LegStruct.
         <br>The given reference date corresponds to the date of the
         FlightDate. Indeed, each Leg gets date off-sets, when compared
-        to that (reference) flight-date, both for the board date
+        to that (reference) flight-date, both for the boarding date
         and for the off date. */
     void fill (const stdair::Date_T& iRefDate, stdair::LegDate&) const;
       

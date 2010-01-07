@@ -102,15 +102,15 @@ namespace AIRSCHED {
     }
       
     // //////////////////////////////////////////////////////////////////
-    storeLegBoardPoint::
-    storeLegBoardPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeLegBoardingPoint::
+    storeLegBoardingPoint (FlightPeriodStruct_T& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
     // //////////////////////////////////////////////////////////////////
-    void storeLegBoardPoint::operator() (iterator_t iStr,
+    void storeLegBoardingPoint::operator() (iterator_t iStr,
                                          iterator_t iStrEnd) const {
-      std::string lBoardPoint (iStr, iStrEnd);
+      std::string lBoardingPoint (iStr, iStrEnd);
 
       // If a leg has already been parsed, add it to the FlightPeriod
       if (_flightPeriod._legAlreadyDefined == true) {
@@ -119,15 +119,15 @@ namespace AIRSCHED {
         _flightPeriod._legAlreadyDefined = true;
       }
         
-      // Set the (new) board point
-      _flightPeriod._itLeg._boardPoint = lBoardPoint;
+      // Set the (new) boarding point
+      _flightPeriod._itLeg._boardingPoint = lBoardingPoint;
       
       // As that's the beginning of a new leg, the list of cabins
       // must be reset
       _flightPeriod._itLeg._cabinList.clear();
 
       // Add the airport code if it is not already stored in the airport lists
-      _flightPeriod.addAirport (lBoardPoint);
+      _flightPeriod.addAirport (lBoardingPoint);
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -147,15 +147,15 @@ namespace AIRSCHED {
     }
 
     // //////////////////////////////////////////////////////////////////
-    storeBoardTime::
-    storeBoardTime (FlightPeriodStruct_T& ioFlightPeriod)
+    storeBoardingTime::
+    storeBoardingTime (FlightPeriodStruct_T& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
     // //////////////////////////////////////////////////////////////////
-    void storeBoardTime::operator() (iterator_t iStr,
+    void storeBoardingTime::operator() (iterator_t iStr,
                                      iterator_t iStrEnd) const {
-      _flightPeriod._itLeg._boardTime = _flightPeriod.getTime();
+      _flightPeriod._itLeg._boardingTime = _flightPeriod.getTime();
         
       // Reset the number of seconds
       _flightPeriod._itSeconds = 0;
@@ -172,10 +172,10 @@ namespace AIRSCHED {
       // Reset the number of seconds
       _flightPeriod._itSeconds = 0;
 
-      // As the board date off set is optional, it can be set only afterwards,
+      // As the boarding date off set is optional, it can be set only afterwards,
       // based on the staging date off-set value (_flightPeriod._dateOffSet).
       const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
-      _flightPeriod._itLeg._boardDateOffSet = lDateOffSet;
+      _flightPeriod._itLeg._boardingDateOffSet = lDateOffSet;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -198,7 +198,7 @@ namespace AIRSCHED {
       // Reset the number of seconds
       _flightPeriod._itSeconds = 0;
 
-      // As the board date off set is optional, it can be set only afterwards,
+      // As the boarding date off set is optional, it can be set only afterwards,
       // based on the staging date off-set value (_flightPeriod._dateOffSet).
       const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
       _flightPeriod._itLeg._offDateOffSet = lDateOffSet;
@@ -262,16 +262,16 @@ namespace AIRSCHED {
     }
       
     // //////////////////////////////////////////////////////////////////
-    storeSegmentBoardPoint::
-    storeSegmentBoardPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeSegmentBoardingPoint::
+    storeSegmentBoardingPoint (FlightPeriodStruct_T& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
     // //////////////////////////////////////////////////////////////////
-    void storeSegmentBoardPoint::operator() (iterator_t iStr,
+    void storeSegmentBoardingPoint::operator() (iterator_t iStr,
                                              iterator_t iStrEnd) const {
-      std::string lBoardPoint (iStr, iStrEnd);
-      _flightPeriod._itSegment._boardPoint = lBoardPoint;
+      std::string lBoardingPoint (iStr, iStrEnd);
+      _flightPeriod._itSegment._boardingPoint = lBoardingPoint;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -525,13 +525,13 @@ namespace AIRSCHED {
         ;
 	 
       leg_key =
-        (airport_p)[storeLegBoardPoint(self._flightPeriod)]
+        (airport_p)[storeLegBoardingPoint(self._flightPeriod)]
         >> ';'
         >> (airport_p)[storeLegOffPoint(self._flightPeriod)]
         ;
 	 
       leg_details =
-        time[storeBoardTime(self._flightPeriod)]
+        time[storeBoardingTime(self._flightPeriod)]
         >> !(date_offset)
         >> ';'
         >> time[storeOffTime(self._flightPeriod)]
@@ -560,7 +560,7 @@ namespace AIRSCHED {
         ;
         
       segment_key =
-        (airport_p)[storeSegmentBoardPoint(self._flightPeriod)]
+        (airport_p)[storeSegmentBoardingPoint(self._flightPeriod)]
         >> ';'
         >> (airport_p)[storeSegmentOffPoint(self._flightPeriod)]
         ;

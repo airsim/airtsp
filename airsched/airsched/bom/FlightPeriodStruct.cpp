@@ -94,7 +94,7 @@ namespace AIRSCHED {
       for (AirportOrderedList_T::const_iterator itAirport_j = itAirport_i + 1;
            itAirport_j != _airportOrderedList.end(); ++itAirport_j) {
         SegmentStruct_T lSegmentStruct;
-        lSegmentStruct._boardPoint = *itAirport_i;
+        lSegmentStruct._boardingPoint = *itAirport_i;
         lSegmentStruct._offPoint = *itAirport_j;
           
         _segmentList.push_back (lSegmentStruct);
@@ -110,22 +110,22 @@ namespace AIRSCHED {
   void FlightPeriodStruct_T::
   addSegmentCabin (const SegmentStruct_T& iSegment,
                    const SegmentCabinStruct_T& iCabin) {
-    // Retrieve the Segment structure corresponding to the (board, off) point
+    // Retrieve the Segment structure corresponding to the (boarding, off) point
     // pair.
     SegmentStructList_T::iterator itSegment = _segmentList.begin();
     for ( ; itSegment != _segmentList.end(); ++itSegment) {
       const SegmentStruct_T& lSegment = *itSegment;
 
-      const stdair::AirportCode_T& lBoardPoint = iSegment._boardPoint;
+      const stdair::AirportCode_T& lBoardingPoint = iSegment._boardingPoint;
       const stdair::AirportCode_T& lOffPoint = iSegment._offPoint;
-      if (lSegment._boardPoint == lBoardPoint
+      if (lSegment._boardingPoint == lBoardingPoint
           && lSegment._offPoint == lOffPoint) {
         break;
       }
     }
 
     // If the segment key (airport pair) given in the schedule input file
-    // does not correspond to the leg (board, off) points, throw an exception
+    // does not correspond to the leg (boarding, off) points, throw an exception
     // so that the user knows the schedule input file is corrupted.
     if (itSegment == _segmentList.end()) {
       AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a "
@@ -159,22 +159,22 @@ namespace AIRSCHED {
   addFareFamily (const SegmentStruct_T& iSegment,
                  const SegmentCabinStruct_T& iCabin,
                  const FareFamilyStruct_T& iFareFamily) {
-    // Retrieve the Segment structure corresponding to the (board, off) point
+    // Retrieve the Segment structure corresponding to the (boarding, off) point
     // pair.
     SegmentStructList_T::iterator itSegment = _segmentList.begin();
     for ( ; itSegment != _segmentList.end(); ++itSegment) {
       const SegmentStruct_T& lSegment = *itSegment;
 
-      const stdair::AirportCode_T& lBoardPoint = iSegment._boardPoint;
+      const stdair::AirportCode_T& lBoardingPoint = iSegment._boardingPoint;
       const stdair::AirportCode_T& lOffPoint = iSegment._offPoint;
-      if (lSegment._boardPoint == lBoardPoint
+      if (lSegment._boardingPoint == lBoardingPoint
           && lSegment._offPoint == lOffPoint) {
         break;
       }
     }
 
     // If the segment key (airport pair) given in the schedule input file
-    // does not correspond to the leg (board, off) points, throw an exception
+    // does not correspond to the leg (boarding, off) points, throw an exception
     // so that the user knows the schedule input file is corrupted.
     if (itSegment == _segmentList.end()) {
       AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a flight "

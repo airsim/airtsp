@@ -9,6 +9,7 @@
 #include <iomanip>
 // STDAIR
 #include <stdair/bom/AirlineFeatureSet.hpp>
+#include <stdair/bom/BomManager.hpp> // for display()
 // AIRSCHED
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
 #include <airsched/bom/BomRoot.hpp>
@@ -82,10 +83,9 @@ namespace AIRSCHED {
     // Store the BOM object tree within the service context
     lAIRSCHED_ServiceContext.setBomRoot (oBomRoot);
     
-    // TODO: Implement a (recursive) display() method in BomRoot
     // DEBUG
-    // AIRSCHED_LOG_DEBUG ("Generated BomRoot:");
-    // oBomRoot.display();
+    AIRSCHED_LOG_DEBUG ("Generated BomRoot:");
+    stdair::BomManager::display (ioLogStream, oBomRoot);
   }
   
   // ////////////////////////////////////////////////////////////////////

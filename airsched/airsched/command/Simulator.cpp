@@ -25,12 +25,12 @@ namespace AIRSCHED {
   void Simulator::simulate (stdair::BomRoot& ioBomRoot) {
 
     // Delegate to the dedicated StdAir utility class
-    std::ostringstream oStream;
-    stdair::BomManager::display (oStream, ioBomRoot);
+    // std::ostringstream oStream;
+    // stdair::BomManager::display (oStream, ioBomRoot);
 
     // DEBUG
-    AIRSCHED_LOG_DEBUG ("BOM Tree: ");
-    AIRSCHED_LOG_DEBUG (oStream.str());
+    // AIRSCHED_LOG_DEBUG ("BOM Tree: ");
+    // AIRSCHED_LOG_DEBUG (oStream.str());
   }
 
 }

@@ -135,28 +135,6 @@ namespace AIRSCHED {
     assert (_airschedServiceContext != NULL);
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext= *_airschedServiceContext;
 
-    // Add travel solutions to the travelsolution holder
-
-    // AF404, NCE-LHR, 01-JUN-09 12:00 -> 14:00 (02:00), Eco
-    addTravelSolution ("NCE","LHR", Date_T(2009,06,1), Duration_T(12,00,00),
-                       Duration_T(14,00,00), Duration_T(02,00,00), false,
-                       "AF", "ECO", 404, 200, 0, false, false);
-    
-    // AF404, NCE-LHR, 01-JUN-09 12:00 -> 14:00 (02:00), Eco
-    addTravelSolution ("NCE","LHR", Date_T(2009,06,1), Duration_T(12,00,00),
-                       Duration_T(14,00,00), Duration_T(02,00,00), true,
-                       "AF", "ECO", 404, 200, 0, false, false);
-    
-    // BA404, NCE-LHR, 01-JUN-09 12:00 -> 14:00 (02:00), Eco
-    addTravelSolution ("NCE","LHR", Date_T(2009,06,1), Duration_T(12,00,00),
-                       Duration_T(14,00,00), Duration_T(02,00,00), false,
-                       "BA", "ECO", 404, 200, 0, true, false);
-    
-    // BA404, NCE-LHR, 01-JUN-09 12:00 -> 14:00 (02:00), Eco
-    addTravelSolution ("NCE","LHR", Date_T(2009,06,1), Duration_T(12,00,00),
-                       Duration_T(14,00,00), Duration_T(02,00,00), true,
-                       "BA", "ECO", 404, 200, 0, true, false);
-
     // Retrieve, from the service context, the root of the BOM tree
     stdair::BomRoot& lBomRoot = lAIRSCHED_ServiceContext.getBomRoot();
     

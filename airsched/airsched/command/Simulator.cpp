@@ -7,6 +7,7 @@
 #include <sstream>
 // STDAIR
 #include <stdair/bom/BomManager.hpp>
+#include <stdair/bom/BookingRequestStruct.hpp>
 // AIRSCHED
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/bom/Inventory.hpp>
@@ -31,6 +32,11 @@ namespace AIRSCHED {
     // DEBUG
     // AIRSCHED_LOG_DEBUG ("BOM Tree: ");
     // AIRSCHED_LOG_DEBUG (oStream.str());
+
+    // TODO: do not hardcode the booking request (get it from the
+    // demand generation module instead).
+    stdair::BookingRequestStruct ("LHR", "JFK", stdair::Date_T (2009, 01, 16),
+                                  "L", 1);
   }
 
 }

@@ -652,8 +652,10 @@ namespace AIRSCHED {
 
     // Check the filename exists and can be open
     if (!_startIterator) {
-      AIRSCHED_LOG_DEBUG ("The file " << _filename << " can not be open."
-                       << std::endl);
+      AIRSCHED_LOG_ERROR ("The file " << _filename << " can not be open."
+                          << std::endl);
+
+      throw new FileNotFoundException();
     }
 
     // Create an EOF iterator

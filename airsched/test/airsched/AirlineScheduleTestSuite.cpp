@@ -1,9 +1,9 @@
 // STL
 #include <iostream>
 #include <string>
-// CPPUNIT
+// CppUnit
 #include <extracppunit/CppUnitCore.hpp>
-// STDAIR
+// StdAir
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BomRootKey.hpp>
 #include <stdair/bom/InventoryKey.hpp>
@@ -28,12 +28,12 @@
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
-// AIRSCHED
+#include <stdair/service/Logger.hpp>
+// AirSched
 #include <airsched/factory/FacSupervisor.hpp>
 #include <airsched/command/Simulator.hpp>
-#include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
-// AIRSCHED Test Suite
+// AirSched Test Suite
 #include <test/airsched/AirlineScheduleTestSuite.hpp>
 
 // //////////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ void externalMemoryManagementHelper() {
                                                 lInputFilename);
 
     // DEBUG
-    AIRSCHED_LOG_DEBUG ("Welcome to Air-Schedule");
+    STDAIR_LOG_DEBUG ("Welcome to Air-Schedule");
 
     // Step 0.0: initialisation
     // Create the root of the Bom tree (i.e., a BomRoot object)
@@ -103,7 +103,7 @@ void externalMemoryManagementHelper() {
                                                               lBomRoot);
 
     // Display the inventory
-    AIRSCHED_LOG_DEBUG ("Inventory: " << lInventory.toString());
+    STDAIR_LOG_DEBUG ("Inventory: " << lInventory.toString());
     
     // Step 0.2: Flight-date level
     // Create a FlightDate (BA15/10-JUN-2010)
@@ -117,7 +117,7 @@ void externalMemoryManagementHelper() {
                                                                lInventory);
     
     // Display the flight-date
-    AIRSCHED_LOG_DEBUG ("FlightDate: " << lFlightDate.toString());
+    STDAIR_LOG_DEBUG ("FlightDate: " << lFlightDate.toString());
     
     // Step 0.3: Segment-date level
     // Create a first SegmentDate (LHR-SYD)
@@ -132,7 +132,7 @@ void externalMemoryManagementHelper() {
                                                                 lFlightDate);
 
     // Display the segment-date
-    AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRSYDSegment.toString());
+    STDAIR_LOG_DEBUG ("SegmentDate: " << lLHRSYDSegment.toString());
 
 
     // Create a second SegmentDate (LHR-BKK)
@@ -146,7 +146,7 @@ void externalMemoryManagementHelper() {
                                                                 lFlightDate);
 
     // Display the segment-date
-    AIRSCHED_LOG_DEBUG ("SegmentDate: " << lLHRBKKSegment.toString());
+    STDAIR_LOG_DEBUG ("SegmentDate: " << lLHRBKKSegment.toString());
 
 
     // Create a third SegmentDate (BKK-SYD)
@@ -159,7 +159,7 @@ void externalMemoryManagementHelper() {
                                                                 lFlightDate);
 
     // Display the segment-date
-    AIRSCHED_LOG_DEBUG ("SegmentDate: " << lBKKSYDSegment.toString());
+    STDAIR_LOG_DEBUG ("SegmentDate: " << lBKKSYDSegment.toString());
 
     
     // Step 0.4: Leg-date level
@@ -171,7 +171,7 @@ void externalMemoryManagementHelper() {
     stdair::FacBomContent::linkWithParent<stdair::LegDate>(lLHRLeg, lFlightDate);
 
     // Display the leg-date
-    AIRSCHED_LOG_DEBUG ("LegDate: " << lLHRLeg.toString());
+    STDAIR_LOG_DEBUG ("LegDate: " << lLHRLeg.toString());
     
     // Create a second LegDate (BKK)
     lLegDateKey = stdair::LegDateKey_T (lBKK);
@@ -181,7 +181,7 @@ void externalMemoryManagementHelper() {
     stdair::FacBomContent::linkWithParent<stdair::LegDate>(lBKKLeg, lFlightDate);
 
     // Display the leg-date
-    AIRSCHED_LOG_DEBUG ("LegDate: " << lBKKLeg.toString());
+    STDAIR_LOG_DEBUG ("LegDate: " << lBKKLeg.toString());
 
     // Step 0.5: segment-cabin level
     // Create a SegmentCabin (Y) of the Segment LHR-BKK;
@@ -195,7 +195,7 @@ void externalMemoryManagementHelper() {
       linkWithParent<stdair::SegmentCabin> (lLHRBKKSegmentYCabin,lLHRBKKSegment);
 
     // Display the segment-cabin
-    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lLHRBKKSegmentYCabin.toString());
+    STDAIR_LOG_DEBUG ("SegmentCabin: " << lLHRBKKSegmentYCabin.toString());
 
     // Create a SegmentCabin (Y) of the Segment BKK-SYD;
     stdair::SegmentCabin& lBKKSYDSegmentYCabin =
@@ -205,7 +205,7 @@ void externalMemoryManagementHelper() {
       linkWithParent<stdair::SegmentCabin> (lBKKSYDSegmentYCabin,lBKKSYDSegment);
      
     // Display the segment-cabin
-    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lBKKSYDSegmentYCabin.toString());
+    STDAIR_LOG_DEBUG ("SegmentCabin: " << lBKKSYDSegmentYCabin.toString());
 
     // Create a SegmentCabin (Y) of the Segment LHR-SYD;
     stdair::SegmentCabin& lLHRSYDSegmentYCabin =
@@ -215,7 +215,7 @@ void externalMemoryManagementHelper() {
       linkWithParent<stdair::SegmentCabin> (lLHRSYDSegmentYCabin,lLHRSYDSegment);
       
     // Display the segment-cabin
-    AIRSCHED_LOG_DEBUG ("SegmentCabin: " << lLHRSYDSegmentYCabin.toString());
+    STDAIR_LOG_DEBUG ("SegmentCabin: " << lLHRSYDSegmentYCabin.toString());
 
     
     // Step 0.6: leg-cabin level
@@ -228,7 +228,7 @@ void externalMemoryManagementHelper() {
                                                              lLHRLeg);
 
     // Display the leg-cabin
-    AIRSCHED_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
+    STDAIR_LOG_DEBUG ("LegCabin: " << lLHRLegYCabin.toString());
 
     // Create a LegCabin (Y) of the Leg BKK-SYD;
     stdair::LegCabin& lBKKLegYCabin =
@@ -237,7 +237,7 @@ void externalMemoryManagementHelper() {
                                                              lBKKLeg);
 
     // Display the leg-cabin
-    AIRSCHED_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
+    STDAIR_LOG_DEBUG ("LegCabin: " << lBKKLegYCabin.toString());
 
     // Step 0.7: booking class level
     // Create a BookingClass (Q) of the Segment LHR-BKK, cabin Y;
@@ -252,17 +252,17 @@ void externalMemoryManagementHelper() {
                                             lLHRBKKSegmentYCabin);
 
     // Display the booking class
-    AIRSCHED_LOG_DEBUG ("BookingClass: "
+    STDAIR_LOG_DEBUG ("BookingClass: "
                         << lLHRBKKSegmentYCabinQClass.toString());
 
     // Browse the BomRoot and display the created objects.
-    AIRSCHED_LOG_DEBUG ("Browse the BomRoot");
+    STDAIR_LOG_DEBUG ("Browse the BomRoot");
     
     const stdair::InventoryList_T& lInventoryList = lBomRoot.getInventoryList();
     for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
          itInv != lInventoryList.end(); ++itInv) {
       const stdair::Inventory& lCurrentInventory = *itInv;
-      AIRSCHED_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
+      STDAIR_LOG_DEBUG ("Inventory: " << lCurrentInventory.toString());
     }
     
     // Close the Log outputFile
@@ -292,7 +292,7 @@ void scheduleParsingHelper() {
   try {
     
     // DEBUG
-    AIRSCHED_LOG_DEBUG ("Schedule Parsing Test");
+    STDAIR_LOG_DEBUG ("Schedule Parsing Test");
     
     // Output log File
     std::string lLogFilename ("AirlineScheduleTestSuite.log");

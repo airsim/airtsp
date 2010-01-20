@@ -76,6 +76,14 @@ namespace AIRSCHED {
     }
 
     
+    // ///////// Display Methods //////////
+    /** Display the short SIMCRS_ServiceContext content. */
+    const std::string shortDisplay() const;
+    
+    /** Display the full SIMCRS_ServiceContext content. */
+    const std::string display() const;
+    
+
     // ///////////// Business support methods ////////////
     /** Add a travel solution to the TravelSolutionHolder */
     void addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,

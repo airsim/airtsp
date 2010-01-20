@@ -12,6 +12,7 @@
 #include <stdair/bom/BomManager.hpp> // for display()
 // AIRSCHED
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
+#include <stdair/basic/BasChronometer.hpp>
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
@@ -139,7 +140,14 @@ namespace AIRSCHED {
     stdair::BomRoot& lBomRoot = lAIRSCHED_ServiceContext.getBomRoot();
     
     // Call the underlying Use Case (command)
+    stdair::BasChronometer lSimulateChronometer;
+    lSimulateChronometer.start();
     Simulator::simulate (lBomRoot);
+    const double lSimulateMeasure = lSimulateChronometer.elapsed();
+
+    // DEBUG
+    AIRSCHED_LOG_DEBUG ("Simulation: " << lSimulateMeasure << " - "
+                        << lAIRSCHED_ServiceContext.display());
   }
 
 }

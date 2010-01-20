@@ -44,6 +44,22 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
+  const std::string AIRSCHED_ServiceContext::shortDisplay() const {
+    std::ostringstream oStr;
+    oStr << "AIRSCHED_ServiceContext: " << std::endl
+         << "Start analysis date: " << _startAnalysisDate
+         << std::endl;
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
+  const std::string AIRSCHED_ServiceContext::display() const {
+    std::ostringstream oStr;
+    oStr << shortDisplay();
+    return oStr.str();
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   void AIRSCHED_ServiceContext::
   addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
                      const stdair::AirportCode_T& iArrivalAirport,

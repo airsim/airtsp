@@ -7,19 +7,20 @@
 #include <ostream>
 #include <sstream>
 #include <iomanip>
-// STDAIR
+// StdAir
 #include <stdair/bom/AirlineFeatureSet.hpp>
+#include <stdair/basic/BasChronometer.hpp>
+#include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
+#include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
-#include <stdair/basic/BasChronometer.hpp>
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
 #include <airsched/command/NetworkGenerator.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
-#include <airsched/service/Logger.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
 
 namespace AIRSCHED {
@@ -59,7 +60,16 @@ namespace AIRSCHED {
         const stdair::Date_T& iStartAnalysisDate,
         const stdair::Filename_T& iScheduleInputFilename) {
     // Set the log file
-    logInit (LOG::DEBUG, ioLogStream);
+    logInit (stdair::LOG::DEBUG, ioLogStream);
+
+    // Check that the file path given as input corresponds to an actual file
+    const bool doesExistAndIsReadable =
+      stdair::BasFileMgr::doesExistAndIsReadable (iScheduleInputFilename);
+    if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The schedule input file, '" << iScheduleInputFilename
+                        << "', can not be retrieved on the file-system");
+      throw FileNotFoundException();
+    }
 
     // Initialise the context
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = 
@@ -85,14 +95,14 @@ namespace AIRSCHED {
     lAIRSCHED_ServiceContext.setBomRoot (oBomRoot);
     
     // DEBUG
-    AIRSCHED_LOG_DEBUG ("Generated BomRoot:");
+    STDAIR_LOG_DEBUG ("Generated BomRoot:");
     stdair::BomManager::display (ioLogStream, oBomRoot);
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void AIRSCHED_Service::logInit (const LOG::EN_LogLevel iLogLevel,
+  void AIRSCHED_Service::logInit (const stdair::LOG::EN_LogLevel iLogLevel,
                                   std::ostream& ioLogOutputFile) {
-    Logger::instance().setLogParameters (iLogLevel, ioLogOutputFile);
+    stdair::Logger::instance().setLogParameters (iLogLevel, ioLogOutputFile);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -146,8 +156,8 @@ namespace AIRSCHED {
     const double lSimulateMeasure = lSimulateChronometer.elapsed();
 
     // DEBUG
-    AIRSCHED_LOG_DEBUG ("Simulation: " << lSimulateMeasure << " - "
-                        << lAIRSCHED_ServiceContext.display());
+    STDAIR_LOG_DEBUG ("Simulation: " << lSimulateMeasure << " - "
+                      << lAIRSCHED_ServiceContext.display());
   }
 
 }

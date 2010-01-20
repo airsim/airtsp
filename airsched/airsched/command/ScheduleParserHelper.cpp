@@ -3,13 +3,12 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// STDAIR
+// StdAir
 #include <stdair/bom/BomRoot.hpp>
+#include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
-#include <airsched/service/Logger.hpp>
-
 
 namespace AIRSCHED {
 
@@ -387,7 +386,7 @@ namespace AIRSCHED {
       _flightPeriod._itLeg._cabinList.clear();
         
       // DEBUG: Display the result
-      AIRSCHED_LOG_DEBUG ("FlightPeriod: " << _flightPeriod.describe());
+      STDAIR_LOG_DEBUG ("FlightPeriod: " << _flightPeriod.describe());
 
       // Create the FlightDate BOM objects, and potentially the intermediary
       // objects (e.g., Inventory).
@@ -652,10 +651,10 @@ namespace AIRSCHED {
 
     // Check the filename exists and can be open
     if (!_startIterator) {
-      AIRSCHED_LOG_ERROR ("The file " << _filename << " can not be open."
+      STDAIR_LOG_ERROR ("The file " << _filename << " can not be open."
                           << std::endl);
 
-      throw new FileNotFoundException();
+      throw FileNotFoundException();
     }
 
     // Create an EOF iterator
@@ -666,7 +665,7 @@ namespace AIRSCHED {
   bool FlightPeriodFileParser::generateInventories () {
     bool oResult = false;
       
-    AIRSCHED_LOG_DEBUG ("Parsing schedule input file: " << _filename);
+    STDAIR_LOG_DEBUG ("Parsing schedule input file: " << _filename);
 
     // Initialise the parser (grammar) with the helper/staging structure.
     ScheduleParserHelper::FlightPeriodParser lFPParser (_bomRoot, 
@@ -685,7 +684,7 @@ namespace AIRSCHED {
       
     const std::string hasBeenFullyReadStr = (info.full == true)?"":"not ";
     if (oResult == true) {
-      AIRSCHED_LOG_DEBUG ("Parsing of schedule input file: " << _filename
+      STDAIR_LOG_DEBUG ("Parsing of schedule input file: " << _filename
                        << " succeeded: read " << info.length
                        << " characters. The input file has "
                        << hasBeenFullyReadStr
@@ -693,7 +692,7 @@ namespace AIRSCHED {
         
     } else {
       // TODO: decide whether to throw an exception
-      AIRSCHED_LOG_ERROR ("Parsing of schedule input file: " << _filename
+      STDAIR_LOG_ERROR ("Parsing of schedule input file: " << _filename
                        << " failed: read " << info.length
                        << " characters. The input file has "
                        << hasBeenFullyReadStr

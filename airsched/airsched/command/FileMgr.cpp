@@ -8,9 +8,11 @@
 #include <fstream>
 // Boost (Extended STL)
 #include <boost/date_time/gregorian/gregorian.hpp>
-// AIRSCHED
+// StdAir
+#include <stdair/service/Logger.hpp>
+// AirSched
+#include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/command/FileMgr.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
@@ -21,9 +23,9 @@ namespace AIRSCHED {
     // Open the input file
     std::ifstream inputFile (iInputFileName.c_str());
     if (! inputFile) {
-      AIRSCHED_LOG_ERROR ("Can not open input file \"" << iInputFileName
-                           << "\"");
-      throw new FileNotFoundException();
+      STDAIR_LOG_ERROR ("Can not open input file \"" << iInputFileName
+                        << "\"");
+      throw FileNotFoundException();
     }
     
     char buffer[80];
@@ -125,11 +127,11 @@ namespace AIRSCHED {
     }
 
     if (hasAllPArams && i == 1) {
-      AIRSCHED_LOG_DEBUG ("Successfully read");
+      STDAIR_LOG_DEBUG ("Successfully read");
     }
     
     if (!inputFile.eof()) {
-      AIRSCHED_LOG_ERROR ("Problem when reading input file \""
+      STDAIR_LOG_ERROR ("Problem when reading input file \""
                           << iInputFileName << "\"");
     }
 

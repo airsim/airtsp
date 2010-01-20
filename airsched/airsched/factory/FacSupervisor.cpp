@@ -1,12 +1,11 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
-// AIRSCHED
+// STL
+#include <cassert>
+// AirSched
 #include <airsched/factory/FacServiceAbstract.hpp>
 #include <airsched/factory/FacSupervisor.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
@@ -28,14 +27,8 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::registerLoggerService (Logger* ioLogger_ptr) {
-    _logger = ioLogger_ptr;
-  }
-
-  // //////////////////////////////////////////////////////////////////////
   FacSupervisor::~FacSupervisor() {
     cleanServiceLayer();
-    cleanLoggerService();
  }
 
   // //////////////////////////////////////////////////////////////////////
@@ -53,15 +46,9 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void FacSupervisor::cleanLoggerService() {
-    delete _logger; _logger = NULL;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
   void FacSupervisor::cleanFactory () {
 	if (_instance != NULL) {
-		_instance->cleanServiceLayer();
-        _instance->cleanLoggerService();
+      _instance->cleanServiceLayer();
  	}
     delete (_instance); _instance = NULL;
   }

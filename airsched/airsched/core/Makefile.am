@@ -1,3 +1,4 @@
+# core
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
@@ -19,6 +20,6 @@ libairsched_la_LIBADD = \
 	$(top_builddir)/airsched/command/libcmd.la \
 	$(top_builddir)/airsched/service/libsvc.la
 libairsched_la_LDFLAGS = \
-	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(BOOST_FILESYSTEM_LIB) \
 	$(top_builddir)/stdair/core/libstdair.la \
 	-version-info $(GENERIC_LIBRARY_VERSION)

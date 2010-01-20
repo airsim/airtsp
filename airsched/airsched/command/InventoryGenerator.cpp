@@ -5,7 +5,7 @@
 #include <cassert>
 // BOOST
 #include <boost/date_time/date_iterator.hpp>
-// STDAIR
+// StdAir
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/basic/BasConst_BookingClass.hpp>
 #include <stdair/basic/BasConst_Yield.hpp>
@@ -26,11 +26,11 @@
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
+#include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
@@ -40,7 +40,7 @@ namespace AIRSCHED {
                      const Date_T& iStartAnalysisDate,
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
-     //AIRSCHED_LOG_DEBUG ("Airline Code: " << lAirlineCode);
+     //STDAIR_LOG_DEBUG ("Airline Code: " << lAirlineCode);
     stdair::Inventory* lInventory_ptr = ioBomRoot.getInventory (lAirlineCode);
       
     if (lInventory_ptr == NULL) {
@@ -109,7 +109,7 @@ namespace AIRSCHED {
       ioBomRoot.getAirlineFeatureSet ();
     const stdair::AirlineFeature* lAirlineFeature_ptr =
       lAirlineFeatureSet.getAirlineFeature (iAirlineCode);
-    //AIRSCHED_LOG_DEBUG (lAirlineFeatureSet.display()
+    //STDAIR_LOG_DEBUG (lAirlineFeatureSet.display()
     //                 << "needed airline code: " << iAirlineCode);
     assert (lAirlineFeature_ptr != NULL);
       
@@ -139,7 +139,7 @@ namespace AIRSCHED {
       // TODO: transform that error into an exception (duplicated
       // entry in schedule input file), as there should not be any
       // duplicated Flight-Date.
-      AIRSCHED_LOG_ERROR ("The flight-date: " << lFlightDateKey
+      STDAIR_LOG_ERROR ("The flight-date: " << lFlightDateKey
                           << " is duplicated within the schedule input file.");
       //return;
     }
@@ -363,7 +363,7 @@ namespace AIRSCHED {
 //             lSegmentCabin.getBookingClass (lClassKey);
 
 //           if (lBookingClass_ptr == NULL) {
-//             AIRSCHED_LOG_ERROR ("The class " << lClassKey
+//             STDAIR_LOG_ERROR ("The class " << lClassKey
 //                                 << " can not be found in the following "
 //                                 << "SegmentCabin: "
 //                                 << lSegmentCabin.getPrimaryKey());
@@ -381,14 +381,14 @@ namespace AIRSCHED {
 //       }
         
 //       //Output for debug
-//       /*AIRSCHED_LOG_DEBUG ("fare family description for "
+//       /*STDAIR_LOG_DEBUG ("fare family description for "
 //         << lSegmentCabin.describeKey());
 //         for (lSegmentCabin.fareFamilyListBegin();
 //         lSegmentCabin.fareFamilyListHasNotReachedEnd();
 //         lSegmentCabin.fareFamilyListIterate()) {
 //         const FareFamily& lFareFamily =
 //         lSegmentCabin.getCurrentFareFamily();
-//         AIRSCHED_LOG_DEBUG("FF display : " << lFareFamily.display());
+//         STDAIR_LOG_DEBUG("FF display : " << lFareFamily.display());
           
 //         }*/
 //       // end output for debug
@@ -436,7 +436,7 @@ namespace AIRSCHED {
     }
 
     // DEBUG
-    /*AIRSCHED_LOG_DEBUG("FlightDate" << ioFlightDate.describeKey()
+    /*STDAIR_LOG_DEBUG("FlightDate" << ioFlightDate.describeKey()
       << ", Similar flight date list size: "
       << ioFlightDate.getSimilarFlightDateListSize ());*/
   }
@@ -588,7 +588,7 @@ namespace AIRSCHED {
 //     }
      
 //     // DEBUG
-//     // AIRSCHED_LOG_DEBUG("Policies" << lPolicyHolder.describe());
+//     // STDAIR_LOG_DEBUG("Policies" << lPolicyHolder.describe());
      
 //   }
 

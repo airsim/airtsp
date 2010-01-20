@@ -5,16 +5,15 @@
 #include <cassert>
 #include <iostream>
 #include <string>
-// STDAIR
+// StdAir
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/Network.hpp>
 #include <stdair/factory/FacBomContent.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/ScheduleParser.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 

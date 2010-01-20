@@ -4,7 +4,7 @@
 // STL
 #include <cassert>
 #include <vector>
-// STDAIR
+// StdAir
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/InventoryTypes.hpp>
 #include <stdair/bom/FlightDateTypes.hpp>
@@ -20,9 +20,8 @@
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/command/NetworkGenerator.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 

@@ -90,7 +90,8 @@ namespace AIRSCHED {
                const stdair::Filename_T& iScheduleInputFilename);
     
     /** Initialise the log. */
-    void logInit (const LOG::EN_LogLevel iLogLevel, std::ostream& ioLogStream);
+    void logInit (const stdair::LOG::EN_LogLevel iLogLevel,
+                  std::ostream& ioLogStream);
 
     /** Finaliser. */
     void finalise ();

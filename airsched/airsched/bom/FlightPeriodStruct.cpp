@@ -4,12 +4,12 @@
 // STL
 #include <cassert>
 #include <iostream>
-// STDAIR
+// StdAir
 #include <stdair/basic/BasConst_Period_BOM.hpp>
+#include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/bom/FlightPeriodStruct.hpp>
-#include <airsched/service/Logger.hpp>
 
 namespace AIRSCHED {
 
@@ -128,7 +128,7 @@ namespace AIRSCHED {
     // does not correspond to the leg (boarding, off) points, throw an exception
     // so that the user knows the schedule input file is corrupted.
     if (itSegment == _segmentList.end()) {
-      AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a "
+      STDAIR_LOG_ERROR ("Within the schedule input file, there is a "
                           << "flight for which the airports of segments "
                           << "and those of the legs do not correspond.");
       throw SegmentDateNotFoundException();
@@ -177,7 +177,7 @@ namespace AIRSCHED {
     // does not correspond to the leg (boarding, off) points, throw an exception
     // so that the user knows the schedule input file is corrupted.
     if (itSegment == _segmentList.end()) {
-      AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a flight "
+      STDAIR_LOG_ERROR ("Within the schedule input file, there is a flight "
                           << "for which the airports of segments and "
                           << "those of the legs do not correspond.");
       throw SegmentDateNotFoundException();
@@ -201,7 +201,7 @@ namespace AIRSCHED {
     // does not correspond to the stored cabin codes, throw an exception
     // so that the user knows the schedule input file is corrupted.
     if (itCabin == lSegment._cabinList.end()) {
-      AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a flight "
+      STDAIR_LOG_ERROR ("Within the schedule input file, there is a flight "
                           << "for which the cabin code does not exist.");
       throw SegmentDateNotFoundException();
     }
@@ -236,7 +236,7 @@ namespace AIRSCHED {
       // does not correspond to the stored cabin codes, throw an exception
       // so that the user knows the schedule input file is corrupted.
       if (itCabin == lSegment._cabinList.end()) {
-        AIRSCHED_LOG_ERROR ("Within the schedule input file, there is a flight"
+        STDAIR_LOG_ERROR ("Within the schedule input file, there is a flight"
                             << " for which the cabin code does not exist.");
         throw SegmentDateNotFoundException();
       }

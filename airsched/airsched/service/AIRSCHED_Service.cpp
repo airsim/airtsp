@@ -26,27 +26,38 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  AIRSCHED_Service::AIRSCHED_Service () {
-    // Initialise the context
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = 
-      FacAIRSCHEDServiceContext::instance().create ();
-    _airschedServiceContext = &lAIRSCHED_ServiceContext;
+  AIRSCHED_Service::AIRSCHED_Service () : _airschedServiceContext (NULL) {
+    assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  AIRSCHED_Service::AIRSCHED_Service (const AIRSCHED_Service& iService) :
-    _airschedServiceContext (iService._airschedServiceContext) {
+  AIRSCHED_Service::AIRSCHED_Service (const AIRSCHED_Service& iService) {
+    assert (false);
   }
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
-  AIRSCHED_Service (std::ostream& ioLogStream,
+  AIRSCHED_Service (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+                    const stdair::Date_T& iStartAnalysisDate,
+                    const stdair::Filename_T& iScheduleInputFilename)
+    : _airschedServiceContext (NULL) {
+    // Initialise the context
+    init (iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AIRSCHED_Service::
+  AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
                     const stdair::AirlineFeatureSet& iAirlineFeatureSet,
                     const stdair::Date_T& iStartAnalysisDate,
-                    const stdair::Filename_T& iScheduleInputFilename) {
-    // Initialise the context
-    init (ioLogStream,
-          iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
+                    const stdair::Filename_T& iScheduleInputFilename) 
+    : _airschedServiceContext (NULL) {
+    
+    // Set the log file
+    logInit (iLogParams);
+
+    // Initialise the (remaining of the) context
+    init (iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -54,13 +65,15 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::logInit (const stdair::BasLogParams& iLogParams) {
+    stdair::Logger::init (iLogParams);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  init (std::ostream& ioLogStream,
-        const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+  init (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
         const stdair::Date_T& iStartAnalysisDate,
         const stdair::Filename_T& iScheduleInputFilename) {
-    // Set the log file
-    logInit (stdair::LOG::DEBUG, ioLogStream);
 
     // Check that the file path given as input corresponds to an actual file
     const bool doesExistAndIsReadable =
@@ -96,15 +109,11 @@ namespace AIRSCHED {
     
     // DEBUG
     STDAIR_LOG_DEBUG ("Generated BomRoot:");
-    stdair::BomManager::display (ioLogStream, oBomRoot);
+    std::ostringstream oStream;
+    stdair::BomManager::display (oStream, oBomRoot);
+    STDAIR_LOG_DEBUG (oStream.str());
   }
   
-  // ////////////////////////////////////////////////////////////////////
-  void AIRSCHED_Service::logInit (const stdair::LOG::EN_LogLevel iLogLevel,
-                                  std::ostream& ioLogOutputFile) {
-    stdair::Logger::instance().setLogParameters (iLogLevel, ioLogOutputFile);
-  }
-
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
   addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,

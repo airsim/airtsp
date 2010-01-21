@@ -4,11 +4,9 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STL
-#include <iosfwd>
-#include <string>
 // StdAir
 #include <stdair/STDAIR_Types.hpp>
+#include <stdair/basic/BasLogParams.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
@@ -32,14 +30,33 @@ namespace AIRSCHED {
     /** Constructor.
         <br>The init() method is called; see the corresponding documentation
         for more details.
-        @param std::ostream& Output log stream.
+        <br>Moreover, a reference on an output stream is given, so
+        that log outputs can be directed onto that stream.       
+        @param const stdair::BasLogParams& Parameters for the output log stream.
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    AIRSCHED_Service (std::ostream& ioLogStream,
+    AIRSCHED_Service (const stdair::BasLogParams&,
                       const stdair::AirlineFeatureSet&,
                       const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
+
+    /** Constructor.
+        <br>The init() method is called; see the corresponding documentation
+        for more details.
+        <br>Moreover, as no reference on any output stream is given,
+        it is assumed that the StdAir log service has already been
+        initialised with the proper log output stream by some other
+        methods in the calling chain (for instance, when the AIRSCHED_Service
+        is itself being initialised by another library service such as
+        SIMCRS_Service).
+        @param const stdair::AirlineFeatureSet& Set of airline features.
+        @param const stdair::Date_T& Date for the beginning of analysis.
+        @param const stdair::Filename_T& Filename of the input schedule file. */
+    AIRSCHED_Service (const stdair::AirlineFeatureSet&,
+                      const stdair::Date_T& iStartAnalysisDate,
+                      const stdair::Filename_T& iScheduleInputFilename);
+    
     /** Destructor. */
     ~AIRSCHED_Service();
 
@@ -71,28 +88,25 @@ namespace AIRSCHED {
     
   private:
     // ////////////////// Constructors and Destructors //////////////////    
-    /** Default Constructors. */
+    /** Default Constructors, which must not be used. */
     AIRSCHED_Service ();
     AIRSCHED_Service (const AIRSCHED_Service&);
+
+    /** Initialise the log. */
+    void logInit (const stdair::BasLogParams&);
 
     /** Initialise.
         <br>The CSV file, describing the airline schedules for the
         simulator, is parsed and the inventories are generated accordingly.
         <br>A reference on the root of the BOM tree, namely the BomRoot object,
         is stored within the service context for later use.
-        @param std::ostream& Output log stream.
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    void init (std::ostream& ioLogStream,
-               const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+    void init (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
                const stdair::Date_T& iStartAnalysisDate,
                const stdair::Filename_T& iScheduleInputFilename);
     
-    /** Initialise the log. */
-    void logInit (const stdair::LOG::EN_LogLevel iLogLevel,
-                  std::ostream& ioLogStream);
-
     /** Finaliser. */
     void finalise ();
 

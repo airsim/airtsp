@@ -189,7 +189,8 @@ int main (int argc, char* argv[]) {
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
     // Initialise the AirSched service object
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+    const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
                                                 lAirlineFeatureSet,
                                                 lStartAnalysisDate,
                                                 lInputFilename);

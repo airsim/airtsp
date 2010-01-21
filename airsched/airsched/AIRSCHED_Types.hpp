@@ -30,9 +30,6 @@ namespace AIRSCHED {
   class ObjectNotFoundException : public RootException {
   };
 
-  class DocumentNotFoundException : public RootException {
-  };
-
   class InventoryNotFoundException : public RootException {
   };
 

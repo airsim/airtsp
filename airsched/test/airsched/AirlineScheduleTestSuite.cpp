@@ -79,7 +79,8 @@ void externalMemoryManagementHelper() {
     // The analysis starts at January 1, 2000
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+    const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
                                                 lAirlineFeatureSet,
                                                 lStartAnalysisDate,
                                                 lInputFilename);
@@ -320,7 +321,8 @@ void scheduleParsingHelper() {
 
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
-    AIRSCHED::AIRSCHED_Service airschedService (logOutputFile,
+    const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
                                                 lAirlineFeatureSet,
                                                 lStartAnalysisDate,
                                                 lInputFilename);

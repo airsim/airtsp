@@ -169,4 +169,14 @@ namespace AIRSCHED {
                       << lAIRSCHED_ServiceContext.display());
   }
 
+  // ////////////////////////////////////////////////////////////////////
+  stdair::OutboundPathLightList_T AIRSCHED_Service::
+  getTravelSolutions (const stdair::BookingRequestStruct& iBookingRequest) {
+    // Initiate an empty list of outbound paths/travel solutions.
+    stdair::OutboundPathLightList_T oOutboundPathList;
+
+
+    return oOutboundPathList;
+  }
+
 }

@@ -175,7 +175,6 @@ namespace AIRSCHED {
     // Initiate an empty list of outbound paths/travel solutions.
     stdair::OutboundPathLightList_T oOutboundPathList;
 
-
     return oOutboundPathList;
   }
 

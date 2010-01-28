@@ -170,6 +170,12 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
+  stdair::BomRoot& AIRSCHED_Service::getBomRoot () const {
+    assert (_airschedServiceContext != NULL);
+    return _airschedServiceContext->getBomRoot();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
   stdair::OutboundPathLightList_T AIRSCHED_Service::
   getTravelSolutions (const stdair::BookingRequestStruct& iBookingRequest) {
     // Initiate an empty list of outbound paths/travel solutions.

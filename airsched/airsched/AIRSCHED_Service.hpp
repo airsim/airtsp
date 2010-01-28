@@ -26,6 +26,12 @@ namespace AIRSCHED {
   
   /** Interface for the AIRSCHED Services. */
   class AIRSCHED_Service {
+
+  public:
+    // ////////////////// Getters ///////////////////
+    /** Retrieve the BomRoot of the context. */
+    stdair::BomRoot& getBomRoot () const;
+    
   public:
     // ////////////////// Constructors and Destructors //////////////////    
     /** Constructor.

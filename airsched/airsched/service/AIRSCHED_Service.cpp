@@ -40,13 +40,20 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
-  AIRSCHED_Service (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+  AIRSCHED_Service (stdair::STDAIR_Service& ioSTDAIR_Service,
+                    const stdair::AirlineFeatureSet& iAirlineFeatureSet,
                     const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename)
     : _airschedServiceContext (NULL) {
 
     // Initialise the service context
     initServiceContext ();
+    
+    // Retrieve the AirSched service context
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
+    // Store the STDAIR service object within the (AIRSCHED) service context
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_Service);
     
     // Initialise the context
     init (iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
@@ -94,8 +101,8 @@ namespace AIRSCHED {
     // Initialise the STDAIR service handler
     // Note that the track on the object memory is kept thanks to the Boost
     // Smart Pointers component.
-    STDAIR_ServicePtr_T lSTDAIR_Service_ptr = 
-      STDAIR_ServicePtr_T (new stdair::STDAIR_Service (iLogParams));
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr = 
+      stdair::STDAIR_ServicePtr_T (new stdair::STDAIR_Service (iLogParams));
 
     // Retrieve the root of the BOM tree, on which all of the other BOM objects
     // will be attached
@@ -109,7 +116,7 @@ namespace AIRSCHED {
     lAIRSCHED_ServiceContext.setAirlineFeatureSet (iAirlineFeatureSet);
     
     // Store the STDAIR service object within the (AIRSCHED) service context
-    lAIRSCHED_ServiceContext.setSTDAIR_Service (lSTDAIR_Service_ptr);
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (*lSTDAIR_Service_ptr);
   }
   
   // ////////////////////////////////////////////////////////////////////

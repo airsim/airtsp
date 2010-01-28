@@ -6,7 +6,6 @@
 // //////////////////////////////////////////////////////////////////////
 // StdAir
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/basic/BasLogParams.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/OutboundPathTypes.hpp>
 // AIRSCHED
@@ -15,6 +14,8 @@
 // Forward declarations.
 namespace stdair {
   class AirlineFeatureSet;
+  class STDAIR_Service;
+  struct BasLogParams;
 }
 
 namespace AIRSCHED {
@@ -53,7 +54,8 @@ namespace AIRSCHED {
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    AIRSCHED_Service (const stdair::AirlineFeatureSet&,
+    AIRSCHED_Service (stdair::STDAIR_Service& ioSTDAIR_Service,
+                      const stdair::AirlineFeatureSet&,
                       const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
     

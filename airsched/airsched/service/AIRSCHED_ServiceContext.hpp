@@ -10,22 +10,18 @@
 #include <boost/shared_ptr.hpp>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
+#include <stdair/STDAIR_ServicePtr.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
-  class STDAIR_Service;
   class AirlineFeatureSet;
 }
 
 namespace AIRSCHED {
 
-  /** Pointer on the STDAIR Service handler. */
-  typedef boost::shared_ptr<stdair::STDAIR_Service> STDAIR_ServicePtr_T;
-
-  
   /** Inner class holding the context for the AIRSCHED Service object. */
   class AIRSCHED_ServiceContext : public ServiceAbstract {
     /** The AIRSCHED_Service class should be the sole class to get access to
@@ -66,9 +62,7 @@ namespace AIRSCHED {
     
     // ///////////////// Setters ///////////////////
     /** Set the pointer on the STDAIR service handler. */
-    void setSTDAIR_Service (STDAIR_ServicePtr_T ioSTDAIR_ServicePtr) {
-      _stdairService = ioSTDAIR_ServicePtr;
-    }
+    void setSTDAIR_Service (stdair::STDAIR_Service&);
     
     /** Set the AirlineFeatureSet object. */
     void setAirlineFeatureSet (const stdair::AirlineFeatureSet& iAirlineFeatureSet) {
@@ -112,7 +106,7 @@ namespace AIRSCHED {
   private:
     // ///////////// Children ////////////
     /** Standard Airline (StdAir) Service Handler. */
-    STDAIR_ServicePtr_T _stdairService;
+    stdair::STDAIR_ServicePtr_T _stdairService;
 
     
   private:

@@ -10,6 +10,7 @@
 #include <boost/program_options.hpp>
 // StdAir
 #include <stdair/STDAIR_Types.hpp>
+#include <stdair/STDAIR_Service.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/bom/AirlineFeatureSet.hpp>
 #include <stdair/bom/AirlineFeature.hpp>

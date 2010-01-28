@@ -3,13 +3,10 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <iostream>
 #include <string>
 // StdAir
-#include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/Inventory.hpp>
 #include <stdair/bom/Network.hpp>
-#include <stdair/factory/FacBomContent.hpp>
 // AirSched
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/ScheduleParser.hpp>
@@ -18,18 +15,12 @@
 namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
-  stdair::BomRoot& ScheduleParser::
-  generateInventories (const std::string& iFilename,
-                       const stdair::AirlineFeatureSet& iAirlineFeatureSet,
-                       const Date_T& iStartAnalysisDate) {
-    stdair::BomRoot& oBomRoot =
-      stdair::FacBomContent::instance().create<stdair::BomRoot> ();
-
-    // Set the AirlineFeatureSet for the BomRoot.
-    oBomRoot.setAirlineFeatureSet (&iAirlineFeatureSet);
+  void ScheduleParser::
+  generateInventories (const stdair::Filename_T& iFilename, stdair::BomRoot& ioBomRoot,
+                       const stdair::Date_T& iStartAnalysisDate) {
 
     // Initialise the Flight-Period file parser.
-    FlightPeriodFileParser lFlightPeriodParser (oBomRoot, iStartAnalysisDate,
+    FlightPeriodFileParser lFlightPeriodParser (ioBomRoot, iStartAnalysisDate,
                                                 iFilename);
 
     // Parse the CSV-formatted schedule input file, and generate the
@@ -38,9 +29,7 @@ namespace AIRSCHED {
       
     // Complete the BomRoot BOM building
     // Create the routings for all the inventories.
-    InventoryGenerator::createDirectAccesses (oBomRoot);
-
-    return oBomRoot;
+    InventoryGenerator::createDirectAccesses (ioBomRoot);
   }
 
 }

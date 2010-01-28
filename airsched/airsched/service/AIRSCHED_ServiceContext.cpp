@@ -3,7 +3,9 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// AIRSCHED
+// StdAir
+#include <stdair/STDAIR_Service.hpp>
+// AirSched
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
 #include <airsched/factory/FacSupervisor.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
@@ -12,16 +14,16 @@
 namespace AIRSCHED {
   
   // //////////////////////////////////////////////////////////////////////
+  AIRSCHED_ServiceContext::
+  AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&) {
+    assert (false);
+  }
+
+  // //////////////////////////////////////////////////////////////////////
   AIRSCHED_ServiceContext::AIRSCHED_ServiceContext () {
     init ();
   }
   
-  // //////////////////////////////////////////////////////////////////////
-  AIRSCHED_ServiceContext::
-  AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&) : _bomRoot (NULL) {
-    init ();
-  }
-
   // //////////////////////////////////////////////////////////////////////
   AIRSCHED_ServiceContext::~AIRSCHED_ServiceContext() {
   }
@@ -31,14 +33,13 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  stdair::BomRoot& AIRSCHED_ServiceContext::getBomRoot () const {
-    assert (_bomRoot != NULL);
-    return *_bomRoot;
+  stdair::STDAIR_Service& AIRSCHED_ServiceContext::getSTDAIR_Service() const {
+    assert (_stdairService != NULL);
+    return *_stdairService;
   }
-
+  
   // //////////////////////////////////////////////////////////////////////
-  const stdair::AirlineFeatureSet& AIRSCHED_ServiceContext::
-  getAirlineFeatureSet () const {
+  const stdair::AirlineFeatureSet& AIRSCHED_ServiceContext::getAirlineFeatureSet() const {
     assert (_airlineFeatureSet != NULL);
     return *_airlineFeatureSet;
   }

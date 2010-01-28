@@ -15,7 +15,6 @@
 // Forward declarations.
 namespace stdair {
   class AirlineFeatureSet;
-  class BomRoot;
 }
 
 namespace AIRSCHED {
@@ -26,12 +25,6 @@ namespace AIRSCHED {
   
   /** Interface for the AIRSCHED Services. */
   class AIRSCHED_Service {
-
-  public:
-    // ////////////////// Getters ///////////////////
-    /** Retrieve the BomRoot of the context. */
-    stdair::BomRoot& getBomRoot () const;
-    
   public:
     // ////////////////// Constructors and Destructors //////////////////    
     /** Constructor.
@@ -68,6 +61,7 @@ namespace AIRSCHED {
     ~AIRSCHED_Service();
 
     
+  public:    
     // ////////////////// Business support methods //////////////////    
     /** Add a travel solution to the service context.
         <br>Currently, that method does nothing. */
@@ -99,14 +93,21 @@ namespace AIRSCHED {
     AIRSCHED_Service ();
     AIRSCHED_Service (const AIRSCHED_Service&);
 
-    /** Initialise the log. */
-    void logInit (const stdair::BasLogParams&);
+    /** Initialise the (AIRSCHED) service context (i.e., the
+        AIRSCHED_ServiceContext object). */
+    void initServiceContext ();
 
+    /** Initialise the STDAIR service (including the log service).
+        <br>A reference on the root of the BOM tree, namely the BomRoot object,
+        is stored within the service context for later use.
+        @param const stdair::BasLogParams& Parameters for the output log stream.
+        @param const stdair::AirlineFeatureSet& Set of airline features. */
+    void initStdAirService (const stdair::BasLogParams&,
+                            const stdair::AirlineFeatureSet&);
+    
     /** Initialise.
         <br>The CSV file, describing the airline schedules for the
         simulator, is parsed and the inventories are generated accordingly.
-        <br>A reference on the root of the BOM tree, namely the BomRoot object,
-        is stored within the service context for later use.
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */

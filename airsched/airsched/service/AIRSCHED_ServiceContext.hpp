@@ -6,22 +6,26 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-#include <cassert>
+// Boost
+#include <boost/shared_ptr.hpp>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/bom/BomRoot.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
-  class BomRoot;
+  class STDAIR_Service;
   class AirlineFeatureSet;
 }
 
 namespace AIRSCHED {
 
+  /** Pointer on the STDAIR Service handler. */
+  typedef boost::shared_ptr<stdair::STDAIR_Service> STDAIR_ServicePtr_T;
+
+  
   /** Inner class holding the context for the AIRSCHED Service object. */
   class AIRSCHED_ServiceContext : public ServiceAbstract {
     /** The AIRSCHED_Service class should be the sole class to get access to
@@ -32,8 +36,11 @@ namespace AIRSCHED {
 
   private:
     /// //////////////// Constructors and destructors /////////////
+    /** Default constructor. */
     AIRSCHED_ServiceContext ();
+    /** Default copy constructor. */
     AIRSCHED_ServiceContext (const AIRSCHED_ServiceContext&);
+    /** Initialisation. */
     void init ();
     /** Destructor. */
     ~AIRSCHED_ServiceContext();
@@ -43,28 +50,26 @@ namespace AIRSCHED {
 
     
     // ///////////////// Getters ///////////////////
-    /** Get a reference on the BomRoot object.
-        <br>If the service context has not been initialised, that
-        method throws an exception (failing assertion). */
-    stdair::BomRoot& getBomRoot () const;
-
+    /** Get the pointer on the STDAIR service handler. */
+    stdair::STDAIR_Service& getSTDAIR_Service () const;
+    
     /** Get a reference on the AirlineFeatureSet object.
         <br>If the service context has not been initialised, that
         method throws an exception (failing assertion). */
     const stdair::AirlineFeatureSet& getAirlineFeatureSet () const;
 
     /** Get the requested date for the beginning of analysis. */
-    const Date_T& getStartAnalysisDate() const {
+    const stdair::Date_T& getStartAnalysisDate() const {
       return _startAnalysisDate;
     }
 
     
     // ///////////////// Setters ///////////////////
-    /** Set the BomRoot object. */
-    void setBomRoot (stdair::BomRoot& ioBomRoot) {
-      _bomRoot = &ioBomRoot;
+    /** Set the pointer on the STDAIR service handler. */
+    void setSTDAIR_Service (STDAIR_ServicePtr_T ioSTDAIR_ServicePtr) {
+      _stdairService = ioSTDAIR_ServicePtr;
     }
-
+    
     /** Set the AirlineFeatureSet object. */
     void setAirlineFeatureSet (const stdair::AirlineFeatureSet& iAirlineFeatureSet) {
       _airlineFeatureSet = &iAirlineFeatureSet;
@@ -105,10 +110,12 @@ namespace AIRSCHED {
 
 
   private:
-    // /////////////// Attributes ///////////////
-    /** The BomRoot which contents all the inventory objects. */
-    stdair::BomRoot* _bomRoot;
+    // ///////////// Children ////////////
+    /** Standard Airline (StdAir) Service Handler. */
+    STDAIR_ServicePtr_T _stdairService;
 
+    
+  private:
     /** Set of airline required features. */
     const stdair::AirlineFeatureSet* _airlineFeatureSet;
 

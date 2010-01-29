@@ -54,8 +54,7 @@ namespace AIRSCHED {
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    AIRSCHED_Service (stdair::STDAIR_Service& ioSTDAIR_Service,
-                      const stdair::AirlineFeatureSet&,
+    AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
                       const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
     
@@ -113,8 +112,7 @@ namespace AIRSCHED {
         @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    void init (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
-               const stdair::Date_T& iStartAnalysisDate,
+    void init (const stdair::Date_T& iStartAnalysisDate,
                const stdair::Filename_T& iScheduleInputFilename);
     
     /** Finaliser. */

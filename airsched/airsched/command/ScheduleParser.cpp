@@ -16,7 +16,8 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void ScheduleParser::
-  generateInventories (const stdair::Filename_T& iFilename, stdair::BomRoot& ioBomRoot,
+  generateInventories (const stdair::Filename_T& iFilename,
+                       stdair::BomRoot& ioBomRoot,
                        const stdair::Date_T& iStartAnalysisDate) {
 
     // Initialise the Flight-Period file parser.

@@ -10,15 +10,9 @@
 #include <boost/shared_ptr.hpp>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/STDAIR_ServicePtr.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
-
-// Forward declarations
-namespace stdair {
-  class AirlineFeatureSet;
-}
 
 namespace AIRSCHED {
 
@@ -49,11 +43,6 @@ namespace AIRSCHED {
     /** Get the pointer on the STDAIR service handler. */
     stdair::STDAIR_Service& getSTDAIR_Service () const;
     
-    /** Get a reference on the AirlineFeatureSet object.
-        <br>If the service context has not been initialised, that
-        method throws an exception (failing assertion). */
-    const stdair::AirlineFeatureSet& getAirlineFeatureSet () const;
-
     /** Get the requested date for the beginning of analysis. */
     const stdair::Date_T& getStartAnalysisDate() const {
       return _startAnalysisDate;
@@ -62,13 +51,8 @@ namespace AIRSCHED {
     
     // ///////////////// Setters ///////////////////
     /** Set the pointer on the STDAIR service handler. */
-    void setSTDAIR_Service (stdair::STDAIR_Service&);
+    void setSTDAIR_Service (stdair::STDAIR_ServicePtr_T);
     
-    /** Set the AirlineFeatureSet object. */
-    void setAirlineFeatureSet (const stdair::AirlineFeatureSet& iAirlineFeatureSet) {
-      _airlineFeatureSet = &iAirlineFeatureSet;
-    }
-
     /** Set the requested date for the beginning of analysis. */
     void setStartAnalysisDate (const Date_T& iStartAnalysisDate) {
       _startAnalysisDate = iStartAnalysisDate;
@@ -110,9 +94,6 @@ namespace AIRSCHED {
 
     
   private:
-    /** Set of airline required features. */
-    const stdair::AirlineFeatureSet* _airlineFeatureSet;
-
     /** Requested date for the beginning of analysis. */
     stdair::Date_T _startAnalysisDate;
   };

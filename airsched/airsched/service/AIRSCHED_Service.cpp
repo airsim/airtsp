@@ -40,8 +40,7 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
-  AIRSCHED_Service (stdair::STDAIR_Service& ioSTDAIR_Service,
-                    const stdair::AirlineFeatureSet& iAirlineFeatureSet,
+  AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
                     const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename)
     : _airschedServiceContext (NULL) {
@@ -53,10 +52,10 @@ namespace AIRSCHED {
     assert (_airschedServiceContext != NULL);
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
     // Store the STDAIR service object within the (AIRSCHED) service context
-    lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_Service);
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_ServicePtr);
     
     // Initialise the context
-    init (iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
+    init (iStartAnalysisDate, iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -74,7 +73,7 @@ namespace AIRSCHED {
     initStdAirService (iLogParams, iAirlineFeatureSet);
     
     // Initialise the (remaining of the) context
-    init (iAirlineFeatureSet, iStartAnalysisDate, iScheduleInputFilename);
+    init (iStartAnalysisDate, iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -111,18 +110,14 @@ namespace AIRSCHED {
 
     // Set the AirlineFeatureSet for the BomRoot.
     lBomRoot.setAirlineFeatureSet (&iAirlineFeatureSet);
-
-    // Store the AirlineFeatureSet object within the service context
-    lAIRSCHED_ServiceContext.setAirlineFeatureSet (iAirlineFeatureSet);
     
     // Store the STDAIR service object within the (AIRSCHED) service context
-    lAIRSCHED_ServiceContext.setSTDAIR_Service (*lSTDAIR_Service_ptr);
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (lSTDAIR_Service_ptr);
   }
   
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  init (const stdair::AirlineFeatureSet& iAirlineFeatureSet,
-        const stdair::Date_T& iStartAnalysisDate,
+  init (const stdair::Date_T& iStartAnalysisDate,
         const stdair::Filename_T& iScheduleInputFilename) {
 
     // Check that the file path given as input corresponds to an actual file
@@ -144,7 +139,7 @@ namespace AIRSCHED {
     // Retrieve the StdAir service context
     stdair::STDAIR_Service& lSTDAIR_Service= lAIRSCHED_ServiceContext.getSTDAIR_Service();
     
-    // Create the root of the BOM tree, on which all of the other BOM objects
+    // Get the root of the BOM tree, on which all of the other BOM objects
     // will be attached
     stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
 
@@ -152,7 +147,7 @@ namespace AIRSCHED {
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot,
                                          iStartAnalysisDate);
 
-    // Build the network from the schedule.
+    // // Build the network from the schedule.
     NetworkGenerator::createNetworks (lBomRoot);
     
     // DEBUG

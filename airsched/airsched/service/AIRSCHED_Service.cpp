@@ -7,6 +7,8 @@
 #include <ostream>
 #include <sstream>
 #include <iomanip>
+// Boost
+#include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/basic/BasFileMgr.hpp>
@@ -101,7 +103,7 @@ namespace AIRSCHED {
     // Note that the track on the object memory is kept thanks to the Boost
     // Smart Pointers component.
     stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr = 
-      stdair::STDAIR_ServicePtr_T (new stdair::STDAIR_Service (iLogParams));
+      boost::make_shared<stdair::STDAIR_Service> (iLogParams);
 
     // Retrieve the root of the BOM tree, on which all of the other BOM objects
     // will be attached

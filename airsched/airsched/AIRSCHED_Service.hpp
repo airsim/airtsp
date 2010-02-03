@@ -7,7 +7,7 @@
 // StdAir
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
-#include <stdair/bom/OutboundPathTypes.hpp>
+#include <stdair/bom/TravelSolutionTypes.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Types.hpp>
 
@@ -81,7 +81,8 @@ namespace AIRSCHED {
 
     /** Calculate and return a list of travel solutions corresponding to a given
         product demand. */
-    stdair::OutboundPathLightList_T getTravelSolutions (const stdair::BookingRequestStruct&);
+    void getTravelSolutions (stdair::TravelSolutionList_T&,
+                             const stdair::BookingRequestStruct&);
 
     /** Perform a small simulation, which uses the Customer Choice Model.
         <br>Currently, that method does nothing.*/

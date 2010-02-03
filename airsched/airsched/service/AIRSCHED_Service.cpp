@@ -15,6 +15,9 @@
 #include <stdair/bom/BomManager.hpp> // for display()
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/AirlineFeatureSet.hpp>
+#include <stdair/bom/TravelSolutionStruct.hpp>
+#include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/NetworkKey.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
@@ -25,6 +28,7 @@
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
 #include <airsched/command/NetworkGenerator.hpp>
+#include <airsched/command/TravelSolutionProvider.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
 
@@ -219,12 +223,25 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  stdair::OutboundPathLightList_T AIRSCHED_Service::
-  getTravelSolutions (const stdair::BookingRequestStruct& iBookingRequest) {
-    // Initiate an empty list of outbound paths/travel solutions.
-    stdair::OutboundPathLightList_T oOutboundPathList;
+  void AIRSCHED_Service::
+  getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
+                      const stdair::BookingRequestStruct& iBookingRequest) {
+    if (_airschedServiceContext == NULL) {
+      throw NonInitialisedServiceException();
+    }
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
 
-    return oOutboundPathList;
+    // Retrieve the network.
+    const stdair::STDAIR_Service& lSTDAIR_Service =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    const stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    const stdair::NetworkID_T lNetworkID ("Whole Network");
+    const stdair::Network* lNetwork_ptr = lBomRoot.getNetwork (lNetworkID);
+    assert (lNetwork_ptr != NULL);
+    
+    TravelSolutionProvider::getTravelSolutions (ioTravelSolutionList,
+                                                *lNetwork_ptr, iBookingRequest);
   }
 
 }

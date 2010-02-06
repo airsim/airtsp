@@ -45,10 +45,10 @@ template<class T> std::ostream& operator<< (std::ostream& os,
 const int K_AIRSCHED_EARLY_RETURN_STATUS = 99;
 
 /** Read and parse the command line options. */
-int readConfiguration (int argc, char* argv[], int& lRandomDraws, 
-                       stdair::Filename_T& lInputFilename,
-                       std::string& lLogFilename,
-                       stdair::AirlineCode_T& lAirlineCode) {
+int readConfiguration (int argc, char* argv[], int& ioRandomDraws, 
+                       stdair::Filename_T& ioInputFilename,
+                       std::string& ioLogFilename,
+                       stdair::AirlineCode_T& ioAirlineCode) {
   
     
   // Declare a group of options that will be allowed only on command line
@@ -63,16 +63,16 @@ int readConfiguration (int argc, char* argv[], int& lRandomDraws,
   boost::program_options::options_description config ("Configuration");
   config.add_options()
     ("draws,d",
-     boost::program_options::value<int>(&lRandomDraws)->default_value(K_AIRSCHED_DEFAULT_RANDOM_DRAWS), 
+     boost::program_options::value<int>(&ioRandomDraws)->default_value(K_AIRSCHED_DEFAULT_RANDOM_DRAWS), 
      "Number of to-be-generated random draws")
     ("airline,a",
-     boost::program_options::value< std::string >(&lAirlineCode)->default_value(K_AIRSCHED_DEFAULT_AIRLINE_CODE),
+     boost::program_options::value< std::string >(&ioAirlineCode)->default_value(K_AIRSCHED_DEFAULT_AIRLINE_CODE),
      "Airline code")
     ("input,i",
-     boost::program_options::value< std::string >(&lInputFilename)->default_value(K_AIRSCHED_DEFAULT_INPUT_FILENAME),
+     boost::program_options::value< std::string >(&ioInputFilename)->default_value(K_AIRSCHED_DEFAULT_INPUT_FILENAME),
      "(CVS) input file for the demand distributions")
     ("log,l",
-     boost::program_options::value< std::string >(&lLogFilename)->default_value(K_AIRSCHED_DEFAULT_LOG_FILENAME),
+     boost::program_options::value< std::string >(&ioLogFilename)->default_value(K_AIRSCHED_DEFAULT_LOG_FILENAME),
      "Filename for the logs")
     ;
 
@@ -122,16 +122,16 @@ int readConfiguration (int argc, char* argv[], int& lRandomDraws,
   }
 
   if (vm.count ("input")) {
-    lInputFilename = vm["input"].as< std::string >();
-    std::cout << "Input filename is: " << lInputFilename << std::endl;
+    ioInputFilename = vm["input"].as< std::string >();
+    std::cout << "Input filename is: " << ioInputFilename << std::endl;
   }
 
   if (vm.count ("log")) {
-    lLogFilename = vm["log"].as< std::string >();
-    std::cout << "Log filename is: " << lLogFilename << std::endl;
+    ioLogFilename = vm["log"].as< std::string >();
+    std::cout << "Log filename is: " << ioLogFilename << std::endl;
   }
 
-  std::cout << "The number of random draws is: " << lRandomDraws << std::endl;
+  std::cout << "The number of random draws is: " << ioRandomDraws << std::endl;
   
   return 0;
 }

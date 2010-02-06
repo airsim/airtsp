@@ -1,12 +1,12 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// C
-#include <assert.h>
+// STL
+#include <cassert>
 // AIRSCHED
-#include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/factory/FacSupervisor.hpp>
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
+#include <airsched/service/AIRSCHED_ServiceContext.hpp>
 
 namespace AIRSCHED {
 

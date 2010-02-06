@@ -654,7 +654,7 @@ namespace AIRSCHED {
       STDAIR_LOG_ERROR ("The file " << _filename << " can not be open."
                           << std::endl);
 
-      throw FileNotFoundException();
+      throw stdair::FileNotFoundException();
     }
 
     // Create an EOF iterator

@@ -24,8 +24,9 @@ namespace AIRSCHED {
 
     /** Destructor.
         <br> The Destruction put the _instance to NULL
-        in order to be clean for the next FacServiceContext::instance() */
-    virtual ~FacAIRSCHEDServiceContext();
+        in order to be clean for the next
+        FacAIRSCHEDServiceContext::instance(). */
+    ~FacAIRSCHEDServiceContext();
 
     /** Create a new ServiceContext object.
         <br>This new object is added to the list of instantiated objects.

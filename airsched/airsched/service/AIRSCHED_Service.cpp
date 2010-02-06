@@ -3,22 +3,18 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <istream>
-#include <ostream>
 #include <sstream>
-#include <iomanip>
 // Boost
 #include <boost/make_shared.hpp>
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
+#include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/AirlineFeatureSet.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
-#include <stdair/bom/BomRoot.hpp>
 #include <stdair/bom/NetworkKey.hpp>
-#include <stdair/factory/FacBomContent.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 // AirSched
@@ -56,7 +52,9 @@ namespace AIRSCHED {
     
     // Retrieve the AirSched service context
     assert (_airschedServiceContext != NULL);
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+    
     // Store the STDAIR service object within the (AIRSCHED) service context
     lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_ServicePtr);
     
@@ -132,7 +130,7 @@ namespace AIRSCHED {
     if (doesExistAndIsReadable == false) {
       STDAIR_LOG_ERROR ("The schedule input file, '" << iScheduleInputFilename
                         << "', can not be retrieved on the file-system");
-      throw FileNotFoundException();
+      throw stdair::FileNotFoundException();
     }
 
     // Retrieve the AirSched service context

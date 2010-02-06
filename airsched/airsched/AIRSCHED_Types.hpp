@@ -18,9 +18,6 @@ namespace AIRSCHED {
   class RootException : public std::exception {
   };
 
-  class FileNotFoundException : public RootException {
-  };
-  
   class NonInitialisedServiceException : public RootException {
   };
 

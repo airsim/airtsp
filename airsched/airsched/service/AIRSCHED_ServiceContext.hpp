@@ -94,6 +94,7 @@ namespace AIRSCHED {
 
     
   private:
+    // ////////////// Attributes ////////////////
     /** Requested date for the beginning of analysis. */
     stdair::Date_T _startAnalysisDate;
   };

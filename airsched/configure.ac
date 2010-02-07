@@ -121,6 +121,22 @@ AC_SUBST(BOOST_DATE_TIME_LIB)
 AC_SUBST(BOOST_PROGRAM_OPTIONS_LIB)
 AC_SUBST(BOOST_FILESYSTEM_LIB)
 
+# --------------------------------------------------------------------
+# Support for MySQL (C client API): http://www.mysql.org
+# --------------------------------------------------------------------
+AX_MYSQL
+AC_SUBST(MYSQL_VERSION)
+AC_SUBST(MYSQL_CFLAGS)
+AC_SUBST(MYSQL_LIBS)
+
+# --------------------------------------------------------
+# SOCI (Database API: http://soci.sourceforge.net)
+# --------------------------------------------------------
+AX_SOCI([3.0])
+AC_SUBST(SOCI_VERSION)
+AC_SUBST(SOCI_CFLAGS)
+AC_SUBST(SOCI_LIBS)
+
 
 # -------------------------------------------------------------------
 # Support for documentation
@@ -280,6 +296,7 @@ AC_CONFIG_FILES(
 	stdair/Makefile
 	stdair/basic/Makefile
 	stdair/bom/Makefile
+	stdair/dbadaptor/Makefile
 	stdair/factory/Makefile
 	stdair/service/Makefile
 	stdair/core/Makefile
@@ -360,6 +377,16 @@ External libraries:
     o BOOST_DT_LIB .... : ${BOOST_DATE_TIME_LIB}
     o BOOST_PO_LIB .... : ${BOOST_PROGRAM_OPTIONS_LIB}
     o BOOST_FS_LIB .... : ${BOOST_FILESYSTEM_LIB}
+
+  - MySQL ............. :
+    o MYSQL_version ... : ${MYSQL_VERSION}
+    o MYSQL_CFLAGS .... : ${MYSQL_CFLAGS}
+    o MYSQL_LIBS ...... : ${MYSQL_LIBS} 
+
+  - SOCI .............. :	
+    o SOCI_version .... : ${SOCI_VERSION}
+    o SOCI_CFLAGS ..... : ${SOCI_CFLAGS}
+    o SOCI_LIBS ....... : ${SOCI_LIBS}
 
   - CPPUNIT ........... :
     o CPPUNIT_VERSION . : ${CPPUNIT_VERSION}

@@ -103,17 +103,6 @@ namespace AIRSCHED {
     // Link the created inventory with the bom root.
     stdair::FacBomContent::linkWithParent<stdair::Inventory> (lInventory,
                                                               ioBomRoot);
-    
-    // Set the AirlineFeature for the inventory.
-    const stdair::AirlineFeatureSet& lAirlineFeatureSet =
-      ioBomRoot.getAirlineFeatureSet ();
-    const stdair::AirlineFeature* lAirlineFeature_ptr =
-      lAirlineFeatureSet.getAirlineFeature (iAirlineCode);
-    //STDAIR_LOG_DEBUG (lAirlineFeatureSet.display()
-    //                 << "needed airline code: " << iAirlineCode);
-    assert (lAirlineFeature_ptr != NULL);
-      
-    lInventory.setAirlineFeature (lAirlineFeature_ptr);
       
     return lInventory;
   }

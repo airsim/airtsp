@@ -11,8 +11,12 @@
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
 #include <stdair/bom/BomRoot.hpp>
+#include <stdair/bom/BomList.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/bom/NetworkKey.hpp>
+#include <stdair/bom/OutboundPath.hpp>
+#include <stdair/bom/InventoryTypes.hpp>
+#include <stdair/bom/Inventory.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 // AirSched
@@ -63,6 +67,31 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
+                    const stdair::BasDBParams& iDBParams,
+                    const stdair::Date_T& iStartAnalysisDate,
+                    const stdair::Filename_T& iScheduleInputFilename) 
+    : _airschedServiceContext (NULL) {
+    
+    // Initialise the service context
+    initServiceContext ();
+    
+    // Initialise the STDAIR service handler
+    initStdAirService (iLogParams, iDBParams);
+    
+    // Initialise the (remaining of the) context
+    init (iStartAnalysisDate, iScheduleInputFilename);
+
+    // Initialiase the list of AirlineFeature objects
+    // Note: when the constructor is invoked with a STDAIR_Service handler,
+    // e.g., by the SIMCRS_Service, that list (of AirlineFeature objects)
+    // is assumed to have been already built (in our example, together with
+    // creation of the corresponding AIRINV::AIRINV_Service objects).
+    initAirlineFeatures();
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AIRSCHED_Service::
+  AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
                     const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename) 
     : _airschedServiceContext (NULL) {
@@ -75,6 +104,13 @@ namespace AIRSCHED {
     
     // Initialise the (remaining of the) context
     init (iStartAnalysisDate, iScheduleInputFilename);
+
+    // Initialiase the list of AirlineFeature objects
+    // Note: when the constructor is invoked with a STDAIR_Service handler,
+    // e.g., by the SIMCRS_Service, that list (of AirlineFeature objects)
+    // is assumed to have been already built (in our example, together with
+    // creation of the corresponding AIRINV::AIRINV_Service objects).
+    initAirlineFeatures();
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -89,6 +125,26 @@ namespace AIRSCHED {
     _airschedServiceContext = &lAIRSCHED_ServiceContext;
   }
 
+  // //////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::
+  initStdAirService (const stdair::BasLogParams& iLogParams,
+                     const stdair::BasDBParams& iDBParams) {
+
+    // Retrieve the AirSched service context
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+    
+    // Initialise the STDAIR service handler
+    // Note that the track on the object memory is kept thanks to the Boost
+    // Smart Pointers component.
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr = 
+      boost::make_shared<stdair::STDAIR_Service> (iLogParams, iDBParams);
+
+    // Store the STDAIR service object within the (AIRSCHED) service context
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (lSTDAIR_Service_ptr);
+  }
+  
   // //////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
   initStdAirService (const stdair::BasLogParams& iLogParams) {
@@ -151,6 +207,37 @@ namespace AIRSCHED {
     std::ostringstream oStream;
     stdair::BomManager::display (oStream, lBomRoot);
     STDAIR_LOG_DEBUG (oStream.str());
+  }
+  
+  // //////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::initAirlineFeatures () {
+
+    // Retrieve the AirSched service context
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+    
+    // Retrieve the StdAir service context
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    assert (lSTDAIR_Service_ptr != NULL);
+    
+    // Retrieve, from the StdAir service context, the root of the BOM tree
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
+    
+    // Retrieve the list of Inventory objects: one per airline
+    const stdair::InventoryList_T& lInventoryList = lBomRoot.getInventoryList();
+
+    // Browse the inventory list and initialise the corresponding
+    // AirInv services.
+    for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
+         itInv != lInventoryList.end(); ++itInv) {
+      stdair::Inventory& lCurrentInv = *itInv;
+      const stdair::AirlineCode_T& lAirlineCode = lCurrentInv.getAirlineCode();
+
+      // Create an AirlineFeature object corresponding to the current airline
+      lSTDAIR_Service_ptr->addAirlineFeature (lAirlineCode);
+    }
   }
   
   // ////////////////////////////////////////////////////////////////////

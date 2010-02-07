@@ -15,6 +15,7 @@
 namespace stdair {
   class STDAIR_Service;
   struct BasLogParams;
+  struct BasDBParams;
 }
 
 namespace AIRSCHED {
@@ -27,6 +28,21 @@ namespace AIRSCHED {
   class AIRSCHED_Service {
   public:
     // ////////////////// Constructors and Destructors //////////////////    
+    /** Constructor.
+        <br>The init() method is called; see the corresponding documentation
+        for more details.
+        <br>A reference on an output stream is given, so that log
+        outputs can be directed onto that stream.
+        <br>Moreover, database connection parameters are given, so that a
+        session can be created on the corresponding database.
+        @param const stdair::BasLogParams& Parameters for the output log stream.
+        @param const stdair::BasDBParams& Parameters for the database access.
+        @param const stdair::Date_T& Date for the beginning of analysis.
+        @param const stdair::Filename_T& Filename of the input schedule file. */
+    AIRSCHED_Service (const stdair::BasLogParams&, const stdair::BasDBParams&,
+                      const stdair::Date_T& iStartAnalysisDate,
+                      const stdair::Filename_T& iScheduleInputFilename);
+
     /** Constructor.
         <br>The init() method is called; see the corresponding documentation
         for more details.
@@ -98,6 +114,14 @@ namespace AIRSCHED {
     /** Initialise the STDAIR service (including the log service).
         <br>A reference on the root of the BOM tree, namely the BomRoot object,
         is stored within the service context for later use.
+        @param const stdair::BasLogParams& Parameters for the output log stream.
+        @param const stdair::BasDBParams& Parameters for the database access. */
+    void initStdAirService (const stdair::BasLogParams&,
+                            const stdair::BasDBParams&);
+    
+    /** Initialise the STDAIR service (including the log service).
+        <br>A reference on the root of the BOM tree, namely the BomRoot object,
+        is stored within the service context for later use.
         @param const stdair::BasLogParams& Parameters for the output log
                stream. */
     void initStdAirService (const stdair::BasLogParams&);
@@ -109,6 +133,12 @@ namespace AIRSCHED {
         @param const stdair::Filename_T& Filename of the input schedule file. */
     void init (const stdair::Date_T& iStartAnalysisDate,
                const stdair::Filename_T& iScheduleInputFilename);
+    
+    /** Initialise.
+        <br>An AirlineFeature object is created, and stored within the
+        STDAIR_Service instance, for each airline present in the schedule
+        file. */
+    void initAirlineFeatures();
     
     /** Finaliser. */
     void finalise ();

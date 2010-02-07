@@ -110,6 +110,33 @@ if test -z "${CXXFLAGS}"; then
 fi
 
 
+# -----------------------------------------------------------
+# Python: http://www.python.org
+# -----------------------------------------------------------
+PGAC_CHECK_PYTHON_EMBED_SETUP
+AC_SUBST(PYTHON_VERSION)
+AC_SUBST(PYTHON_LIBS)
+AC_SUBST(PYTHON_CFLAGS)
+AC_SUBST(PYTHON_ADD_LIBS)
+
+# -----------------------------------------------------------
+# OpenMPI: http://www.open-mpi.org
+# -----------------------------------------------------------
+AX_OPENMPI
+AC_SUBST(MPIGEN_VERSION)
+AC_SUBST(MPIGEN_CFLAGS)
+AC_SUBST(MPIGEN_LIBS)
+
+# -----------------------------------------------------------
+# MPICH2: http://www.mcs.anl.gov/research/projects/mpich2
+# Note: Boost.MPI depends on MPICH2 by default, rather than 
+#       on OpenMPI
+# -----------------------------------------------------------
+#AX_MPICH2
+#AC_SUBST(MPIGEN_VERSION)
+#AC_SUBST(MPIGEN_CFLAGS)
+#AC_SUBST(MPIGEN_LIBS)
+
 # --------------------------------------------------------
 # Boost (STL Extensions: http://www.boost.org)
 # --------------------------------------------------------
@@ -120,6 +147,12 @@ AC_SUBST(BOOST_LIBS)
 AC_SUBST(BOOST_DATE_TIME_LIB)
 AC_SUBST(BOOST_PROGRAM_OPTIONS_LIB)
 AC_SUBST(BOOST_FILESYSTEM_LIB)
+AC_SUBST(BOOST_THREAD_LIB)
+AC_SUBST(BOOST_PYTHON_LIB)
+AC_SUBST(BOOST_SIGNALS_LIB)
+AC_SUBST(BOOST_ASIO_LIB)
+AC_SUBST(BOOST_MPI_LIB)
+AC_SUBST(BOOST_MPI_PYTHON_LIB)
 
 # --------------------------------------------------------------------
 # Support for MySQL (C client API): http://www.mysql.org
@@ -370,6 +403,16 @@ Compiler/linker flags/libs/defs:
   - LIBS .............. : ${LIBS}
 
 External libraries:
+${OPENMPI_OUTPUT}
+
+${MPICH2_OUTPUT}
+
+  - Python ............ :
+    o PYTHON_VERSION .. : ${PYTHON_VERSION}
+    o PYTHON_CFLAGS ... : ${PYTHON_CFLAGS}
+    o PYTHON_LIBS ..... : ${PYTHON_LIBS}
+    o PYTHON_ADD_LIBS . : ${PYTHON_ADD_LIBS}
+
   - Boost ............. :
     o BOOST_VERSION ... : ${BOOST_VERSION}
     o BOOST_CFLAGS .... : ${BOOST_CFLAGS}

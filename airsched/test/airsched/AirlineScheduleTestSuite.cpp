@@ -24,8 +24,6 @@
 #include <stdair/bom/Network.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/bom/BomMap.hpp>
-#include <stdair/bom/AirlineFeatureSet.hpp>
-#include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/factory/FacSupervisor.hpp>
 #include <stdair/service/Logger.hpp>
@@ -63,26 +61,11 @@ void externalMemoryManagementHelper() {
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
 
-    // Initialise the set of required airline features
-    stdair::AirlineFeatureSet& lAirlineFeatureSet =
-      stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
-
-    // Initialise an AirlineFeature object
-    const stdair::AirlineCode_T lAirlineCode ("BA");
-    stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
-    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::
-      instance().create<stdair::AirlineFeature> (lAirlineFeatureKey);
-    stdair::FacBomContent::
-      linkWithParent<stdair::AirlineFeature> (lAirlineFeature,
-                                              lAirlineFeatureSet);
-
     // The analysis starts at January 1, 2000
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
-                                                lAirlineFeatureSet,
-                                                lStartAnalysisDate,
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
                                                 lInputFilename);
 
     // DEBUG
@@ -96,6 +79,7 @@ void externalMemoryManagementHelper() {
     
     // Step 0.1: Inventory level
     // Create an Inventory (BA)
+    const stdair::AirlineCode_T lAirlineCode ("BA");
     stdair::InventoryKey_T lInventoryKey (lAirlineCode);
 
     stdair::Inventory& lInventory =
@@ -290,6 +274,7 @@ void AirlineScheduleTestSuite::externalMemoryManagement() {
 
 // //////////////////////////////////////////////////////////////////////
 void scheduleParsingHelper() {
+
   try {
     
     // DEBUG
@@ -307,31 +292,17 @@ void scheduleParsingHelper() {
     // Input file name
     std::string lInputFilename ("../samples/schedule02.csv");
 
-    // Create a dummy AirlineFeature object for the test.
-    stdair::AirlineFeatureSet& lAirlineFeatureSet =
-      stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
-    const stdair::AirlineCode_T lAirlineCode ("BA");
-    stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
-
-    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::
-      instance().create<stdair::AirlineFeature> (lAirlineFeatureKey);
-    stdair::FacBomContent::
-      linkWithParent<stdair::AirlineFeature> (lAirlineFeature,
-                                              lAirlineFeatureSet);
-
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
-                                                lAirlineFeatureSet,
-                                                lStartAnalysisDate,
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
                                                 lInputFilename);
 
     // Start a mini-simulation
     airschedService.simulate();
 
   } catch (const std::exception& stde) {
-    std::cerr << "Standard exception: " << stde.what() << std::endl;
+    std::cerr << "Standard exception: " << stde.what()  << std::endl;
     
   } catch (...) {
     std::cerr << "Unknown exception" << std::endl;

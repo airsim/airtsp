@@ -1,8 +1,8 @@
 # Process this file with autoconf to produce a configure script
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
-AC_COPYRIGHT([Copyright (C) 2007-2009  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([AIRSCHED],[0.1.0],[denis_arnaud@users.sourceforge.net],[airsched])
+AC_COPYRIGHT([Copyright (C) 2007-2010  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
+AC_INIT([AIRSCHED],[99.99.99],[denis_arnaud@users.sourceforge.net],[airsched])
 AC_CONFIG_HEADER([airsched/config.h])
 AC_CONFIG_SRCDIR([airsched/basic/BasConst.cpp])
 AC_CONFIG_AUX_DIR([config])
@@ -15,7 +15,7 @@ RPM_RELEASE="1"
 AC_SUBST(RPM_RELEASE)
 
 # Shared library versioning
-GENERIC_LIBRARY_VERSION="0:1:0"
+GENERIC_LIBRARY_VERSION="99:99:99"
 #                        | | |
 #                 +------+ | +---+
 #                 |        |     |
@@ -331,6 +331,7 @@ AC_CONFIG_FILES(
 	stdair/bom/Makefile
 	stdair/dbadaptor/Makefile
 	stdair/factory/Makefile
+	stdair/command/Makefile
 	stdair/service/Makefile
 	stdair/core/Makefile
 	stdair/config/Makefile

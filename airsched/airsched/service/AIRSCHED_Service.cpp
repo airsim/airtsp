@@ -135,17 +135,20 @@ namespace AIRSCHED {
 
     // Retrieve the AirSched service context
     assert (_airschedServiceContext != NULL);
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
 
     // Store the beginning date of analysis within the service context
     lAIRSCHED_ServiceContext.setStartAnalysisDate (iStartAnalysisDate);
 
     // Retrieve the StdAir service context
-    stdair::STDAIR_Service& lSTDAIR_Service= lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    assert (lSTDAIR_Service_ptr != NULL);
     
     // Get the root of the BOM tree, on which all of the other BOM objects
     // will be attached
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
 
     // Parse the schedule input file, and generate the Inventories
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot,
@@ -200,14 +203,17 @@ namespace AIRSCHED {
       throw NonInitialisedServiceException();
     }
     assert (_airschedServiceContext != NULL);
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
 
     // Retrieve the StdAir service context
-    stdair::STDAIR_Service& lSTDAIR_Service= lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    assert (lSTDAIR_Service_ptr != NULL);
     
     // Create the root of the BOM tree, on which all of the other BOM objects
     // will be attached
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
 
     // Call the underlying Use Case (command)
     stdair::BasChronometer lSimulateChronometer;
@@ -231,9 +237,11 @@ namespace AIRSCHED {
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
 
     // Retrieve the network.
-    const stdair::STDAIR_Service& lSTDAIR_Service =
+    const stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
       lAIRSCHED_ServiceContext.getSTDAIR_Service();
-    const stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    assert (lSTDAIR_Service_ptr != NULL);
+    
+    const stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
     const stdair::NetworkID_T lNetworkID ("Whole Network");
     const stdair::Network* lNetwork_ptr = lBomRoot.getNetwork (lNetworkID);
     assert (lNetwork_ptr != NULL);

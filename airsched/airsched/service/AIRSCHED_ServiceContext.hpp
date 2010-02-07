@@ -41,7 +41,9 @@ namespace AIRSCHED {
     
     // ///////////////// Getters ///////////////////
     /** Get the pointer on the STDAIR service handler. */
-    stdair::STDAIR_Service& getSTDAIR_Service () const;
+    stdair::STDAIR_ServicePtr_T getSTDAIR_Service () const {
+      return _stdairService;
+    }
     
     /** Get the requested date for the beginning of analysis. */
     const stdair::Date_T& getStartAnalysisDate() const {
@@ -51,7 +53,9 @@ namespace AIRSCHED {
     
     // ///////////////// Setters ///////////////////
     /** Set the pointer on the STDAIR service handler. */
-    void setSTDAIR_Service (stdair::STDAIR_ServicePtr_T);
+    void setSTDAIR_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr) {
+      _stdairService = ioSTDAIR_ServicePtr;
+    }      
     
     /** Set the requested date for the beginning of analysis. */
     void setStartAnalysisDate (const Date_T& iStartAnalysisDate) {

@@ -33,18 +33,6 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  stdair::STDAIR_Service& AIRSCHED_ServiceContext::getSTDAIR_Service() const {
-    assert (_stdairService != NULL);
-    return *_stdairService;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
-  void AIRSCHED_ServiceContext::
-  setSTDAIR_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr) {
-    _stdairService = ioSTDAIR_ServicePtr;
-  }
-  
-  // //////////////////////////////////////////////////////////////////////
   const std::string AIRSCHED_ServiceContext::shortDisplay() const {
     std::ostringstream oStr;
     oStr << "AIRSCHED_ServiceContext: " << std::endl

@@ -13,7 +13,6 @@
 
 // Forward declarations.
 namespace stdair {
-  class AirlineFeatureSet;
   class STDAIR_Service;
   struct BasLogParams;
 }
@@ -34,11 +33,9 @@ namespace AIRSCHED {
         <br>Moreover, a reference on an output stream is given, so
         that log outputs can be directed onto that stream.       
         @param const stdair::BasLogParams& Parameters for the output log stream.
-        @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (const stdair::BasLogParams&,
-                      const stdair::AirlineFeatureSet&,
                       const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
 
@@ -51,7 +48,6 @@ namespace AIRSCHED {
         methods in the calling chain (for instance, when the AIRSCHED_Service
         is itself being initialised by another library service such as
         SIMCRS_Service).
-        @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
@@ -102,15 +98,13 @@ namespace AIRSCHED {
     /** Initialise the STDAIR service (including the log service).
         <br>A reference on the root of the BOM tree, namely the BomRoot object,
         is stored within the service context for later use.
-        @param const stdair::BasLogParams& Parameters for the output log stream.
-        @param const stdair::AirlineFeatureSet& Set of airline features. */
-    void initStdAirService (const stdair::BasLogParams&,
-                            const stdair::AirlineFeatureSet&);
+        @param const stdair::BasLogParams& Parameters for the output log
+               stream. */
+    void initStdAirService (const stdair::BasLogParams&);
     
     /** Initialise.
         <br>The CSV file, describing the airline schedules for the
         simulator, is parsed and the inventories are generated accordingly.
-        @param const stdair::AirlineFeatureSet& Set of airline features.
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     void init (const stdair::Date_T& iStartAnalysisDate,

@@ -11,8 +11,6 @@
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
 #include <stdair/bom/BomRoot.hpp>
-#include <stdair/bom/AirlineFeature.hpp>
-#include <stdair/bom/AirlineFeatureSet.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/bom/NetworkKey.hpp>
 #include <stdair/service/Logger.hpp>
@@ -65,7 +63,6 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
-                    const stdair::AirlineFeatureSet& iAirlineFeatureSet,
                     const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename) 
     : _airschedServiceContext (NULL) {
@@ -74,7 +71,7 @@ namespace AIRSCHED {
     initServiceContext ();
     
     // Initialise the STDAIR service handler
-    initStdAirService (iLogParams, iAirlineFeatureSet);
+    initStdAirService (iLogParams);
     
     // Initialise the (remaining of the) context
     init (iStartAnalysisDate, iScheduleInputFilename);
@@ -94,12 +91,12 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  initStdAirService (const stdair::BasLogParams& iLogParams,
-                     const stdair::AirlineFeatureSet& iAirlineFeatureSet) {
+  initStdAirService (const stdair::BasLogParams& iLogParams) {
 
     // Retrieve the AirSched service context
     assert (_airschedServiceContext != NULL);
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
     
     // Initialise the STDAIR service handler
     // Note that the track on the object memory is kept thanks to the Boost
@@ -107,14 +104,6 @@ namespace AIRSCHED {
     stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr = 
       boost::make_shared<stdair::STDAIR_Service> (iLogParams);
 
-    // Retrieve the root of the BOM tree, on which all of the other BOM objects
-    // will be attached
-    assert (lSTDAIR_Service_ptr != NULL);
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
-
-    // Set the AirlineFeatureSet for the BomRoot.
-    lBomRoot.setAirlineFeatureSet (&iAirlineFeatureSet);
-    
     // Store the STDAIR service object within the (AIRSCHED) service context
     lAIRSCHED_ServiceContext.setSTDAIR_Service (lSTDAIR_Service_ptr);
   }

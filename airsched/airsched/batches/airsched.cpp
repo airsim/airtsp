@@ -12,8 +12,6 @@
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/factory/FacBomContent.hpp>
-#include <stdair/bom/AirlineFeatureSet.hpp>
-#include <stdair/bom/AirlineFeature.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Service.hpp>
 #include <airsched/config/airsched-paths.hpp>
@@ -174,26 +172,12 @@ int main (int argc, char* argv[]) {
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
     
-    // Initialise the set of required airline features
-    stdair::AirlineFeatureSet& lAirlineFeatureSet =
-      stdair::FacBomContent::instance().create<stdair::AirlineFeatureSet>();
-
-    // Initialise an AirlineFeature object
-    stdair::AirlineFeatureKey_T lAirlineFeatureKey (lAirlineCode);
-    stdair::AirlineFeature& lAirlineFeature = stdair::FacBomContent::
-      instance().create<stdair::AirlineFeature> (lAirlineFeatureKey);
-    stdair::FacBomContent::
-      linkWithParent<stdair::AirlineFeature> (lAirlineFeature,
-                                              lAirlineFeatureSet);
-    
     // The analysis starts at January 1, 2000
     const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
     // Initialise the AirSched service object
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
-                                                lAirlineFeatureSet,
-                                                lStartAnalysisDate,
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
                                                 lInputFilename);
 
     // Start a mini-simulation

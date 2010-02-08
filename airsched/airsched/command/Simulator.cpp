@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 // StdAir
+#include <stdair/basic/BasConst_General.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/service/Logger.hpp>
@@ -36,7 +37,7 @@ namespace AIRSCHED {
     // TODO: do not hardcode the booking request (get it from the
     // demand generation module instead).
     stdair::BookingRequestStruct ("LHR", "JFK", stdair::Date_T (2009, 01, 16),
-                                  "L", 1);
+                                  stdair::DEFAULT_DATETIME, "L", 1);
   }
 
 }

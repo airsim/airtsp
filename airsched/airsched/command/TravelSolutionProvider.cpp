@@ -33,7 +33,8 @@ namespace AIRSCHED {
                       const stdair::BookingRequestStruct& iBookingRequest) {
     
     // Get the requested departure date.
-    const stdair::Date_T lDepartureDate = iBookingRequest.getDepartureDate ();
+    const stdair::Date_T lDepartureDate =
+      iBookingRequest.getPreferedDepartureDate ();
     // Retrieve the NetworkDate for that departure date.
     const stdair::NetworkDate* lNetworkDate_ptr =
       iNetwork.getNetworkDate (lDepartureDate);

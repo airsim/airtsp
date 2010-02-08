@@ -42,10 +42,6 @@ namespace AIRSCHED {
                                    const Date_T& iStartAnalysisDate,
                                    const FlightPeriodStruct_T&);
 
-    /** Generate an Inventory. */
-    static stdair::Inventory& createInventory (stdair::BomRoot&,
-                                               const stdair::AirlineCode_T&);
-      
     /** Generate a FlightDate. */
     static stdair::FlightDate& createFlightDate (stdair::Inventory&,
                                                  const Date_T&, const Date_T&,

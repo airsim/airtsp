@@ -26,6 +26,7 @@
 #include <stdair/bom/AirlineFeature.hpp>
 #include <stdair/bom/BomList.hpp>
 #include <stdair/factory/FacBomContent.hpp>
+#include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
@@ -41,13 +42,10 @@ namespace AIRSCHED {
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
      //STDAIR_LOG_DEBUG ("Airline Code: " << lAirlineCode);
-    stdair::Inventory* lInventory_ptr = ioBomRoot.getInventory (lAirlineCode);
-      
-    if (lInventory_ptr == NULL) {
-      // Instantiate an Inventory object for the given key (airline code)
-      lInventory_ptr = &createInventory (ioBomRoot, lAirlineCode);
-      assert (lInventory_ptr != NULL);
-    }
+
+    // Instantiate an Inventory object for the given key (airline code)
+    stdair::Inventory& lInventory =
+      stdair::CmdBomManager::getOrCreateInventory (ioBomRoot, lAirlineCode);
 
     // Generate all the dates corresponding to the period
     // and create the corresponding flight-dates.
@@ -67,7 +65,7 @@ namespace AIRSCHED {
       const bool isDoWActive = lDoWList.getStandardDayOfWeek (currentDoW);
 
       if (isDoWActive == true) {
-        stdair::FlightDate& lFlightDate = createFlightDate (*lInventory_ptr,
+        stdair::FlightDate& lFlightDate = createFlightDate (lInventory,
                                                             currentDate,
                                                             iStartAnalysisDate,
                                                             iFlightPeriod);
@@ -77,8 +75,8 @@ namespace AIRSCHED {
 
         // Create the list of references on previous built similar flight dates
         const stdair::Date_T& lStartDateRange = lDateRange.begin();
-        createSimilarFlightDateList (lFlightDate, *lInventory_ptr,
-                                     currentDate, lStartDateRange);
+        createSimilarFlightDateList (lFlightDate, lInventory, currentDate,
+                                     lStartDateRange);
       }
     }
   }
@@ -90,23 +88,6 @@ namespace AIRSCHED {
     BomRoot::fillFromRouting (ioBomRoot);
   }
 
-  // //////////////////////////////////////////////////////////////////////
-  stdair::Inventory& InventoryGenerator::
-  createInventory (stdair::BomRoot& ioBomRoot,
-                   const stdair::AirlineCode_T& iAirlineCode) {
-    stdair::InventoryKey_T lInventoryKey (iAirlineCode);
-
-    // Instantiate an Inventory object with the given airline code
-    stdair::Inventory& lInventory =
-      stdair::FacBomContent::instance().create<stdair::Inventory>(lInventoryKey);
-
-    // Link the created inventory with the bom root.
-    stdair::FacBomContent::linkWithParent<stdair::Inventory> (lInventory,
-                                                              ioBomRoot);
-      
-    return lInventory;
-  }
-      
    // //////////////////////////////////////////////////////////////////////
    stdair::FlightDate& InventoryGenerator::
    createFlightDate (stdair::Inventory& ioInventory,

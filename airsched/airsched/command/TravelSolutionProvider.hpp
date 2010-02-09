@@ -6,8 +6,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STDAIR
 #include <stdair/bom/TravelSolutionTypes.hpp>
-// AIRSCHED
-#include <airsched/command/CmdAbstract.hpp>
+#include <stdair/command/CmdAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -19,7 +18,7 @@ namespace AIRSCHED {
   
   /** Class handling the generation / instantiation of the travel
       solution block and travel solutions. */
-  class TravelSolutionProvider : public CmdAbstract {
+  class TravelSolutionProvider : public stdair::CmdAbstract {
     friend class AIRSCHED_Service;
     
   private:

@@ -38,7 +38,7 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createFlightDates (stdair::BomRoot& ioBomRoot,
-                     const Date_T& iStartAnalysisDate,
+                     const stdair::Date_T& iStartAnalysisDate,
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
      //STDAIR_LOG_DEBUG ("Airline Code: " << lAirlineCode);
@@ -53,7 +53,7 @@ namespace AIRSCHED {
 
     for (boost::gregorian::day_iterator itDate = lDateRange.begin();
          itDate != lDateRange.end(); ++itDate) {
-      const Date_T currentDate = *itDate;
+      const stdair::Date_T& currentDate = *itDate;
 
       // Retrieve, for the current day, the Day-Of-the-Week (thanks to Boost)
       const unsigned short currentDoW = currentDate.day_of_week().as_number();
@@ -91,9 +91,9 @@ namespace AIRSCHED {
    // //////////////////////////////////////////////////////////////////////
    stdair::FlightDate& InventoryGenerator::
    createFlightDate (stdair::Inventory& ioInventory,
-                    const Date_T& iFlightDate,
-                    const Date_T& iStartAnalysisDate,
-                    const FlightPeriodStruct_T& iFlightPeriod) {
+                     const stdair::Date_T& iFlightDate,
+                     const stdair::Date_T& iStartAnalysisDate,
+                     const FlightPeriodStruct_T& iFlightPeriod) {
     // Create the FlightDateKey
     const stdair::FlightNumber_T& lFlightNumber = iFlightPeriod._flightNumber;
     stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, iFlightDate);
@@ -117,8 +117,8 @@ namespace AIRSCHED {
       
     // Instantiate a FlightDate object for the given key (flight number and
     // flight date)
-    lFlightDate_ptr = &stdair::FacBomContent::
-      instance().create<stdair::FlightDate> (lFlightDateKey);
+    lFlightDate_ptr = &stdair::FacBomContent::instance().
+      create<stdair::FlightDate> (lFlightDateKey);
     assert (lFlightDate_ptr != NULL);
 
     // Link the created flight-date with its parent inventory.
@@ -379,8 +379,7 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<stdair::BookingClass> (lClassKey);
 
     // Link the created booking-class with its parent segment-cabin.
-    stdair::FacBomContent::linkWithParent<stdair::BookingClass> (lClass,
-                                                                 ioSegmentCabin);
+    stdair::FacBomContent::linkWithParent<stdair::BookingClass> (lClass, ioSegmentCabin);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -389,18 +388,19 @@ namespace AIRSCHED {
                                stdair::Inventory& iInventory,
                                const stdair::Date_T& iCurrentDate,
                                const stdair::Date_T& iStartDateRange) {
-    const stdair::FlightNumber_T& lFlightNumber =
-      ioFlightDate.getFlightNumber();
+
+    const stdair::FlightNumber_T& lFlightNumber = ioFlightDate.getFlightNumber();
     const stdair::DateOffSet_T lSemaine(7);
     stdair::Date_T lSimilarDate = iCurrentDate - lSemaine;
+    
     while (!(iStartDateRange > lSimilarDate)) {
+
       const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lSimilarDate);
-      stdair::FlightDate* lFlightDate_ptr =
-        iInventory.getFlightDate (lFlightDateKey);
+      stdair::FlightDate* lFlightDate_ptr = iInventory.getFlightDate (lFlightDateKey);
+      
       if (lFlightDate_ptr != NULL) {
         // Link the Flight-Date and the similar flight date
-        // stdair::FacBomContent::
-//           linkSimilarFlightDates (ioFlightDate, *lFlightDate_ptr);
+        // stdair::FacBomContent::linkSimilarFlightDates (ioFlightDate, *lFlightDate_ptr);
       }
       lSimilarDate = lSimilarDate - lSemaine;
     }

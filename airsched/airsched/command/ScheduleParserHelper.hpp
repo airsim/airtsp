@@ -6,12 +6,12 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// AIRSCHED
+// StdAir
+#include <stdair/command/CmdAbstract.hpp>
+// AirSched
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/basic/BasParserTypes.hpp>
 #include <airsched/bom/FlightPeriodStruct.hpp>
-#include <airsched/command/CmdAbstract.hpp>
-
 
 // Forward declarations
 namespace stdair {
@@ -197,7 +197,7 @@ namespace AIRSCHED {
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
       /** Actor Specific Context. */
       stdair::BomRoot& _bomRoot;
-      const Date_T _startAnalysisDate;
+      const stdair::Date_T _startAnalysisDate;
     };
   
 
@@ -290,12 +290,12 @@ namespace AIRSCHED {
       the actual parser, which is a templatised Boost Spirit grammar.
       Hence, the actual parser is instantiated within that class object
       code. */
-  class FlightPeriodFileParser : public CmdAbstract {
+  class FlightPeriodFileParser : public stdair::CmdAbstract {
   public:
     /** Constructor. */
     FlightPeriodFileParser (stdair::BomRoot& ioBomRoot,
-                            const Date_T& iStartAnalysisDate,
-                            const std::string& iFilename);
+                            const stdair::Date_T& iStartAnalysisDate,
+                            const stdair::Filename_T& iFilename);
 
     /** Parse the input file and generate the Inventories. */
     bool generateInventories ();
@@ -307,7 +307,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** File-name of the CSV-formatted schedule input file. */
-    std::string _filename;
+    stdair::Filename_T _filename;
 
     /** Start iterator for the parser. */
     iterator_t _startIterator;
@@ -319,7 +319,7 @@ namespace AIRSCHED {
     stdair::BomRoot& _bomRoot;
 
     /** Start date for the simulation analysis. */
-    const Date_T _startAnalysisDate;
+    const stdair::Date_T _startAnalysisDate;
 
     /** Flight-Period Structure. */
     FlightPeriodStruct_T _flightPeriod;

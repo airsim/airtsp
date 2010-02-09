@@ -32,7 +32,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeAirlineCode::operator() (iterator_t iStr,
                                        iterator_t iStrEnd) const { 
-      const std::string lAirlineCode (iStr, iStrEnd);
+      const stdair::AirlineCode_T lAirlineCode (iStr, iStrEnd);
       _flightPeriod._airlineCode = lAirlineCode;
                 
       // As that's the beginning of a new flight, the list of legs
@@ -96,7 +96,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     void storeDow::operator() (iterator_t iStr, iterator_t iStrEnd) const {
-      std::string lDow (iStr, iStrEnd);
+      stdair::DOW_String_T lDow (iStr, iStrEnd);
       _flightPeriod._dow = lDow;
     }
       
@@ -108,8 +108,8 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     void storeLegBoardingPoint::operator() (iterator_t iStr,
-                                         iterator_t iStrEnd) const {
-      std::string lBoardingPoint (iStr, iStrEnd);
+                                            iterator_t iStrEnd) const {
+      stdair::AirportCode_T lBoardingPoint (iStr, iStrEnd);
 
       // If a leg has already been parsed, add it to the FlightPeriod
       if (_flightPeriod._legAlreadyDefined == true) {
@@ -138,7 +138,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeLegOffPoint::operator() (iterator_t iStr,
                                        iterator_t iStrEnd) const {
-      std::string lOffPoint (iStr, iStrEnd);
+      stdair::AirportCode_T lOffPoint (iStr, iStrEnd);
       _flightPeriod._itLeg._offPoint = lOffPoint;
 
       // Add the airport code if it is not already stored in the airport lists
@@ -153,7 +153,7 @@ namespace AIRSCHED {
     
     // //////////////////////////////////////////////////////////////////
     void storeBoardingTime::operator() (iterator_t iStr,
-                                     iterator_t iStrEnd) const {
+                                        iterator_t iStrEnd) const {
       _flightPeriod._itLeg._boardingTime = _flightPeriod.getTime();
         
       // Reset the number of seconds
@@ -269,7 +269,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeSegmentBoardingPoint::operator() (iterator_t iStr,
                                              iterator_t iStrEnd) const {
-      std::string lBoardingPoint (iStr, iStrEnd);
+      stdair::AirportCode_T lBoardingPoint (iStr, iStrEnd);
       _flightPeriod._itSegment._boardingPoint = lBoardingPoint;
     }
 
@@ -282,7 +282,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeSegmentOffPoint::operator() (iterator_t iStr,
                                            iterator_t iStrEnd) const {
-      std::string lOffPoint (iStr, iStrEnd);
+      stdair::AirportCode_T lOffPoint (iStr, iStrEnd);
       _flightPeriod._itSegment._offPoint = lOffPoint;
     }
 
@@ -637,8 +637,8 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   FlightPeriodFileParser::
   FlightPeriodFileParser (stdair::BomRoot& ioBomRoot,
-                          const Date_T& iStartAnalysisDate,
-                          const std::string& iFilename)
+                          const stdair::Date_T& iStartAnalysisDate,
+                          const stdair::Filename_T& iFilename)
     : _filename (iFilename), _bomRoot (ioBomRoot),
       _startAnalysisDate (iStartAnalysisDate) {
     init();

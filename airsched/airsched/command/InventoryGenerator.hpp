@@ -4,9 +4,10 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// AIRSCHED 
+// StdAir
+#include <stdair/command/CmdAbstract.hpp>
+// AirSched
 #include <airsched/AIRSCHED_Types.hpp>
-#include <airsched/command/CmdAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -20,6 +21,7 @@ namespace stdair {
 }
 
 namespace AIRSCHED {
+
   // Forward declarations
   struct FlightPeriodStruct_T;
   namespace ScheduleParserHelper {
@@ -27,7 +29,7 @@ namespace AIRSCHED {
   }
     
   /** Class handling the generation / instantiation of the Inventory BOM. */
-  class InventoryGenerator : public CmdAbstract {
+  class InventoryGenerator : public stdair::CmdAbstract {
     // Only the following class may use methods of InventoryGenerator.
     // Indeed, as those methods build the BOM, it is not good to expose
     // them publicly.
@@ -39,12 +41,13 @@ namespace AIRSCHED {
     /** Generate the Flight-Date objects corresponding to the given
         Flight-Period, and add them to the given BomRoot. */
     static void createFlightDates (stdair::BomRoot&,
-                                   const Date_T& iStartAnalysisDate,
+                                   const stdair::Date_T& iStartAnalysisDate,
                                    const FlightPeriodStruct_T&);
 
     /** Generate a FlightDate. */
     static stdair::FlightDate& createFlightDate (stdair::Inventory&,
-                                                 const Date_T&, const Date_T&,
+                                                 const stdair::Date_T&,
+                                                 const stdair::Date_T&,
                                                  const FlightPeriodStruct_T&);
       
     /** Generate a LegDate. */

@@ -4,8 +4,8 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// AIRSCHED
-#include <airsched/command/CmdAbstract.hpp>
+// StdAir
+#include <stdair/command/CmdAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -15,11 +15,12 @@ namespace stdair {
 namespace AIRSCHED {
   
   /** Class implementing a small simulation, which uses the Airline Schedule. */
-  class Simulator : public CmdAbstract {
+  class Simulator : public stdair::CmdAbstract {
   public:
 
     // ////////// Business Methods /////////
-    /** Perform a small simulation, which uses the Airline Schedule. */
+    /** Perform a small simulation, which uses the Airline Schedule.
+        @param stdair::BomRoot& Root of the BOM tree. */
     static void simulate (stdair::BomRoot&);
   };
 

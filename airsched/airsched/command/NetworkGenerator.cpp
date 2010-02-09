@@ -156,7 +156,7 @@ namespace AIRSCHED {
   createSinglePaths (stdair::AirportDate& ioAirportDate,
                      const stdair::SegmentDate& iSegmentDate) {
     // Build the OutboundPath key elements
-    const stdair::AirportDateKey_T& lAirportDateKey = ioAirportDate.getKey();
+    //const stdair::AirportDateKey_T& lAirportDateKey = ioAirportDate.getKey();
     const stdair::AirportCode_T& lDestination = iSegmentDate.getOffPoint();
     const stdair::Duration_T& lElapsedTime = iSegmentDate.getElapsedTime();
     // There is a single segment in the list
@@ -357,7 +357,7 @@ namespace AIRSCHED {
         }
 
         // Build the i-length OutboundPath
-        const stdair::AirportDateKey_T& lAirportDateKey = ioAirportDate.getKey();
+        //const stdair::AirportDateKey_T& lAirportDateKey = ioAirportDate.getKey();
 
         // Get the parameters of the last segment
         const stdair::SegmentDate* lSegmentDate_1_ptr =

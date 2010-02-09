@@ -6,12 +6,12 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <vector>
-// STDAIR
+// StdAir
 #include <stdair/STDAIR_Types.hpp>
+#include <stdair/command/CmdAbstract.hpp>
 #include <stdair/bom/OutboundPathTypes.hpp>
-// AIRSCHED 
+// AirSched
 #include <airsched/AIRSCHED_Types.hpp>
-#include <airsched/command/CmdAbstract.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -27,8 +27,7 @@ namespace stdair {
 
 namespace AIRSCHED {
   /** Class handling the generation / instantiation of the Network BOM. */
-  class NetworkGenerator : public CmdAbstract {
-
+  class NetworkGenerator : public stdair::CmdAbstract {
   public:
     /** Generate the networks.*/
     static void createNetworks (stdair::BomRoot&);

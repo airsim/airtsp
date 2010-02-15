@@ -83,8 +83,6 @@ namespace AIRSCHED {
                                              const stdair::Date_T&,
                                              const stdair::Date_T&);
 
-//     /** Create the list of policies and store them in the segment cabin.*/
-//     static void createPolicies (stdair::SegmentCabin&);
   };
 
 }

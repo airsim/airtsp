@@ -41,7 +41,8 @@ namespace AIRSCHED {
                      const stdair::Date_T& iStartAnalysisDate,
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
-     //STDAIR_LOG_DEBUG ("Airline Code: " << lAirlineCode);
+    // STDAIR_LOG_DEBUG ("Generate flight-dates for the airline: "
+    // << lAirlineCode);
 
     // Instantiate an Inventory object for the given key (airline code)
     stdair::Inventory& lInventory =
@@ -69,7 +70,7 @@ namespace AIRSCHED {
                                                             currentDate,
                                                             iStartAnalysisDate,
                                                             iFlightPeriod);
-
+        
         // Update the number of generated flight dates
         ioBomRoot.updateFlightDateCounter();
 
@@ -97,7 +98,6 @@ namespace AIRSCHED {
     // Create the FlightDateKey
     const stdair::FlightNumber_T& lFlightNumber = iFlightPeriod._flightNumber;
     stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, iFlightDate);
-
     // Check that the FlightDate object is not already existing. If a
     // FlightDate object with the same key has already been created,
     // it means that the schedule input file is invalid (two flight-periods
@@ -124,7 +124,7 @@ namespace AIRSCHED {
     // Link the created flight-date with its parent inventory.
     stdair::FacBomContent::linkWithParent<stdair::FlightDate> (*lFlightDate_ptr,
                                                                ioInventory);
-
+        
     // Define the boolean stating whether the flight date is in the
     // analysis window or not
     stdair::AnalysisStatus_T lAnalysisStatus = false;
@@ -144,6 +144,7 @@ namespace AIRSCHED {
       stdair::LegDate& lLegDate =
         createLegDate (*lFlightDate_ptr, iFlightDate, lLeg, lAnalysisStatus);
 
+      
       // TODO: Check that the boarding date/time of the next leg is greated
       // than the off date/time of the current leg. Throw an exception
       // otherwise.
@@ -297,75 +298,6 @@ namespace AIRSCHED {
       // Create the Segment-class-branch of the FlightDate BOM
       createClass (lSegmentCabin, lClassCode);
     }
-
-//     // Create the list of fare families if they exist
-//     if (iCabin._fareFamilies.size() > 0) {
-//       for (FareFamilyStructList_T::const_iterator itFareFamily =
-//              iCabin._fareFamilies.begin();
-//            itFareFamily != iCabin._fareFamilies.end(); itFareFamily++) {
-//         const FareFamilyStruct_T& lFareFamilyStruct = *itFareFamily;
-
-//         const SegmentCabinKey_T& lSegmentCabinKey =
-//           lSegmentCabin.getSegmentCabinKey();
-
-//         const FareFamilyKey_T lFareFamilyKey (lSegmentCabinKey,
-//                                               lFareFamilyStruct._familyCode);
-
-//         // Create the fare-family object
-//         FareFamily& lFareFamily =
-//           FacFareFamily::instance().create (lFareFamilyKey);
-
-//         // Iterate on the Classes
-//         const ClassList_String_T& lClassList = lFareFamilyStruct._classes;
-//         for (ClassList_String_T::const_iterator itClass =
-//                lClassList.begin(); itClass != lClassList.end(); ++itClass) {
-            
-//           // Transform the single-character class code into a STL string
-//           std::ostringstream ostr;
-//           ostr << *itClass;
-
-//           // Build the BookingClass key
-//           const ClassCode_T lClassCode (ostr.str());
-//           BookingClassKey_T lClassKey (lSegmentCabinKey, lClassCode);
-
-//           // Retrieve the BookingClass object
-//           BookingClass* lBookingClass_ptr =
-//             lSegmentCabin.getBookingClass (lClassKey);
-
-//           if (lBookingClass_ptr == NULL) {
-//             STDAIR_LOG_ERROR ("The class " << lClassKey
-//                                 << " can not be found in the following "
-//                                 << "SegmentCabin: "
-//                                 << lSegmentCabin.getPrimaryKey());
-//           }
-//           assert (lBookingClass_ptr != NULL);
-            
-//           // Create the map linking each class to each SegmentCabin
-//           FacFareFamily::initLinkWithClass (lFareFamily,
-//                                             *lBookingClass_ptr);
-//         }
-
-//         // Create the map linking each fare family to each SegmentCabin
-//         FacSegmentCabin::initLinkWithFareFamily (lSegmentCabin,
-//                                                  lFareFamily);
-//       }
-        
-//       //Output for debug
-//       /*STDAIR_LOG_DEBUG ("fare family description for "
-//         << lSegmentCabin.describeKey());
-//         for (lSegmentCabin.fareFamilyListBegin();
-//         lSegmentCabin.fareFamilyListHasNotReachedEnd();
-//         lSegmentCabin.fareFamilyListIterate()) {
-//         const FareFamily& lFareFamily =
-//         lSegmentCabin.getCurrentFareFamily();
-//         STDAIR_LOG_DEBUG("FF display : " << lFareFamily.display());
-          
-//         }*/
-//       // end output for debug
-
-//       // Create the set of policies and store them in the Segment Cabin
-//       createPolicies(lSegmentCabin); 
-//     }
   }
     
   // //////////////////////////////////////////////////////////////////////
@@ -380,6 +312,7 @@ namespace AIRSCHED {
 
     // Link the created booking-class with its parent segment-cabin.
     stdair::FacBomContent::linkWithParent<stdair::BookingClass> (lClass, ioSegmentCabin);
+
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -410,156 +343,5 @@ namespace AIRSCHED {
       << ", Similar flight date list size: "
       << ioFlightDate.getSimilarFlightDateListSize ());*/
   }
-
-//   // //////////////////////////////////////////////////////////////////////
-//   void InventoryGenerator::createPolicies(SegmentCabin& ioSegmentCabin) {
-
-//     // Create the Policy holder
-//     PolicyHolder& lPolicyHolder =
-//       FacPolicyHolder::instance().create ();
-
-//     // Link the PolicyHolder and the SegmentCabin
-//     ioSegmentCabin.setPolicyHolder(lPolicyHolder);
-
-//     // Create list of policies used in the algorithm of policy generation
-//     OrderedPolicyList_T lOldPolicyList;
-//     OrderedPolicyList_T lPolicyList;
-
-//     // Build an iterator on the list of FareFamily objects
-//     const FareFamilyList_T& lFareFamilyList =
-//       ioSegmentCabin.getFareFamilyList();
-
-//     BomMapIterator_T<FareFamily,
-//       FareFamilyList_T> lFareFamilyIterator (lFareFamilyList);
-
-//     // Initialisation of the list of policies with the first fare family
-//     lFareFamilyIterator.begin();
-//     FareFamily* lFareFamily_ptr = lFareFamilyIterator.getCurrent();
-//     assert (lFareFamily_ptr != NULL);
-
-//     // TODO: remove this "get"
-//     const BookingClassList_T& lBookingClassList =
-//       lFareFamily_ptr->getBookingClassList();
-
-//     /** Generation of a "closed virtual class" necessary to
-//         represent policies where a family would be closed. */
-
-//     Policy& lClosedClassPolicy =
-//       FacPolicy::instance().create ();
-
-//     /** The Key given to such a closed class is the key of a segment
-//         cabin+a two characters classCode "CC" (usual classCodes are
-//         only one letter long). */
-
-//     SegmentCabinKey_T lSegmentCabinKey = ioSegmentCabin.getPrimaryKey();
-//     BookingClassKey_T lClosedBookingClassKey =
-//       BookingClassKey_T(lSegmentCabinKey,
-//                         DEFAULT_CLOSED_CLASS_CODE);
-//     BookingClass& lVirtualClosedClass =
-//       FacBookingClass::instance().create (lClosedBookingClassKey);
-
-//     lVirtualClosedClass.setSegmentCabin (ioSegmentCabin);
-//     lVirtualClosedClass.setFareFamily (*lFareFamily_ptr);
-//     lVirtualClosedClass.setYield (DEFAULT_YIELD_MAX_VALUE);
-
-//     lClosedClassPolicy.addBookingClass(lVirtualClosedClass);
-//     lOldPolicyList.push_back(&lClosedClassPolicy);
-
-
-//     BomMapIterator_T<BookingClass, BookingClassList_T>
-//       lBookingClassIterator (lBookingClassList);
-
-//     for (lBookingClassIterator.begin();
-//          lBookingClassIterator.hasNotReachedEnd();
-//          lBookingClassIterator.iterate())  {
-
-//       BookingClass* lCurrentBookingClass_ptr =
-//         lBookingClassIterator.getCurrent();
-//       assert (lCurrentBookingClass_ptr != NULL);
-
-//       Policy& lTempPolicy =
-//         FacPolicy::instance().create ();
-
-//       lTempPolicy.addBookingClass(*lCurrentBookingClass_ptr);
-//       lOldPolicyList.push_back(&lTempPolicy);
-//     }
-
-//     if (lFareFamilyIterator.hasNotReachedEnd()) {
-       
-//       lFareFamilyIterator.iterate();
-       
-//       BomListIterator_T<Policy, OrderedPolicyList_T>
-//         lPolicyIterator (lOldPolicyList);
-       
-//       while (lFareFamilyIterator.hasNotReachedEnd()) {
-//         FareFamily* llFareFamily_ptr =
-//           lFareFamilyIterator.getCurrent();
-//         assert (llFareFamily_ptr != NULL);
-         
-//         const BookingClassList_T& lNewBookingClassList =
-//           llFareFamily_ptr->getBookingClassList();
-//         BomMapIterator_T<BookingClass, BookingClassList_T>
-//           lNewBookingClassIterator (lNewBookingClassList);
-         
-//         for (lPolicyIterator.begin();
-//              lPolicyIterator.hasNotReachedEnd();
-//              lPolicyIterator.iterate())  {
-//           Policy* lPolicy_ptr =
-//             lPolicyIterator.getCurrent();
-//           assert (lPolicy_ptr != NULL);
-           
-//           Policy& ldTempPolicy = FacPolicy::instance().create ();
-//           FacPolicy::copyClassList (*lPolicy_ptr, ldTempPolicy);
-           
-//           // TODO: create a method for that
-//           /**Generation of a "closed virtual class" necessary to
-//              represent policies where a family would be closed. */
-//           SegmentCabinKey_T lSegmentCabinKey = 
-//             ioSegmentCabin.getPrimaryKey();
-//           BookingClassKey_T lClosedBookingClassKey = 
-//             BookingClassKey_T(lSegmentCabinKey,
-//                               DEFAULT_CLOSED_CLASS_CODE);
-//           BookingClass& lVirtualClosedClass =
-//             FacBookingClass::instance().create (lClosedBookingClassKey);
-           
-//           lVirtualClosedClass.setSegmentCabin (ioSegmentCabin);
-//           lVirtualClosedClass.setFareFamily (*llFareFamily_ptr);
-//           lVirtualClosedClass.setYield (DEFAULT_YIELD_MAX_VALUE);
-           
-//           //add this "closed FF class" to the already existing policies.
-//           ldTempPolicy.addBookingClass(lVirtualClosedClass);
-//           lPolicyList.push_back(&ldTempPolicy);
-           
-//           //else create new policies by adding the classes of the
-//           //current family introduced.
-//           for (lNewBookingClassIterator.begin();
-//                lNewBookingClassIterator.hasNotReachedEnd();
-//                lNewBookingClassIterator.iterate()) {
-//             BookingClass* lBookingClass_ptr =
-//               lNewBookingClassIterator.getCurrent();
-//             assert (lBookingClass_ptr != NULL);
-             
-//             Policy& llTempPolicy = FacPolicy::instance().create ();
-//             FacPolicy::copyClassList (*lPolicy_ptr, llTempPolicy);
-//             llTempPolicy.addBookingClass(*lBookingClass_ptr);
-//             lPolicyList.push_back(&llTempPolicy);
-//           }
-//         }
-         
-//         lOldPolicyList.clear();
-//         lOldPolicyList = lPolicyList;
-//         lPolicyList.clear();
-//         lFareFamilyIterator.iterate() ;
-         
-//       }
-//     }
-//     if (lOldPolicyList.empty() == false) {
-//       lPolicyHolder.setList (lOldPolicyList);
-//     }
-     
-//     // DEBUG
-//     // STDAIR_LOG_DEBUG("Policies" << lPolicyHolder.describe());
-     
-//   }
 
 }

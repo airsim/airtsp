@@ -203,10 +203,10 @@ namespace AIRSCHED {
     NetworkGenerator::createNetworks (lBomRoot);
     
     // DEBUG
-    // STDAIR_LOG_DEBUG ("Generated BomRoot:");
-    // std::ostringstream oStream;
-    // stdair::BomManager::display (oStream, lBomRoot);
-    // STDAIR_LOG_DEBUG (oStream.str());
+    STDAIR_LOG_DEBUG ("Generated BomRoot:");
+    std::ostringstream oStream;
+    stdair::BomManager::display (oStream, lBomRoot);
+    STDAIR_LOG_DEBUG (oStream.str());
   }
   
   // //////////////////////////////////////////////////////////////////////

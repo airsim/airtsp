@@ -8,7 +8,7 @@
 #include <string>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/bom/StructAbstract.hpp>
+#include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/DoWStruct.hpp>
 // AIRSCHED
 #include <airsched/bom/LegCabinStruct.hpp>

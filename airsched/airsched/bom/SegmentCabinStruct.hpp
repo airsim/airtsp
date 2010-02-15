@@ -9,7 +9,7 @@
 #include <vector>
 // STDAIR
 #include <stdair/STDAIR_Types.hpp>
-#include <stdair/bom/StructAbstract.hpp>
+#include <stdair/basic/StructAbstract.hpp>
 // AIRSCHED
 #include <airsched/bom/FareFamilyStruct.hpp>
 

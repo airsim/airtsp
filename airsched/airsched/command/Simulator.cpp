@@ -37,7 +37,7 @@ namespace AIRSCHED {
     // TODO: do not hardcode the booking request (get it from the
     // demand generation module instead).
     stdair::BookingRequestStruct ("LHR", "JFK", stdair::Date_T (2009, 01, 16),
-                                  stdair::DEFAULT_DATETIME, "L", 1);
+                                  stdair::DEFAULT_DATETIME, 'L', 1);
   }
 
 }

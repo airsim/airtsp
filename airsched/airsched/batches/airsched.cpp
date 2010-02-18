@@ -191,6 +191,11 @@ int readConfiguration (int argc, char* argv[], int& ioRandomDraws,
 
   std::cout << "The number of random draws is: " << ioRandomDraws << std::endl;
 
+  // Rebuild the booking request query string
+  ioBookingRequestString = createStringFromWordList (lWordList);
+
+  // Suppress some potential separators (such as ':', '-' or '/')
+  tokeniseStringIntoWordList (ioBookingRequestString, lWordList);
   ioBookingRequestString = createStringFromWordList (lWordList);
   std::cout << "The booking request string is: " << ioBookingRequestString
             << std::endl;

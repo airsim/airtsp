@@ -19,7 +19,9 @@
 #include <stdair/bom/FlightDate.hpp>
 #include <stdair/bom/SegmentDate.hpp>
 #include <stdair/bom/BomList.hpp>
+#include <stdair/bom/BomManager.hpp>
 #include <stdair/factory/FacBomContent.hpp>
+#include <stdair/service/Logger.hpp>
 // AirSched
 #include <airsched/command/NetworkGenerator.hpp>
 
@@ -163,6 +165,7 @@ namespace AIRSCHED {
     const stdair::NbOfSegments_T lNbOfSegments = 1;
     // There is a single airline in the list (since there is a single segment)
     const stdair::NbOfAirlines_T lNbOfAirlines = 1;
+    const stdair::Duration_T& lBoardingTime = iSegmentDate.getBoardingTime();
 
     // Create an outbound-path object for that (single) segment-date.
     // By construction, no other identical outbound-path (i.e., segment-date
@@ -176,7 +179,8 @@ namespace AIRSCHED {
     const stdair::OutboundPathKey_T lOutboundPathKey (lDestination,
                                                       lElapsedTime,
                                                       lNbOfSegments,
-                                                      lNbOfAirlines);
+                                                      lNbOfAirlines,
+                                                      lBoardingTime);
     stdair::OutboundPath& lOutboundPath = stdair::FacBomContent::
       instance().create<stdair::OutboundPath> (lOutboundPathKey);
     stdair::FacBomContent::
@@ -201,7 +205,6 @@ namespace AIRSCHED {
   void NetworkGenerator::
   buildNetwork (stdair::Network& ioNetwork,
                 const stdair::NbOfSegments_T& iNbOfSegments) {
-
     assert (iNbOfSegments >= 2
             && iNbOfSegments <= stdair::MAXIMUM_NUMBER_OF_SEGMENTS_IN_OND);
 
@@ -404,18 +407,17 @@ namespace AIRSCHED {
         assert (lOutboundPathOffDate == lSegmentDateBoardingDate
                 && lOutboundPathOffPoint == lSegmentDateBoardingPoint);
 
-        // Add the given segment to the end of the outbound path
-        stdair::FacBomContent::
-          addSegmentDateIntoOutboundPath<stdair::OutboundPath> (*lOutboundPath_im1_ptr, *lSegmentDate_1_ptr);
-
-
         const stdair::Duration_T lElapsedTime_i =
           lOutboundPath_im1_ptr->calculateElapsedTimeFromRouting ();
+
+        const stdair::Duration_T& lBoardingTime_i =
+          lOutboundPath_im1_ptr->getBoardingTime();
           
         const stdair::OutboundPathKey_T lOutboundPathKey_i (lDestination_i,
                                                             lElapsedTime_i,
                                                             iNbOfSegments,
-                                                            lNbOfAirlines_i);
+                                                            lNbOfAirlines_i,
+                                                            lBoardingTime_i);
         stdair::OutboundPath& lOutboundPath_i = stdair::FacBomContent::
           instance().create<stdair::OutboundPath> (lOutboundPathKey_i);
 

@@ -86,7 +86,7 @@ namespace AIRSCHED {
     // e.g., by the SIMCRS_Service, that list (of AirlineFeature objects)
     // is assumed to have been already built (in our example, together with
     // creation of the corresponding AIRINV::AIRINV_Service objects).
-    initAirlineFeatures();
+    // initAirlineFeatures();
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -110,7 +110,7 @@ namespace AIRSCHED {
     // e.g., by the SIMCRS_Service, that list (of AirlineFeature objects)
     // is assumed to have been already built (in our example, together with
     // creation of the corresponding AIRINV::AIRINV_Service objects).
-    initAirlineFeatures();
+    // initAirlineFeatures();
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -228,6 +228,8 @@ namespace AIRSCHED {
     // Retrieve the list of Inventory objects: one per airline
     const stdair::InventoryList_T& lInventoryList = lBomRoot.getInventoryList();
 
+    STDAIR_LOG_DEBUG ("Number of inventories: " << lInventoryList.size());
+    
     // Browse the inventory list and initialise the corresponding
     // AirInv services.
     for (stdair::InventoryList_T::iterator itInv = lInventoryList.begin();
@@ -235,6 +237,8 @@ namespace AIRSCHED {
       stdair::Inventory& lCurrentInv = *itInv;
       const stdair::AirlineCode_T& lAirlineCode = lCurrentInv.getAirlineCode();
 
+      STDAIR_LOG_DEBUG ("Inventory code: " << lAirlineCode);
+      
       // Create an AirlineFeature object corresponding to the current airline
       lSTDAIR_Service_ptr->addAirlineFeature (lAirlineCode);
     }

@@ -3,7 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-#include <iostream>
+#include <sstream>
 // STDAIR
 #include <stdair/basic/BasConst_Period_BOM.hpp>
 #include <stdair/bom/LegDate.hpp>

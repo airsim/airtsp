@@ -78,7 +78,7 @@ namespace AIRSCHED {
       // As a Boost date period (DatePeriod_T) defines the last day of
       // the period to be end-date - one day, we have to add one day to that
       // end date before.
-      const DateOffSet_T oneDay (1);
+      const stdair::DateOffSet_T oneDay (1);
       _flightPeriod._dateRangeEnd = _flightPeriod.getDate() + oneDay;
 
       // Transform the date pair (i.e., the date range) into a date period
@@ -164,6 +164,12 @@ namespace AIRSCHED {
     }
 
     // //////////////////////////////////////////////////////////////////
+    storeOffTime::
+    storeOffTime (FlightPeriodStruct_T& ioFlightPeriod)
+      : ParserSemanticAction (ioFlightPeriod) {
+    }
+    
+    // //////////////////////////////////////////////////////////////////
     void storeOffTime::operator() (iterator_t iStr,
                                    iterator_t iStrEnd) const {
       _flightPeriod._itLeg._offTime = _flightPeriod.getTime();
@@ -171,18 +177,13 @@ namespace AIRSCHED {
       // Reset the number of seconds
       _flightPeriod._itSeconds = 0;
 
-      // As the boarding date off set is optional, it can be set only afterwards,
-      // based on the staging date off-set value (_flightPeriod._dateOffSet).
+      // As the boarding date off set is optional, it can be set only
+      // afterwards, based on the staging date off-set value
+      // (_flightPeriod._dateOffSet).
       const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
       _flightPeriod._itLeg._boardingDateOffSet = lDateOffSet;
     }
 
-    // //////////////////////////////////////////////////////////////////
-    storeOffTime::
-    storeOffTime (FlightPeriodStruct_T& ioFlightPeriod)
-      : ParserSemanticAction (ioFlightPeriod) {
-    }
-    
     // //////////////////////////////////////////////////////////////////
     storeElapsedTime::
     storeElapsedTime (FlightPeriodStruct_T& ioFlightPeriod)
@@ -197,8 +198,9 @@ namespace AIRSCHED {
       // Reset the number of seconds
       _flightPeriod._itSeconds = 0;
 
-      // As the boarding date off set is optional, it can be set only afterwards,
-      // based on the staging date off-set value (_flightPeriod._dateOffSet).
+      // As the boarding date off set is optional, it can be set only
+      // afterwards, based on the staging date off-set value
+      // (_flightPeriod._dateOffSet).
       const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
       _flightPeriod._itLeg._offDateOffSet = lDateOffSet;
     }

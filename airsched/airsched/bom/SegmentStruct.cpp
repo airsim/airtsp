@@ -3,6 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <sstream>
 // STDAIR
 #include <stdair/bom/SegmentDate.hpp>
 // AIRSCHED

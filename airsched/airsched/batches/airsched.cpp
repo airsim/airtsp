@@ -301,7 +301,7 @@ parseBookingRequest (const std::string& iRequestOption) {
 
 // ///////// M A I N ////////////
 int main (int argc, char* argv[]) {
-   try {
+  // try {
     
     // Number of random draws to be generated (best if greater than 100)
     int lRandomDraws = 0;
@@ -387,13 +387,13 @@ int main (int argc, char* argv[]) {
     // Start a mini-simulation
     // airschedService.simulate();
     
-  } catch (const std::exception& stde) {
-    std::cerr << "Standard exception: " << stde.what() << std::endl;
-    return -1;
+  // } catch (const std::exception& stde) {
+  //   std::cerr << "Standard exception: " << stde.what() << std::endl;
+  //   return -1;
     
-  } catch (...) {
-    return -1;
-  }
+  // } catch (...) {
+  //   return -1;
+  // }
   
   return 0;	
 }

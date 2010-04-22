@@ -196,7 +196,7 @@ namespace AIRSCHED {
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot,
                                          iStartAnalysisDate);
 
-    // // Build the network from the schedule.
+    // Build the network from the schedule.
     NetworkGenerator::createNetworks (lBomRoot);
     
     // DEBUG

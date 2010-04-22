@@ -34,7 +34,7 @@ namespace AIRSCHED {
 
     /** Build the given network.
         <br> Create the OutboundPath objects. */
-    static void buildNetworK (stdair::Network&, const stdair::BomRoot&);
+    static void buildNetwork (stdair::Network&, const stdair::BomRoot&);
 
     /** Generate the AirportDate and OutboundPath objects corresponding to
         the given Inventory, and add them to the given Network. */

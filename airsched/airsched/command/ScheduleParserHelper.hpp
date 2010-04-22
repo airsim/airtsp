@@ -10,6 +10,7 @@
 #include <stdair/command/CmdAbstract.hpp>
 // AirSched
 #include <airsched/AIRSCHED_Types.hpp>
+// #define BOOST_SPIRIT_DEBUG
 #include <airsched/basic/BasParserTypes.hpp>
 #include <airsched/bom/FlightPeriodStruct.hpp>
 

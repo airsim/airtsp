@@ -28,9 +28,6 @@ namespace AIRSCHED {
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
 
-    // DEBUG
-    STDAIR_LOG_DEBUG ("Generate flight-dates for the airline: " << lAirlineCode);
-
     // Instantiate an Inventory object for the given key (airline code)
     stdair::Inventory& lInventory =
       stdair::CmdBomManager::getOrCreateInventory (ioBomRoot, lAirlineCode);
@@ -99,31 +96,11 @@ namespace AIRSCHED {
     // flight date)
     lFlightDate_ptr = &stdair::FacBomContent::instance().
       create<stdair::FlightDate> (lFlightDateKey);
-    // DEBUG
-    const stdair::FlightDateKey_T& lFDKey = lFlightDate_ptr->getKey();
-    STDAIR_LOG_DEBUG ("Generated key: " << lFDKey.toString());
     assert (lFlightDate_ptr != NULL);
 
-    // DEBUG
-    STDAIR_LOG_DEBUG ("Generated flight-date: "
-                      << lFlightDate_ptr->describeShortKey());
-
     // Link the created flight-date with its parent inventory.
-    stdair::FacBomContent::linkWithParent<stdair::FlightDate> (*lFlightDate_ptr,
-                                                               ioInventory);
-    // DEBUG
-    STDAIR_LOG_DEBUG ("Generated flight-date: "
-                      << lFlightDate_ptr->describeShortKey());
-    const stdair::FlightDateList_T lFlightDateList = 
-      ioInventory.getFlightDateList();
-    for (stdair::FlightDateList_T::iterator itFlightDate = 
-           lFlightDateList.begin();
-         itFlightDate != lFlightDateList.end(); ++itFlightDate) {
-      const stdair::FlightDate& lCurrentFlightDate = *itFlightDate;
-      STDAIR_LOG_DEBUG ("Current flight-date: "
-                        << lCurrentFlightDate.describeShortKey());
-    }
-    
+    stdair::FacBomContent::linkWithParent (*lFlightDate_ptr, ioInventory);
+       
     // Define the boolean stating whether the flight date is in the
     // analysis window or not
     stdair::AnalysisStatus_T lAnalysisStatus = false;
@@ -194,8 +171,7 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<stdair::LegDate> (lLegDateKey);
 
     // Link the created leg-date with its parent flight-date.
-    stdair::FacBomContent::linkWithParent<stdair::LegDate> (lLegDate,
-                                                            ioFlightDate);
+    stdair::FacBomContent::linkWithParent (lLegDate, ioFlightDate);
 
     // Set the Leg-Date attributes
     iLeg.fill (iReferenceDate, lLegDate);
@@ -227,8 +203,7 @@ namespace AIRSCHED {
       stdair::FacBomContent::instance().create<stdair::LegCabin> (lLegCabinKey);
 
     // Link the created leg-cabin with its parent leg-date.
-    stdair::FacBomContent::linkWithParent<stdair::LegCabin> (lLegCabin,
-                                                             ioLegDate);
+    stdair::FacBomContent::linkWithParent (lLegCabin, ioLegDate);
 
     // Set the Leg-Cabin attributes
     iCabin.fill (lLegCabin, iAnalysisStatus);
@@ -248,8 +223,7 @@ namespace AIRSCHED {
       instance().create<stdair::SegmentDate> (lSegmentDateKey);
     
     // Link the created segment-date with its parent flight-date.
-    stdair::FacBomContent::linkWithParent<stdair::SegmentDate> (lSegmentDate,
-                                                                ioFlightDate);
+    stdair::FacBomContent::linkWithParent (lSegmentDate, ioFlightDate);
 
     // Set the Segment-Date attributes
     iSegment.fill (lSegmentDate);
@@ -279,8 +253,7 @@ namespace AIRSCHED {
       instance().create<stdair::SegmentCabin> (lSegmentCabinKey);
 
     // Link the created segment-cabin with its parent segment-date.
-    stdair::FacBomContent::linkWithParent<stdair::SegmentCabin> (lSegmentCabin,
-                                                                 ioSegmentDate);
+    stdair::FacBomContent::linkWithParent (lSegmentCabin, ioSegmentDate);
 
     // Set the Segment-Cabin attributes
     iCabin.fill (lSegmentCabin);
@@ -304,14 +277,11 @@ namespace AIRSCHED {
                                         const stdair::ClassCode_T& iClassCode) {
     // Set the Class primary key
     stdair::BookingClassKey_T lClassKey (iClassCode);
-      
     // Create the booking-class 
     stdair::BookingClass& lClass = 
       stdair::FacBomContent::instance().create<stdair::BookingClass> (lClassKey);
-
     // Link the created booking-class with its parent segment-cabin.
-    stdair::FacBomContent::linkWithParent<stdair::BookingClass> (lClass, ioSegmentCabin);
-
+    stdair::FacBomContent::linkWithParent (lClass, ioSegmentCabin);
   }
 
   // //////////////////////////////////////////////////////////////////////
@@ -385,7 +355,6 @@ namespace AIRSCHED {
            lSegmentDateList.begin();
          itSegmentDate != lSegmentDateList.end(); ++itSegmentDate) {
       const stdair::SegmentDate& lCurrentSegmentDate = *itSegmentDate;
-
       const stdair::AirportCode_T& lBoardingPoint =
         lCurrentSegmentDate.getBoardingPoint();
       stdair::AirportCode_T currentBoardingPoint = lBoardingPoint;
@@ -403,7 +372,6 @@ namespace AIRSCHED {
         const stdair::LegDate* lLegDate_ptr =
           iFlightDate.getLegDate (currentBoardingPoint);
         assert (lLegDate_ptr != NULL);
-
         // Link the SegmentDate and LegDate together
         stdair::FacBomContent::linkTwoObjects(lCurrentSegmentDate,*lLegDate_ptr);
                

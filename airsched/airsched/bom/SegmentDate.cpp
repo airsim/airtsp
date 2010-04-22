@@ -36,19 +36,15 @@ namespace AIRSCHED {
     // Set the Boarding Date
     const stdair::Date_T& lBoardingDate = lFirstLeg.getBoardingDate();
     ioSegmentDate.setBoardingDate (lBoardingDate);
-
     // Set the Boarding Time
     const stdair::Duration_T& lBoardingTime = lFirstLeg.getBoardingTime();
     ioSegmentDate.setBoardingTime (lBoardingTime);
-      
     // Set the Off Date
     const stdair::Date_T& lOffDate = lLastLeg.getOffDate();
     ioSegmentDate.setOffDate (lOffDate);
-
     // Set the Off Time
     const stdair::Duration_T& lOffTime = lLastLeg.getOffTime();
     ioSegmentDate.setOffTime (lOffTime);
-
     // Set the Elapsed Time for the whole path
     updateElapsedTimeFromRouting (ioSegmentDate);
   }

@@ -30,7 +30,7 @@ namespace AIRSCHED {
       
     // Complete the BomRoot BOM building
     // Create the routings for all the inventories.
-    //InventoryGenerator::createDirectAccesses (ioBomRoot);
+    InventoryGenerator::createDirectAccesses (ioBomRoot);
   }
 
 }

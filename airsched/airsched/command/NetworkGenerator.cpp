@@ -26,15 +26,14 @@ namespace AIRSCHED {
     stdair::NetworkKey_T lNetworkKey ("Whole Network");
     stdair::Network& lNetwork = stdair::FacBomContent::
       instance().create<stdair::Network> (lNetworkKey);
-    stdair::FacBomContent::linkWithParent<stdair::Network> (lNetwork, ioBomRoot);
+    stdair::FacBomContent::linkWithParent (lNetwork, ioBomRoot);
 
     // Build the network by creating the list of OutboundPath objects.
-    buildNetworK (lNetwork, ioBomRoot);
-    
+    buildNetwork (lNetwork, ioBomRoot);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void NetworkGenerator::buildNetworK (stdair::Network& ioNetwork,
+  void NetworkGenerator::buildNetwork (stdair::Network& ioNetwork,
                                        const stdair::BomRoot& iBomRoot) {
     // Build the list of single-segment OutboundPath objects.
     const stdair::InventoryList_T& lInventoryList = iBomRoot.getInventoryList();
@@ -102,8 +101,7 @@ namespace AIRSCHED {
       assert (lNetworkDate_ptr != NULL);
       
       // Link the NetworkDate with the Network
-      stdair::FacBomContent::
-        linkWithParent<stdair::NetworkDate> (*lNetworkDate_ptr, ioNetwork);
+      stdair::FacBomContent::linkWithParent (*lNetworkDate_ptr, ioNetwork);
     }
     assert (lNetworkDate_ptr != NULL);
     
@@ -134,7 +132,7 @@ namespace AIRSCHED {
 
       // Link the AirportDate with the NetworkDate
       stdair::FacBomContent::
-        linkWithParent<stdair::AirportDate> (*lAirportDate_ptr, ioNetworkDate);
+        linkWithParent (*lAirportDate_ptr, ioNetworkDate);
     }
     assert (lAirportDate_ptr != NULL);
 
@@ -175,8 +173,7 @@ namespace AIRSCHED {
                                                       lBoardingTime);
     stdair::OutboundPath& lOutboundPath = stdair::FacBomContent::
       instance().create<stdair::OutboundPath> (lOutboundPathKey);
-    stdair::FacBomContent::
-      linkWithParent<stdair::OutboundPath> (lOutboundPath, ioAirportDate);
+    stdair::FacBomContent::linkWithParent (lOutboundPath, ioAirportDate);
 
     // Build the list of lists of outbound paths.
     ioAirportDate.buildOutboundPathListList (lOutboundPath);
@@ -186,7 +183,8 @@ namespace AIRSCHED {
     // link between the OutboundPath and AirportDate, as that latter
     // method uses the number of segments within the OutboundPath
     // object.
-    stdair::FacBomContent::addObjectToTheDedicatedList (lOutboundPath, iSegmentDate);
+    stdair::FacBomContent::addFullObjectToTheDedicatedList (lOutboundPath,
+                                                            iSegmentDate);
     lOutboundPath.updateAfterAddingSegmentDate (iSegmentDate);
     // Update the AirlineCode of the OutboundPath
     lOutboundPath.updateAirlineCode();
@@ -231,7 +229,6 @@ namespace AIRSCHED {
   void NetworkGenerator::
   buildNetwork (stdair::AirportDate& ioAirportDate,
                 const stdair::NbOfSegments_T& iNbOfSegments) {
-
     // The goal of that method is to build the i-fixed-length
     // Outbound-Path objects, knowing that all the
     // lower-fixed-length Outbound-Path objects have already been
@@ -428,14 +425,13 @@ namespace AIRSCHED {
         // method uses the number of segments within the OutboundPath
         // object.
         stdair::FacBomContent::
-          addObjectToTheDedicatedList (lOutboundPath_i, *lSegmentDate_1_ptr);
+          addFullObjectToTheDedicatedList (lOutboundPath_i, *lSegmentDate_1_ptr);
         lOutboundPath_i.updateAfterAddingSegmentDate (*lSegmentDate_1_ptr);
         // update the AirlineCode of the OutboundPath
         lOutboundPath_i.updateAirlineCode();
           
         // Link the OutboundPath to the AirportDate
-        stdair::FacBomContent::
-          linkWithParent<stdair::OutboundPath> (lOutboundPath_i, ioAirportDate);
+        stdair::FacBomContent::linkWithParent (lOutboundPath_i, ioAirportDate);
         ioAirportDate.buildOutboundPathListList (lOutboundPath_i);
       }
     }

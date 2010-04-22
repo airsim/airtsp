@@ -4,8 +4,7 @@
 // STL
 #include <cassert>
 // STDAIR
-#include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/BomList.hpp>
+#include <stdair/bom/BomSource.hpp>
 // AIRSCHED
 #include <airsched/bom/Inventory.hpp>
 #include <airsched/bom/FlightDate.hpp>
@@ -13,8 +12,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  Inventory::Inventory (const BomKey_T& iKey,
-                        BomStructure_T& ioInventoryStructure)
+  Inventory::Inventory (const Key_T& iKey,
+                        Structure_T& ioInventoryStructure)
     : stdair::Inventory (iKey, ioInventoryStructure) {
   }
   

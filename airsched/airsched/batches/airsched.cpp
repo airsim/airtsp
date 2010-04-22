@@ -15,9 +15,8 @@
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
-#include <stdair/bom/BomList.hpp>
-#include <stdair/bom/SegmentDate.hpp>
-#include <stdair/bom/OutboundPath.hpp>
+#include <stdair/bom/BomSource.hpp>
+#include <stdair/bom/BomTypes.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Service.hpp>
@@ -38,10 +37,6 @@ const std::string K_AIRSCHED_DEFAULT_INPUT_FILENAME ("../../test/samples/schedul
 /** Default booking request string, to be seached against the AirSched
     network. */
 const std::string K_AIRSCHED_DEFAULT_BOOKING_REQUEST ("NCE BKK NCE 2007-04-21 2007-03-21 08:32:00 C 1 DF RO 5 NONE 10:00:00 2000.0 20.0");
-
-/** Default number of random draws to be generated (best if over 100). */
-const int K_AIRSCHED_DEFAULT_RANDOM_DRAWS = 100000;
-
 
 // //////////////////////////////////////////////////////////////////////
 void tokeniseStringIntoWordList (const std::string& iPhrase,
@@ -120,9 +115,6 @@ int readConfiguration (int argc, char* argv[], int& ioRandomDraws,
   // line and in config file
   boost::program_options::options_description config ("Configuration");
   config.add_options()
-    ("draws,d",
-     boost::program_options::value<int>(&ioRandomDraws)->default_value(K_AIRSCHED_DEFAULT_RANDOM_DRAWS), 
-     "Number of to-be-generated random draws")
     ("input,i",
      boost::program_options::value< std::string >(&ioInputFilename)->default_value(K_AIRSCHED_DEFAULT_INPUT_FILENAME),
      "(CVS) input file for the demand distributions")
@@ -188,8 +180,6 @@ int readConfiguration (int argc, char* argv[], int& ioRandomDraws,
     ioLogFilename = vm["log"].as< std::string >();
     std::cout << "Log filename is: " << ioLogFilename << std::endl;
   }
-
-  std::cout << "The number of random draws is: " << ioRandomDraws << std::endl;
 
   // Rebuild the booking request query string
   ioBookingRequestString = createStringFromWordList (lWordList);
@@ -356,43 +346,43 @@ int main (int argc, char* argv[]) {
 
 
     // Create a booking request
-    const stdair::BookingRequestStruct& lBookingRequest =
-      parseBookingRequest (lBookingRequestString);
+    // const stdair::BookingRequestStruct& lBookingRequest =
+    //   parseBookingRequest (lBookingRequestString);
 
     // DEBUG
-    std::cout << "Booking request: " << lBookingRequest << std::endl;
+    // std::cout << "Booking request: " << lBookingRequest << std::endl;
 
     // Get the corresponding travel solutions
-    stdair::TravelSolutionList_T lTravelSolutionList;
-    airschedService.getTravelSolutions (lTravelSolutionList, lBookingRequest);
+    // stdair::TravelSolutionList_T lTravelSolutionList;
+   //  airschedService.getTravelSolutions (lTravelSolutionList, lBookingRequest);
 
-    unsigned short idx = 1;
-    for (stdair::TravelSolutionList_T::const_iterator itTS =
-           lTravelSolutionList.begin();
-         itTS != lTravelSolutionList.end(); ++itTS, ++idx) {
-      const stdair::TravelSolutionStruct& lTS = *itTS;
+   //  unsigned short idx = 1;
+   //  for (stdair::TravelSolutionList_T::const_iterator itTS =
+   //         lTravelSolutionList.begin();
+   //       itTS != lTravelSolutionList.end(); ++itTS, ++idx) {
+   //    const stdair::TravelSolutionStruct& lTS = *itTS;
 
-      const stdair::OutboundPath& lOutboundPath = lTS.getOutboundPath();
+   //    const stdair::OutboundPath& lOutboundPath = lTS.getOutboundPath();
 
-      std::ostringstream oStr;
-      const stdair::SegmentDateList_T& lSegmentDateList =
-        lOutboundPath.getSegmentDateList();
-      unsigned short idxSeg = 0;
-      for (stdair::SegmentDateList_T::iterator itSegment =
-             lSegmentDateList.begin();
-           itSegment != lSegmentDateList.end(); ++itSegment, ++idxSeg) {
-        if (idxSeg != 0) {
-          oStr << " -> ";
-        }
-        const stdair::SegmentDate& lSegmentDate = *itSegment;
-        oStr << "[" << idxSeg << "] " << lSegmentDate.describeKey();
-      }
+   //    std::ostringstream oStr;
+   //    const stdair::SegmentDateList_T& lSegmentDateList =
+   //      lOutboundPath.getSegmentDateList();
+   //    unsigned short idxSeg = 0;
+   //    for (stdair::SegmentDateList_T::iterator itSegment =
+   //           lSegmentDateList.begin();
+   //         itSegment != lSegmentDateList.end(); ++itSegment, ++idxSeg) {
+   //      if (idxSeg != 0) {
+   //        oStr << " -> ";
+   //      }
+   //      const stdair::SegmentDate& lSegmentDate = *itSegment;
+   //      oStr << "[" << idxSeg << "] " << lSegmentDate.describeKey();
+   //    }
 
-      // DEBUG
-      std::cout << "Travel solution #" << idx << ": "
-                << lTS.describeShortKey() << ", i.e.: " << oStr.str()
-                << std::endl;
-   }
+   //    // DEBUG
+   //    std::cout << "Travel solution #" << idx << ": "
+   //              << lTS.describeShortKey() << ", i.e.: " << oStr.str()
+   //              << std::endl;
+   // }
     
     // Start a mini-simulation
     // airschedService.simulate();

@@ -20,18 +20,18 @@ namespace AIRSCHED {
 
   public:
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::LegDateStructure_T BomStructure_T;
+    typedef stdair::LegDateStructure_T Structure_T;
 
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
+    /** Constructors. */
+    LegDate (const Key_T&, Structure_T&);
+    /** Destructor. */
+    ~LegDate();
     /** Default constructors. */
     LegDate ();
     LegDate (const LegDate&);
-    LegDate (const BomKey_T&, BomStructure_T&);
-
-    /** Destructor. */
-    virtual ~LegDate();
 
   };
 

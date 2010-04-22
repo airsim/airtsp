@@ -4,8 +4,7 @@
 // STL
 #include <cassert>
 // STDAIR
-#include <stdair/bom/SegmentDate.hpp>
-#include <stdair/bom/BomList.hpp>
+#include <stdair/bom/BomSource.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightDate.hpp>
 #include <airsched/bom/SegmentDate.hpp>
@@ -13,8 +12,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  FlightDate::FlightDate (const BomKey_T& iKey,
-                          BomStructure_T& ioFlightDateStructure)
+  FlightDate::FlightDate (const Key_T& iKey,
+                          Structure_T& ioFlightDateStructure)
     : stdair::FlightDate (iKey, ioFlightDateStructure) {
   }
   

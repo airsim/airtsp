@@ -10,15 +10,7 @@
 #include <stdair/bom/FlightDateTypes.hpp>
 #include <stdair/bom/SegmentDateTypes.hpp>
 #include <stdair/bom/NetworkKey.hpp>
-#include <stdair/bom/BomRoot.hpp>
-#include <stdair/bom/Network.hpp>
-#include <stdair/bom/NetworkDate.hpp>
-#include <stdair/bom/AirportDate.hpp>
-#include <stdair/bom/OutboundPath.hpp>
-#include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/FlightDate.hpp>
-#include <stdair/bom/SegmentDate.hpp>
-#include <stdair/bom/BomList.hpp>
+#include <stdair/bom/BomSource.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/factory/FacBomContent.hpp>
 #include <stdair/service/Logger.hpp>
@@ -100,11 +92,11 @@ namespace AIRSCHED {
     
     // If a NetworkDate with that reference date does not exist yet,
     // create one.
-    const stdair::NetworkDateKey_T lNetworkDateKey (lReferenceDate);
     stdair::NetworkDate* lNetworkDate_ptr =
-      ioNetwork.getNetworkDate (lNetworkDateKey);
+      ioNetwork.getNetworkDate (lReferenceDate);
     if (lNetworkDate_ptr == NULL) {
       // Create the NetworkDate with the primary key (reference date)
+      const stdair::NetworkDateKey_T lNetworkDateKey (lReferenceDate);
       lNetworkDate_ptr = &stdair::FacBomContent::
         instance().create<stdair::NetworkDate> (lNetworkDateKey);
       assert (lNetworkDate_ptr != NULL);
@@ -132,10 +124,10 @@ namespace AIRSCHED {
 
     // If an AirportDate with that reference date does not exist yet,
     // create one.
-    const stdair::AirportDateKey_T lAirportDateKey (lOrigin);
     stdair::AirportDate* lAirportDate_ptr =
-      ioNetworkDate.getAirportDate (lAirportDateKey);
+      ioNetworkDate.getAirportDate (lOrigin);
     if (lAirportDate_ptr == NULL) {
+      const stdair::AirportDateKey_T lAirportDateKey (lOrigin);
       lAirportDate_ptr = &stdair::FacBomContent::
         instance().create<stdair::AirportDate> (lAirportDateKey);
       assert (lAirportDate_ptr != NULL);
@@ -194,9 +186,8 @@ namespace AIRSCHED {
     // link between the OutboundPath and AirportDate, as that latter
     // method uses the number of segments within the OutboundPath
     // object.
-    stdair::FacBomContent::
-      addSegmentDateIntoOutboundPath<stdair::OutboundPath> (lOutboundPath,
-                                                            iSegmentDate);
+    stdair::FacBomContent::addObjectToTheDedicatedList (lOutboundPath, iSegmentDate);
+    lOutboundPath.updateAfterAddingSegmentDate (iSegmentDate);
     // Update the AirlineCode of the OutboundPath
     lOutboundPath.updateAirlineCode();
   }
@@ -423,18 +414,22 @@ namespace AIRSCHED {
 
         // Clone the list of SegmentDate references of the given OutboundPath
         // object (passed as the second parameter).
-        stdair::FacBomContent::
-          cloneSegmentDateLinks<stdair::OutboundPath> (lOutboundPath_i,
-                                                       *lOutboundPath_im1_ptr);
-          
+        stdair::FacBomContent::cloneChildrenHolder<
+        stdair::OutboundPath, stdair::SegmentDate> (lOutboundPath_i,
+                                                    *lOutboundPath_im1_ptr);
+        // Clone the flight path
+        const stdair::FlightPathCode_T lFlightPathCode =
+          lOutboundPath_im1_ptr->getFlightPathCode();
+        lOutboundPath_i.setFlightPathCode (lFlightPathCode);
+        
         // Add the SegmentDate reference to the dedicated list within
         // the OutboundPath. Note that this must be done before the
         // link between the OutboundPath and AirportDate, as that latter
         // method uses the number of segments within the OutboundPath
         // object.
         stdair::FacBomContent::
-          addSegmentDateIntoOutboundPath<stdair::OutboundPath> (lOutboundPath_i,
-                                                            *lSegmentDate_1_ptr);
+          addObjectToTheDedicatedList (lOutboundPath_i, *lSegmentDate_1_ptr);
+        lOutboundPath_i.updateAfterAddingSegmentDate (*lSegmentDate_1_ptr);
         // update the AirlineCode of the OutboundPath
         lOutboundPath_i.updateAirlineCode();
           

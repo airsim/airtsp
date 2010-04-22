@@ -20,7 +20,7 @@ namespace AIRSCHED {
 
   public:
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::SegmentDateStructure_T BomStructure_T;
+    typedef stdair::SegmentDateStructure_T Structure_T;
 
   public:
     // ////////// Business Methods /////////
@@ -45,13 +45,13 @@ namespace AIRSCHED {
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
+    /** Constructors. */
+    SegmentDate (const Key_T&, Structure_T&);
+    /** Destructor. */
+    ~SegmentDate();
     /** Default constructors. */
     SegmentDate ();
     SegmentDate (const SegmentDate&);
-    SegmentDate (const BomKey_T&, BomStructure_T&);
-
-    /** Destructor. */
-    virtual ~SegmentDate();
 
   };
 

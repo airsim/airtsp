@@ -9,7 +9,7 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  LegCabin::LegCabin (const BomKey_T& iKey, BomStructure_T& ioLegCabinStructure)
+  LegCabin::LegCabin (const Key_T& iKey, Structure_T& ioLegCabinStructure)
     : stdair::LegCabin (iKey, ioLegCabinStructure) {
   }
   

@@ -37,6 +37,7 @@ namespace AIRSCHED {
     friend class FFFlightPeriodFileParser;
     friend struct ScheduleParserHelper::doEndFlight;
     friend class ScheduleParser;
+
   private:
     /** Generate the Flight-Date objects corresponding to the given
         Flight-Period, and add them to the given BomRoot. */
@@ -71,17 +72,20 @@ namespace AIRSCHED {
     /** Generate a Class. */
     static void createClass (stdair::SegmentCabin&, const stdair::ClassCode_T&);
 
-    /** Create the direct accesses within the invetories such as
-        links between inventory and booking class, links between
-        leg-date and segment-date, ect. */
-    static void createDirectAccesses (stdair::BomRoot&);
-
     /** Create the list of previous built similar flights, e.g. flights
         departed at the same week day before.*/
     static void createSimilarFlightDateList (stdair::FlightDate&,
                                              stdair::Inventory&,
                                              const stdair::Date_T&,
                                              const stdair::Date_T&);
+
+    /** Create the direct accesses within the invetories suck as links between
+        leg-date and segment-date, ect. */
+    static void createDirectAccesses (const stdair::BomRoot&);
+    static void createDirectAccesses (const stdair::Inventory&);
+    static void createDirectAccesses (const stdair::FlightDate&);
+    static void createDirectAccesses (const stdair::SegmentDate&);
+
 
   };
 

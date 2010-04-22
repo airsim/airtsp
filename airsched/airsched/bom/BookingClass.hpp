@@ -20,18 +20,18 @@ namespace AIRSCHED {
 
   public:
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::BookingClassStructure_T BomStructure_T;
+    typedef stdair::BookingClassStructure_T Structure_T;
 
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
+    /** Constructors. */
+    BookingClass (const Key_T&, Structure_T&);
+    /** Destructor. */
+    ~BookingClass();
     /** Default constructors. */
     BookingClass ();
     BookingClass (const BookingClass&);
-    BookingClass (const BomKey_T&, BomStructure_T&);
-
-    /** Destructor. */
-    virtual ~BookingClass();
 
   };
 

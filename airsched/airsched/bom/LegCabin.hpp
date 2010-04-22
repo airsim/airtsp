@@ -20,18 +20,18 @@ namespace AIRSCHED {
 
   public:
     /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::LegCabinStructure_T BomStructure_T;
+    typedef stdair::LegCabinStructure_T Structure_T;
 
   private:
     /** Constructors are private so as to force the usage of the Factory
         layer. */
+    /** Constructors. */
+    LegCabin (const Key_T&, Structure_T&);
+    /** Destructor. */
+    ~LegCabin();
     /** Default constructors. */
     LegCabin ();
     LegCabin (const LegCabin&);
-    LegCabin (const BomKey_T&, BomStructure_T&);
-
-    /** Destructor. */
-    virtual ~LegCabin();
 
   };
 

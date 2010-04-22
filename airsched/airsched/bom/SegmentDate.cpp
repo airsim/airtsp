@@ -5,16 +5,15 @@
 #include <cassert>
 // STDAIR
 #include <stdair/basic/BasConst_General.hpp>
-#include <stdair/bom/BomList.hpp>
-#include <stdair/bom/LegDate.hpp>
+#include <stdair/bom/BomSource.hpp>
 // AIRSCHED
 #include <airsched/bom/SegmentDate.hpp>
 
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  SegmentDate::SegmentDate (const BomKey_T& iKey,
-                            BomStructure_T& ioSegmentDateStructure)
+  SegmentDate::SegmentDate (const Key_T& iKey,
+                            Structure_T& ioSegmentDateStructure)
     : stdair::SegmentDate (iKey, ioSegmentDateStructure) {
   }
   

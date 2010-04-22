@@ -9,8 +9,8 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  BookingClass::BookingClass (const BomKey_T& iKey,
-                              BomStructure_T& ioBookingClassStructure)
+  BookingClass::BookingClass (const Key_T& iKey,
+                              Structure_T& ioBookingClassStructure)
     : stdair::BookingClass (iKey, ioBookingClassStructure) {
   }
   

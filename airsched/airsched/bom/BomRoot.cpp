@@ -4,8 +4,7 @@
 // STL
 #include <cassert>
 // STDAIR
-#include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/BomList.hpp>
+#include <stdair/bom/BomSource.hpp>
 // AIRSCHED
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/bom/Inventory.hpp>
@@ -13,7 +12,7 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  BomRoot::BomRoot (const BomKey_T& iKey, BomStructure_T& ioBomRootStructure)
+  BomRoot::BomRoot (const Key_T& iKey, Structure_T& ioBomRootStructure)
     : stdair::BomRoot (iKey, ioBomRootStructure) {
   }
   

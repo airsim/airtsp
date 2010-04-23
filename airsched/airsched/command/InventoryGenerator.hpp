@@ -39,43 +39,44 @@ namespace AIRSCHED {
     friend class ScheduleParser;
 
   private:
-    /** Generate the Flight-Date objects corresponding to the given
+    /** Generate the flight-date objects corresponding to the given
         Flight-Period, and add them to the given BomRoot. */
     static void createFlightDates (stdair::BomRoot&,
                                    const stdair::Date_T& iStartAnalysisDate,
                                    const FlightPeriodStruct_T&);
 
-    /** Generate a FlightDate. */
-    static stdair::FlightDate& createFlightDate (stdair::Inventory&,
+    /** Generate a flight-date. */
+    static stdair::FlightDate& createFlightDate (const stdair::Inventory&,
                                                  const stdair::Date_T&,
                                                  const stdair::Date_T&,
                                                  const FlightPeriodStruct_T&);
       
-    /** Generate a LegDate. */
-    static stdair::LegDate& createLegDate (stdair::FlightDate&,
+    /** Generate a leg-date. */
+    static stdair::LegDate& createLegDate (const stdair::FlightDate&,
                                            const stdair::Date_T&,
                                            const LegStruct_T&,
                                            const stdair::AnalysisStatus_T&);
 
-    /** Generate a LegCabin. */
-    static void createLegCabin (stdair::LegDate&, const LegCabinStruct_T&,
+    /** Generate a leg-cabin. */
+    static void createLegCabin (const stdair::LegDate&, const LegCabinStruct_T&,
                                 const stdair::AnalysisStatus_T&);
       
-    /** Generate a SegmentDate. */
-    static void createSegmentDate (stdair::FlightDate&, const SegmentStruct_T&);
+    /** Generate a segment-date. */
+    static void createSegmentDate (const stdair::FlightDate&, 
+                                   const SegmentStruct_T&);
       
-    /** Generate a SegmentCabin. */
-    static void createSegmentCabin (stdair::FlightDate&,
-                                    stdair::SegmentDate&,
+    /** Generate a segment-cabin. */
+    static void createSegmentCabin (const stdair::SegmentDate&,
                                     const SegmentCabinStruct_T&);
       
-    /** Generate a Class. */
-    static void createClass (stdair::SegmentCabin&, const stdair::ClassCode_T&);
+    /** Generate a booking class. */
+    static void createClass (const stdair::SegmentCabin&, 
+                             const stdair::ClassCode_T&);
 
     /** Create the list of previous built similar flights, e.g. flights
         departed at the same week day before.*/
-    static void createSimilarFlightDateList (stdair::FlightDate&,
-                                             stdair::Inventory&,
+    static void createSimilarFlightDateList (const stdair::FlightDate&,
+                                             const stdair::Inventory&,
                                              const stdair::Date_T&,
                                              const stdair::Date_T&);
 

@@ -13,6 +13,7 @@
 #include <stdair/bom/BomSource.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/factory/FacBomContent.hpp>
+#include <stdair/command/CmdBomManager.hpp>
 #include <stdair/service/Logger.hpp>
 // AirSched
 #include <airsched/command/NetworkGenerator.hpp>
@@ -20,20 +21,18 @@
 namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
-  void NetworkGenerator::createNetworks (stdair::BomRoot& ioBomRoot) {
+  void NetworkGenerator::createNetworks (const stdair::BomRoot& iBomRoot) {
     // TODO: build several networks instead of just one.
     // Create a generic network key and a empty network.
     stdair::NetworkKey_T lNetworkKey ("Whole Network");
-    stdair::Network& lNetwork = stdair::FacBomContent::
-      instance().create<stdair::Network> (lNetworkKey);
-    stdair::FacBomContent::linkWithParent (lNetwork, ioBomRoot);
-
+    stdair::Network& lNetwork =
+      stdair::CmdBomManager::createNetwork (iBomRoot, lNetworkKey);
     // Build the network by creating the list of OutboundPath objects.
-    buildNetwork (lNetwork, ioBomRoot);
+    buildNetwork (lNetwork, iBomRoot);
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void NetworkGenerator::buildNetwork (stdair::Network& ioNetwork,
+  void NetworkGenerator::buildNetwork (const stdair::Network& iNetwork,
                                        const stdair::BomRoot& iBomRoot) {
     // Build the list of single-segment OutboundPath objects.
     const stdair::InventoryList_T& lInventoryList = iBomRoot.getInventoryList();
@@ -41,20 +40,20 @@ namespace AIRSCHED {
          itInventory != lInventoryList.end(); ++itInventory) {
       const stdair::Inventory& lCurrentInventory = *itInventory;
 
-      createSinglePaths (ioNetwork, lCurrentInventory);
+      createSinglePaths (iNetwork, lCurrentInventory);
     }
 
     // Build the lists of i-fixed-length OutboundPath objects. In
     // other words, build the whole network.
     for (stdair::NbOfSegments_T i = 2;
          i <= stdair::MAXIMUM_NUMBER_OF_SEGMENTS_IN_OND; ++i) {
-      buildNetwork (ioNetwork, i);
+      buildNetwork (iNetwork, i);
     }
   }
 
   // ////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  createSinglePaths (stdair::Network& ioNetwork,
+  createSinglePaths (const stdair::Network& iNetwork,
                      const stdair::Inventory& iInventory) {
     const stdair::FlightDateList_T& lFlightDateList =
       iInventory.getFlightDateList ();
@@ -62,13 +61,13 @@ namespace AIRSCHED {
          itFlightDate != lFlightDateList.end(); ++itFlightDate) {
       const stdair::FlightDate& lCurrentFlightDate = *itFlightDate;
 
-      createSinglePaths (ioNetwork, lCurrentFlightDate);
+      createSinglePaths (iNetwork, lCurrentFlightDate);
     }
   }
 
   // ////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  createSinglePaths (stdair::Network& ioNetwork,
+  createSinglePaths (const stdair::Network& iNetwork,
                      const stdair::FlightDate& iFlightDate) {
     const stdair::SegmentDateList_T& lSegmentDateList =
       iFlightDate.getSegmentDateList ();
@@ -77,13 +76,13 @@ namespace AIRSCHED {
          itSegmentDate != lSegmentDateList.end(); ++itSegmentDate) {
       const stdair::SegmentDate& lCurrentSegmentDate = *itSegmentDate;
 
-      createSinglePaths (ioNetwork, lCurrentSegmentDate);
+      createSinglePaths (iNetwork, lCurrentSegmentDate);
     }
   }
 
   // //////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  createSinglePaths (stdair::Network& ioNetwork,
+  createSinglePaths (const stdair::Network& iNetwork,
                      const stdair::SegmentDate& iSegmentDate) {
     // Retrieve the reference date for the AirportDate, which is also
     // the boarding date for the SegmentDate.
@@ -92,16 +91,11 @@ namespace AIRSCHED {
     // If a NetworkDate with that reference date does not exist yet,
     // create one.
     stdair::NetworkDate* lNetworkDate_ptr =
-      ioNetwork.getNetworkDate (lReferenceDate);
+      iNetwork.getNetworkDate (lReferenceDate);
     if (lNetworkDate_ptr == NULL) {
       // Create the NetworkDate with the primary key (reference date)
-      const stdair::NetworkDateKey_T lNetworkDateKey (lReferenceDate);
-      lNetworkDate_ptr = &stdair::FacBomContent::
-        instance().create<stdair::NetworkDate> (lNetworkDateKey);
-      assert (lNetworkDate_ptr != NULL);
-      
-      // Link the NetworkDate with the Network
-      stdair::FacBomContent::linkWithParent (*lNetworkDate_ptr, ioNetwork);
+      lNetworkDate_ptr =
+        &stdair::CmdBomManager::createNetworkDate (iNetwork, lReferenceDate);
     }
     assert (lNetworkDate_ptr != NULL);
     
@@ -114,7 +108,7 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  createSinglePaths (stdair::NetworkDate& ioNetworkDate,
+  createSinglePaths (const stdair::NetworkDate& iNetworkDate,
                      const stdair::SegmentDate& iSegmentDate) {
     // Retrieve the origin for the AirportDate, which is also
     // the boarding point for the SegmentDate.
@@ -123,16 +117,10 @@ namespace AIRSCHED {
     // If an AirportDate with that reference date does not exist yet,
     // create one.
     stdair::AirportDate* lAirportDate_ptr =
-      ioNetworkDate.getAirportDate (lOrigin);
+      iNetworkDate.getAirportDate (lOrigin);
     if (lAirportDate_ptr == NULL) {
-      const stdair::AirportDateKey_T lAirportDateKey (lOrigin);
-      lAirportDate_ptr = &stdair::FacBomContent::
-        instance().create<stdair::AirportDate> (lAirportDateKey);
-      assert (lAirportDate_ptr != NULL);
-
-      // Link the AirportDate with the NetworkDate
-      stdair::FacBomContent::
-        linkWithParent (*lAirportDate_ptr, ioNetworkDate);
+      lAirportDate_ptr =
+        &stdair::CmdBomManager::createAirportDate (iNetworkDate, lOrigin);
     }
     assert (lAirportDate_ptr != NULL);
 
@@ -171,10 +159,8 @@ namespace AIRSCHED {
                                                       lNbOfSegments,
                                                       lNbOfAirlines,
                                                       lBoardingTime);
-    stdair::OutboundPath& lOutboundPath = stdair::FacBomContent::
-      instance().create<stdair::OutboundPath> (lOutboundPathKey);
-    stdair::FacBomContent::linkWithParent (lOutboundPath, ioAirportDate);
-
+    stdair::OutboundPath& lOutboundPath = 
+      stdair::CmdBomManager::createOutboundPath (ioAirportDate,lOutboundPathKey);
     // Build the list of lists of outbound paths.
     ioAirportDate.buildOutboundPathListList (lOutboundPath);
     
@@ -192,14 +178,14 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  buildNetwork (stdair::Network& ioNetwork,
+  buildNetwork (const stdair::Network& iNetwork,
                 const stdair::NbOfSegments_T& iNbOfSegments) {
     assert (iNbOfSegments >= 2
             && iNbOfSegments <= stdair::MAXIMUM_NUMBER_OF_SEGMENTS_IN_OND);
 
     // Iterate on the NetworkDate objects
     const stdair::NetworkDateList_T& lNetworkDateList =
-      ioNetwork.getNetworkDateList();
+      iNetwork.getNetworkDateList();
     for (stdair::NetworkDateList_T::iterator itNetworkDate =
            lNetworkDateList.begin();
          itNetworkDate != lNetworkDateList.end(); ++itNetworkDate) {
@@ -211,11 +197,11 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void NetworkGenerator::
-  buildNetwork (stdair::NetworkDate& ioNetworkDate,
+  buildNetwork (const stdair::NetworkDate& iNetworkDate,
                 const stdair::NbOfSegments_T& iNbOfSegments) {
     // Iterate on the AirportDate objects
     const stdair::AirportDateList_T& lAirportDateList =
-      ioNetworkDate.getAirportDateList();
+      iNetworkDate.getAirportDateList();
     for (stdair::AirportDateList_T::iterator itAirportDate =
            lAirportDateList.begin();
          itAirportDate != lAirportDateList.end(); ++itAirportDate) {

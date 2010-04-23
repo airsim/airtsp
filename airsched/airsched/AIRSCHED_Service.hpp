@@ -133,13 +133,7 @@ namespace AIRSCHED {
         @param const stdair::Filename_T& Filename of the input schedule file. */
     void init (const stdair::Date_T& iStartAnalysisDate,
                const stdair::Filename_T& iScheduleInputFilename);
-    
-    /** Initialise.
-        <br>An AirlineFeature object is created, and stored within the
-        STDAIR_Service instance, for each airline present in the schedule
-        file. */
-    void initAirlineFeatures();
-    
+        
     /** Finaliser. */
     void finalise ();
 

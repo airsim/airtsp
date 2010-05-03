@@ -17,12 +17,10 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void ScheduleParser::
   generateInventories (const stdair::Filename_T& iFilename,
-                       stdair::BomRoot& ioBomRoot,
-                       const stdair::Date_T& iStartAnalysisDate) {
+                       stdair::BomRoot& ioBomRoot) {
 
     // Initialise the Flight-Period file parser.
-    FlightPeriodFileParser lFlightPeriodParser (ioBomRoot, iStartAnalysisDate,
-                                                iFilename);
+    FlightPeriodFileParser lFlightPeriodParser (ioBomRoot, iFilename);
 
     // Parse the CSV-formatted schedule input file, and generate the
     // corresponding Inventories for the airlines.

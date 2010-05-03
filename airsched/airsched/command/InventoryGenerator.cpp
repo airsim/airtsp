@@ -22,7 +22,6 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createFlightDates (stdair::BomRoot& ioBomRoot,
-                     const stdair::Date_T& iStartAnalysisDate,
                      const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
 
@@ -55,7 +54,6 @@ namespace AIRSCHED {
       if (isDoWActive == true) {
         stdair::FlightDate& lFlightDate = createFlightDate (*lInventory_ptr,
                                                             currentDate,
-                                                            iStartAnalysisDate,
                                                             iFlightPeriod);
         
         // Update the number of generated flight dates
@@ -73,7 +71,6 @@ namespace AIRSCHED {
   stdair::FlightDate& InventoryGenerator::
   createFlightDate (const stdair::Inventory& iInventory,
                     const stdair::Date_T& iFlightDate,
-                    const stdair::Date_T& iStartAnalysisDate,
                     const FlightPeriodStruct_T& iFlightPeriod) {
     // Create the FlightDateKey
     const stdair::FlightNumber_T& lFlightNumber = iFlightPeriod._flightNumber;
@@ -99,13 +96,6 @@ namespace AIRSCHED {
     lFlightDate_ptr = &stdair::CmdBomManager::createFlightDate (iInventory,
                                                                 lFlightDateKey);
     assert (lFlightDate_ptr != NULL);
-    
-    // Define the boolean stating whether the flight date is in the
-    // analysis window or not
-    stdair::AnalysisStatus_T lAnalysisStatus = false;
-    if (iStartAnalysisDate <= iFlightDate) {
-      lAnalysisStatus = true;
-    }
       
     // Iterate on the leg-dates
     stdair::Duration_T currentOffTime (0, 0, 0);
@@ -117,7 +107,7 @@ namespace AIRSCHED {
 
       // Create the leg-branch of the flight-date BOM
       stdair::LegDate& lLegDate =
-        createLegDate (*lFlightDate_ptr, iFlightDate, lLeg, lAnalysisStatus);
+        createLegDate (*lFlightDate_ptr, iFlightDate, lLeg);
 
       
       // TODO: Check that the boarding date/time of the next leg is greated
@@ -159,8 +149,7 @@ namespace AIRSCHED {
   stdair::LegDate& InventoryGenerator::
   createLegDate (const stdair::FlightDate& iFlightDate,
                  const stdair::Date_T& iReferenceDate,
-                 const LegStruct_T& iLeg,
-                 const stdair::AnalysisStatus_T& iAnalysisStatus) {
+                 const LegStruct_T& iLeg) {
     // Create the leg-date corresponding to the boarding point.
     stdair::LegDate& lLegDate = stdair::CmdBomManager::
       createLegDate (iFlightDate, iLeg._boardingPoint);
@@ -174,7 +163,7 @@ namespace AIRSCHED {
       const LegCabinStruct_T& lCabin = *itCabin;
 
       // Create the leg-cabin-branch of the leg-date 
-      createLegCabin (lLegDate, lCabin, iAnalysisStatus);
+      createLegCabin (lLegDate, lCabin);
     }
 
     return lLegDate;
@@ -183,13 +172,12 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createLegCabin (const stdair::LegDate& iLegDate,
-                  const LegCabinStruct_T& iCabin,
-                  const stdair::AnalysisStatus_T& iAnalysisStatus) {
+                  const LegCabinStruct_T& iCabin) {
     // Instantiate an leg-cabin object with the corresponding cabin code
     stdair::LegCabin& lLegCabin =
       stdair::CmdBomManager::createLegCabin (iLegDate, iCabin._cabinCode);
     // Set the Leg-Cabin attributes
-    iCabin.fill (lLegCabin, iAnalysisStatus);
+    iCabin.fill (lLegCabin);
   }
     
   // //////////////////////////////////////////////////////////////////////

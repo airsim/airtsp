@@ -42,7 +42,6 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
-                    const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename)
     : _airschedServiceContext (NULL) {
 
@@ -58,14 +57,13 @@ namespace AIRSCHED {
     lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_ServicePtr);
     
     // Initialise the context
-    init (iStartAnalysisDate, iScheduleInputFilename);
+    init (iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
                     const stdair::BasDBParams& iDBParams,
-                    const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename) 
     : _airschedServiceContext (NULL) {
     
@@ -76,13 +74,12 @@ namespace AIRSCHED {
     initStdAirService (iLogParams, iDBParams);
     
     // Initialise the (remaining of the) context
-    init (iStartAnalysisDate, iScheduleInputFilename);
+    init (iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
-                    const stdair::Date_T& iStartAnalysisDate,
                     const stdair::Filename_T& iScheduleInputFilename) 
     : _airschedServiceContext (NULL) {
     
@@ -93,7 +90,7 @@ namespace AIRSCHED {
     initStdAirService (iLogParams);
     
     // Initialise the (remaining of the) context
-    init (iStartAnalysisDate, iScheduleInputFilename);
+    init (iScheduleInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -149,8 +146,7 @@ namespace AIRSCHED {
   
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  init (const stdair::Date_T& iStartAnalysisDate,
-        const stdair::Filename_T& iScheduleInputFilename) {
+  init (const stdair::Filename_T& iScheduleInputFilename) {
 
     // Check that the file path given as input corresponds to an actual file
     const bool doesExistAndIsReadable =
@@ -166,9 +162,6 @@ namespace AIRSCHED {
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
       *_airschedServiceContext;
 
-    // Store the beginning date of analysis within the service context
-    lAIRSCHED_ServiceContext.setStartAnalysisDate (iStartAnalysisDate);
-
     // Retrieve the StdAir service context
     stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
       lAIRSCHED_ServiceContext.getSTDAIR_Service();
@@ -179,8 +172,7 @@ namespace AIRSCHED {
     stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
 
     // Parse the schedule input file, and generate the Inventories
-    ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot,
-                                         iStartAnalysisDate);
+    ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot);
 
     // Build the network from the schedule.
     NetworkGenerator::createNetworks (lBomRoot);
@@ -190,38 +182,6 @@ namespace AIRSCHED {
     std::ostringstream oStream;
     stdair::BomManager::display (oStream, lBomRoot);
     STDAIR_LOG_DEBUG (oStream.str());
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  void AIRSCHED_Service::
-  addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
-                     const stdair::AirportCode_T& iArrivalAirport,
-                     const stdair::Date_T& iDepartureDate,
-                     const stdair::Duration_T& iDepartureTime,
-                     const stdair::Duration_T& iArrivalTime,
-                     const stdair::Duration_T& iDuration,
-                     const bool iRefundability,
-                     const stdair::AirlineCode_T& iAirlineCode,
-                     const stdair::CabinCode_T& iCabinCode,
-                     const stdair::FlightNumber_T& iFlightNumber,
-                     const stdair::Fare_T& iFare,
-                     int iStopsNumber, bool iSNS, bool iChangeability) {
-
-    if (_airschedServiceContext == NULL) {
-      throw NonInitialisedServiceException();
-    }
-    assert (_airschedServiceContext != NULL);
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext = *_airschedServiceContext;
-
-    // Add the travel solution to the service context
-    lAIRSCHED_ServiceContext.addTravelSolution (iDepartureAirport,
-                                                iArrivalAirport, iDepartureDate,
-                                                iDepartureTime, iArrivalTime,
-                                                iDuration, iRefundability,
-                                                iAirlineCode, iCabinCode,
-                                                iFlightNumber, iFare,
-                                                iStopsNumber, iSNS,
-                                                iChangeability);
   }
   
   // ////////////////////////////////////////////////////////////////////

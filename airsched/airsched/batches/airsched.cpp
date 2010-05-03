@@ -335,14 +335,10 @@ int main (int argc, char* argv[]) {
     // Open and clean the log outputfile
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
-    
-    // The analysis starts at January 1, 2000
-    const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
 
     // Initialise the AirSched service object
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
-                                                lInputFilename);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
 
 
     // Create a booking request

@@ -40,7 +40,6 @@ namespace AIRSCHED {
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (const stdair::BasLogParams&, const stdair::BasDBParams&,
-                      const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
 
     /** Constructor.
@@ -52,7 +51,6 @@ namespace AIRSCHED {
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (const stdair::BasLogParams&,
-                      const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
 
     /** Constructor.
@@ -67,7 +65,6 @@ namespace AIRSCHED {
         @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
-                      const stdair::Date_T& iStartAnalysisDate,
                       const stdair::Filename_T& iScheduleInputFilename);
     
     /** Destructor. */
@@ -75,22 +72,7 @@ namespace AIRSCHED {
 
     
   public:    
-    // ////////////////// Business support methods //////////////////    
-    /** Add a travel solution to the service context.
-        <br>Currently, that method does nothing. */
-    void addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
-                            const stdair::AirportCode_T& iArrivalAirport,
-                            const stdair::Date_T& iDepartureDate,
-                            const stdair::Duration_T& iDepartureTime,
-                            const stdair::Duration_T& iArrivalTime,
-                            const stdair::Duration_T& iDuration,
-                            const bool iRefundability,
-                            const stdair::AirlineCode_T& iAirlineCode,
-                            const stdair::CabinCode_T& iCabinCode,
-                            const stdair::FlightNumber_T& iFlightNumber,
-                            const stdair::Fare_T& iFare,
-                            int iStopsNumber, bool iSNS, bool iChangeability);
-
+    // ////////////////// Business support methods //////////////////  
     /** Calculate and return a list of travel solutions corresponding to a given
         product demand. */
     void getTravelSolutions (stdair::TravelSolutionList_T&,
@@ -129,10 +111,8 @@ namespace AIRSCHED {
     /** Initialise.
         <br>The CSV file, describing the airline schedules for the
         simulator, is parsed and the inventories are generated accordingly.
-        @param const stdair::Date_T& Date for the beginning of analysis.
         @param const stdair::Filename_T& Filename of the input schedule file. */
-    void init (const stdair::Date_T& iStartAnalysisDate,
-               const stdair::Filename_T& iScheduleInputFilename);
+    void init (const stdair::Filename_T& iScheduleInputFilename);
         
     /** Finaliser. */
     void finalise ();

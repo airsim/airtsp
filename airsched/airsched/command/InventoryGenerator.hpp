@@ -42,24 +42,20 @@ namespace AIRSCHED {
     /** Generate the flight-date objects corresponding to the given
         Flight-Period, and add them to the given BomRoot. */
     static void createFlightDates (stdair::BomRoot&,
-                                   const stdair::Date_T& iStartAnalysisDate,
                                    const FlightPeriodStruct_T&);
 
     /** Generate a flight-date. */
     static stdair::FlightDate& createFlightDate (const stdair::Inventory&,
-                                                 const stdair::Date_T&,
                                                  const stdair::Date_T&,
                                                  const FlightPeriodStruct_T&);
       
     /** Generate a leg-date. */
     static stdair::LegDate& createLegDate (const stdair::FlightDate&,
                                            const stdair::Date_T&,
-                                           const LegStruct_T&,
-                                           const stdair::AnalysisStatus_T&);
+                                           const LegStruct_T&);
 
     /** Generate a leg-cabin. */
-    static void createLegCabin (const stdair::LegDate&, const LegCabinStruct_T&,
-                                const stdair::AnalysisStatus_T&);
+    static void createLegCabin (const stdair::LegDate&, const LegCabinStruct_T&);
       
     /** Generate a segment-date. */
     static void createSegmentDate (const stdair::FlightDate&, 

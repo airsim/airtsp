@@ -368,11 +368,9 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     doEndFlight::
     doEndFlight (stdair::BomRoot& ioBomRoot,
-                 const Date_T& iStartAnalysisDate,
                  FlightPeriodStruct_T& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod),
-        _bomRoot (ioBomRoot),
-        _startAnalysisDate (iStartAnalysisDate) {
+        _bomRoot (ioBomRoot) {
     }
     
     // //////////////////////////////////////////////////////////////////
@@ -392,8 +390,7 @@ namespace AIRSCHED {
 
       // Create the FlightDate BOM objects, and potentially the intermediary
       // objects (e.g., Inventory).
-      InventoryGenerator::createFlightDates (_bomRoot, _startAnalysisDate,  
-                                             _flightPeriod);
+      InventoryGenerator::createFlightDates (_bomRoot, _flightPeriod);
     }
 
       
@@ -461,10 +458,8 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     FlightPeriodParser::
     FlightPeriodParser (stdair::BomRoot& ioBomRoot,
-                        const Date_T& iStartAnalysisDate,
                         FlightPeriodStruct_T& ioFlightPeriod) 
       : _bomRoot (ioBomRoot),
-        _startAnalysisDate (iStartAnalysisDate),
         _flightPeriod (ioFlightPeriod) {
     }
 
@@ -482,7 +477,6 @@ namespace AIRSCHED {
         >> +( ';' >> leg )
         >> +( ';' >> segment )
         >> flight_period_end[doEndFlight(self._bomRoot,
-                                         self._startAnalysisDate,
                                          self._flightPeriod)]
         ;
 
@@ -639,10 +633,8 @@ namespace AIRSCHED {
   // //////////////////////////////////////////////////////////////////////
   FlightPeriodFileParser::
   FlightPeriodFileParser (stdair::BomRoot& ioBomRoot,
-                          const stdair::Date_T& iStartAnalysisDate,
                           const stdair::Filename_T& iFilename)
-    : _filename (iFilename), _bomRoot (ioBomRoot),
-      _startAnalysisDate (iStartAnalysisDate) {
+    : _filename (iFilename), _bomRoot (ioBomRoot) {
     init();
   }
 
@@ -671,7 +663,6 @@ namespace AIRSCHED {
 
     // Initialise the parser (grammar) with the helper/staging structure.
     ScheduleParserHelper::FlightPeriodParser lFPParser (_bomRoot, 
-                                                        _startAnalysisDate,
                                                         _flightPeriod);
       
     // Launch the parsing of the file and, thanks to the doEndFlight

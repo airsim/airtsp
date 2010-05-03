@@ -192,13 +192,11 @@ namespace AIRSCHED {
     /** Mark the end of the flight-period parsing. */
     struct doEndFlight : public ParserSemanticAction {
       /** Actor Constructor. */
-      doEndFlight (stdair::BomRoot&, const stdair::Date_T&,
-                   FlightPeriodStruct_T&);
+      doEndFlight (stdair::BomRoot&, FlightPeriodStruct_T&);
       /** Actor Function (functor). */
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
       /** Actor Specific Context. */
       stdair::BomRoot& _bomRoot;
-      const stdair::Date_T _startAnalysisDate;
     };
   
 
@@ -253,8 +251,7 @@ namespace AIRSCHED {
     struct FlightPeriodParser : 
       public boost::spirit::classic::grammar<FlightPeriodParser> {
 
-      FlightPeriodParser (stdair::BomRoot&, const Date_T&,
-                          FlightPeriodStruct_T&);
+      FlightPeriodParser (stdair::BomRoot&, FlightPeriodStruct_T&);
 
       template <typename ScannerT>
       struct definition {
@@ -274,12 +271,13 @@ namespace AIRSCHED {
 
       // Parser Context
       stdair::BomRoot& _bomRoot;
-      const Date_T _startAnalysisDate;
       FlightPeriodStruct_T& _flightPeriod;
     };
 
   }
-
+  /** Short Description
+      <br> Detailed Description.*/
+  
 
   /////////////////////////////////////////////////////////////////////////
   //
@@ -295,7 +293,6 @@ namespace AIRSCHED {
   public:
     /** Constructor. */
     FlightPeriodFileParser (stdair::BomRoot& ioBomRoot,
-                            const stdair::Date_T& iStartAnalysisDate,
                             const stdair::Filename_T& iFilename);
 
     /** Parse the input file and generate the Inventories. */
@@ -318,9 +315,6 @@ namespace AIRSCHED {
       
     /** stdair::BomRoot. */
     stdair::BomRoot& _bomRoot;
-
-    /** Start date for the simulation analysis. */
-    const stdair::Date_T _startAnalysisDate;
 
     /** Flight-Period Structure. */
     FlightPeriodStruct_T _flightPeriod;

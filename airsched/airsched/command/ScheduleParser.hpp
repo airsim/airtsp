@@ -22,12 +22,10 @@ namespace AIRSCHED {
   public:
     /** Parses the CSV file describing the airline schedules for the
         simulator, and generates the inventories accordingly.
-        @param const stdair::Filename_T& The file-name of the CSV-formatted schedule
-               input file.
-        @param stdair::BomRoot& Root of the BOM tree.
-        @param const stdair::Date_T& */
-    static void generateInventories (const stdair::Filename_T&, stdair::BomRoot&,
-                                     const stdair::Date_T&);
+        @param const stdair::Filename_T& The file-name of the CSV-formatted 
+        schedule input file.
+        @param stdair::BomRoot& Root of the BOM tree. */
+    static void generateInventories(const stdair::Filename_T&, stdair::BomRoot&);
   };
 }
 #endif // __AIRSCHED_CMD_SCHEDULEPARSER_HPP

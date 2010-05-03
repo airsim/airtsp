@@ -19,10 +19,9 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void LegCabinStruct_T::fill (stdair::LegCabin& ioLegCabin,
-                               const bool iAnalysisStatus) const {
+  void LegCabinStruct_T::fill (stdair::LegCabin& ioLegCabin) const {
     // Set the Capacity
-    ioLegCabin.setCapacity (_capacity, iAnalysisStatus);
+    ioLegCabin.setCapacities (_capacity);
   }
 
 }

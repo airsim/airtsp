@@ -44,24 +44,12 @@ namespace AIRSCHED {
     stdair::STDAIR_ServicePtr_T getSTDAIR_Service () const {
       return _stdairService;
     }
-    
-    /** Get the requested date for the beginning of analysis. */
-    const stdair::Date_T& getStartAnalysisDate() const {
-      return _startAnalysisDate;
-    }
-
-    
+        
     // ///////////////// Setters ///////////////////
     /** Set the pointer on the STDAIR service handler. */
     void setSTDAIR_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr) {
       _stdairService = ioSTDAIR_ServicePtr;
-    }      
-    
-    /** Set the requested date for the beginning of analysis. */
-    void setStartAnalysisDate (const Date_T& iStartAnalysisDate) {
-      _startAnalysisDate = iStartAnalysisDate;
-    }
-
+    } 
     
     // ///////// Display Methods //////////
     /** Display the short SIMCRS_ServiceContext content. */
@@ -69,24 +57,7 @@ namespace AIRSCHED {
     
     /** Display the full SIMCRS_ServiceContext content. */
     const std::string display() const;
-    
-
-    // ///////////// Business support methods ////////////
-    /** Add a travel solution to the TravelSolutionHolder */
-    void addTravelSolution (const stdair::AirportCode_T& iDepartureAirport,
-                            const stdair::AirportCode_T& iArrivalAirport,
-                            const stdair::Date_T& iDepartureDate,
-                            const stdair::Duration_T& iDepartureTime,
-                            const stdair::Duration_T& iArrivalTime,
-                            const stdair::Duration_T& iDuration,
-                            const bool iRefundability,
-                            const stdair::AirlineCode_T& iAirlineCode,
-                            const stdair::CabinCode_T& iCabinCode,
-                            const stdair::FlightNumber_T& iFlightNumber,
-                            const stdair::Fare_T& iFare,
-                            int iStopsNumber, bool iSNS, bool iChangeability);
-
-    
+        
     /** Read the input data from a file */
     void readFromInputFile (const std::string& iInputFileName);
 
@@ -95,12 +66,6 @@ namespace AIRSCHED {
     // ///////////// Children ////////////
     /** Standard Airline (StdAir) Service Handler. */
     stdair::STDAIR_ServicePtr_T _stdairService;
-
-    
-  private:
-    // ////////////// Attributes ////////////////
-    /** Requested date for the beginning of analysis. */
-    stdair::Date_T _startAnalysisDate;
   };
 
 }

@@ -233,8 +233,12 @@ namespace AIRSCHED {
   void InventoryGenerator::
   createClass (const stdair::SegmentCabin& iSegmentCabin,
                const stdair::ClassCode_T& iClassCode) {
-    // Forward the action to the dedicated function.
-    stdair::CmdBomManager::createBookingClass (iSegmentCabin, iClassCode);
+    // Instantiate a booking class object with the given class code
+    const stdair::BookingClassKey_T lClassKey (iClassCode);
+    stdair::BookingClass& lClass =
+      stdair::FacBomContent::instance().create<stdair::BookingClass>(lClassKey);
+    // Link the created booking-class with its parent segment-cabin.
+    stdair::FacBomContent::linkWithParent (lClass, iSegmentCabin);
   }
 
   // //////////////////////////////////////////////////////////////////////

@@ -61,12 +61,8 @@ void externalMemoryManagementHelper() {
     logOutputFile.open (lLogFilename.c_str());
     logOutputFile.clear();
 
-    // The analysis starts at January 1, 2000
-    const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
-
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
-                                                lInputFilename);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
 
     // DEBUG
     STDAIR_LOG_DEBUG ("Welcome to Air-Schedule");
@@ -292,11 +288,8 @@ void scheduleParsingHelper() {
     // Input file name
     std::string lInputFilename ("../samples/schedule02.csv");
 
-    const stdair::Date_T lStartAnalysisDate (2000, 1, 1);
-
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lStartAnalysisDate,
-                                                lInputFilename);
+    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
 
     // Start a mini-simulation
     airschedService.simulate();

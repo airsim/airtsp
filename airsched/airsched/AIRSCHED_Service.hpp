@@ -36,8 +36,7 @@ namespace AIRSCHED {
         <br>Moreover, database connection parameters are given, so that a
         session can be created on the corresponding database.
         @param const stdair::BasLogParams& Parameters for the output log stream.
-        @param const stdair::BasDBParams& Parameters for the database access.
-        @param const stdair::Date_T& Date for the beginning of analysis.
+        @param const stdair::BasDBParams& Parameters for the database access.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (const stdair::BasLogParams&, const stdair::BasDBParams&,
                       const stdair::Filename_T& iScheduleInputFilename);

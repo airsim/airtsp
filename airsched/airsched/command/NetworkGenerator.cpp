@@ -88,7 +88,7 @@ namespace AIRSCHED {
     // the boarding date for the SegmentDate.
     const stdair::Date_T& lReferenceDate = iSegmentDate.getBoardingDate();
     
-    // If a NetworkDate with that reference date does not exist yet,
+    // If a NetworkDate with that reference date does not yet exist,
     // create one.
     stdair::NetworkDate* lNetworkDate_ptr =
       iNetwork.getNetworkDate (lReferenceDate);
@@ -225,7 +225,7 @@ namespace AIRSCHED {
     // Hence, at that iteration, by construction, the list of the
     // (fixed-length Outbound-Path object) lists should already get
     // a size of i-1, if there were such possibilities (in terms of
-    // Outbound Pathes). In that case, at the end of the method, its
+    // Outbound Paths). In that case, at the end of the method, its
     // size should be of i.
     //
     // If the size of the list of the (fixed-length Outbound-Path
@@ -234,10 +234,8 @@ namespace AIRSCHED {
     // are thus done at that stage.
     const stdair::OutboundPathListList_T& lOutboundPathListList =
       ioAirportDate.getOutboundPathListList();
-    const short lNbOfSegments_m1_Short = iNbOfSegments - 1;
-    assert (lNbOfSegments_m1_Short >= 0);
-    const stdair::NbOfSegments_T lNbOfSegments_m1 = 
-      static_cast<const stdair::NbOfSegments_T> (lNbOfSegments_m1_Short);
+    const short lNbOfSegments_m1 = iNbOfSegments - 1;
+    assert (lNbOfSegments_m1 >= 0);
     if (lOutboundPathListList.size() < lNbOfSegments_m1) {
       return;
     }
@@ -334,8 +332,6 @@ namespace AIRSCHED {
         }
 
         // Build the i-length OutboundPath
-        //const stdair::AirportDateKey_T& lAirportDateKey = ioAirportDate.getKey();
-
         // Get the parameters of the last segment
         const stdair::SegmentDate* lSegmentDate_1_ptr =
           lOutboundPath_1_ptr->getFirstSegmentDate();
@@ -381,8 +377,8 @@ namespace AIRSCHED {
         assert (lOutboundPathOffDate == lSegmentDateBoardingDate
                 && lOutboundPathOffPoint == lSegmentDateBoardingPoint);
 
-        const stdair::Duration_T lElapsedTime_i =
-          lOutboundPath_im1_ptr->calculateElapsedTimeFromRouting ();
+        const stdair::Duration_T lElapsedTime_i = lOutboundPath_im1_ptr->
+          calculateElapsedTimeFromRouting (*lSegmentDate_1_ptr);
 
         const stdair::Duration_T& lBoardingTime_i =
           lOutboundPath_im1_ptr->getBoardingTime();
@@ -400,6 +396,7 @@ namespace AIRSCHED {
         stdair::FacBomContent::cloneChildrenHolder<
         stdair::OutboundPath, stdair::SegmentDate> (lOutboundPath_i,
                                                     *lOutboundPath_im1_ptr);
+       
         // Clone the flight path
         const stdair::FlightPathCode_T lFlightPathCode =
           lOutboundPath_im1_ptr->getFlightPathCode();

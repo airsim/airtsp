@@ -18,7 +18,7 @@
 
 namespace AIRSCHED {
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
                       const stdair::Network& iNetwork,
@@ -45,7 +45,7 @@ namespace AIRSCHED {
     getTravelSolutions(ioTravelSolutionList, lOutboundPathList, iBookingRequest);
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
                       const stdair::OutboundPathList_T& iOutboundPathList,
@@ -68,7 +68,7 @@ namespace AIRSCHED {
     } 
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
                       stdair::OutboundPath& ioOutboundPath,

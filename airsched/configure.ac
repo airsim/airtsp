@@ -109,6 +109,17 @@ if test -z "${CXXFLAGS}"; then
    CXXFLAGS="-g -Wall"
 fi
 
+# -----------------------------------------------------------------------------
+# Support for ExtraCC (Extra-CruiseControl): http://sf.net/projects/extracc
+# -----------------------------------------------------------------------------
+# Note: the ExtraCC is now imported as a Subversion external reference,
+#       thus directly accessible within the extracppunit directory.
+#       When that library will be widely avaible on Linux distributions,
+#       the external reference can be removed and the following line uncommented.
+#AM_PATH_EXTRACC
+#AC_SUBST(EXTRACC_VERSION)
+#AC_SUBST(EXTRACC_CFLAGS)
+#AC_SUBST(EXTRACC_LIBS)
 
 # -----------------------------------------------------------
 # Python: http://www.python.org
@@ -432,6 +443,11 @@ ${MPICH2_OUTPUT}
     o SOCI_version .... : ${SOCI_VERSION}
     o SOCI_CFLAGS ..... : ${SOCI_CFLAGS}
     o SOCI_LIBS ....... : ${SOCI_LIBS}
+
+  - ExtraCC ........... :
+    o EXTRACC_VERSION . : ${EXTRACC_VERSION}
+    o EXTRACC_CFLAGS .. : ${EXTRACC_CFLAGS}
+    o EXTRACC_LIBS .... : ${EXTRACC_LIBS}
 
   - CPPUNIT ........... :
     o CPPUNIT_VERSION . : ${CPPUNIT_VERSION}

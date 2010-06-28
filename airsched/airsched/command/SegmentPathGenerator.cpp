@@ -155,7 +155,7 @@ namespace AIRSCHED {
     // are thus done at that stage.
     const stdair::SegmentPathPeriodListList_T& lSegmentPathPeriodListList =
       ioReachableUniverse.getSegmentPathPeriodListList();
-    const short lNbOfSegments_m1 = iNbOfSegments - 1;
+    const unsigned short lNbOfSegments_m1 = iNbOfSegments - 1;
     assert (lNbOfSegments_m1 >= 0);
     if (lSegmentPathPeriodListList.size() < lNbOfSegments_m1) {
       return;
@@ -252,41 +252,41 @@ namespace AIRSCHED {
         // is not feasible, then the current single-segment outbound-path
         // must not be added. There is nothing more to do at that stage,
         // and we can handle the next single-segment outbound-path.
-        const bool isConnectable =
-          lSegmentPathPeriod_im1_ptr->isConnectable (*lSingleSegmentPathPeriodFromDestination_im1_ptr);
-        if (isConnectable == false) {
-          continue;
-        }
+        // const bool isConnectable =
+        //   lSegmentPathPeriod_im1_ptr->isConnectable (*lSingleSegmentPathPeriodFromDestination_im1_ptr);
+        // if (isConnectable == false) {
+        //   continue;
+        // }
           
         // Get the off point of the single-segment SegmentPathPeriod
         // attached to the intermediate destination (im1). That off point is
         // at a length i of the initial ReachableUniverse: (i-1) + 1.
-        const stdair::AirportCode_T& lDestination_i =
-          lSingleSegmentPathPeriodFromDestination_im1_ptr->getDestination();
+        // const stdair::AirportCode_T& lDestination_i =
+        //   lSingleSegmentPathPeriodFromDestination_im1_ptr->getDestination();
 
         // Check if the the single segment path period does not go the
         // one of the airports passed by the (i-1) segment path period.
-        const bool lCircleExistence =
-          lSegmentPathPeriod_im1_ptr->checkCircle (lDestination_i);
-        if (lCircleExistence == true) {
-          continue;
-        }
+        // const bool lCircleExistence =
+        //   lSegmentPathPeriod_im1_ptr->checkCircle (lDestination_i);
+        // if (lCircleExistence == true) {
+        //   continue;
+        // }
 
         // Build the i-length SegmentPathPeriod
         // Get the parameters of the last segment
-        const stdair::SegmentDate* lSegmentDate_1_ptr =
-          lSingleSegmentPathPeriodFromDestination_im1_ptr->getFirstSegmentDate();
-        assert (lSegmentDate_1_ptr != NULL);
+        // const stdair::SegmentDate* lSegmentDate_1_ptr =
+        //   lSingleSegmentPathPeriodFromDestination_im1_ptr->getFirstSegmentDate();
+        // assert (lSegmentDate_1_ptr != NULL);
           
         // Calculate the number of airlines flown by the i-length
         // outbound path
-        const stdair::AirlineCode_T& lAirlineCode_1 =
-          lSegmentDate_1_ptr->getAirlineCode();
-        stdair::NbOfAirlines_T lNbOfAirlines_i =
-          lSegmentPathPeriod_im1_ptr->getNbOfAirlines();
-        if (lSegmentPathPeriod_im1_ptr->isAirlineFlown(lAirlineCode_1) == false){
-          ++lNbOfAirlines_i;
-        }
+        // const stdair::AirlineCode_T& lAirlineCode_1 =
+        //   lSegmentDate_1_ptr->getAirlineCode();
+        // stdair::NbOfAirlines_T lNbOfAirlines_i =
+        //   lSegmentPathPeriod_im1_ptr->getNbOfAirlines();
+        // if (lSegmentPathPeriod_im1_ptr->isAirlineFlown(lAirlineCode_1) == false){
+        //   ++lNbOfAirlines_i;
+        // }
 
         // It may happen that the combination of the (single-segment)
         // outbound path with the last segment-date of the (i-1)-outbound path
@@ -295,68 +295,68 @@ namespace AIRSCHED {
         // already a segment-date of the BA9 flight-date.
         // In that case, there is no need to add up the segment-date
         // to the (single-segment) outbound-path.
-        const stdair::SegmentDate* lSegment_im1_ptr =
-          lSegmentPathPeriod_im1_ptr->getLastSegmentDate();
-        assert (lSegment_im1_ptr != NULL);
-        if (lSegment_im1_ptr->getAirlineCode() == lAirlineCode_1
-            && lSegment_im1_ptr->getFlightNumber()
-            == lSegmentDate_1_ptr->getFlightNumber()) {
-          continue;
-        }
+        // const stdair::SegmentDate* lSegment_im1_ptr =
+        //   lSegmentPathPeriod_im1_ptr->getLastSegmentDate();
+        // assert (lSegment_im1_ptr != NULL);
+        // if (lSegment_im1_ptr->getAirlineCode() == lAirlineCode_1
+        //     && lSegment_im1_ptr->getFlightNumber()
+        //     == lSegmentDate_1_ptr->getFlightNumber()) {
+        //   continue;
+        // }
         
         // Calculate the total elapsed time flown by the i-length
         // outbound path
-        const stdair::Date_T& lSegmentPathPeriodOffDate =
-          lSegmentPathPeriod_im1_ptr->getOffDate();
-        const stdair::AirportCode_T& lSegmentPathPeriodOffPoint = 
-          lSegmentPathPeriod_im1_ptr->getDestination();
-        const stdair::Date_T& lSegmentDateBoardingDate =
-          lSegmentDate_1_ptr->getBoardingDate();
-        const stdair::AirportCode_T& lSegmentDateBoardingPoint=
-          lSegmentDate_1_ptr->getBoardingPoint();
+        // const stdair::Date_T& lSegmentPathPeriodOffDate =
+        //   lSegmentPathPeriod_im1_ptr->getOffDate();
+        // const stdair::AirportCode_T& lSegmentPathPeriodOffPoint = 
+        //   lSegmentPathPeriod_im1_ptr->getDestination();
+        // const stdair::Date_T& lSegmentDateBoardingDate =
+        //   lSegmentDate_1_ptr->getBoardingDate();
+        // const stdair::AirportCode_T& lSegmentDateBoardingPoint=
+        //   lSegmentDate_1_ptr->getBoardingPoint();
         
-        assert (lSegmentPathPeriodOffDate == lSegmentDateBoardingDate
-                && lSegmentPathPeriodOffPoint == lSegmentDateBoardingPoint);
+        // assert (lSegmentPathPeriodOffDate == lSegmentDateBoardingDate
+        //         && lSegmentPathPeriodOffPoint == lSegmentDateBoardingPoint);
 
-        const stdair::Duration_T lElapsedTime_i = lSegmentPathPeriod_im1_ptr->
-          calculateElapsedTimeFromRouting (*lSegmentDate_1_ptr);
+        // const stdair::Duration_T lElapsedTime_i = lSegmentPathPeriod_im1_ptr->
+        //   calculateElapsedTimeFromRouting (*lSegmentDate_1_ptr);
 
-        const stdair::Duration_T& lBoardingTime_i =
-          lSegmentPathPeriod_im1_ptr->getBoardingTime();
+        // const stdair::Duration_T& lBoardingTime_i =
+        //   lSegmentPathPeriod_im1_ptr->getBoardingTime();
           
-        const stdair::SegmentPathPeriodKey_T lSegmentPathPeriodKey_i (lDestination_i,
-                                                            lElapsedTime_i,
-                                                            iNbOfSegments,
-                                                            lNbOfAirlines_i,
-                                                            lBoardingTime_i);
-        stdair::SegmentPathPeriod& lSegmentPathPeriod_i = stdair::FacBomContent::
-          instance().create<stdair::SegmentPathPeriod> (lSegmentPathPeriodKey_i);
+        // const stdair::SegmentPathPeriodKey_T lSegmentPathPeriodKey_i (lDestination_i,
+        //                                                     lElapsedTime_i,
+        //                                                     iNbOfSegments,
+        //                                                     lNbOfAirlines_i,
+        //                                                     lBoardingTime_i);
+        // stdair::SegmentPathPeriod& lSegmentPathPeriod_i = stdair::FacBomContent::
+        //   instance().create<stdair::SegmentPathPeriod> (lSegmentPathPeriodKey_i);
 
         // Clone the list of SegmentDate references of the given SegmentPathPeriod
         // object (passed as the second parameter).
-        stdair::FacBomContent::cloneChildrenHolder<
-        stdair::SegmentPathPeriod, stdair::SegmentDate> (lSegmentPathPeriod_i,
-                                                    *lSegmentPathPeriod_im1_ptr);
+        // stdair::FacBomContent::cloneChildrenHolder<
+        // stdair::SegmentPathPeriod, stdair::SegmentDate> (lSegmentPathPeriod_i,
+        //                                             *lSegmentPathPeriod_im1_ptr);
        
         // Clone the flight path
-        const stdair::FlightPathCode_T lFlightPathCode =
-          lSegmentPathPeriod_im1_ptr->getFlightPathCode();
-        lSegmentPathPeriod_i.setFlightPathCode (lFlightPathCode);
+        // const stdair::FlightPathCode_T lFlightPathCode =
+        //   lSegmentPathPeriod_im1_ptr->getFlightPathCode();
+        // lSegmentPathPeriod_i.setFlightPathCode (lFlightPathCode);
         
         // Add the SegmentDate reference to the dedicated list within
         // the SegmentPathPeriod. Note that this must be done before the
         // link between the SegmentPathPeriod and ReachableUniverse, as that latter
         // method uses the number of segments within the SegmentPathPeriod
         // object.
-        stdair::FacBomContent::
-          addFullObjectToTheDedicatedList (lSegmentPathPeriod_i, *lSegmentDate_1_ptr);
-        lSegmentPathPeriod_i.updateAfterAddingSegmentDate (*lSegmentDate_1_ptr);
+        // stdair::FacBomContent::
+        //   addFullObjectToTheDedicatedList (lSegmentPathPeriod_i, *lSegmentDate_1_ptr);
+        // lSegmentPathPeriod_i.updateAfterAddingSegmentDate (*lSegmentDate_1_ptr);
         // update the AirlineCode of the SegmentPathPeriod
-        lSegmentPathPeriod_i.updateAirlineCode();
+        // lSegmentPathPeriod_i.updateAirlineCode();
           
         // Link the SegmentPathPeriod to the ReachableUniverse
-        stdair::FacBomContent::linkWithParent (lSegmentPathPeriod_i, ioReachableUniverse);
-        ioReachableUniverse.buildSegmentPathPeriodListList (lSegmentPathPeriod_i);
+        // stdair::FacBomContent::linkWithParent (lSegmentPathPeriod_i, ioReachableUniverse);
+        // ioReachableUniverse.buildSegmentPathPeriodListList (lSegmentPathPeriod_i);
       }
     }
   }

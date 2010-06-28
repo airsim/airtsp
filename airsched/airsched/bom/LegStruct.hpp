@@ -24,10 +24,10 @@ namespace AIRSCHED {
   struct LegStruct_T : public stdair::StructAbstract {
     // Attributes
     stdair::AirportCode_T _boardingPoint;
-    stdair::DateOffSet_T _boardingDateOffSet;
+    stdair::DateOffset_T _boardingDateOffset;
     stdair::Duration_T _boardingTime;
     stdair::AirportCode_T _offPoint;
-    stdair::DateOffSet_T _offDateOffSet;
+    stdair::DateOffset_T _offDateOffset;
     stdair::Duration_T _offTime;
     stdair::Duration_T _elapsed;
     LegCabinStructList_T _cabinList;

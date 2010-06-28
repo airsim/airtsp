@@ -9,7 +9,6 @@
 // StdAir
 #include <stdair/STDAIR_Types.hpp>
 #include <stdair/command/CmdAbstract.hpp>
-#include <stdair/bom/OutboundPathTypes.hpp>
 // AirSched
 #include <airsched/AIRSCHED_Types.hpp>
 
@@ -75,8 +74,6 @@ namespace AIRSCHED {
         given number of segments (i). */
     static void buildNetwork (stdair::AirportDate&,
                               const stdair::NbOfSegments_T&);
-
-    
   };
  
 }

@@ -18,6 +18,7 @@ namespace stdair {
   class LegCabin;
   class SegmentDate;
   class SegmentCabin;
+  class FlightPeriod;
 }
 
 namespace AIRSCHED {
@@ -41,8 +42,8 @@ namespace AIRSCHED {
   private:
     /** Generate the flight-date objects corresponding to the given
         Flight-Period, and add them to the given BomRoot. */
-    static void createFlightDates (stdair::BomRoot&,
-                                   const FlightPeriodStruct_T&);
+    static void createFlightDate (stdair::BomRoot&,
+                                  const FlightPeriodStruct_T&);
 
     /** Generate a flight-date. */
     static stdair::FlightDate& createFlightDate (const stdair::Inventory&,
@@ -83,6 +84,14 @@ namespace AIRSCHED {
     static void createDirectAccesses (const stdair::FlightDate&);
     static void createDirectAccesses (const stdair::SegmentDate&);
 
+    /** Generate the flight-period objects corresponding to the given
+        FlightPeriodStruct, and add them to the given BomRoot. */
+    static void createFlightPeriod (stdair::BomRoot&,
+                                    const FlightPeriodStruct_T&);
+
+    /** Generate a segment-period. */
+    static void createSegmentPeriods (const stdair::FlightPeriod&,
+                                      const FlightPeriodStruct_T&);
 
   };
 

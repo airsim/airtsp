@@ -14,18 +14,19 @@
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
 #include <airsched/bom/FlightPeriodStruct.hpp>
+#include <airsched/bom/SegmentPeriod.hpp>
 #include <airsched/bom/BomRoot.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
 
 namespace AIRSCHED {
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
-  createFlightDates (stdair::BomRoot& ioBomRoot,
-                     const FlightPeriodStruct_T& iFlightPeriod) {
+  createFlightDate (stdair::BomRoot& ioBomRoot,
+                    const FlightPeriodStruct_T& iFlightPeriod) {
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriod._airlineCode;
 
-    // Instantiate an tnventory object (if not exist)
+    // Instantiate an inventory object (if not exist)
     // for the given key (airline code)
     stdair::Inventory* lInventory_ptr = ioBomRoot.getInventory (lAirlineCode);
     if (lInventory_ptr == NULL) {
@@ -67,7 +68,7 @@ namespace AIRSCHED {
     }
   }
   
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   stdair::FlightDate& InventoryGenerator::
   createFlightDate (const stdair::Inventory& iInventory,
                     const stdair::Date_T& iFlightDate,
@@ -83,15 +84,10 @@ namespace AIRSCHED {
     stdair::FlightDate* lFlightDate_ptr =
       iInventory.getFlightDate (lFlightDateKey);
     if (lFlightDate_ptr != NULL) {
-      // TODO: transform that error into an exception (duplicated
-      // entry in schedule input file), as there should not be any
-      // duplicated flight-date.
-      STDAIR_LOG_ERROR ("The flight-date: " << lFlightDateKey
-                        << " is duplicated within the schedule input file.");
+      throw stdair::ObjectCreationgDuplicationException ();
     }
-    assert (lFlightDate_ptr == NULL);
-      
-    // Instantiate a fligh-date object for the given key (flight number and
+
+    // Instantiate a fligh-date object with the given key (flight number and
     // flight date)
     lFlightDate_ptr = &stdair::CmdBomManager::createFlightDate (iInventory,
                                                                 lFlightDateKey);
@@ -145,7 +141,7 @@ namespace AIRSCHED {
     return *lFlightDate_ptr;
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   stdair::LegDate& InventoryGenerator::
   createLegDate (const stdair::FlightDate& iFlightDate,
                  const stdair::Date_T& iReferenceDate,
@@ -169,7 +165,7 @@ namespace AIRSCHED {
     return lLegDate;
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createLegCabin (const stdair::LegDate& iLegDate,
                   const LegCabinStruct_T& iCabin) {
@@ -180,7 +176,7 @@ namespace AIRSCHED {
     iCabin.fill (lLegCabin);
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createSegmentDate (const stdair::FlightDate& iFlightDate,
                      const SegmentStruct_T& iSegment) {
@@ -205,7 +201,7 @@ namespace AIRSCHED {
     }
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createSegmentCabin (const stdair::SegmentDate& iSegmentDate,
                       const SegmentCabinStruct_T& iCabin) {
@@ -229,7 +225,7 @@ namespace AIRSCHED {
     }
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createClass (const stdair::SegmentCabin& iSegmentCabin,
                const stdair::ClassCode_T& iClassCode) {
@@ -241,7 +237,7 @@ namespace AIRSCHED {
     stdair::FacBomContent::linkWithParent (lClass, iSegmentCabin);
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createSimilarFlightDateList (const stdair::FlightDate& iFlightDate,
                                const stdair::Inventory& iInventory,
@@ -249,24 +245,25 @@ namespace AIRSCHED {
                                const stdair::Date_T& iStartDateRange) {
 
     const stdair::FlightNumber_T& lFlightNumber = iFlightDate.getFlightNumber();
-    const stdair::DateOffSet_T lSemaine(7);
-    stdair::Date_T lSimilarDate = iCurrentDate - lSemaine;
+    const stdair::DateOffset_T lWeek(7);
+    stdair::Date_T lSimilarDate = iCurrentDate - lWeek;
     
     while (!(iStartDateRange > lSimilarDate)) {
 
       const stdair::FlightDateKey_T lFlightDateKey (lFlightNumber, lSimilarDate);
-      stdair::FlightDate* lFlightDate_ptr = iInventory.getFlightDate (lFlightDateKey);
+      stdair::FlightDate* lFlightDate_ptr = 
+        iInventory.getFlightDate (lFlightDateKey);
       
       if (lFlightDate_ptr != NULL) {
         // Link the Flight-Date and the similar flight date
         // stdair::FacBomContent::linkSimilarFlightDates (iFlightDate, 
         // *lFlightDate_ptr);
       }
-      lSimilarDate = lSimilarDate - lSemaine;
+      lSimilarDate = lSimilarDate - lWeek;
     }
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createDirectAccesses (const stdair::BomRoot& iBomRoot) {
     // Browse the list of inventories and create direct accesses
@@ -282,7 +279,7 @@ namespace AIRSCHED {
     BomRoot::fillFromRouting (iBomRoot);
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createDirectAccesses (const stdair::Inventory& iInventory) {
     // Browse the list of flight-dates and create direct accesses
@@ -297,7 +294,7 @@ namespace AIRSCHED {
     }
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createDirectAccesses (const stdair::FlightDate& iFlightDate) {
     // Browse the list of segment-dates and create direct accesses
@@ -341,7 +338,7 @@ namespace AIRSCHED {
     }
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createDirectAccesses (const stdair::SegmentDate& iSegmentDate) {
     // Browse the list of segment-cabins and create direct accesses
@@ -371,6 +368,69 @@ namespace AIRSCHED {
         stdair::FacBomContent::linkTwoObjects (lCurrentSegmentCabin,
                                                *lLegCabin_ptr);
       }      
+    }
+  }
+
+  
+  // ////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createFlightPeriod (stdair::BomRoot& ioBomRoot,
+                      const FlightPeriodStruct_T& iFlightPeriodStruct) {
+      
+    const stdair::AirlineCode_T& lAirlineCode = iFlightPeriodStruct._airlineCode;
+      
+    // Instantiate an inventory object (if not exist)
+    // for the given key (airline code)
+    stdair::Inventory* lInventory_ptr = ioBomRoot.getInventory (lAirlineCode);
+    if (lInventory_ptr == NULL) {
+      lInventory_ptr =
+        &stdair::CmdBomManager::createInventory (ioBomRoot, lAirlineCode);
+    }
+    assert (lInventory_ptr != NULL);
+      
+    // Create the flight-period key.
+    const stdair::FlightPeriodKey_T
+      lFlightPeriodKey (iFlightPeriodStruct._flightNumber,
+                        iFlightPeriodStruct._dateRange,
+                        iFlightPeriodStruct._dow);
+      
+    // Check that the flight-period object is not already created.
+    stdair::FlightPeriod* lFlightPeriod_ptr =
+      lInventory_ptr->getFlightPeriod (lFlightPeriodKey);
+    if (lFlightPeriod_ptr != NULL) {
+      throw stdair::ObjectCreationgDuplicationException ();
+    }
+    assert (lFlightPeriod_ptr == NULL);
+
+    // Instantiate a flight-period object with the given key.
+    lFlightPeriod_ptr = &stdair::CmdBomManager::
+      createFlightPeriod (*lInventory_ptr, lFlightPeriodKey);
+
+    // Create the segment-periods.
+    createSegmentPeriods (*lFlightPeriod_ptr, iFlightPeriodStruct);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void InventoryGenerator::
+  createSegmentPeriods (const stdair::FlightPeriod& iFlightPeriod,
+                        const FlightPeriodStruct_T& iFlightPeriodStruct) {
+    // Iterate on the segment strutures.
+    const SegmentStructList_T& lSegmentList = iFlightPeriodStruct._segmentList;
+    for (SegmentStructList_T::const_iterator itSegment = lSegmentList.begin();
+         itSegment != lSegmentList.end(); ++itSegment) {
+      const SegmentStruct_T& lSegment = *itSegment;
+      // Set the segment-period primary key.
+      const stdair::AirportCode_T& lBoardingPoint = lSegment._boardingPoint;
+      const stdair::AirportCode_T& lOffPoint = lSegment._offPoint;
+      const stdair::SegmentPeriodKey_T lSegmentPeriodKey (lBoardingPoint,
+                                                          lOffPoint);
+      // Instantiate a segment-perioed with the key.
+      stdair::SegmentPeriod& lSegmentPeriod =
+        stdair::CmdBomManager::createSegmentPeriod (iFlightPeriod,
+                                                    lSegmentPeriodKey);
+
+      // Set the segment-period attributes.
+      SegmentPeriod::fill (lSegmentPeriod, iFlightPeriodStruct._legList);
     }
   }
 

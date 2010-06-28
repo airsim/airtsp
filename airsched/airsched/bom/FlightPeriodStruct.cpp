@@ -13,26 +13,26 @@
 
 namespace AIRSCHED {
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   FlightPeriodStruct_T::FlightPeriodStruct_T ()
     : _dateRange (stdair::BOOST_DEFAULT_DATE_PERIOD),
       _dow (stdair::DEFAULT_DOW_STRING),
       _legAlreadyDefined (false), _itSeconds (0) {
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   stdair::Date_T FlightPeriodStruct_T::getDate() const {
     return stdair::Date_T (_itYear, _itMonth, _itDay);
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   stdair::Duration_T FlightPeriodStruct_T::getTime() const {
     return boost::posix_time::hours (_itHours)
       + boost::posix_time::minutes (_itMinutes)
       + boost::posix_time::seconds (_itSeconds);
   }
   
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   const std::string FlightPeriodStruct_T::describe() const {
     std::ostringstream ostr;
     ostr << _airlineCode << _flightNumber << ", " << _dateRange
@@ -58,7 +58,7 @@ namespace AIRSCHED {
     return ostr.str();
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::addAirport (const stdair::AirportCode_T& iAirport) {
     AirportList_T::const_iterator itAirport = _airportList.find (iAirport);
     if (itAirport == _airportList.end()) {
@@ -74,7 +74,7 @@ namespace AIRSCHED {
     }
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::buildSegments () {
     // The list of airports encompasses all the airports on which
     // the flight takes off or lands. Moreover, that list is
@@ -106,7 +106,7 @@ namespace AIRSCHED {
     _airportOrderedList.clear();
   }
       
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::
   addSegmentCabin (const SegmentStruct_T& iSegment,
                    const SegmentCabinStruct_T& iCabin) {
@@ -129,8 +129,8 @@ namespace AIRSCHED {
     // so that the user knows the schedule input file is corrupted.
     if (itSegment == _segmentList.end()) {
       STDAIR_LOG_ERROR ("Within the schedule input file, there is a "
-                          << "flight for which the airports of segments "
-                          << "and those of the legs do not correspond.");
+                        << "flight for which the airports of segments "
+                        << "and those of the legs do not correspond.");
       throw SegmentDateNotFoundException();
     }
 
@@ -140,12 +140,11 @@ namespace AIRSCHED {
     lSegment._cabinList.push_back (iCabin);
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::
   addSegmentCabin (const SegmentCabinStruct_T& iCabin) {
     // Iterate on all the Segment structures (as they get the same cabin
     // definitions)
-      
     for (SegmentStructList_T::iterator itSegment = _segmentList.begin();
          itSegment != _segmentList.end(); ++itSegment) {
       SegmentStruct_T& lSegment = *itSegment;
@@ -154,7 +153,7 @@ namespace AIRSCHED {
     }
   }
 
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::
   addFareFamily (const SegmentStruct_T& iSegment,
                  const SegmentCabinStruct_T& iCabin,
@@ -202,7 +201,7 @@ namespace AIRSCHED {
     // so that the user knows the schedule input file is corrupted.
     if (itCabin == lSegment._cabinList.end()) {
       STDAIR_LOG_ERROR ("Within the schedule input file, there is a flight "
-                          << "for which the cabin code does not exist.");
+                        << "for which the cabin code does not exist.");
       throw SegmentDateNotFoundException();
     }
     // Add the Cabin structure to the Segment Cabin structure.
@@ -211,7 +210,7 @@ namespace AIRSCHED {
     lCabin._fareFamilies.push_back(iFareFamily);
   }
     
-  // //////////////////////////////////////////////////////////////////////
+  // ////////////////////////////////////////////////////////////////////
   void FlightPeriodStruct_T::
   addFareFamily (const SegmentCabinStruct_T& iCabin,
                  const FareFamilyStruct_T& iFareFamily) {

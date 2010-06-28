@@ -418,8 +418,6 @@ namespace AIRSCHED {
         ioAirportDate.buildOutboundPathListList (lOutboundPath_i);
       }
     }
-  }
-
-  
+  } 
   
 }

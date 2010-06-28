@@ -7,6 +7,7 @@ bom_h_sources = \
 				$(top_srcdir)/airsched/bom/SegmentCabin.hpp \
 				$(top_srcdir)/airsched/bom/LegCabin.hpp \
 				$(top_srcdir)/airsched/bom/BookingClass.hpp \
+				$(top_srcdir)/airsched/bom/SegmentPeriod.hpp \
 				$(top_srcdir)/airsched/bom/FareFamilyStruct.hpp \
 				$(top_srcdir)/airsched/bom/FlightPeriodStruct.hpp \
 				$(top_srcdir)/airsched/bom/SegmentStruct.hpp \
@@ -23,6 +24,7 @@ bom_cc_sources = \
 				$(top_srcdir)/airsched/bom/SegmentCabin.cpp \
 				$(top_srcdir)/airsched/bom/LegCabin.cpp \
 				$(top_srcdir)/airsched/bom/BookingClass.cpp \
+				$(top_srcdir)/airsched/bom/SegmentPeriod.cpp \
 				$(top_srcdir)/airsched/bom/FareFamilyStruct.cpp \
 				$(top_srcdir)/airsched/bom/FlightPeriodStruct.cpp \
 				$(top_srcdir)/airsched/bom/SegmentStruct.cpp \

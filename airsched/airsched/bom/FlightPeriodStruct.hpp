@@ -96,7 +96,7 @@ namespace AIRSCHED {
     unsigned int _itYear;
     unsigned int _itMonth;
     unsigned int _itDay;
-    int _dateOffSet;
+    int _dateOffset;
       
     /** Staging Time. */
     long _itHours;

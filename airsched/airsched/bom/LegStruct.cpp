@@ -14,8 +14,8 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   LegStruct_T::LegStruct_T ()
-    : _boardingDateOffSet (stdair::DEFAULT_DATE_OFFSET),
-      _offDateOffSet (stdair::DEFAULT_DATE_OFFSET) {
+    : _boardingDateOffset (stdair::DEFAULT_DATE_OFFSET),
+      _offDateOffset (stdair::DEFAULT_DATE_OFFSET) {
   }
     
   // //////////////////////////////////////////////////////////////////////
@@ -23,13 +23,13 @@ namespace AIRSCHED {
     std::ostringstream ostr;
     ostr << "    " << _boardingPoint << " / "
          << boost::posix_time::to_simple_string(_boardingTime);
-    if (_boardingDateOffSet.days() != 0) {
-      ostr << " [" << _boardingDateOffSet.days() << "]";
+    if (_boardingDateOffset.days() != 0) {
+      ostr << " [" << _boardingDateOffset.days() << "]";
     }
     ostr << " -- " << _offPoint << " / "
          << boost::posix_time::to_simple_string(_offTime);
-    if (_offDateOffSet.days() != 0) {
-      ostr << " [" << _offDateOffSet.days() << "]";
+    if (_offDateOffset.days() != 0) {
+      ostr << " [" << _offDateOffset.days() << "]";
     }
     ostr << " --> "
          << boost::posix_time::to_simple_string(_elapsed)
@@ -51,15 +51,13 @@ namespace AIRSCHED {
     ioLegDate.setOffPoint (_offPoint);
 
     // Set the Boarding Date
-    const boost::gregorian::date_duration lBoardingDateOffSet (_boardingDateOffSet);
-    ioLegDate.setBoardingDate (iRefDate+ lBoardingDateOffSet);
+    ioLegDate.setBoardingDate (iRefDate + _boardingDateOffset);
 
     // Set the Boarding Time
     ioLegDate.setBoardingTime (_boardingTime);
       
     // Set the Off Date
-    const boost::gregorian::date_duration lOffDateOffSet (_offDateOffSet);
-    ioLegDate.setOffDate (iRefDate + lOffDateOffSet);
+    ioLegDate.setOffDate (iRefDate + _offDateOffset);
 
     // Set the Off Time
     ioLegDate.setOffTime (_offTime);

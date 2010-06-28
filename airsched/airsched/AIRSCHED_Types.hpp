@@ -66,8 +66,8 @@ namespace AIRSCHED {
   /** Define the Date (e.g., flight-date departure date). */
   typedef boost::gregorian::date Date_T;
 
-  /** Define the Date Off-Set (e.g., -1 ). */
-  typedef boost::gregorian::date_duration DateOffSet_T;
+  /** Define the Date Offset (e.g., -1 ). */
+  typedef boost::gregorian::date_duration DateOffset_T;
 
   /** Define the Period (e.g., period during which flights depart). */
   typedef boost::gregorian::date_period DatePeriod_T;

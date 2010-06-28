@@ -78,7 +78,7 @@ namespace AIRSCHED {
       // As a Boost date period (DatePeriod_T) defines the last day of
       // the period to be end-date - one day, we have to add one day to that
       // end date before.
-      const stdair::DateOffSet_T oneDay (1);
+      const stdair::DateOffset_T oneDay (1);
       _flightPeriod._dateRangeEnd = _flightPeriod.getDate() + oneDay;
 
       // Transform the date pair (i.e., the date range) into a date period
@@ -160,7 +160,7 @@ namespace AIRSCHED {
       _flightPeriod._itSeconds = 0;
 
       // Reset the date off-set
-      _flightPeriod._dateOffSet = 0;
+      _flightPeriod._dateOffset = 0;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -179,9 +179,9 @@ namespace AIRSCHED {
 
       // As the boarding date off set is optional, it can be set only
       // afterwards, based on the staging date off-set value
-      // (_flightPeriod._dateOffSet).
-      const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
-      _flightPeriod._itLeg._boardingDateOffSet = lDateOffSet;
+      // (_flightPeriod._dateOffset).
+      const DateOffset_T lDateOffset (_flightPeriod._dateOffset);
+      _flightPeriod._itLeg._boardingDateOffset = lDateOffset;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -200,9 +200,9 @@ namespace AIRSCHED {
 
       // As the boarding date off set is optional, it can be set only
       // afterwards, based on the staging date off-set value
-      // (_flightPeriod._dateOffSet).
-      const DateOffSet_T lDateOffSet (_flightPeriod._dateOffSet);
-      _flightPeriod._itLeg._offDateOffSet = lDateOffSet;
+      // (_flightPeriod._dateOffset).
+      const DateOffset_T lDateOffset (_flightPeriod._dateOffset);
+      _flightPeriod._itLeg._offDateOffset = lDateOffset;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -390,7 +390,11 @@ namespace AIRSCHED {
 
       // Create the FlightDate BOM objects, and potentially the intermediary
       // objects (e.g., Inventory).
-      InventoryGenerator::createFlightDates (_bomRoot, _flightPeriod);
+      InventoryGenerator::createFlightDate (_bomRoot, _flightPeriod);
+
+      // Create the FlightPeriod BOM objects, and potentially the intermediary
+      // objects (e.g., Inventory).
+      InventoryGenerator::createFlightPeriod (_bomRoot, _flightPeriod);
     }
 
       
@@ -546,7 +550,7 @@ namespace AIRSCHED {
 
       date_offset =
         boost::spirit::classic::ch_p('/')
-        >> (int1_p)[boost::spirit::classic::assign_a(self._flightPeriod._dateOffSet)]
+        >> (int1_p)[boost::spirit::classic::assign_a(self._flightPeriod._dateOffset)]
         ;          
         
       leg_cabin_details =

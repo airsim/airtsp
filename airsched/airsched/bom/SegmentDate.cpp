@@ -78,7 +78,7 @@ namespace AIRSCHED {
         lCurrentLegDate_ptr->getBoardingTime() - lPreviousLegDate_ptr->getOffTime();
       lElapsedTime += lStopOverTime;
 
-      // Add the elapsed time of the current segment
+      // Add the elapsed time of the current leg
       const stdair::Duration_T& currentElapsedTime =
         lCurrentLegDate_ptr->getElapsedTime();
       lElapsedTime += currentElapsedTime;

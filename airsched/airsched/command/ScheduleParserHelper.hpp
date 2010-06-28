@@ -207,7 +207,7 @@ namespace AIRSCHED {
     /////////////////////////////////////////////////////////////////////////
     /**
        AirlineCode; FlightNumber; DateRangeStart; DateRangeEnd; DOW;
-       (list) BoardingPoint; OffPoint; BoardingTime; DateOffSet; OffTime;
+       (list) BoardingPoint; OffPoint; BoardingTime; DateOffset; OffTime;
        ElapsedTime;
        (list) CabinCode; Capacity;
        SegmentSpecificty (0 or 1);
@@ -228,8 +228,8 @@ namespace AIRSCHED {
        FlightKey           ::= AirlineCode ';' FlightNumber
        ';' DateRangeStart ';' DateRangeEnd ';' DOW
        LegKey              ::= BoardingPoint ';' OffPoint
-       LegDetails          ::= BoardingTime ['/' BoardingDateOffSet]
-       ';' OffTime ['/' BoardingDateOffSet]
+       LegDetails          ::= BoardingTime ['/' BoardingDateOffset]
+       ';' OffTime ['/' BoardingDateOffset]
        ';' Elapsed
        LegCabinDetails     ::= CabinCode ';' Capacity
        Leg                 ::= LegKey ';' LegDetails (';' CabinDetails)+

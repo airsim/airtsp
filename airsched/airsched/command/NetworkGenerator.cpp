@@ -234,7 +234,7 @@ namespace AIRSCHED {
     // are thus done at that stage.
     const stdair::OutboundPathListList_T& lOutboundPathListList =
       ioAirportDate.getOutboundPathListList();
-    const short lNbOfSegments_m1 = iNbOfSegments - 1;
+    const unsigned short lNbOfSegments_m1 = iNbOfSegments - 1;
     assert (lNbOfSegments_m1 >= 0);
     if (lOutboundPathListList.size() < lNbOfSegments_m1) {
       return;

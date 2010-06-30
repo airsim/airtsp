@@ -387,12 +387,12 @@ namespace AIRSCHED {
         &stdair::CmdBomManager::createInventory (ioBomRoot, lAirlineCode);
     }
     assert (lInventory_ptr != NULL);
-      
+
     // Create the flight-period key.
+    const stdair::PeriodStruct_T lPeriod (iFlightPeriodStruct._dateRange,
+                                          iFlightPeriodStruct._dow);
     const stdair::FlightPeriodKey_T
-      lFlightPeriodKey (iFlightPeriodStruct._flightNumber,
-                        iFlightPeriodStruct._dateRange,
-                        iFlightPeriodStruct._dow);
+      lFlightPeriodKey (iFlightPeriodStruct._flightNumber, lPeriod);
       
     // Check that the flight-period object is not already created.
     stdair::FlightPeriod* lFlightPeriod_ptr =

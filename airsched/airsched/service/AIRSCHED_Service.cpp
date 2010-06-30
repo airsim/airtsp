@@ -23,6 +23,7 @@
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
 #include <airsched/command/NetworkGenerator.hpp>
+#include <airsched/command/SegmentPathGenerator.hpp>
 #include <airsched/command/TravelSolutionProvider.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
@@ -175,13 +176,15 @@ namespace AIRSCHED {
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot);
 
     // Build the network from the schedule.
-    NetworkGenerator::createNetworks (lBomRoot);
+    //NetworkGenerator::createNetworks (lBomRoot);
+    SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);
+
     
     // DEBUG
-    STDAIR_LOG_DEBUG ("Generated BomRoot:");
-    std::ostringstream oStream;
-    stdair::BomManager::display (oStream, lBomRoot);
-    STDAIR_LOG_DEBUG (oStream.str());
+    // STDAIR_LOG_DEBUG ("Generated BomRoot:");
+    // std::ostringstream oStream;
+    // stdair::BomManager::display (oStream, lBomRoot);
+    // STDAIR_LOG_DEBUG (oStream.str());
   }
   
   // ////////////////////////////////////////////////////////////////////

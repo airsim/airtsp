@@ -8,6 +8,7 @@
 #include <stdair/bom/SegmentPeriod.hpp>
 // AIRSCHED
 #include <airsched/bom/LegStruct.hpp>
+#include <airsched/bom/SegmentStruct.hpp>
 
 // Forward declarations
 namespace stdair {
@@ -27,6 +28,10 @@ namespace AIRSCHED {
 
   public:
     // ////////// Business Methods /////////
+    /** Fill the attributes of the given segment-period with the cabins
+        and classes. */
+    static void fill (stdair::SegmentPeriod&, const SegmentStruct_T&);
+    
     /** Fill the attributes of the given segment-period with the list of used
         legs. */
     static void fill (stdair::SegmentPeriod&, const LegStructList_T&);

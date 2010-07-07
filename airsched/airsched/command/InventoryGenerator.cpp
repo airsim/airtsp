@@ -430,6 +430,7 @@ namespace AIRSCHED {
                                                     lSegmentPeriodKey);
 
       // Set the segment-period attributes.
+      SegmentPeriod::fill (lSegmentPeriod, lSegment);
       SegmentPeriod::fill (lSegmentPeriod, iFlightPeriodStruct._legList);
     }
   }

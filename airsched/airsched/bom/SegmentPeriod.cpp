@@ -23,6 +23,21 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   void SegmentPeriod::fill (stdair::SegmentPeriod& ioSegmentPeriod,
+                            const SegmentStruct_T& iSegmentStruct) {
+    // Browse the list of segment cabins and fill the cabin booking
+    // class map of the BOM segment period.
+    for (SegmentCabinStructList_T::const_iterator itCabin =
+           iSegmentStruct._cabinList.begin();
+         itCabin != iSegmentStruct._cabinList.end(); ++itCabin) {
+      const SegmentCabinStruct_T& lSegmentCabinStruct = *itCabin;
+      ioSegmentPeriod.
+        addCabinBookingClassList (lSegmentCabinStruct._cabinCode,
+                                  lSegmentCabinStruct._classes);
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentPeriod::fill (stdair::SegmentPeriod& ioSegmentPeriod,
                             const LegStructList_T& iLegList) {
 
     const stdair::AirportCode_T& lBoardingPoint =

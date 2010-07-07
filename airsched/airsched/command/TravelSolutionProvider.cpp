@@ -21,91 +21,116 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
-                      const stdair::Network& iNetwork,
+                      const stdair::BomRoot& iBomRoot,
                       const stdair::BookingRequestStruct& iBookingRequest) {
-    
-    // Get the requested departure date.
-    const stdair::Date_T lDepartureDate =
-      iBookingRequest.getPreferedDepartureDate ();
-    // Retrieve the NetworkDate for that departure date.
-    const stdair::NetworkDate* lNetworkDate_ptr =
-      iNetwork.getNetworkDate (lDepartureDate);
-    assert (lNetworkDate_ptr != NULL);
-
-    // Get the departure airport.
+    // Retrieve  the reachable  universe object  corresponding  to the
+    // origin of the booking request.
     const stdair::AirportCode_T& lOrigin = iBookingRequest.getOrigin ();
-    // Retrieve the AirportDate for that origin.
-    const stdair::AirportDate* lAirportDate_ptr =
-      lNetworkDate_ptr->getAirportDate (lOrigin);
-    assert (lAirportDate_ptr != NULL);
+    const stdair::ReachableUniverse* lReachableUniverse_ptr =
+      iBomRoot.getReachableUniverse (lOrigin);
+    assert (lReachableUniverse_ptr != NULL);
 
-    const stdair::OutboundPathList_T& lOutboundPathList =
-      lAirportDate_ptr->getOutboundPathList ();
-
-    getTravelSolutions(ioTravelSolutionList, lOutboundPathList, iBookingRequest);
+    getTravelSolutions (ioTravelSolutionList, *lReachableUniverse_ptr,
+                        iBookingRequest);
   }
 
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
-                      const stdair::OutboundPathList_T& iOutboundPathList,
+                      const stdair::ReachableUniverse& iReachableUniverse,
                       const stdair::BookingRequestStruct& iBookingRequest) {
-    // Retrieve the destination of the booking request.
+    // Retrieve the origin-destination set objet correponding to the
+    // destination of the booking request.
     const stdair::AirportCode_T& lDestination = iBookingRequest.getDestination();
+    const stdair::OriginDestinationSet* lOriginDestinationSet_ptr =
+      iReachableUniverse.getOriginDestinationSet (lDestination);
+    assert (lOriginDestinationSet_ptr != NULL);
 
-    // Browse the outbound path list for those with the appropriate destination.
-    for (stdair::OutboundPathList_T::iterator itOutboundPath =
-           iOutboundPathList.begin();
-         itOutboundPath != iOutboundPathList.end(); ++itOutboundPath) {
-      stdair::OutboundPath& lOutboundPath = *itOutboundPath;
-
-      const stdair::AirportCode_T& lCurrentDestination =
-        lOutboundPath.getDestination();
-
-      if (lDestination == lCurrentDestination) {
-        getTravelSolutions(ioTravelSolutionList, lOutboundPath, iBookingRequest);
-      }
-    } 
+    getTravelSolutions (ioTravelSolutionList, *lOriginDestinationSet_ptr,
+                        iBookingRequest);
   }
 
   // ////////////////////////////////////////////////////////////////////
   void TravelSolutionProvider::
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
-                      stdair::OutboundPath& ioOutboundPath,
+                      const stdair::OriginDestinationSet& iOriginDestinationSet,
                       const stdair::BookingRequestStruct& iBookingRequest) {
-    // Create an empty list of booking classes.
-    stdair::BookingClassSTLList_T lBookingClassSTLList;
+    // Retrieve the departure date of the booking request.
+    const stdair::Date_T& lPreferedDepartureDate =
+      iBookingRequest.getPreferedDepartureDate ();
 
-    // Browse the segment-date list and take the first (least
-    // expensive) booking class to build the least expensive travel
-    // solution.
-    const stdair::SegmentDateList_T lSegmentDateList =
-      ioOutboundPath.getSegmentDateList ();
-    
-    for (stdair::SegmentDateList_T::iterator itSegmentDate =
-           lSegmentDateList.begin();
-         itSegmentDate != lSegmentDateList.end(); ++itSegmentDate) {
-      const stdair::SegmentDate& lSegmentDate = *itSegmentDate;
-
-      const stdair::SegmentCabinList_T lSegmentCabinList =
-        lSegmentDate.getSegmentCabinList();
-      stdair::SegmentCabinList_T::reverse_iterator itLastCabin =
-        lSegmentCabinList.rbegin();
-      assert (itLastCabin != lSegmentCabinList.rend());
-      const stdair::SegmentCabin& lSegmentCabin = *itLastCabin;
-
-      const stdair::BookingClassList_T lBookingClassList =
-        lSegmentCabin.getBookingClassList();
-      stdair::BookingClassList_T::reverse_iterator itLastBookingClass =
-        lBookingClassList.rbegin();
-      assert (itLastBookingClass != lBookingClassList.rend());
-      stdair::BookingClass& lBookingClass = *itLastBookingClass;
-
-      lBookingClassSTLList.push_back (&lBookingClass);
+    // Browse the list of segment path periods and find those which content
+    // the prefered departure date.
+    const stdair::SegmentPathPeriodList_T& lSegmentPathPeriodList =
+      iOriginDestinationSet.getSegmentPathPeriodList ();
+    for (stdair::SegmentPathPeriodList_T::iterator itSegmentPath =
+           lSegmentPathPeriodList.begin ();
+         itSegmentPath != lSegmentPathPeriodList.end (); ++itSegmentPath) {
+      const stdair::SegmentPathPeriod& lCurrentSegmentPath = *itSegmentPath;
+      if (lCurrentSegmentPath.isDepartureDateValid (lPreferedDepartureDate)) {
+        getTravelSolutions (ioTravelSolutionList, lCurrentSegmentPath,
+                            iBookingRequest);
+      }
     }
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionProvider::
+  getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
+                      const stdair::SegmentPathPeriod& iSegmentPathPeriod,
+                      const stdair::BookingRequestStruct& iBookingRequest) {
+    // Create a new travel solution.
+    stdair::TravelSolutionStruct lTravelSolution;
     
-    stdair::TravelSolutionStruct lTravelSolution (ioOutboundPath,
-                                                  lBookingClassSTLList);
+    // Browse the list of segments and retrieve the necessary informations
+    // for identifying the corresponding segment-date.
+    const stdair::Date_T& lPreferedDepartureDate =
+      iBookingRequest.getPreferedDepartureDate ();
+    const stdair::SegmentPeriodList_T& lSegmentPeriodList =
+      iSegmentPathPeriod.getSegmentPeriodList ();
+    const stdair::DateOffsetList_T& lBoardingDateOffsetList =
+      iSegmentPathPeriod.getBoardingDateOffsetList ();
+    assert (lSegmentPeriodList.size() == lBoardingDateOffsetList.size());
+    stdair::DateOffsetList_T::const_iterator itOffset =
+      lBoardingDateOffsetList.begin();
+    for (stdair::SegmentPeriodList_T::iterator itSegment =
+           lSegmentPeriodList.begin();
+         itSegment != lSegmentPeriodList.end(); ++itSegment) {
+      const stdair::SegmentPeriod& lSegmentPeriod = *itSegment;
+      const stdair::DateOffset_T& lBoardingDateOffset = *itOffset;
+
+      // Find the corresponding segment-date within the segment period.
+      const stdair::DateOffset_T& lSegmentBoardingDateOffset =
+        lSegmentPeriod.getBoardingDateOffset();
+      const stdair::Date_T& lReferenceFlightDate = lPreferedDepartureDate 
+        + lBoardingDateOffset - lSegmentBoardingDateOffset;
+
+      // Build the whole segment-date key string.
+      std::ostringstream oStr;
+      oStr << lSegmentPeriod.getParent().getParent().getAirlineCode()
+           << ", " << lSegmentPeriod.getParent().getFlightNumber()
+           << ", " << lReferenceFlightDate;
+
+      lTravelSolution.addSegmentDateKey (oStr.str());
+
+      // Retrieve a class code within the segment-date.
+      const stdair::CabinBookingClassMap_T& lCabinBookingClassMap =
+        lSegmentPeriod.getCabinBookingClassMap ();
+      stdair::CabinBookingClassMap_T::const_reverse_iterator
+        itCabinBookingClassList = lCabinBookingClassMap.rbegin();
+      if (itCabinBookingClassList != lCabinBookingClassMap.rend()) {
+        const stdair::ClassList_String_T& lClassList =
+          itCabinBookingClassList->second;
+        const unsigned int lNbOfClasses = lClassList.size();
+        if (lNbOfClasses > 0) {
+          const char lClassCode = lClassList.at (lNbOfClasses-1);
+          lTravelSolution.addBookingClassKey (lClassCode);
+        }
+      }
+      
+      ++itOffset;
+    }
+
     ioTravelSolutionList.push_back (lTravelSolution);
   }
 

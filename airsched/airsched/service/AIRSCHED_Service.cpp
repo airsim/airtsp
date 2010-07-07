@@ -178,13 +178,13 @@ namespace AIRSCHED {
     // Build the network from the schedule.
     //NetworkGenerator::createNetworks (lBomRoot);
     SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);
-
     
     // DEBUG
-    // STDAIR_LOG_DEBUG ("Generated BomRoot:");
-    // std::ostringstream oStream;
-    // stdair::BomManager::display (oStream, lBomRoot);
-    // STDAIR_LOG_DEBUG (oStream.str());
+    STDAIR_LOG_DEBUG ("Generated BomRoot:");
+    std::ostringstream oStream;
+    //stdair::BomManager::display (oStream, lBomRoot);
+    stdair::BomManager::displaySegmentPathNetwork (oStream, lBomRoot);
+    STDAIR_LOG_DEBUG (oStream.str());
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -233,12 +233,9 @@ namespace AIRSCHED {
     assert (lSTDAIR_Service_ptr != NULL);
     
     const stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
-    const stdair::NetworkID_T lNetworkID ("Whole Network");
-    const stdair::Network* lNetwork_ptr = lBomRoot.getNetwork (lNetworkID);
-    assert (lNetwork_ptr != NULL);
     
     TravelSolutionProvider::getTravelSolutions (ioTravelSolutionList,
-                                                *lNetwork_ptr, iBookingRequest);
+                                                lBomRoot, iBookingRequest);
   }
 
 }

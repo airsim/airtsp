@@ -10,7 +10,10 @@
 
 // Forward declarations
 namespace stdair {
-  class Network;
+  class BomRoot;
+  class ReachableUniverse;
+  class OriginDestinationSet;
+  class SegmentPathPeriod;
   struct BookingRequestStruct;
 }
 
@@ -26,20 +29,16 @@ namespace AIRSCHED {
     /** Calculate and return a list of travel solutions corresponding to a given
         product demand. */
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const stdair::Network&,
+                                    const stdair::BomRoot&,
                                     const stdair::BookingRequestStruct&);
-
-    
-    /** Calculate and return a list of travel solutions corresponding to a given
-        product demand. */
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const stdair::OutboundPathList_T&,
+                                    const stdair::ReachableUniverse&,
                                     const stdair::BookingRequestStruct&);
-
-    /** Calculate and return a list of travel solutions corresponding to a given
-        product demand. */
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    stdair::OutboundPath&,
+                                    const stdair::OriginDestinationSet&,
+                                    const stdair::BookingRequestStruct&);
+    static void getTravelSolutions (stdair::TravelSolutionList_T&,
+                                    const stdair::SegmentPathPeriod&,
                                     const stdair::BookingRequestStruct&);
   };
 

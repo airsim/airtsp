@@ -6,7 +6,6 @@
 #include <string>
 // StdAir
 #include <stdair/bom/Inventory.hpp>
-#include <stdair/bom/Network.hpp>
 // AirSched
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/ScheduleParser.hpp>

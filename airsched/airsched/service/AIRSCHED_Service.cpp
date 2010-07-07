@@ -11,7 +11,6 @@
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomManager.hpp> // for display()
 #include <stdair/bom/TravelSolutionStruct.hpp>
-#include <stdair/bom/NetworkKey.hpp>
 #include <stdair/bom/BomSource.hpp>
 #include <stdair/bom/BomTypes.hpp>
 #include <stdair/service/Logger.hpp>
@@ -22,7 +21,6 @@
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
-#include <airsched/command/NetworkGenerator.hpp>
 #include <airsched/command/SegmentPathGenerator.hpp>
 #include <airsched/command/TravelSolutionProvider.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
@@ -176,7 +174,6 @@ namespace AIRSCHED {
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot);
 
     // Build the network from the schedule.
-    //NetworkGenerator::createNetworks (lBomRoot);
     SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);
     
     // DEBUG

@@ -356,6 +356,7 @@ AC_CONFIG_FILES(
 	airsched/core/Makefile
 	airsched/config/Makefile
 	airsched/batches/Makefile
+	man/Makefile
 	doc/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile

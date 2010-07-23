@@ -1,4 +1,4 @@
-## top directory
+## airsched top directory
 include $(top_srcdir)/Makefile.common
 
 ACLOCAL_AMFLAGS = -I config
@@ -25,7 +25,7 @@ MAINTAINERCLEANFILES = Makefile.in aclocal.m4 configure \
 EXTRA_DIST =
 
 # Build in these directories:
-SUBDIRS = stdair @PACKAGE@ $(HTML_DOC_DIR) extracppunit $(TEST_DIR)
+SUBDIRS = stdair @PACKAGE@ man $(HTML_DOC_DIR) extracppunit $(TEST_DIR)
 
 
 # Configuration helpers

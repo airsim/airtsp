@@ -1,11 +1,12 @@
-## command sub-directory
+## airsched/command sub-directory
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
-noinst_LTLIBRARIES= libsvc.la
+#
+noinst_LTLIBRARIES= libairschedsvc.la
 
-libsvc_la_SOURCES= $(svc_h_sources) $(svc_cc_sources) 
-libsvc_la_CXXFLAGS =
+libairschedsvc_la_SOURCES= $(airsched_svc_h_sources) $(airsched_svc_cc_sources) 
+libairschedsvc_la_CXXFLAGS =
 
 #pkgincludedir = $(includedir)/@PACKAGE@/service
-#pkginclude_HEADERS = $(svc_h_sources)
+#pkginclude_HEADERS = $(airsched_svc_h_sources)

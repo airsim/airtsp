@@ -1,4 +1,4 @@
-# batches
+# airsched/batches
 include $(top_srcdir)/Makefile.common
 include $(srcdir)/sources.mk
 
@@ -10,7 +10,7 @@ MAINTAINERCLEANFILES = Makefile.in
 # Binaries (batches)
 bin_PROGRAMS = airsched
 
-airsched_SOURCES = $(batches_h_sources) $(batches_cc_sources)
+airsched_SOURCES = $(airsched_batches_h_sources) $(airsched_batches_cc_sources)
 airsched_CXXFLAGS = $(BOOST_CFLAGS)
 airsched_LDADD = 
 airsched_LDFLAGS = $(BOOST_PROGRAM_OPTIONS_LIB) \

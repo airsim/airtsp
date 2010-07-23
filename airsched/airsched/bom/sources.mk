@@ -1,4 +1,4 @@
-bom_h_sources = \
+airsched_bom_h_sources = \
 				$(top_srcdir)/airsched/bom/BomRoot.hpp \
 				$(top_srcdir)/airsched/bom/Inventory.hpp \
 				$(top_srcdir)/airsched/bom/FlightDate.hpp \
@@ -15,7 +15,7 @@ bom_h_sources = \
 				$(top_srcdir)/airsched/bom/LegStruct.hpp \
 				$(top_srcdir)/airsched/bom/LegCabinStruct.hpp \
 				$(top_srcdir)/airsched/bom/AirportList.hpp
-bom_cc_sources = \
+airsched_bom_cc_sources = \
 				$(top_srcdir)/airsched/bom/BomRoot.cpp \
 				$(top_srcdir)/airsched/bom/Inventory.cpp \
 				$(top_srcdir)/airsched/bom/FlightDate.cpp \

@@ -1,4 +1,4 @@
-cmd_h_sources = \
+airsched_cmd_h_sources = \
 				$(top_srcdir)/airsched/command/Simulator.hpp \
 				$(top_srcdir)/airsched/command/FileMgr.hpp \
 				$(top_srcdir)/airsched/command/ScheduleParser.hpp \
@@ -6,7 +6,7 @@ cmd_h_sources = \
 				$(top_srcdir)/airsched/command/SegmentPathGenerator.hpp \
 				$(top_srcdir)/airsched/command/InventoryGenerator.hpp \
 				$(top_srcdir)/airsched/command/TravelSolutionProvider.hpp
-cmd_cc_sources = \
+airsched_cmd_cc_sources = \
 				$(top_srcdir)/airsched/command/Simulator.cpp \
 				$(top_srcdir)/airsched/command/FileMgr.cpp \
 				$(top_srcdir)/airsched/command/ScheduleParser.cpp \

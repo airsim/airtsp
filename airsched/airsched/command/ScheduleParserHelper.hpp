@@ -236,14 +236,13 @@ namespace AIRSCHED {
        SegmentKey          ::= BoardingPoint ';' OffPoint
        SegmentCabinDetails ::= CabinCode ';' Classes
        (';' FamilyCabinDetails)*
-       FamilyCabinDetails  ::= CabinCode ';' Classes
+       FamilyCabinDetails  ::= FamilyCode ';' Classes
        FullSegmentCabinDetails::= (';' SegmentCabinDetails)+
-       GeneralSegments     ::= '0' (';' SegmentCabinDetails)+
-       SpecificSegments    ::= '1' (';' SegmentKey
-       ';' FullSegmentCabinDetails)+
-       Segment             ::= GeneralSegment | SpecificSegment
+       GenericSegment      ::= '0' (';' SegmentCabinDetails)+
+       SpecificSegments    ::= '1' (';' SegmentKey ';' FullSegmentCabinDetails)+
+       SegmentSection      ::= GenericSegment | SpecificSegments
        FlightPeriod        ::= FlightKey (';' Leg)+
-       (';' Segment)+ ';' EndOfFlight
+                               ';' SegmentSection ';' EndOfFlight
        EndOfFlight         ::= ';'
     */
 
@@ -260,10 +259,11 @@ namespace AIRSCHED {
         // Instantiation of rules
         boost::spirit::classic::rule<ScannerT> flight_period_list, flight_period,
           flight_period_end, flight_key, airline_code, flight_number,
-          date, dow, leg, leg_key, leg_details, time, date_offset,
-          leg_cabin_details, segment, segment_key, full_segment_cabin_details,
+          date, dow, time, date_offset,
+          leg, leg_key, leg_details, leg_cabin_details,
+          segment_section, segment_key, full_segment_cabin_details,
           segment_cabin_details, full_family_cabin_details,
-          family_cabin_details, general_segments, specific_segments;
+          family_cabin_details, generic_segment, specific_segment_list;
 
         /** Entry point of the parser. */
         boost::spirit::classic::rule<ScannerT> const& start() const;

@@ -479,7 +479,7 @@ namespace AIRSCHED {
       
       flight_period = flight_key
         >> +( ';' >> leg )
-        >> +( ';' >> segment )
+        >> ';' >> segment_section
         >> flight_period_end[doEndFlight(self._bomRoot,
                                          self._flightPeriod)]
         ;
@@ -564,16 +564,16 @@ namespace AIRSCHED {
         >> (airport_p)[storeSegmentOffPoint(self._flightPeriod)]
         ;
 	 
-      segment =
-        general_segments | specific_segments
+      segment_section =
+        generic_segment | specific_segment_list
         ;
 
-      general_segments =
+      generic_segment =
         boost::spirit::classic::ch_p('0')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_cabin_details)
         ;
 
-      specific_segments =
+      specific_segment_list =
         boost::spirit::classic::ch_p('1')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_key >> full_segment_cabin_details)
         ;
@@ -609,10 +609,10 @@ namespace AIRSCHED {
       BOOST_SPIRIT_DEBUG_NODE (time);
       BOOST_SPIRIT_DEBUG_NODE (date_offset);
       BOOST_SPIRIT_DEBUG_NODE (leg_cabin_details);
-      BOOST_SPIRIT_DEBUG_NODE (segment);
+      BOOST_SPIRIT_DEBUG_NODE (segment_section);
       BOOST_SPIRIT_DEBUG_NODE (segment_key);
-      BOOST_SPIRIT_DEBUG_NODE (general_segments);
-      BOOST_SPIRIT_DEBUG_NODE (specific_segments);
+      BOOST_SPIRIT_DEBUG_NODE (generic_segment);
+      BOOST_SPIRIT_DEBUG_NODE (specific_segment_list);
       BOOST_SPIRIT_DEBUG_NODE (full_segment_cabin_details);
       BOOST_SPIRIT_DEBUG_NODE (segment_cabin_details);
       BOOST_SPIRIT_DEBUG_NODE (family_cabin_details);

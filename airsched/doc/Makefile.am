@@ -1,10 +1,11 @@
+# airsched doc sub-directory
 # StdAir
-include $(top_srcdir)/stdair/basic/sources.mk
-include $(top_srcdir)/stdair/bom/sources.mk
-include $(top_srcdir)/stdair/factory/sources.mk
-include $(top_srcdir)/stdair/command/sources.mk
-include $(top_srcdir)/stdair/service/sources.mk
-include $(top_srcdir)/stdair/core/sources.mk
+#include $(top_srcdir)/stdair/basic/sources.mk
+#include $(top_srcdir)/stdair/bom/sources.mk
+#include $(top_srcdir)/stdair/factory/sources.mk
+#include $(top_srcdir)/stdair/command/sources.mk
+#include $(top_srcdir)/stdair/service/sources.mk
+#include $(top_srcdir)/stdair/core/sources.mk
 # Air-Sched
 include $(top_srcdir)/airsched/basic/sources.mk
 include $(top_srcdir)/airsched/bom/sources.mk
@@ -13,6 +14,7 @@ include $(top_srcdir)/airsched/command/sources.mk
 include $(top_srcdir)/airsched/service/sources.mk
 include $(top_srcdir)/airsched/core/sources.mk
 include $(top_srcdir)/airsched/batches/sources.mk
+#
 include $(top_srcdir)/doc/local/sources.mk
 include $(top_srcdir)/doc/tutorial/sources.mk
 include $(top_srcdir)/doc/tutorial/src/sources.mk
@@ -22,9 +24,9 @@ SUBDIRS = images tutorial local
 docdir = @docdir@
 
 html_tarname = @PACKAGE_TARNAME@-doc-@PACKAGE_VERSION@
-tex_tarname = @PACKAGE_TARNAME@-tex-@PACKAGE_VERSION@
+pdf_tarname = @PACKAGE_TARNAME@-pdf-@PACKAGE_VERSION@
 
-noinst_DATA = sourceforge/howto_release_airsched.html.in
+noinst_DATA =
 EXTRA_DIST = $(noinst_DATA)
 
 # Targets
@@ -35,14 +37,6 @@ html-local: html/index.html
 html/index.html: doxygen_html.cfg \
 	$(doc_local_sources) $(html_local_sources) \
 	$(doc_tutorial_sources) $(cpp_tutorial_sources) \
-	$(stdair_batches_h_sources) $(stdair_batches_cc_sources) \
-	$(stdair_service_h_sources) $(stdair_service_cc_sources) \
-	$(stdair_bas_h_sources) $(stdair_bas_cc_sources) \
-	$(stdair_bom_h_sources) $(stdair_bom_cc_sources) \
-	$(stdair_fac_h_sources) $(stdair_fac_cc_sources) \
-	$(stdair_dba_h_sources) $(stdair_dba_cc_sources) \
-	$(stdair_cmd_h_sources) $(stdair_cmd_cc_sources) \
-	$(stdair_svc_h_sources) $(stdair_svc_cc_sources) \
 	$(airsched_batches_h_sources) $(airsched_batches_cc_sources) \
 	$(airsched_service_h_sources) $(airsched_service_cc_sources) \
 	$(airsched_bas_h_sources) $(airsched_bas_cc_sources) \
@@ -58,6 +52,16 @@ html/index.html: doxygen_html.cfg \
 		cp $(srcdir)/images/favicon.ico html; \
 	fi
 
+# 	$(stdair_batches_h_sources) $(stdair_batches_cc_sources) \
+#	$(stdair_service_h_sources) $(stdair_service_cc_sources) \
+#	$(stdair_bas_h_sources) $(stdair_bas_cc_sources) \
+#	$(stdair_bom_h_sources) $(stdair_bom_cc_sources) \
+#	$(stdair_fac_h_sources) $(stdair_fac_cc_sources) \
+#	$(stdair_dba_h_sources) $(stdair_dba_cc_sources) \
+#	$(stdair_cmd_h_sources) $(stdair_cmd_cc_sources) \
+#	$(stdair_svc_h_sources) $(stdair_svc_cc_sources) \
+#
+
 dist-html: html-local
 	cp -a $(top_builddir)/doc/html $(top_builddir)/$(html_tarname)
 	tar chof - $(top_builddir)/$(html_tarname) | \
@@ -66,13 +70,13 @@ dist-html: html-local
 		bzip2 -9 -c > $(top_builddir)/$(html_tarname).tar.bz2
 	rm -rf $(top_builddir)/$(html_tarname)
 
-dist-tex: html-local
-	cp -a $(top_builddir)/doc/latex $(top_builddir)/$(tex_tarname)
-	tar chof - $(top_builddir)/$(tex_tarname) | \
-		gzip --best -c > $(top_builddir)/$(tex_tarname).tar.gz
-	tar chof - $(top_builddir)/$(tex_tarname) | \
-		bzip2 -9 -c > $(top_builddir)/$(tex_tarname).tar.bz2
-	rm -rf $(top_builddir)/$(tex_tarname)
+dist-pdf: html-local
+	cp -a $(top_builddir)/doc/latex $(top_builddir)/$(pdf_tarname)
+	tar chof - $(top_builddir)/$(pdf_tarname) | \
+		gzip --best -c > $(top_builddir)/$(pdf_tarname).tar.gz
+	tar chof - $(top_builddir)/$(pdf_tarname) | \
+		bzip2 -9 -c > $(top_builddir)/$(pdf_tarname).tar.bz2
+	rm -rf $(top_builddir)/$(pdf_tarname)
 
 install-data-local: html-local
 	$(mkinstalldirs) $(DESTDIR)$(docdir)

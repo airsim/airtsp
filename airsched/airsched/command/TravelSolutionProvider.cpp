@@ -28,7 +28,9 @@ namespace AIRSCHED {
     const stdair::AirportCode_T& lOrigin = iBookingRequest.getOrigin ();
     const stdair::ReachableUniverse* lReachableUniverse_ptr =
       iBomRoot.getReachableUniverse (lOrigin);
-    assert (lReachableUniverse_ptr != NULL);
+    if (lReachableUniverse_ptr == NULL) {
+      return;
+    }
 
     getTravelSolutions (ioTravelSolutionList, *lReachableUniverse_ptr,
                         iBookingRequest);
@@ -44,7 +46,9 @@ namespace AIRSCHED {
     const stdair::AirportCode_T& lDestination = iBookingRequest.getDestination();
     const stdair::OriginDestinationSet* lOriginDestinationSet_ptr =
       iReachableUniverse.getOriginDestinationSet (lDestination);
-    assert (lOriginDestinationSet_ptr != NULL);
+    if (lOriginDestinationSet_ptr == NULL) {
+      return;
+    }
 
     getTravelSolutions (ioTravelSolutionList, *lOriginDestinationSet_ptr,
                         iBookingRequest);

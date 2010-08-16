@@ -311,13 +311,13 @@ namespace AIRSCHED {
       const stdair::AirportCode_T& lOffPoint = lCurrentSegmentDate.getOffPoint();
       
       // Add a sanity check so as to ensure that the loop stops. If
-      // there are more than MAXIMUM_NUMBER_OF_LEGS legs, there is
+      // there are more than MAXIMAL_NUMBER_OF_LEGS legs, there is
       // an issue somewhere in the code (not in the parser, as the
       // segments are derived from the legs thanks to the
       // FlightPeriodStruct::buildSegments() method).
       unsigned short i = 1;
       while (currentBoardingPoint != lOffPoint
-             && i <= stdair::MAXIMUM_NUMBER_OF_LEGS_IN_FLIGHT) {
+             && i <= stdair::MAXIMAL_NUMBER_OF_LEGS_IN_FLIGHT) {
         // Retrieve the (unique) LegDate getting that Boarding Point
         const stdair::LegDate* lLegDate_ptr =
           iFlightDate.getLegDate (currentBoardingPoint);
@@ -329,7 +329,7 @@ namespace AIRSCHED {
         currentBoardingPoint = lLegDate_ptr->getOffPoint();
         ++i;
       }
-      assert (i <= stdair::MAXIMUM_NUMBER_OF_LEGS_IN_FLIGHT);
+      assert (i <= stdair::MAXIMAL_NUMBER_OF_LEGS_IN_FLIGHT);
           
       // Create the routing for the leg- and segment-cabins.
       // At the same time, set the SegmentDate attributes derived from

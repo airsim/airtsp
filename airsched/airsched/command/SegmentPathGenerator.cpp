@@ -32,7 +32,7 @@ namespace AIRSCHED {
     // Build the list of i-fixed-length segment path objects. In other words,
     // build the whole segment path network.
     for (stdair::NbOfSegments_T i = 2;
-         i <= stdair::MAXIMUM_NUMBER_OF_SEGMENTS_IN_OND; ++i) {
+         i <= stdair::MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND; ++i) {
       buildSegmentPathNetwork (iBomRoot, i);
     }
   }

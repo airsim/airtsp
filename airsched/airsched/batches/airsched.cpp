@@ -15,9 +15,6 @@
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
-#include <stdair/bom/BomSource.hpp>
-#include <stdair/bom/BomTypes.hpp>
-#include <stdair/factory/FacBomContent.hpp>
 // AIRSCHED
 #include <airsched/AIRSCHED_Service.hpp>
 #include <airsched/config/airsched-paths.hpp>
@@ -301,7 +298,7 @@ parseBookingRequest (const std::string& iRequestOption) {
 
 // ///////// M A I N ////////////
 int main (int argc, char* argv[]) {
-  // try {
+   try {
     
     // Number of random draws to be generated (best if greater than 100)
     int lRandomDraws = 0;
@@ -350,46 +347,13 @@ int main (int argc, char* argv[]) {
 
     // Get the corresponding travel solutions
     // stdair::TravelSolutionList_T lTravelSolutionList;
-   //  airschedService.getTravelSolutions (lTravelSolutionList, lBookingRequest);
+    // airschedService.getTravelSolutions (lTravelSolutionList, lBookingRequest);
 
-   //  unsigned short idx = 1;
-   //  for (stdair::TravelSolutionList_T::const_iterator itTS =
-   //         lTravelSolutionList.begin();
-   //       itTS != lTravelSolutionList.end(); ++itTS, ++idx) {
-   //    const stdair::TravelSolutionStruct& lTS = *itTS;
-
-   //    const stdair::OutboundPath& lOutboundPath = lTS.getOutboundPath();
-
-   //    std::ostringstream oStr;
-   //    const stdair::SegmentDateList_T& lSegmentDateList =
-   //      lOutboundPath.getSegmentDateList();
-   //    unsigned short idxSeg = 0;
-   //    for (stdair::SegmentDateList_T::iterator itSegment =
-   //           lSegmentDateList.begin();
-   //         itSegment != lSegmentDateList.end(); ++itSegment, ++idxSeg) {
-   //      if (idxSeg != 0) {
-   //        oStr << " -> ";
-   //      }
-   //      const stdair::SegmentDate& lSegmentDate = *itSegment;
-   //      oStr << "[" << idxSeg << "] " << lSegmentDate.describeKey();
-   //    }
-
-   //    // DEBUG
-   //    std::cout << "Travel solution #" << idx << ": "
-   //              << lTS.describeShortKey() << ", i.e.: " << oStr.str()
-   //              << std::endl;
-   // }
-    
+       
     // Start a mini-simulation
     // airschedService.simulate();
-    
-  // } catch (const std::exception& stde) {
-  //   std::cerr << "Standard exception: " << stde.what() << std::endl;
-  //   return -1;
-    
-  // } catch (...) {
-  //   return -1;
-  // }
+
+   } CATCH
   
   return 0;	
 }

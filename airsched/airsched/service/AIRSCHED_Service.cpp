@@ -9,15 +9,12 @@
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/basic/BasFileMgr.hpp>
-#include <stdair/bom/BomManager.hpp> // for display()
+#include <stdair/bom/BomManager.hpp> 
 #include <stdair/bom/TravelSolutionStruct.hpp>
-#include <stdair/bom/BomSource.hpp>
-#include <stdair/bom/BomTypes.hpp>
 #include <stdair/service/Logger.hpp>
 #include <stdair/STDAIR_Service.hpp>
 // AirSched
 #include <airsched/basic/BasConst_AIRSCHED_Service.hpp>
-#include <airsched/bom/BomRoot.hpp>
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
@@ -177,11 +174,9 @@ namespace AIRSCHED {
     SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);
     
     // DEBUG
-    STDAIR_LOG_DEBUG ("Generated BomRoot:");
-    std::ostringstream oStream;
-    //stdair::BomManager::display (oStream, lBomRoot);
-    stdair::BomManager::displaySegmentPathNetwork (oStream, lBomRoot);
-    STDAIR_LOG_DEBUG (oStream.str());
+    // STDAIR_LOG_DEBUG ("Generated BomRoot:");
+    // std::ostringstream oStream;
+    // STDAIR_LOG_DEBUG (oStream.str());
   }
   
   // ////////////////////////////////////////////////////////////////////

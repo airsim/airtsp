@@ -5,25 +5,14 @@
 #include <cassert>
 // STDAIR
 #include <stdair/basic/BasConst_General.hpp>
-#include <stdair/bom/BomSource.hpp>
+#include <stdair/bom/SegmentPeriod.hpp>
 // AIRSCHED
-#include <airsched/bom/SegmentPeriod.hpp>
+#include <airsched/bom/SegmentPeriodHelper.hpp>
 
 namespace AIRSCHED {
-
   // ////////////////////////////////////////////////////////////////////
-  SegmentPeriod::SegmentPeriod (const Key_T& iKey,
-                                Structure_T& ioSegmentPeriodStructure)
-    : stdair::SegmentPeriod (iKey, ioSegmentPeriodStructure) {
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
-  SegmentPeriod::~SegmentPeriod () {
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void SegmentPeriod::fill (stdair::SegmentPeriod& ioSegmentPeriod,
-                            const SegmentStruct_T& iSegmentStruct) {
+  void SegmentPeriodHelper::fill (stdair::SegmentPeriod& ioSegmentPeriod,
+                                  const SegmentStruct_T& iSegmentStruct) {
     // Browse the list of segment cabins and fill the cabin booking
     // class map of the BOM segment period.
     for (SegmentCabinStructList_T::const_iterator itCabin =
@@ -37,8 +26,8 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentPeriod::fill (stdair::SegmentPeriod& ioSegmentPeriod,
-                            const LegStructList_T& iLegList) {
+  void SegmentPeriodHelper::fill (stdair::SegmentPeriod& ioSegmentPeriod,
+                                  const LegStructList_T& iLegList) {
 
     const stdair::AirportCode_T& lBoardingPoint =
       ioSegmentPeriod.getBoardingPoint ();

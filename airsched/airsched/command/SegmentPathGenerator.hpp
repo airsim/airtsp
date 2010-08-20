@@ -18,12 +18,14 @@ namespace stdair {
   class Inventory;
   class FlightPeriod;
   class SegmentPeriod;
-  class ReachableUniverse;
-  class OriginDestinationSet;
-  class SegmentPathPeriod;
 }
 
 namespace AIRSCHED {
+  //Forward declarations
+  class ReachableUniverse;
+  class OriginDestinationSet;
+  class SegmentPathPeriod;
+  
   /** Class handling the generation / instantiation of the network BOM. */
   class SegmentPathGenerator : public stdair::CmdAbstract {
   public:
@@ -37,14 +39,14 @@ namespace AIRSCHED {
 
     /** Generate the single-segment segment path period with the
         given segment-period. */
-    static void createSinglePath (const stdair::SegmentPeriod&);
-    static void createSinglePath (stdair::ReachableUniverse&,
-                                  const stdair::SegmentPeriod&);
+    static void createSinglePath (stdair::SegmentPeriod&);
+    static void createSinglePath (ReachableUniverse&,
+                                  stdair::SegmentPeriod&);
 
     /** Generate the i-fixed-length list of segment path period objects. */
     static void buildSegmentPathNetwork (const stdair::BomRoot&,
                                          const stdair::NbOfSegments_T&);
-    static void buildSegmentPathNetwork (stdair::ReachableUniverse&,
+    static void buildSegmentPathNetwork (ReachableUniverse&,
                                          const stdair::NbOfSegments_T&);
 
     

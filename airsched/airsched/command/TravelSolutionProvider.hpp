@@ -32,13 +32,13 @@ namespace AIRSCHED {
                                     const stdair::BomRoot&,
                                     const stdair::BookingRequestStruct&);
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const stdair::ReachableUniverse&,
+                                    const ReachableUniverse&,
                                     const stdair::BookingRequestStruct&);
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const stdair::OriginDestinationSet&,
+                                    const OriginDestinationSet&,
                                     const stdair::BookingRequestStruct&);
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const stdair::SegmentPathPeriod&,
+                                    const SegmentPathPeriod&,
                                     const stdair::BookingRequestStruct&);
   };
 

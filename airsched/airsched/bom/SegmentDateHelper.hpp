@@ -1,27 +1,19 @@
-#ifndef __AIRSCHED_BOM_SEGMENTDATE_HPP
-#define __AIRSCHED_BOM_SEGMENTDATE_HPP
+#ifndef __AIRSCHED_BOM_SEGMENTDATEHELPER_HPP
+#define __AIRSCHED_BOM_SEGMENTDATEHELPER_HPP
 
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
-#include <stdair/bom/SegmentDate.hpp>
 
 // Forward declarations
 namespace stdair {
-  class FacBomContent;
+  class SegmentDate;
 }
 
 namespace AIRSCHED {
   /** Class representing the actual business functions for
       an airline segment-date. */
-  class SegmentDate : public stdair::SegmentDate {
-    friend class stdair::FacBomContent;
-
-  public:
-    /** Definition allowing to retrieve the associated BOM structure type. */
-    typedef stdair::SegmentDateStructure_T Structure_T;
-
+  class SegmentDateHelper {
   public:
     // ////////// Business Methods /////////
     /** Fill the attributes derived from the routing legs (e.g., board
@@ -41,19 +33,7 @@ namespace AIRSCHED {
       
     /** Method computing the distance of the segment (in kilometers).*/
     static void updateDistanceFromElapsedTime (stdair::SegmentDate&);
-
-  private:
-    /** Constructors are private so as to force the usage of the Factory
-        layer. */
-    /** Constructors. */
-    SegmentDate (const Key_T&, Structure_T&);
-    /** Destructor. */
-    ~SegmentDate();
-    /** Default constructors. */
-    SegmentDate ();
-    SegmentDate (const SegmentDate&);
-
   };
 
 }
-#endif // __AIRSCHED_BOM_SEGMENTDATE_HPP
+#endif // __AIRSCHED_BOM_SEGMENTDATEHELPER_HPP

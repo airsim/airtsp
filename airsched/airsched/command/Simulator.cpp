@@ -11,14 +11,6 @@
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
-#include <airsched/bom/BomRoot.hpp>
-#include <airsched/bom/Inventory.hpp>
-#include <airsched/bom/FlightDate.hpp>
-#include <airsched/bom/SegmentDate.hpp>
-#include <airsched/bom/LegDate.hpp>
-#include <airsched/bom/SegmentCabin.hpp>
-#include <airsched/bom/LegCabin.hpp>
-#include <airsched/bom/BookingClass.hpp>
 #include <airsched/command/Simulator.hpp>
 
 namespace AIRSCHED {

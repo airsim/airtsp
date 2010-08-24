@@ -33,16 +33,16 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   const stdair::SegmentPeriod* SegmentPathPeriod::getLastSegmentPeriod () const {
     // Retrieve the last segment of the list
-    stdair::SegmentPeriodList_T& lSegmentPeriodList =
-      stdair::BomManager::getList<stdair::SegmentPeriod> (*this);
-    stdair::SegmentPeriodList_T::reverse_iterator itLastSegment =
-      lSegmentPeriodList.rbegin();
+    stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList =
+      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (*this);
+    stdair::SegmentPeriodDetailedList_T::reverse_iterator itLastSegment =
+      lSegmentPeriodDetailedList.rbegin();
 
-    if (itLastSegment == lSegmentPeriodList.rend()) {
+    if (itLastSegment == lSegmentPeriodDetailedList.rend()) {
       return NULL;
     }
     
-    stdair::SegmentPeriod* oSegment_ptr = *itLastSegment;
+    stdair::SegmentPeriod* oSegment_ptr = itLastSegment->second;
     assert (oSegment_ptr != NULL);
 
     return oSegment_ptr;
@@ -51,16 +51,16 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   const stdair::SegmentPeriod* SegmentPathPeriod::getFirstSegmentPeriod () const{
     // Retrieve the first segment of the list
-    stdair::SegmentPeriodList_T& lSegmentPeriodList =
-      stdair::BomManager::getList<stdair::SegmentPeriod> (*this);
-    stdair::SegmentPeriodList_T::iterator itFirstSegment = 
-      lSegmentPeriodList.begin();
+    stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList =
+      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (*this);
+    stdair::SegmentPeriodDetailedList_T::iterator itFirstSegment = 
+      lSegmentPeriodDetailedList.begin();
 
-    if (itFirstSegment == lSegmentPeriodList.end()) {
+    if (itFirstSegment == lSegmentPeriodDetailedList.end()) {
       return NULL;
     }
     
-    stdair::SegmentPeriod* oSegment_ptr = *itFirstSegment;
+    stdair::SegmentPeriod* oSegment_ptr = itFirstSegment->second;
     assert (oSegment_ptr != NULL);
 
     return oSegment_ptr;
@@ -78,20 +78,14 @@ namespace AIRSCHED {
   isAirlineFlown (const stdair::AirlineCode_T& iAirlineCode) const {
     bool oAirlineFlown = false;
 
-    const stdair::SegmentPeriodList_T& lSegmentPeriodList = 
-      stdair::BomManager::getList<stdair::SegmentPeriod> (*this);
-    for (stdair::SegmentPeriodList_T::const_iterator itSegmentPeriod =
-           lSegmentPeriodList.begin();
-         itSegmentPeriod != lSegmentPeriodList.end(); ++itSegmentPeriod) {
-      const stdair::SegmentPeriod* lSegmentPeriod_ptr = *itSegmentPeriod;
-      assert (lSegmentPeriod_ptr != NULL);
-
-      const stdair::FlightPeriod& lFlightPeriod =
-        stdair::BomManager::getParent<stdair::FlightPeriod>(*lSegmentPeriod_ptr);
-      const stdair::Inventory& lInventory =
-        stdair::BomManager::getParent<stdair::Inventory> (lFlightPeriod);
-      const stdair::AirlineCode_T& lSegmentAirlineCode =
-        lInventory.getAirlineCode ();
+    const stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList = 
+      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (*this);
+    for (stdair::SegmentPeriodDetailedList_T::const_iterator itSegmentPeriod =
+           lSegmentPeriodDetailedList.begin();
+         itSegmentPeriod != lSegmentPeriodDetailedList.end(); ++itSegmentPeriod){
+      const stdair::MapKey_T lKey = itSegmentPeriod->first;
+      stdair::AirlineCode_T lSegmentAirlineCode = "";
+      lSegmentAirlineCode = lKey.at(0) + lKey.at(1);
       if (lSegmentAirlineCode == iAirlineCode) {
         oAirlineFlown = true;
         break;
@@ -107,28 +101,30 @@ namespace AIRSCHED {
     SegmentPathPeriodKey oSegmentPathPeriodKey;
 
     // Retrieve the (only) segment period of the single segment path.
+    stdair::SegmentPeriodDetailedList_T& lNextSegmentPeriodDetailedList =
+      stdair::BomManager::
+      getDetailedList<stdair::SegmentPeriod> (iSingleSegmentPath);
+    stdair::SegmentPeriodDetailedList_T::iterator itNextSegment = 
+      lNextSegmentPeriodDetailedList.begin();
+    assert (itNextSegment != lNextSegmentPeriodDetailedList.end());
     const stdair::SegmentPeriod* lNextSegmentPeriod_ptr =
-      iSingleSegmentPath.getFirstSegmentPeriod ();
+      itNextSegment->second; 
     assert (lNextSegmentPeriod_ptr != NULL);
 
     // Retrive the last segment period of the current segment path and check
     // if the combination of the last segment and the next segment that we
     // want to add to the current segment path will create a new segment
     // (i.e., the two segment period belongs to the same flight number).
-    const stdair::SegmentPeriod* lLastSegmentPeriod_ptr = getLastSegmentPeriod ();
+    stdair::SegmentPeriodDetailedList_T& lCurrentSegmentPeriodDetailedList =
+      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (*this);
+    stdair::SegmentPeriodDetailedList_T::reverse_iterator itLastSegment =
+      lCurrentSegmentPeriodDetailedList.rbegin();
+    assert (itLastSegment != lCurrentSegmentPeriodDetailedList.rend());
+    const stdair::SegmentPeriod* lLastSegmentPeriod_ptr =
+      itLastSegment->second;
     assert (lLastSegmentPeriod_ptr != NULL);
-    const stdair::FlightPeriod& lLastFlightPeriod = stdair::BomManager::
-      getParent<stdair::FlightPeriod> (*lLastSegmentPeriod_ptr);
-    const stdair::Inventory& lLastInventory =
-      stdair::BomManager::getParent<stdair::Inventory> (lLastFlightPeriod);
     
-    const stdair::FlightPeriod& lNextFlightPeriod = stdair::BomManager::
-      getParent<stdair::FlightPeriod> (*lNextSegmentPeriod_ptr);
-    const stdair::Inventory& lNextInventory =
-      stdair::BomManager::getParent<stdair::Inventory> (lNextFlightPeriod);
-    
-    if (lLastFlightPeriod.getFlightNumber()==lNextFlightPeriod.getFlightNumber()
-        && lLastInventory.getAirlineCode() == lNextInventory.getAirlineCode()) {
+    if (itNextSegment->first == itLastSegment->first) {
       return oSegmentPathPeriodKey;
     }
     
@@ -230,12 +226,12 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   bool SegmentPathPeriod::
   checkCircle (const stdair::AirlineCode_T& iDestination) const {
-    const stdair::SegmentPeriodList_T& lSegmentPeriodList =
-      stdair::BomManager::getList<stdair::SegmentPeriod> (*this);
-    for (stdair::SegmentPeriodList_T::const_iterator itSegment =
-           lSegmentPeriodList.begin();
-         itSegment != lSegmentPeriodList.end(); ++itSegment) {
-      const stdair::SegmentPeriod* lCurrentSegment_ptr = *itSegment;
+    const stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList =
+      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (*this);
+    for (stdair::SegmentPeriodDetailedList_T::const_iterator itSegment =
+           lSegmentPeriodDetailedList.begin();
+         itSegment != lSegmentPeriodDetailedList.end(); ++itSegment) {
+      const stdair::SegmentPeriod* lCurrentSegment_ptr = itSegment->second;
       assert (lCurrentSegment_ptr != NULL);
       const stdair::AirlineCode_T& lCurrentBoardingPoint =
         lCurrentSegment_ptr->getBoardingPoint();

@@ -43,7 +43,8 @@ namespace AIRSCHED {
     static void createSinglePath (stdair::BomRoot&, const stdair::Inventory&,
                                   const stdair::FlightPeriod&,
                                   stdair::SegmentPeriod&);
-    static void createSinglePath (ReachableUniverse&, const stdair::Inventory&,
+    static void createSinglePath (const stdair::BomRoot&,
+                                  ReachableUniverse&, const stdair::Inventory&,
                                   const stdair::FlightPeriod&,
                                   stdair::SegmentPeriod&);
 

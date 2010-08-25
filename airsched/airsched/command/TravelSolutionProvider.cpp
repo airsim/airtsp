@@ -27,28 +27,14 @@ namespace AIRSCHED {
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
                       const stdair::BomRoot& iBomRoot,
                       const stdair::BookingRequestStruct& iBookingRequest) {
-    // Retrieve  the reachable  universe object  corresponding  to the
-    // origin of the booking request.
-    const stdair::AirportCode_T& lOrigin = iBookingRequest.getOrigin ();
-    const ReachableUniverse* lReachableUniverse_ptr =
-      stdair::BomManager::getChildPtr<ReachableUniverse> (iBomRoot, lOrigin);
-    if (lReachableUniverse_ptr != NULL) {
-      getTravelSolutions (ioTravelSolutionList, *lReachableUniverse_ptr,
-                          iBookingRequest);
-    }
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  void TravelSolutionProvider::
-  getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
-                      const ReachableUniverse& iReachableUniverse,
-                      const stdair::BookingRequestStruct& iBookingRequest) {
     // Retrieve the origin-destination set objet correponding to the
-    // destination of the booking request.
-    const stdair::AirportCode_T& lDestination = iBookingRequest.getDestination();
+    // booking request.
+    std::ostringstream ostr;
+    ostr << iBookingRequest.getOrigin() << ", "
+         << iBookingRequest.getDestination();;
     const OriginDestinationSet* lOriginDestinationSet_ptr =
-      stdair::BomManager::getChildPtr<OriginDestinationSet> (iReachableUniverse,
-                                                             lDestination);
+      stdair::BomManager::getChildPtr<OriginDestinationSet> (iBomRoot,
+                                                             ostr.str());
     if (lOriginDestinationSet_ptr != NULL) {
       getTravelSolutions (ioTravelSolutionList, *lOriginDestinationSet_ptr,
                           iBookingRequest);

@@ -94,13 +94,14 @@ namespace AIRSCHED {
       stdair::FacBomManager::linkWithParent (ioBomRoot, *lReachableUniverse_ptr);
     }
     assert (lReachableUniverse_ptr != NULL);
-    createSinglePath (*lReachableUniverse_ptr, iInventory,
+    createSinglePath (ioBomRoot, *lReachableUniverse_ptr, iInventory,
                       iFlightPeriod, ioSegmentPeriod);
   }
 
   // ////////////////////////////////////////////////////////////////////
   void SegmentPathGenerator::
-  createSinglePath (ReachableUniverse& ioReachableUniverse,
+  createSinglePath (const stdair::BomRoot& iBomRoot,
+                    ReachableUniverse& ioReachableUniverse,
                     const stdair::Inventory& iInventory,
                     const stdair::FlightPeriod& iFlightPeriod,
                     stdair::SegmentPeriod& ioSegmentPeriod) {
@@ -119,6 +120,13 @@ namespace AIRSCHED {
                                               *lOriginDestinationSet_ptr);
       stdair::FacBomManager::linkWithParent (ioReachableUniverse,
                                              *lOriginDestinationSet_ptr);
+
+      // Link the Origin-Destination Set to BomRoot.
+      std::ostringstream ostr;
+      ostr << ioReachableUniverse.getOrigin()
+           << ", " << lDestination;
+      stdair::FacBomManager::addToMap (iBomRoot, *lOriginDestinationSet_ptr,
+                                       ostr.str());
     }
     assert (lOriginDestinationSet_ptr != NULL);
     
@@ -331,6 +339,13 @@ namespace AIRSCHED {
                                                   *lOriginDestinationSet_ptr);
           stdair::FacBomManager::linkWithParent (ioReachableUniverse,
                                                  *lOriginDestinationSet_ptr);
+
+          // Link the Origin-Destination Set to BomRoot.
+          std::ostringstream ostr;
+          ostr << ioReachableUniverse.getOrigin()
+               << ", " << lDestination_i;
+          stdair::FacBomManager::addToMap (iBomRoot, *lOriginDestinationSet_ptr,
+                                           ostr.str());
         }
         assert (lOriginDestinationSet_ptr != NULL);
         

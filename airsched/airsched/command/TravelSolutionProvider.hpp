@@ -11,7 +11,6 @@
 // Forward declarations
 namespace stdair {
   class BomRoot;
-  class ReachableUniverse;
   class OriginDestinationSet;
   class SegmentPathPeriod;
   struct BookingRequestStruct;
@@ -30,9 +29,6 @@ namespace AIRSCHED {
         product demand. */
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
                                     const stdair::BomRoot&,
-                                    const stdair::BookingRequestStruct&);
-    static void getTravelSolutions (stdair::TravelSolutionList_T&,
-                                    const ReachableUniverse&,
                                     const stdair::BookingRequestStruct&);
     static void getTravelSolutions (stdair::TravelSolutionList_T&,
                                     const OriginDestinationSet&,

@@ -6,6 +6,14 @@ include $(srcdir)/sources.mk
 
 MAINTAINERCLEANFILES = Makefile.in
 
+# Library (for the batches)
+lib_LTLIBRARIES = libairschedbatch.la
+
+libairschedbatch_la_SOURCES = $(airsched_batch_lib_h_sources) \
+	$(airsched_batch_lib_cc_sources)
+libairschedbatch_la_CXXFLAGS = $(BOOST_CFLAGS)
+libairschedbatch_la_LIBADD =
+libairschedbatch_la_LDFLAGS =
 
 # Binaries (batches)
 bin_PROGRAMS = airsched
@@ -15,4 +23,5 @@ airsched_CXXFLAGS = $(BOOST_CFLAGS)
 airsched_LDADD = 
 airsched_LDFLAGS = $(BOOST_PROGRAM_OPTIONS_LIB) \
 	$(top_builddir)/stdair/core/libstdair.la \
+	$(top_builddir)/airsched/batches/libairschedbatch.la \
 	$(top_builddir)/airsched/core/libairsched.la

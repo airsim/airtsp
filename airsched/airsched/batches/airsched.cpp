@@ -15,8 +15,10 @@
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
-// AIRSCHED
+#include <stdair/service/Logger.hpp>
+// AirSched
 #include <airsched/AIRSCHED_Service.hpp>
+#include <airsched/batches/BookingRequestParser.hpp>
 #include <airsched/config/airsched-paths.hpp>
 
 
@@ -30,6 +32,10 @@ const std::string K_AIRSCHED_DEFAULT_LOG_FILENAME ("airsched.log");
 
 /** Default name and location for the (CSV) input file. */
 const std::string K_AIRSCHED_DEFAULT_INPUT_FILENAME ("../../test/samples/schedule03.csv");
+
+/** Default for the input type. It can be either built-in or provided by an
+    input file. That latter must then be given with the -i option. */
+const bool K_AIRSCHED_DEFAULT_BOOKING_REQUEST_MODE = false;
 
 /** Default booking request string, to be seached against the AirSched
     network. */
@@ -86,10 +92,13 @@ template<class T> std::ostream& operator<< (std::ostream& os,
 const int K_AIRSCHED_EARLY_RETURN_STATUS = 99;
 
 /** Read and parse the command line options. */
-int readConfiguration (int argc, char* argv[], int& ioRandomDraws, 
+int readConfiguration (int argc, char* argv[],
+                       bool& ioReadBookingRequestFromCmdLine,
                        stdair::Filename_T& ioInputFilename,
                        std::string& ioLogFilename,
                        std::string& ioBookingRequestString) {
+  // Default for the booking request mode (whether it is read from command-line)
+  ioReadBookingRequestFromCmdLine = K_AIRSCHED_DEFAULT_BOOKING_REQUEST_MODE;
   
   // Initialise the travel query string, if that one is empty
   if (ioBookingRequestString.empty() == true) {
@@ -118,6 +127,8 @@ int readConfiguration (int argc, char* argv[], int& ioRandomDraws,
     ("log,l",
      boost::program_options::value< std::string >(&ioLogFilename)->default_value(K_AIRSCHED_DEFAULT_LOG_FILENAME),
      "Filename for the logs")
+    ("read_booking_request,r",
+     "A booking request is given as a command-line option. That latter must then be given with the -b/--bkg_req option")
     ("bkg_req,b",
      boost::program_options::value< WordList_T >(&lWordList)->multitoken(),
      "Booking request word list (e.g. NCE BKK NCE 2007-04-21 2007-04-21 10:00:00 C 1 DF RO 5 NONE 10:0:0 2000.0 20.0), which sould be located at the end of the command line (otherwise, the other options would be interpreted as part of that booking request word list)")
@@ -173,20 +184,30 @@ int readConfiguration (int argc, char* argv[], int& ioRandomDraws,
     std::cout << "Input filename is: " << ioInputFilename << std::endl;
   }
 
+  if (vm.count ("read_booking_request")) {
+    ioReadBookingRequestFromCmdLine = true;
+  }
+  const std::string readBookingRequestFromCmdLineStr =
+    (ioReadBookingRequestFromCmdLine == true)?"yes":"no";
+  std::cout << "A booking request is to be given as command-line option? "
+            << readBookingRequestFromCmdLineStr << std::endl;
+
+  if (ioReadBookingRequestFromCmdLine == false) {
+    // Rebuild the booking request query string
+    ioBookingRequestString = createStringFromWordList (lWordList);
+
+    // Suppress some potential separators (such as ':', '-' or '/')
+    tokeniseStringIntoWordList (ioBookingRequestString, lWordList);
+    ioBookingRequestString = createStringFromWordList (lWordList);
+    std::cout << "The booking request string is: " << ioBookingRequestString
+              << std::endl;
+  }
+
   if (vm.count ("log")) {
     ioLogFilename = vm["log"].as< std::string >();
     std::cout << "Log filename is: " << ioLogFilename << std::endl;
   }
 
-  // Rebuild the booking request query string
-  ioBookingRequestString = createStringFromWordList (lWordList);
-
-  // Suppress some potential separators (such as ':', '-' or '/')
-  tokeniseStringIntoWordList (ioBookingRequestString, lWordList);
-  ioBookingRequestString = createStringFromWordList (lWordList);
-  std::cout << "The booking request string is: " << ioBookingRequestString
-            << std::endl;
-    
   return 0;
 }
 
@@ -195,7 +216,7 @@ stdair::BookingRequestStruct
 parseBookingRequest (const std::string& iRequestOption) {
 
   typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-  boost::char_separator<char> sep(" ");
+  boost::char_separator<char> sep(" -:");
 
   tokenizer tokens (iRequestOption, sep);
 
@@ -298,10 +319,11 @@ parseBookingRequest (const std::string& iRequestOption) {
 
 // ///////// M A I N ////////////
 int main (int argc, char* argv[]) {
-   try {
+
+  try {
     
-    // Number of random draws to be generated (best if greater than 100)
-    int lRandomDraws = 0;
+    // A booking request should be given as command-line option
+    bool readBookingRequestFromCmdLine;
     
     // Input file name
     stdair::Filename_T lInputFilename;
@@ -314,17 +336,11 @@ int main (int argc, char* argv[]) {
     
     // Call the command-line option parser
     const int lOptionParserStatus = 
-      readConfiguration (argc, argv, lRandomDraws, lInputFilename,
-                         lLogFilename, lBookingRequestString);
+      readConfiguration (argc, argv, readBookingRequestFromCmdLine,
+                         lInputFilename, lLogFilename, lBookingRequestString);
 
     if (lOptionParserStatus == K_AIRSCHED_EARLY_RETURN_STATUS) {
       return 0;
-    }
-
-    // Check wether or not a (CSV) input file should be read
-    bool hasInputFile = false;
-    if (lInputFilename.empty() == false) {
-      hasInputFile = true;
     }
 
     // Set the log parameters
@@ -337,23 +353,50 @@ int main (int argc, char* argv[]) {
     const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
     AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
 
-
-    // Create a booking request
-    // const stdair::BookingRequestStruct& lBookingRequest =
-    //   parseBookingRequest (lBookingRequestString);
-
     // DEBUG
-    // std::cout << "Booking request: " << lBookingRequest << std::endl;
+    STDAIR_LOG_DEBUG ("Welcome to Air-Sched");
 
-    // Get the corresponding travel solutions
-    // stdair::TravelSolutionList_T lTravelSolutionList;
-    // airschedService.getTravelSolutions (lTravelSolutionList, lBookingRequest);
+    // Check wether or not a booking request is given as a command-line option
+    if (readBookingRequestFromCmdLine == true) {
+      // Create a booking request
+      const stdair::BookingRequestStruct& lBookingRequest =
+        parseBookingRequest (lBookingRequestString);
 
+      // Create a booking request
+      /*
+      const airsched::SearchString_T& lSearchStringStruct =
+        airsched::parseBookingRequest (lBookingRequestString);
+      STDAIR_LOG_DEBUG ("Booking request: " << lSearchStringStruct.display());
+      */
+
+      // DEBUG
+      STDAIR_LOG_DEBUG ("Booking request: " << lBookingRequest);
+
+      // Get the corresponding travel solutions
+      // stdair::TravelSolutionList_T lTravelSolutionList;
+      // airschedService.getTravelSolutions (lTravelSolutionList,
+      //                                     lBookingRequest);
        
-    // Start a mini-simulation
-    // airschedService.simulate();
+    } else {
+      // DEBUG
+      STDAIR_LOG_DEBUG ("AirSched will just display the parsed schedule for "
+                        << lInputFilename
+                        << " after having built the corresponding BOM tree.");
 
-   } CATCH
-  
+      // Start a mini-simulation
+      // airschedService.simulate();
+    }
+
+    // Close the Log outputFile
+    logOutputFile.close();
+
+  } catch (const std::exception& stde) {
+    std::cerr << "Standard exception: " << stde.what() << std::endl;
+    return -1;
+    
+  } catch (...) {
+    return -1;
+  }
+
   return 0;	
 }

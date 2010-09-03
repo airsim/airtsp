@@ -25,6 +25,10 @@ namespace AIRSCHED {
 
   // Forward declarations
   struct FlightPeriodStruct_T;
+  struct LegStruct_T;
+  struct SegmentStruct_T;
+  struct LegCabinStruct_T;
+  struct SegmentCabinStruct_T;
   namespace ScheduleParserHelper {
     struct doEndFlight;
   }
@@ -80,9 +84,8 @@ namespace AIRSCHED {
     /** Create the direct accesses within the invetories suck as links between
         leg-date and segment-date, ect. */
     static void createDirectAccesses (const stdair::BomRoot&);
-    static void createDirectAccesses (stdair::Inventory&);
-    static void createDirectAccesses (stdair::FlightDate&);
-    static void createDirectAccesses (stdair::SegmentDate&);
+    static void createDirectAccessesBetweenSegmentDateAndLegDate ();
+    static void createDirectAccessesBetweenSegmentCabinAndLegCabin ();
 
     /** Generate the flight-period objects corresponding to the given
         FlightPeriodStruct, and add them to the given BomRoot. */
@@ -92,7 +95,6 @@ namespace AIRSCHED {
     /** Generate a segment-period. */
     static void createSegmentPeriods (stdair::FlightPeriod&,
                                       const FlightPeriodStruct_T&);
-
   };
 
 }

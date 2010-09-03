@@ -9,6 +9,7 @@
 // StdAir
 #include <stdair/basic/BasChronometer.hpp>
 #include <stdair/basic/BasFileMgr.hpp>
+#include <stdair/basic/BasChronometer.hpp>
 #include <stdair/bom/BomManager.hpp> 
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/service/Logger.hpp>
@@ -20,6 +21,7 @@
 #include <airsched/command/ScheduleParser.hpp>
 #include <airsched/command/SegmentPathGenerator.hpp>
 #include <airsched/command/TravelSolutionProvider.hpp>
+#include <airsched/command/InventoryGenerator.hpp>
 #include <airsched/service/AIRSCHED_ServiceContext.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
 
@@ -168,7 +170,10 @@ namespace AIRSCHED {
     stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
 
     // Parse the schedule input file, and generate the Inventories
+    stdair::BasChronometer lINVGeneration; lINVGeneration.start();
     ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot);
+    STDAIR_LOG_DEBUG ("Inv generation time: " << lINVGeneration.elapsed());
+    
 
     // Build the network from the schedule.
     SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);

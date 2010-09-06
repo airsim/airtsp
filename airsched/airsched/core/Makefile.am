@@ -21,6 +21,7 @@ libairsched_la_LIBADD = \
 	$(top_builddir)/airsched/command/libairschedcmd.la \
 	$(top_builddir)/airsched/service/libairschedsvc.la
 libairsched_la_LDFLAGS = \
-	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(BOOST_FILESYSTEM_LIB) \
-	$(top_builddir)/stdair/core/libstdair.la \
+	$(BOOST_DATE_TIME_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_FILESYSTEM_LIB) $(STDAIR_LIBS) \
 	-version-info $(GENERIC_LIBRARY_VERSION)
+

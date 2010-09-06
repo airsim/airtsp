@@ -112,10 +112,10 @@ fi
 #       thus directly accessible within the extracppunit directory.
 #       When that library will be widely avaible on Linux distributions,
 #       the external reference can be removed and the following line uncommented.
-#AM_PATH_EXTRACC
-#AC_SUBST(EXTRACC_VERSION)
-#AC_SUBST(EXTRACC_CFLAGS)
-#AC_SUBST(EXTRACC_LIBS)
+AM_PATH_EXTRACC
+AC_SUBST(EXTRACC_VERSION)
+AC_SUBST(EXTRACC_CFLAGS)
+AC_SUBST(EXTRACC_LIBS)
 
 # -----------------------------------------------------------
 # Python: http://www.python.org
@@ -177,6 +177,17 @@ AC_SUBST(SOCI_VERSION)
 AC_SUBST(SOCI_CFLAGS)
 AC_SUBST(SOCI_LIBS)
 
+# -----------------------------------------------------------------------------
+# Support for StdAir (): http://sf.net/projects/stdair
+# -----------------------------------------------------------------------------
+# Note: the StdAir is now imported as a Subversion external reference,
+#       thus directly accessible within the extracppunit directory.
+#       When that library will be widely avaible on Linux distributions,
+#       the external reference can be removed and the following line uncommented.
+AM_PATH_STDAIR
+AC_SUBST(STDAIR_VERSION)
+AC_SUBST(STDAIR_CFLAGS)
+AC_SUBST(STDAIR_LIBS)
 
 # -------------------------------------------------------------------
 # Support for documentation
@@ -331,18 +342,7 @@ AC_CONFIG_FILES(
 	Makefile
 	airsched-config
 	airsched.pc
-	airsched.spec
 	airsched.m4
-	stdair/Makefile
-	stdair/basic/Makefile
-	stdair/bom/Makefile
-	stdair/dbadaptor/Makefile
-	stdair/factory/Makefile
-	stdair/command/Makefile
-	stdair/config/Makefile
-	stdair/service/Makefile
-	stdair/core/Makefile
-	stdair/batches/Makefile
 	airsched/Makefile
 	airsched/basic/Makefile
 	airsched/bom/Makefile
@@ -359,10 +359,8 @@ AC_CONFIG_FILES(
 	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
-	extracppunit/Makefile
 	test/Makefile
 	test/samples/Makefile
-	test/stdair/Makefile
 	test/architecture/Makefile
 	test/airsched/Makefile
 )
@@ -428,16 +426,26 @@ ${MPICH2_OUTPUT}
     o BOOST_DT_LIB .... : ${BOOST_DATE_TIME_LIB}
     o BOOST_PO_LIB .... : ${BOOST_PROGRAM_OPTIONS_LIB}
     o BOOST_FS_LIB .... : ${BOOST_FILESYSTEM_LIB}
+    o BOOST_THRD_LIB .. : ${BOOST_THREAD_LIB}
+    o BOOST_PY_LIB .... : ${BOOST_PYTHON_LIB}
+    o BOOST_ASIO_LIB .. : ${BOOST_ASIO_LIB}
+    o BOOST_MPI_LIB ... : ${BOOST_MPI_LIB}
+    o BOOST_MPIPY_LIB . : ${BOOST_MPI_PYTHON_LIB}
 
   - MySQL ............. :
     o MYSQL_version ... : ${MYSQL_VERSION}
     o MYSQL_CFLAGS .... : ${MYSQL_CFLAGS}
     o MYSQL_LIBS ...... : ${MYSQL_LIBS} 
 
-  - SOCI .............. :	
+  - Soci .............. :	
     o SOCI_version .... : ${SOCI_VERSION}
     o SOCI_CFLAGS ..... : ${SOCI_CFLAGS}
     o SOCI_LIBS ....... : ${SOCI_LIBS}
+
+  - StdAir ............ :
+    o STDAIR_VERSION .. : ${STDAIR_VERSION}
+    o STDAIR_CFLAGS ... : ${STDAIR_CFLAGS}
+    o STDAIR_LIBS ..... : ${STDAIR_LIBS}
 
   - ExtraCC ........... :
     o EXTRACC_VERSION . : ${EXTRACC_VERSION}
@@ -453,3 +461,4 @@ ${MPICH2_OUTPUT}
 Now type 'make && make install' to build and install $PACKAGE-$VERSION library
 ------------------------------------------------------------------------------
 "
+

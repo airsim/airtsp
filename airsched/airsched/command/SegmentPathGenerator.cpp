@@ -187,6 +187,9 @@ namespace AIRSCHED {
   buildSegmentPathNetwork (const stdair::BomRoot& iBomRoot,
                            ReachableUniverse& ioReachableUniverse,
                            const stdair::NbOfSegments_T& iNbOfSegments) {
+    // DEBUG
+    std::cout << "Origine: " << ioReachableUniverse.getOrigin() << std::endl;
+    std::cout << "Number of segments: " << iNbOfSegments << std::endl;
     
     // The goal of that method is to build the i-fixed-length
     // segment path period objects, knowing that all the
@@ -369,12 +372,20 @@ namespace AIRSCHED {
         // the link between the SegmentPathPeriod and
         // ReachableUniverse, as that latter method uses the number of
         // segments within the SegmentPathPeriod object.
+
+        // DEBUG
+        const stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList =
+          stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (lSegmentPathPeriod_i);
+        std::cout << "before: " << lSegmentPeriodDetailedList.size() << std::endl;
+
         std::ostringstream oStr;
         oStr << lAirlineCode_1
              << ", " << lFlightPeriod.getFlightNumber();
         stdair::FacBomManager::addToDetailedList (lSegmentPathPeriod_i,
                                                   *lSegmentPeriod_1_ptr,
                                                   oStr.str());
+        std::cout << "after: " << lSegmentPeriodDetailedList.size() << std::endl;
+        std::cout << "code: " << oStr.str() << std::endl;
         
         // Link the SegmentPathPeriod to the ReachableUniverse
         ioReachableUniverse.addSegmentPathPeriod (lSegmentPathPeriod_i);

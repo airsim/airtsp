@@ -82,6 +82,8 @@ namespace AIRSCHED {
       stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (iSegmentPathPeriod);
     const DateOffsetList_T& lBoardingDateOffsetList =
       iSegmentPathPeriod.getBoardingDateOffsetList ();
+    std::cout << lSegmentPeriodDetailedList.size()
+              << " " << lBoardingDateOffsetList.size() << std::endl;
     assert (lSegmentPeriodDetailedList.size() == lBoardingDateOffsetList.size());
     DateOffsetList_T::const_iterator itOffset = lBoardingDateOffsetList.begin();
     for (stdair::SegmentPeriodDetailedList_T::const_iterator itSegment =
@@ -100,7 +102,9 @@ namespace AIRSCHED {
       // Build the whole segment-date key string.
       std::ostringstream oStr;
       oStr << itSegment->first
-           << ", " << lReferenceFlightDate;
+           << ", " << lReferenceFlightDate
+           << ", " << lSegmentPeriod_ptr->getBoardingPoint()
+           << "-" << lSegmentPeriod_ptr->getOffPoint();
 
       lTravelSolution.addSegmentDateKey (oStr.str());
 

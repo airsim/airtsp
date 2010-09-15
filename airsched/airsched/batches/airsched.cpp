@@ -390,13 +390,7 @@ int main (int argc, char* argv[]) {
     // Close the Log outputFile
     logOutputFile.close();
 
-  } catch (const std::exception& stde) {
-    std::cerr << "Standard exception: " << stde.what() << std::endl;
-    return -1;
-    
-  } catch (...) {
-    return -1;
-  }
+  } CATCH_ALL_EXCEPTIONS
 
   return 0;	
 }

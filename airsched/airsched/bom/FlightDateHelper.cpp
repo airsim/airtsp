@@ -14,11 +14,11 @@
 namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void FlightDateHelper::fillFromRouting (const stdair::FlightDate& iFlightDate){
-    stdair::SegmentDateList_T& lSegmentDateList =
+    const stdair::SegmentDateList_T& lSegmentDateList =
       stdair::BomManager::getList<stdair::SegmentDate> (iFlightDate);
 
     // Browse the list of segment-dates and update each segment-date.
-    for (stdair::SegmentDateList_T::iterator itSegmentDate =
+    for (stdair::SegmentDateList_T::const_iterator itSegmentDate =
            lSegmentDateList.begin();
          itSegmentDate != lSegmentDateList.end(); ++itSegmentDate) {
       stdair::SegmentDate* lCurrentSegmentDate_ptr = *itSegmentDate;

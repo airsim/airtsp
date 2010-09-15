@@ -12,13 +12,15 @@
 
 namespace stdair {
   template <typename BOM> class FacBom;
+  class FacBomManager;
 }
 
 namespace AIRSCHED {
 
   /** Class representing the actual attributes for an origin-destination set. */
   class OriginDestinationSet : public stdair::BomAbstract {
-    template <typename BOM> friend class stdair::FacBom  ;
+    template <typename BOM> friend class stdair::FacBom;
+    friend  class stdair::FacBomManager;
 
   public :
     // Type definitions
@@ -28,9 +30,13 @@ namespace AIRSCHED {
   public:
     // ////////// Getters ////////////
     /** Get the network key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
+    const Key_T& getKey() const { return _key; }
+
+    /** Get the parent object. */
+    stdair::BomAbstract* const getParent() const { return _parent; }
+
+    /** Get the map of children holders. */
+    const stdair::HolderMap_T& getHolderMap() const { return _holderMap; }
 
   public:
     // /////////// Display support methods /////////
@@ -57,8 +63,9 @@ namespace AIRSCHED {
 
   protected:
     // Attributes
-    /** The key of both structure and  objects. */
     Key_T _key;
+    stdair::BomAbstract* _parent;
+    stdair::HolderMap_T _holderMap;
   };
 
 }

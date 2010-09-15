@@ -13,6 +13,7 @@
 
 namespace stdair {
   template <typename BOM> class FacBom;
+  class FacBomManager;
 }
 
 namespace AIRSCHED {
@@ -20,6 +21,7 @@ namespace AIRSCHED {
   /** Class representing the actual attributes for an airport-date. */
   class ReachableUniverse : public stdair::BomAbstract {
     template <typename BOM> friend class stdair::FacBom;
+    friend  class stdair::FacBomManager;
 
   public:
     // Type definitions.
@@ -29,9 +31,10 @@ namespace AIRSCHED {
   public:
     // /////////// Getters /////////////
     /** Get the airport-date key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
+    const Key_T& getKey() const { return _key; }
+
+    /** Get the parent object. */
+    stdair::BomAbstract* const getParent() const { return _parent; }
     
     /** Get the (origin) airport (part of the primary key). */
     const stdair::AirportCode_T& getOrigin() const {
@@ -42,6 +45,9 @@ namespace AIRSCHED {
     const SegmentPathPeriodListList_T& getSegmentPathPeriodListList () const {
       return _segmentPathPeriodListList;
     }
+
+    /** Get the map of children holders. */
+    const stdair::HolderMap_T& getHolderMap() const { return _holderMap; }
 
   public:
     // /////////// Display support methods /////////
@@ -73,8 +79,9 @@ namespace AIRSCHED {
 
   protected:
     // Attributes
-    /** The key of both structure and  objects. */
     Key_T _key;
+    stdair::BomAbstract* _parent;
+    stdair::HolderMap_T _holderMap;
     
     /** The list of lists of SegmentPathPeriods, used uniquement for the
         construction of the main list of SegmentPathPeriods in

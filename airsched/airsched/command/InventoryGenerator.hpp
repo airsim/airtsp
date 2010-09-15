@@ -84,8 +84,9 @@ namespace AIRSCHED {
     /** Create the direct accesses within the invetories suck as links between
         leg-date and segment-date, ect. */
     static void createDirectAccesses (const stdair::BomRoot&);
-    static void createDirectAccessesBetweenSegmentDateAndLegDate ();
-    static void createDirectAccessesBetweenSegmentCabinAndLegCabin ();
+    static void createDirectAccesses (stdair::Inventory&);
+    static void createDirectAccesses (stdair::FlightDate&);
+    static void createDirectAccesses (stdair::SegmentDate&);
 
     /** Generate the flight-period objects corresponding to the given
         FlightPeriodStruct, and add them to the given BomRoot. */
@@ -95,6 +96,7 @@ namespace AIRSCHED {
     /** Generate a segment-period. */
     static void createSegmentPeriods (stdair::FlightPeriod&,
                                       const FlightPeriodStruct_T&);
+
   };
 
 }

@@ -27,14 +27,28 @@ namespace AIRSCHED {
   getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
                       const stdair::BomRoot& iBomRoot,
                       const stdair::BookingRequestStruct& iBookingRequest) {
+    // Retrieve  the reachable  universe object  corresponding  to the
+    // origin of the booking request.
+    const stdair::AirportCode_T& lOrigin = iBookingRequest.getOrigin ();
+    const ReachableUniverse* lReachableUniverse_ptr =
+      stdair::BomManager::getObjectPtr<ReachableUniverse> (iBomRoot, lOrigin);
+    if (lReachableUniverse_ptr != NULL) {
+      getTravelSolutions (ioTravelSolutionList, *lReachableUniverse_ptr,
+                          iBookingRequest);
+    }
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  void TravelSolutionProvider::
+  getTravelSolutions (stdair::TravelSolutionList_T& ioTravelSolutionList,
+                      const ReachableUniverse& iReachableUniverse,
+                      const stdair::BookingRequestStruct& iBookingRequest) {
     // Retrieve the origin-destination set objet correponding to the
-    // booking request.
-    std::ostringstream ostr;
-    ostr << iBookingRequest.getOrigin() << ", "
-         << iBookingRequest.getDestination();;
+    // destination of the booking request.
+    const stdair::AirportCode_T& lDestination = iBookingRequest.getDestination();
     const OriginDestinationSet* lOriginDestinationSet_ptr =
-      stdair::BomManager::getChildPtr<OriginDestinationSet> (iBomRoot,
-                                                             ostr.str());
+      stdair::BomManager::getObjectPtr<OriginDestinationSet> (iReachableUniverse,
+                                                             lDestination);
     if (lOriginDestinationSet_ptr != NULL) {
       getTravelSolutions (ioTravelSolutionList, *lOriginDestinationSet_ptr,
                           iBookingRequest);
@@ -74,22 +88,20 @@ namespace AIRSCHED {
     // Create a new travel solution.
     stdair::TravelSolutionStruct lTravelSolution;
     
-    // Browse the detailed list of segments and retrieve the necessary
-    // informations for identifying the corresponding segment-date.
+    // Browse the list of segments and retrieve the necessary informations
+    // for identifying the corresponding segment-date.
     const stdair::Date_T& lPreferedDepartureDate =
       iBookingRequest.getPreferedDepartureDate ();
-    const stdair::SegmentPeriodDetailedList_T& lSegmentPeriodDetailedList =
-      stdair::BomManager::getDetailedList<stdair::SegmentPeriod> (iSegmentPathPeriod);
+    const stdair::SegmentPeriodList_T& lSegmentPeriodList =
+      stdair::BomManager::getList<stdair::SegmentPeriod> (iSegmentPathPeriod);
     const DateOffsetList_T& lBoardingDateOffsetList =
       iSegmentPathPeriod.getBoardingDateOffsetList ();
-    std::cout << lSegmentPeriodDetailedList.size()
-              << " " << lBoardingDateOffsetList.size() << std::endl;
-    assert (lSegmentPeriodDetailedList.size() == lBoardingDateOffsetList.size());
+    assert (lSegmentPeriodList.size() == lBoardingDateOffsetList.size());
     DateOffsetList_T::const_iterator itOffset = lBoardingDateOffsetList.begin();
-    for (stdair::SegmentPeriodDetailedList_T::const_iterator itSegment =
-           lSegmentPeriodDetailedList.begin();
-         itSegment != lSegmentPeriodDetailedList.end(); ++itSegment) {
-      const stdair::SegmentPeriod* lSegmentPeriod_ptr = itSegment->second;
+    for (stdair::SegmentPeriodList_T::const_iterator itSegment =
+           lSegmentPeriodList.begin();
+         itSegment != lSegmentPeriodList.end(); ++itSegment) {
+      const stdair::SegmentPeriod* lSegmentPeriod_ptr = *itSegment;
       assert (lSegmentPeriod_ptr != NULL);
       const stdair::DateOffset_T& lBoardingDateOffset = *itOffset;
 
@@ -100,8 +112,13 @@ namespace AIRSCHED {
         + lBoardingDateOffset - lSegmentBoardingDateOffset;
 
       // Build the whole segment-date key string.
+      const stdair::FlightPeriod& lFlightPeriod =
+        stdair::BomManager::getParent<stdair::FlightPeriod>(*lSegmentPeriod_ptr);
+      const stdair::Inventory& lInventory =
+        stdair::BomManager::getParent<stdair::Inventory> (lFlightPeriod);
       std::ostringstream oStr;
-      oStr << itSegment->first
+      oStr << lInventory.getAirlineCode()
+           << ", " << lFlightPeriod.getFlightNumber()
            << ", " << lReferenceFlightDate
            << ", " << lSegmentPeriod_ptr->getBoardingPoint()
            << "-" << lSegmentPeriod_ptr->getOffPoint();

@@ -14,12 +14,14 @@
 namespace stdair {
   class SegmentPeriod;
   template <typename BOM> class FacBom;
+  class FacBomManager;
 }
 
 namespace AIRSCHED {
   /** Class representing the actual attributes for an airline outbound class. */
   class SegmentPathPeriod : public stdair::BomAbstract {
     template <typename BOM> friend class stdair::FacBom;
+    friend  class stdair::FacBomManager;
 
   public:
     // Type definitions.
@@ -29,9 +31,10 @@ namespace AIRSCHED {
   public:
     // /////////// Getters ////////////
     /** Get the outbound path key. */
-    const Key_T& getKey() const {
-      return _key;
-    }
+    const Key_T& getKey() const { return _key; }
+
+    /** Get the parent object. */
+    stdair::BomAbstract* const getParent() const { return _parent; }
 
     /** Get the number of segments (part of the primary key). */
     const stdair::NbOfSegments_T getNbOfSegments() const {
@@ -63,13 +66,16 @@ namespace AIRSCHED {
       return _key.getPeriod();
     }
 
-    /** Get the last SegmentPeriod (constant) object of the list.
-        <br>Return a NULL pointer if the list is empty. */
-    const stdair::SegmentPeriod* getLastSegmentPeriod () const;
+    /** Get the map of children holders. */
+    const stdair::HolderMap_T& getHolderMap() const { return _holderMap; }
 
-    /** Get the first SegmentPeriod (constant) object of the list.
+    /** Get the last SegmentPeriod object of the list.
         <br>Return a NULL pointer if the list is empty. */
-    const stdair::SegmentPeriod* getFirstSegmentPeriod () const;
+    stdair::SegmentPeriod* getLastSegmentPeriod () const;
+
+    /** Get the first SegmentPeriod object of the list.
+        <br>Return a NULL pointer if the list is empty. */
+    stdair::SegmentPeriod* getFirstSegmentPeriod () const;
 
     /** Get the destination of the segment path (i.e., the destination
         of the last segment. */
@@ -128,8 +134,9 @@ namespace AIRSCHED {
 
   protected:
     // Attributes
-    /** The key of both structure and  objects. */
     Key_T _key;
+    stdair::BomAbstract* _parent;
+    stdair::HolderMap_T _holderMap;
   };
 
 }

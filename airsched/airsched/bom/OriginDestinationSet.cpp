@@ -10,7 +10,7 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   OriginDestinationSet::
-  OriginDestinationSet (const Key_T& iKey) : _key (iKey) {
+  OriginDestinationSet (const Key_T& iKey) : _key (iKey), _parent (NULL) {
   }
 
   // ////////////////////////////////////////////////////////////////////

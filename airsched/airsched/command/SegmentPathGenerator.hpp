@@ -30,29 +30,22 @@ namespace AIRSCHED {
   class SegmentPathGenerator : public stdair::CmdAbstract {
   public:
     /** Generate the segment path network. */
-    static void createSegmentPathNetwork (stdair::BomRoot&);
+    static void createSegmentPathNetwork (const stdair::BomRoot&);
 
     /** Generate the single-segment segment path periods while browsing the
         inventory and flight-period lists. */
-    static void createSinglePaths (stdair::BomRoot&, const stdair::Inventory&);
-    static void createSinglePaths (stdair::BomRoot&, const stdair::Inventory&,
-                                   const stdair::FlightPeriod&);
+    static void createSinglePaths (const stdair::Inventory&);
+    static void createSinglePaths (const stdair::FlightPeriod&);
 
     /** Generate the single-segment segment path period with the
         given segment-period. */
-    static void createSinglePath (stdair::BomRoot&, const stdair::Inventory&,
-                                  const stdair::FlightPeriod&,
-                                  stdair::SegmentPeriod&);
-    static void createSinglePath (const stdair::BomRoot&,
-                                  ReachableUniverse&, const stdair::Inventory&,
-                                  const stdair::FlightPeriod&,
-                                  stdair::SegmentPeriod&);
+    static void createSinglePath (stdair::SegmentPeriod&);
+    static void createSinglePath (ReachableUniverse&, stdair::SegmentPeriod&);
 
     /** Generate the i-fixed-length list of segment path period objects. */
     static void buildSegmentPathNetwork (const stdair::BomRoot&,
                                          const stdair::NbOfSegments_T&);
-    static void buildSegmentPathNetwork (const stdair::BomRoot&,
-                                         ReachableUniverse&,
+    static void buildSegmentPathNetwork (ReachableUniverse&,
                                          const stdair::NbOfSegments_T&);
 
     

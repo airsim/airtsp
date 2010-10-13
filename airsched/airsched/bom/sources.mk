@@ -1,14 +1,9 @@
 airsched_bom_h_sources = \
-		$(top_srcdir)/airsched/bom/FareFamilyStruct.hpp \
 		$(top_srcdir)/airsched/bom/FlightPeriodStruct.hpp \
 		$(top_srcdir)/airsched/bom/SegmentStruct.hpp \
 		$(top_srcdir)/airsched/bom/SegmentCabinStruct.hpp \
 		$(top_srcdir)/airsched/bom/LegStruct.hpp \
 		$(top_srcdir)/airsched/bom/LegCabinStruct.hpp \
-		$(top_srcdir)/airsched/bom/BomRootHelper.hpp \
-		$(top_srcdir)/airsched/bom/InventoryHelper.hpp \
-		$(top_srcdir)/airsched/bom/FlightDateHelper.hpp \
-		$(top_srcdir)/airsched/bom/SegmentDateHelper.hpp \
 		$(top_srcdir)/airsched/bom/SegmentPeriodHelper.hpp \
 		$(top_srcdir)/airsched/bom/ReachableUniverseKey.hpp \
 		$(top_srcdir)/airsched/bom/OriginDestinationSetKey.hpp \
@@ -21,16 +16,11 @@ airsched_bom_h_sources = \
 		$(top_srcdir)/airsched/bom/SegmentPathPeriod.hpp \
 		$(top_srcdir)/airsched/bom/AirportList.hpp
 airsched_bom_cc_sources = \
-		$(top_srcdir)/airsched/bom/FareFamilyStruct.cpp \
 		$(top_srcdir)/airsched/bom/FlightPeriodStruct.cpp \
 		$(top_srcdir)/airsched/bom/SegmentStruct.cpp \
 		$(top_srcdir)/airsched/bom/SegmentCabinStruct.cpp \
 		$(top_srcdir)/airsched/bom/LegStruct.cpp \
 		$(top_srcdir)/airsched/bom/LegCabinStruct.cpp \
-		$(top_srcdir)/airsched/bom/BomRootHelper.cpp \
-		$(top_srcdir)/airsched/bom/InventoryHelper.cpp \
-		$(top_srcdir)/airsched/bom/FlightDateHelper.cpp \
-		$(top_srcdir)/airsched/bom/SegmentDateHelper.cpp \
 		$(top_srcdir)/airsched/bom/SegmentPeriodHelper.cpp \
 		$(top_srcdir)/airsched/bom/ReachableUniverseKey.cpp \
 		$(top_srcdir)/airsched/bom/OriginDestinationSetKey.cpp \

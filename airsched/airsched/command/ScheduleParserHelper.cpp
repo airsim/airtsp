@@ -388,10 +388,6 @@ namespace AIRSCHED {
       // DEBUG: Display the result
       STDAIR_LOG_DEBUG ("FlightPeriod: " << _flightPeriod.describe());
 
-      // Create the FlightDate BOM objects, and potentially the intermediary
-      // objects (e.g., Inventory).
-      InventoryGenerator::createFlightDate (_bomRoot, _flightPeriod);
-
       // Create the FlightPeriod BOM objects, and potentially the intermediary
       // objects (e.g., Inventory).
       InventoryGenerator::createFlightPeriod (_bomRoot, _flightPeriod);

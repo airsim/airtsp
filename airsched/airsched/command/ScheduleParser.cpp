@@ -24,10 +24,6 @@ namespace AIRSCHED {
     // Parse the CSV-formatted schedule input file, and generate the
     // corresponding Inventories for the airlines.
     lFlightPeriodParser.generateInventories ();
-      
-    // Complete the BomRoot BOM building
-    // Create the routings for all the inventories.
-    InventoryGenerator::createDirectAccesses (ioBomRoot);
   }
 
 }

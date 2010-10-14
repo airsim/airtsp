@@ -20,7 +20,7 @@ namespace stdair {
 
 namespace AIRSCHED {
   /** Utility Structure for the parsing of Segment structures. */
-  struct SegmentStruct_T : public stdair::StructAbstract {
+  struct SegmentStruct : public stdair::StructAbstract {
     // Attributes
     stdair::AirportCode_T _boardingPoint;
     stdair::Date_T _boardingDate;
@@ -40,7 +40,7 @@ namespace AIRSCHED {
   };
 
   /** List of Segment strucutres. */
-  typedef std::vector<SegmentStruct_T> SegmentStructList_T;
+  typedef std::vector<SegmentStruct> SegmentStructList_T;
 
 }
 #endif // __AIRSCHED_BOM_SEGMENTSTRUCT_HPP

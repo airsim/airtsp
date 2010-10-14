@@ -12,13 +12,13 @@
 namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void SegmentPeriodHelper::fill (stdair::SegmentPeriod& ioSegmentPeriod,
-                                  const SegmentStruct_T& iSegmentStruct) {
+                                  const SegmentStruct& iSegmentStruct) {
     // Browse the list of segment cabins and fill the cabin booking
     // class map of the BOM segment period.
     for (SegmentCabinStructList_T::const_iterator itCabin =
            iSegmentStruct._cabinList.begin();
          itCabin != iSegmentStruct._cabinList.end(); ++itCabin) {
-      const SegmentCabinStruct_T& lSegmentCabinStruct = *itCabin;
+      const SegmentCabinStruct& lSegmentCabinStruct = *itCabin;
       ioSegmentPeriod.
         addCabinBookingClassList (lSegmentCabinStruct._cabinCode,
                                   lSegmentCabinStruct._classes);
@@ -37,7 +37,7 @@ namespace AIRSCHED {
     // Find the leg which has the same boarding point.
     LegStructList_T::const_iterator itLeg = iLegList.begin ();
     while (itLeg != iLegList.end()) {
-      const LegStruct_T& lLeg = *itLeg;
+      const LegStruct& lLeg = *itLeg;
       if (lLeg._boardingPoint == lBoardingPoint) {
         break;
       } else {
@@ -45,7 +45,7 @@ namespace AIRSCHED {
       }
     }
     assert (itLeg != iLegList.end());
-    const LegStruct_T& lFirstLeg = *itLeg;
+    const LegStruct& lFirstLeg = *itLeg;
     stdair::AirportCode_T lCurrentOffPoint = lFirstLeg._offPoint;
     stdair::Duration_T lCurrentOffTime = lFirstLeg._offTime;
     
@@ -57,7 +57,7 @@ namespace AIRSCHED {
       ++itLeg;
       assert (itLeg != iLegList.end());
       
-      const LegStruct_T& lCurrentLeg = *itLeg;
+      const LegStruct& lCurrentLeg = *itLeg;
       assert (lCurrentOffPoint == lCurrentLeg._boardingPoint);
       // As the boarding point of the current leg is the same as the off point
       // of the previous leg (by construction), there is no time difference.
@@ -71,7 +71,7 @@ namespace AIRSCHED {
       lCurrentOffTime = lCurrentLeg._offTime;
       lCurrentOffPoint = lCurrentLeg._offPoint;
     }
-    const LegStruct_T& lLastLeg = *itLeg;
+    const LegStruct& lLastLeg = *itLeg;
 
     // Update the attributes of the segment-period.
     ioSegmentPeriod.setBoardingTime (lFirstLeg._boardingTime);

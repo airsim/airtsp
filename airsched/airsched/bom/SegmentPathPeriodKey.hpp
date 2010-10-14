@@ -19,7 +19,7 @@ namespace AIRSCHED {
     // /////////// Construction ///////////
     /** Constructors. */
     SegmentPathPeriodKey ();
-    SegmentPathPeriodKey (const stdair::PeriodStruct_T&,
+    SegmentPathPeriodKey (const stdair::PeriodStruct&,
                           const stdair::Duration_T&,  const stdair::Duration_T&,
                           const DateOffsetList_T&, 
                           const stdair::NbOfAirlines_T&);
@@ -29,7 +29,7 @@ namespace AIRSCHED {
     
     // /////////// Getters //////////
     /** Get the active days-of-week. */
-    const stdair::PeriodStruct_T& getPeriod () const {
+    const stdair::PeriodStruct& getPeriod () const {
       return _period;
     }
 
@@ -59,7 +59,7 @@ namespace AIRSCHED {
 
     // /////////// Setters //////////
     /** Set the active days-of-week. */
-    void setPeriod (const stdair::PeriodStruct_T& iPeriod) {
+    void setPeriod (const stdair::PeriodStruct& iPeriod) {
       _period = iPeriod;
     }
 
@@ -107,7 +107,7 @@ namespace AIRSCHED {
   private:
     // Attributes
     /** Departure peiod. */
-    stdair::PeriodStruct_T _period;
+    stdair::PeriodStruct _period;
     
     /** The boarding time. */
     stdair::Duration_T _boardingTime;

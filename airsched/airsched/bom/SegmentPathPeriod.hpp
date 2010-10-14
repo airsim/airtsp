@@ -62,7 +62,7 @@ namespace AIRSCHED {
     }
 
     /** Get the departure period. */
-    const stdair::PeriodStruct_T& getDeparturePeriod () const {
+    const stdair::PeriodStruct& getDeparturePeriod () const {
       return _key.getPeriod();
     }
 

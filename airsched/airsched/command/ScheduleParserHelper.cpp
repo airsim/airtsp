@@ -19,13 +19,13 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
 
     ParserSemanticAction::
-    ParserSemanticAction (FlightPeriodStruct_T& ioFlightPeriod)
+    ParserSemanticAction (FlightPeriodStruct& ioFlightPeriod)
       : _flightPeriod (ioFlightPeriod) {
     }      
 
     // //////////////////////////////////////////////////////////////////
     storeAirlineCode::
-    storeAirlineCode (FlightPeriodStruct_T& ioFlightPeriod)
+    storeAirlineCode (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -42,7 +42,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeFlightNumber::
-    storeFlightNumber (FlightPeriodStruct_T& ioFlightPeriod)
+    storeFlightNumber (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -53,7 +53,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeDateRangeStart::
-    storeDateRangeStart (FlightPeriodStruct_T& ioFlightPeriod)
+    storeDateRangeStart (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -68,7 +68,7 @@ namespace AIRSCHED {
       
     // //////////////////////////////////////////////////////////////////
     storeDateRangeEnd::
-    storeDateRangeEnd (FlightPeriodStruct_T& ioFlightPeriod)
+    storeDateRangeEnd (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -90,7 +90,7 @@ namespace AIRSCHED {
     }
 
     // //////////////////////////////////////////////////////////////////
-    storeDow::storeDow (FlightPeriodStruct_T& ioFlightPeriod)
+    storeDow::storeDow (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -102,7 +102,7 @@ namespace AIRSCHED {
       
     // //////////////////////////////////////////////////////////////////
     storeLegBoardingPoint::
-    storeLegBoardingPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeLegBoardingPoint (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -131,7 +131,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeLegOffPoint::
-    storeLegOffPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeLegOffPoint (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -147,7 +147,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeBoardingTime::
-    storeBoardingTime (FlightPeriodStruct_T& ioFlightPeriod)
+    storeBoardingTime (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -165,7 +165,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeOffTime::
-    storeOffTime (FlightPeriodStruct_T& ioFlightPeriod)
+    storeOffTime (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -186,7 +186,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeElapsedTime::
-    storeElapsedTime (FlightPeriodStruct_T& ioFlightPeriod)
+    storeElapsedTime (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -207,7 +207,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeLegCabinCode::
-    storeLegCabinCode (FlightPeriodStruct_T& ioFlightPeriod)
+    storeLegCabinCode (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -219,7 +219,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeCapacity::
-    storeCapacity (FlightPeriodStruct_T& ioFlightPeriod)
+    storeCapacity (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -238,7 +238,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeSegmentSpecificity::
-    storeSegmentSpecificity (FlightPeriodStruct_T& ioFlightPeriod)
+    storeSegmentSpecificity (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -264,7 +264,7 @@ namespace AIRSCHED {
       
     // //////////////////////////////////////////////////////////////////
     storeSegmentBoardingPoint::
-    storeSegmentBoardingPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeSegmentBoardingPoint (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -277,7 +277,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeSegmentOffPoint::
-    storeSegmentOffPoint (FlightPeriodStruct_T& ioFlightPeriod)
+    storeSegmentOffPoint (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -290,7 +290,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeSegmentCabinCode::
-    storeSegmentCabinCode (FlightPeriodStruct_T& ioFlightPeriod)
+    storeSegmentCabinCode (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -301,7 +301,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeClasses::
-    storeClasses (FlightPeriodStruct_T& ioFlightPeriod)
+    storeClasses (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -326,7 +326,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeFamilyCode::
-    storeFamilyCode (FlightPeriodStruct_T& ioFlightPeriod)
+    storeFamilyCode (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
     
@@ -339,7 +339,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     storeFClasses::
-    storeFClasses (FlightPeriodStruct_T& ioFlightPeriod)
+    storeFClasses (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
     }
 
@@ -347,7 +347,7 @@ namespace AIRSCHED {
     void storeFClasses::operator() (iterator_t iStr,
                                     iterator_t iStrEnd) const {
       std::string lClasses (iStr, iStrEnd);
-      FareFamilyStruct_T lFareFamily(_flightPeriod._itSegmentCabin._itFamilyCode,
+      FareFamilyStruct lFareFamily(_flightPeriod._itSegmentCabin._itFamilyCode,
                                      lClasses);
 
       // The list of classes is the last (according to the arrival order
@@ -368,7 +368,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     doEndFlight::
     doEndFlight (stdair::BomRoot& ioBomRoot,
-                 FlightPeriodStruct_T& ioFlightPeriod)
+                 FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod),
         _bomRoot (ioBomRoot) {
     }
@@ -458,7 +458,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     FlightPeriodParser::
     FlightPeriodParser (stdair::BomRoot& ioBomRoot,
-                        FlightPeriodStruct_T& ioFlightPeriod) 
+                        FlightPeriodStruct& ioFlightPeriod) 
       : _bomRoot (ioBomRoot),
         _flightPeriod (ioFlightPeriod) {
     }
@@ -476,8 +476,7 @@ namespace AIRSCHED {
       flight_period = flight_key
         >> +( ';' >> leg )
         >> ';' >> segment_section
-        >> flight_period_end[doEndFlight(self._bomRoot,
-                                         self._flightPeriod)]
+        >> flight_period_end[doEndFlight (self._bomRoot, self._flightPeriod)]
         ;
 
       flight_period_end =
@@ -491,26 +490,24 @@ namespace AIRSCHED {
         >> ';' >> dow[storeDow(self._flightPeriod)]
         ;
 
-      airline_code =
-        boost::spirit::classic::lexeme_d[
-                                (airline_code_p)[storeAirlineCode(self._flightPeriod)]
-                                ]
+      airline_code = boost::spirit::classic::
+        lexeme_d[(airline_code_p)[storeAirlineCode(self._flightPeriod)] ]
         ;
         
-      flight_number =
-        boost::spirit::classic::lexeme_d[
-                                (flight_number_p)[storeFlightNumber(self._flightPeriod)]
-                                ]
+      flight_number = boost::spirit::classic::
+        lexeme_d[(flight_number_p)[storeFlightNumber(self._flightPeriod)] ]
         ;
 
-      date =
-        boost::spirit::classic::lexeme_d[
-                                (year_p)[boost::spirit::classic::assign_a(self._flightPeriod._itYear)]
-                                >> '-'
-                                >> (month_p)[boost::spirit::classic::assign_a(self._flightPeriod._itMonth)]
-                                >> '-'
-                                >> (day_p)[boost::spirit::classic::assign_a(self._flightPeriod._itDay)]
-                                ]
+      date = boost::spirit::classic::
+        lexeme_d[(year_p)[boost::spirit::classic::
+                          assign_a(self._flightPeriod._itYear)]
+                 >> '-'
+                 >> (month_p)[boost::spirit::classic::
+                              assign_a(self._flightPeriod._itMonth)]
+                 >> '-'
+                 >> (day_p)[boost::spirit::classic::
+                            assign_a(self._flightPeriod._itDay)]
+                 ]
         ;
 
       dow = boost::spirit::classic::lexeme_d[ dow_p ]
@@ -535,23 +532,26 @@ namespace AIRSCHED {
         >> time[storeElapsedTime(self._flightPeriod)]
         ;
         
-      time =
-        boost::spirit::classic::lexeme_d[
-                                (hours_p)[boost::spirit::classic::assign_a(self._flightPeriod._itHours)]
-                                >> ':'
-                                >> (minutes_p)[boost::spirit::classic::assign_a(self._flightPeriod._itMinutes)]
-                                >> !(':' >> (seconds_p)[boost::spirit::classic::assign_a(self._flightPeriod._itSeconds)])
-                                ]
+      time = boost::spirit::classic::
+        lexeme_d[(hours_p)[boost::spirit::classic::
+                           assign_a(self._flightPeriod._itHours)]
+                 >> ':'
+                 >> (minutes_p)[boost::spirit::classic::
+                                assign_a(self._flightPeriod._itMinutes)]
+                 >> !(':' 
+                      >> (seconds_p)[boost::spirit::classic::
+                                     assign_a(self._flightPeriod._itSeconds)])
+                 ]
         ;
 
-      date_offset =
-        boost::spirit::classic::ch_p('/')
-        >> (int1_p)[boost::spirit::classic::assign_a(self._flightPeriod._dateOffset)]
+      date_offset = boost::spirit::classic::ch_p('/')
+        >> (int1_p)[boost::spirit::classic::
+                    assign_a(self._flightPeriod._dateOffset)]
         ;          
         
-      leg_cabin_details =
-        (cabin_code_p)[storeLegCabinCode(self._flightPeriod)]
-        >> ';' >> (boost::spirit::classic::ureal_p)[storeCapacity(self._flightPeriod)]
+      leg_cabin_details = (cabin_code_p)[storeLegCabinCode(self._flightPeriod)]
+        >> ';' >> (boost::spirit::classic::
+                   ureal_p)[storeCapacity(self._flightPeriod)]
         ;
         
       segment_key =
@@ -564,13 +564,13 @@ namespace AIRSCHED {
         generic_segment | specific_segment_list
         ;
 
-      generic_segment =
-        boost::spirit::classic::ch_p('0')[storeSegmentSpecificity(self._flightPeriod)]
+      generic_segment = boost::spirit::classic::
+        ch_p('0')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_cabin_details)
         ;
 
-      specific_segment_list =
-        boost::spirit::classic::ch_p('1')[storeSegmentSpecificity(self._flightPeriod)]
+      specific_segment_list = boost::spirit::classic::
+        ch_p('1')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_key >> full_segment_cabin_details)
         ;
 

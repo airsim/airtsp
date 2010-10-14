@@ -12,14 +12,14 @@
 namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
-  const std::string LegCabinStruct_T::describe() const {
+  const std::string LegCabinStruct::describe() const {
     std::ostringstream ostr;
     ostr << "        " << _cabinCode << " " << _capacity << ", ";
     return ostr.str();
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void LegCabinStruct_T::fill (stdair::LegCabin& ioLegCabin) const {
+  void LegCabinStruct::fill (stdair::LegCabin& ioLegCabin) const {
     // Set the Capacity
     ioLegCabin.setCapacities (_capacity);
   }

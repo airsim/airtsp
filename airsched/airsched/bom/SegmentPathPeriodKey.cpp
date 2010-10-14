@@ -19,7 +19,7 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   SegmentPathPeriodKey::
-  SegmentPathPeriodKey (const stdair::PeriodStruct_T& iPeriod,
+  SegmentPathPeriodKey (const stdair::PeriodStruct& iPeriod,
                         const stdair::Duration_T& iBoardingTime,
                         const stdair::Duration_T& iElapsedTime,
                         const DateOffsetList_T& iBoardingDateOffsetList,

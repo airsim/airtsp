@@ -21,7 +21,7 @@ namespace stdair {
 namespace AIRSCHED {
   
   /** Utility Structure for the parsing of SegmentCabin details. */
-  struct SegmentCabinStruct_T : public stdair::StructAbstract {
+  struct SegmentCabinStruct : public stdair::StructAbstract {
     // Attributes
     stdair::CabinCode_T _cabinCode;
     stdair::ClassList_String_T _classes;
@@ -38,7 +38,7 @@ namespace AIRSCHED {
   };
 
   /** List of SegmentCabin-Detail strucutres. */
-  typedef std::vector<SegmentCabinStruct_T> SegmentCabinStructList_T;
+  typedef std::vector<SegmentCabinStruct> SegmentCabinStructList_T;
 
 }
 #endif // __AIRSCHED_BOM_SEGMENTCABINSTRUCT_HPP

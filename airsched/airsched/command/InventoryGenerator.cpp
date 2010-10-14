@@ -24,7 +24,7 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createFlightPeriod (stdair::BomRoot& ioBomRoot,
-                      const FlightPeriodStruct_T& iFlightPeriodStruct) {
+                      const FlightPeriodStruct& iFlightPeriodStruct) {
       
     const stdair::AirlineCode_T& lAirlineCode = iFlightPeriodStruct._airlineCode;
     
@@ -44,7 +44,7 @@ namespace AIRSCHED {
     assert (lInventory_ptr != NULL);
 
     // Create the flight-period key.
-    const stdair::PeriodStruct_T lPeriod (iFlightPeriodStruct._dateRange,
+    const stdair::PeriodStruct lPeriod (iFlightPeriodStruct._dateRange,
                                           iFlightPeriodStruct._dow);
     const stdair::FlightPeriodKey
       lFlightPeriodKey (iFlightPeriodStruct._flightNumber, lPeriod);
@@ -73,12 +73,12 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createSegmentPeriods (stdair::FlightPeriod& ioFlightPeriod,
-                        const FlightPeriodStruct_T& iFlightPeriodStruct) {
+                        const FlightPeriodStruct& iFlightPeriodStruct) {
     // Iterate on the segment strutures.
     const SegmentStructList_T& lSegmentList = iFlightPeriodStruct._segmentList;
     for (SegmentStructList_T::const_iterator itSegment = lSegmentList.begin();
          itSegment != lSegmentList.end(); ++itSegment) {
-      const SegmentStruct_T& lSegment = *itSegment;
+      const SegmentStruct& lSegment = *itSegment;
       // Set the segment-period primary key.
       const stdair::AirportCode_T& lBoardingPoint = lSegment._boardingPoint;
       const stdair::AirportCode_T& lOffPoint = lSegment._offPoint;

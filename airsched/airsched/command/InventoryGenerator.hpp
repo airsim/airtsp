@@ -18,11 +18,11 @@ namespace stdair {
 namespace AIRSCHED {
 
   // Forward declarations
-  struct FlightPeriodStruct_T;
-  struct LegStruct_T;
-  struct SegmentStruct_T;
-  struct LegCabinStruct_T;
-  struct SegmentCabinStruct_T;
+  struct FlightPeriodStruct;
+  struct LegStruct;
+  struct SegmentStruct;
+  struct LegCabinStruct;
+  struct SegmentCabinStruct;
   namespace ScheduleParserHelper {
     struct doEndFlight;
   }
@@ -41,11 +41,11 @@ namespace AIRSCHED {
     /** Generate the flight-period objects corresponding to the given
         FlightPeriodStruct, and add them to the given BomRoot. */
     static void createFlightPeriod (stdair::BomRoot&,
-                                    const FlightPeriodStruct_T&);
+                                    const FlightPeriodStruct&);
 
     /** Generate a segment-period. */
     static void createSegmentPeriods (stdair::FlightPeriod&,
-                                      const FlightPeriodStruct_T&);
+                                      const FlightPeriodStruct&);
 
   };
 

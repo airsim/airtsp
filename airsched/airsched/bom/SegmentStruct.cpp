@@ -12,7 +12,7 @@
 namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
-  const std::string SegmentStruct_T::describe() const {
+  const std::string SegmentStruct::describe() const {
     std::ostringstream ostr;
     ostr << "    " << _boardingPoint << " / "
          << boost::posix_time::to_simple_string(_boardingTime)
@@ -23,7 +23,7 @@ namespace AIRSCHED {
          << std::endl;
     for (SegmentCabinStructList_T::const_iterator itCabin =
            _cabinList.begin(); itCabin != _cabinList.end(); itCabin++) {
-      const SegmentCabinStruct_T& lCabin = *itCabin;
+      const SegmentCabinStruct& lCabin = *itCabin;
       ostr << lCabin.describe();
     }
     ostr << std::endl;
@@ -32,7 +32,7 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void SegmentStruct_T::fill (stdair::SegmentDate& ioSegmentDate) const {
+  void SegmentStruct::fill (stdair::SegmentDate& ioSegmentDate) const {
     // Note that some parameters (boarding date, boarding time, off
     // date, off time, elapsed time) are set by
     // SegmentDate::fillFromRouting() when the routing (with legs) is

@@ -18,6 +18,7 @@
 #include <airsched/factory/FacAIRSCHEDServiceContext.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/command/ScheduleParser.hpp>
+#include <airsched/command/OnDParser.hpp>
 #include <airsched/command/SegmentPathGenerator.hpp>
 #include <airsched/command/TravelSolutionProvider.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
@@ -59,6 +60,28 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
+  AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
+                    const stdair::Filename_T& iScheduleInputFilename,
+                    const stdair::Filename_T& iODInputFilename)
+    : _airschedServiceContext (NULL) {
+
+    // Initialise the service context
+    initServiceContext ();
+    
+    // Retrieve the AirSched service context
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+    
+    // Store the STDAIR service object within the (AIRSCHED) service context
+    lAIRSCHED_ServiceContext.setSTDAIR_Service (ioSTDAIR_ServicePtr);
+    
+    // Initialise the context
+    init (iScheduleInputFilename, iODInputFilename);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
                     const stdair::BasDBParams& iDBParams,
                     const stdair::Filename_T& iScheduleInputFilename) 
@@ -77,6 +100,24 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   AIRSCHED_Service::
   AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
+                    const stdair::BasDBParams& iDBParams,
+                    const stdair::Filename_T& iScheduleInputFilename,
+                    const stdair::Filename_T& iODInputFilename) 
+    : _airschedServiceContext (NULL) {
+    
+    // Initialise the service context
+    initServiceContext ();
+    
+    // Initialise the STDAIR service handler
+    initStdAirService (iLogParams, iDBParams);
+    
+    // Initialise the (remaining of the) context
+    init (iScheduleInputFilename, iODInputFilename);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AIRSCHED_Service::
+  AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
                     const stdair::Filename_T& iScheduleInputFilename) 
     : _airschedServiceContext (NULL) {
     
@@ -88,6 +129,23 @@ namespace AIRSCHED {
     
     // Initialise the (remaining of the) context
     init (iScheduleInputFilename);
+  }
+
+  // ////////////////////////////////////////////////////////////////////
+  AIRSCHED_Service::
+  AIRSCHED_Service (const stdair::BasLogParams& iLogParams,
+                    const stdair::Filename_T& iScheduleInputFilename,
+                    const stdair::Filename_T& iODInputFilename) 
+    : _airschedServiceContext (NULL) {
+    
+    // Initialise the service context
+    initServiceContext ();
+    
+    // Initialise the STDAIR service handler
+    initStdAirService (iLogParams);
+    
+    // Initialise the (remaining of the) context
+    init (iScheduleInputFilename, iODInputFilename);
   }
 
   // ////////////////////////////////////////////////////////////////////
@@ -181,6 +239,41 @@ namespace AIRSCHED {
     // STDAIR_LOG_DEBUG ("Generated BomRoot:");
     // std::ostringstream oStream;
     // STDAIR_LOG_DEBUG (oStream.str());
+  }
+  
+  // ////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::
+  init (const stdair::Filename_T& iScheduleInputFilename,
+        const stdair::Filename_T& iODInputFilename) {
+    init (iScheduleInputFilename);
+
+    // Check that the file path given as input corresponds to an actual file
+    const bool doesExistAndIsReadable =
+      stdair::BasFileMgr::doesExistAndIsReadable (iODInputFilename);
+    if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The schedule input file, '" << iODInputFilename
+                        << "', can not be retrieved on the file-system");
+      throw stdair::FileNotFoundException();
+    }
+
+    // Retrieve the AirSched service context
+    assert (_airschedServiceContext != NULL);
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+
+    // Retrieve the StdAir service context
+    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service();
+    assert (lSTDAIR_Service_ptr != NULL);
+    
+    // Get the root of the BOM tree, on which all of the other BOM objects
+    // will be attached
+    stdair::BomRoot& lBomRoot = lSTDAIR_Service_ptr->getBomRoot();
+
+    // Parse the schedule input file, and generate the Inventories
+    stdair::BasChronometer lOnDGeneration; lOnDGeneration.start();
+    OnDParser::generateOnDPeriods (iODInputFilename, lBomRoot);
+    STDAIR_LOG_DEBUG ("O&D generation time: " << lOnDGeneration.elapsed());
   }
   
   // ////////////////////////////////////////////////////////////////////

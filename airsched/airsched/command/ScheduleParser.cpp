@@ -9,7 +9,6 @@
 // AirSched
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/ScheduleParser.hpp>
-#include <airsched/command/InventoryGenerator.hpp>
 
 namespace AIRSCHED {
 

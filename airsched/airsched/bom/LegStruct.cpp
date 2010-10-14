@@ -13,13 +13,13 @@
 namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
-  LegStruct_T::LegStruct_T ()
+  LegStruct::LegStruct ()
     : _boardingDateOffset (stdair::DEFAULT_DATE_OFFSET),
       _offDateOffset (stdair::DEFAULT_DATE_OFFSET) {
   }
     
   // //////////////////////////////////////////////////////////////////////
-  const std::string LegStruct_T::describe() const {
+  const std::string LegStruct::describe() const {
     std::ostringstream ostr;
     ostr << "    " << _boardingPoint << " / "
          << boost::posix_time::to_simple_string(_boardingTime);
@@ -36,7 +36,7 @@ namespace AIRSCHED {
          << std::endl;
     for (LegCabinStructList_T::const_iterator itCabin = _cabinList.begin();
          itCabin != _cabinList.end(); itCabin++) {
-      const LegCabinStruct_T& lCabin = *itCabin;
+      const LegCabinStruct& lCabin = *itCabin;
       ostr << lCabin.describe();
     }
     ostr << std::endl;
@@ -45,7 +45,7 @@ namespace AIRSCHED {
   }
 
   // //////////////////////////////////////////////////////////////////////
-  void LegStruct_T::fill (const stdair::Date_T& iRefDate,
+  void LegStruct::fill (const stdair::Date_T& iRefDate,
                           stdair::LegDate& ioLegDate) const {
     // Set the Off Point
     ioLegDate.setOffPoint (_offPoint);

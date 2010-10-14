@@ -145,8 +145,8 @@ namespace AIRSCHED {
     // segment path.
     DateOffsetList_T lBoardingDateOffsetList = 
       getBoardingDateOffsetList();
-    const stdair::PeriodStruct_T& lCurrentDeparturePeriod = getDeparturePeriod();
-    const stdair::PeriodStruct_T& lNextDeparturePeriod =
+    const stdair::PeriodStruct& lCurrentDeparturePeriod = getDeparturePeriod();
+    const stdair::PeriodStruct& lNextDeparturePeriod =
       iSingleSegmentPath.getDeparturePeriod();
     const stdair::Duration_T& lLastOffTime =
       lLastSegmentPeriod_ptr->getOffTime();
@@ -175,11 +175,11 @@ namespace AIRSCHED {
 
         // Compute the adjusted departure period of the next segment by
         // substracting the origin one with the boarding date offset.
-        const stdair::PeriodStruct_T lAdjustedNextDeparturePeriod =
+        const stdair::PeriodStruct lAdjustedNextDeparturePeriod =
           lNextDeparturePeriod.addDateOffset (lNegativeNextBoardingDateOffset);
 
         // Build the intersection of the two periods.
-        const stdair::PeriodStruct_T lNewDeparturePeriod =
+        const stdair::PeriodStruct lNewDeparturePeriod =
           lCurrentDeparturePeriod.intersection (lAdjustedNextDeparturePeriod);
         stdair::Duration_T lNewElapsed = getElapsedTime() + lStopTime +
           lNextSegmentPeriod_ptr->getElapsedTime();
@@ -206,11 +206,11 @@ namespace AIRSCHED {
 
         // Compute the adjusted departure period of the next segment by
         // substracting the origin one with the boarding date offset.
-        const stdair::PeriodStruct_T lAdjustedNextDeparturePeriod =
+        const stdair::PeriodStruct lAdjustedNextDeparturePeriod =
           lNextDeparturePeriod.addDateOffset (lNegativeNextBoardingDateOffset);
 
         // Build the intersection of the two periods.
-        const stdair::PeriodStruct_T lNewDeparturePeriod =
+        const stdair::PeriodStruct lNewDeparturePeriod =
           lCurrentDeparturePeriod.intersection (lAdjustedNextDeparturePeriod);
         stdair::Duration_T lNewElapsed = getElapsedTime() + lStopTime +
           lNextSegmentPeriod_ptr->getElapsedTime();
@@ -249,7 +249,7 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   bool SegmentPathPeriod::
   isDepartureDateValid (const stdair::Date_T& iDepartureDate) const {
-    const stdair::PeriodStruct_T& lPeriod = getDeparturePeriod ();
+    const stdair::PeriodStruct& lPeriod = getDeparturePeriod ();
 
     // Check if the departure date is within the date range.
     const stdair::DatePeriod_T& lDeparturePeriod = lPeriod.getDateRange ();
@@ -260,7 +260,7 @@ namespace AIRSCHED {
     // Check if the departure date is valid within the DOW.
     // 0 = Sunday, 1 = Monday, etc.
     const short lDay = iDepartureDate.day_of_week ();
-    const stdair::DoWStruct_T& lDoW = lPeriod.getDoW ();
+    const stdair::DoWStruct& lDoW = lPeriod.getDoW ();
     if (lDoW.getStandardDayOfWeek (lDay) == false) {
       return false;
     }

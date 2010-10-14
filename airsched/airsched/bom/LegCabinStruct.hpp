@@ -19,7 +19,7 @@ namespace stdair {
 namespace AIRSCHED {
 
   /** Utility Structure for the parsing of LegCabin details. */
-  struct LegCabinStruct_T : public stdair::StructAbstract {
+  struct LegCabinStruct : public stdair::StructAbstract {
     // Attributes
     stdair::CabinCode_T _cabinCode;
     stdair::CabinCapacity_T _capacity;
@@ -33,7 +33,7 @@ namespace AIRSCHED {
   };
 
   /** List of LegCabin-Detail strucutres. */
-  typedef std::vector<LegCabinStruct_T> LegCabinStructList_T;
+  typedef std::vector<LegCabinStruct> LegCabinStructList_T;
 
 }
 #endif // __AIRSCHED_BOM_LEGCABINSTRUCT_HPP

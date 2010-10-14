@@ -36,10 +36,24 @@ namespace AIRSCHED {
         <br>Moreover, database connection parameters are given, so that a
         session can be created on the corresponding database.
         @param const stdair::BasLogParams& Parameters for the output log stream.
-        @param const stdair::BasDBParams& Parameters for the database access.
+        @param const stdair::BasDBParams& Parameters for the database access.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (const stdair::BasLogParams&, const stdair::BasDBParams&,
-                      const stdair::Filename_T& iScheduleInputFilename);
+                      const stdair::Filename_T& iScheduleInputFilename);  
+    
+    /** Constructor.
+        <br>The init() method is called; see the corresponding documentation
+        for more details.
+        <br>A reference on an output stream is given, so that log
+        outputs can be directed onto that stream.
+        <br>Moreover, database connection parameters are given, so that a
+        session can be created on the corresponding database.
+        @param const stdair::BasLogParams& Parameters for the output log stream.
+        @param const stdair::BasDBParams& Parameters for the database access.
+        @param const stdair::Filename_T& Filename of the input schedule file.
+        @param const stdair::Filename_T& Filename of the input O&D file. */
+    AIRSCHED_Service (const stdair::BasLogParams&, const stdair::BasDBParams&,
+                      const stdair::Filename_T&, const stdair::Filename_T&);
 
     /** Constructor.
         <br>The init() method is called; see the corresponding documentation
@@ -55,6 +69,18 @@ namespace AIRSCHED {
     /** Constructor.
         <br>The init() method is called; see the corresponding documentation
         for more details.
+        <br>Moreover, a reference on an output stream is given, so
+        that log outputs can be directed onto that stream.       
+        @param const stdair::BasLogParams& Parameters for the output log stream.
+        @param const stdair::Date_T& Date for the beginning of analysis.
+        @param const stdair::Filename_T& Filename of the input schedule file.
+        @param const stdair::Filename_T& Filename of the input O&D file. */
+    AIRSCHED_Service (const stdair::BasLogParams&,
+                      const stdair::Filename_T&, const stdair::Filename_T&);
+
+    /** Constructor.
+        <br>The init() method is called; see the corresponding documentation
+        for more details.
         <br>Moreover, as no reference on any output stream is given,
         it is assumed that the StdAir log service has already been
         initialised with the proper log output stream by some other
@@ -65,6 +91,21 @@ namespace AIRSCHED {
         @param const stdair::Filename_T& Filename of the input schedule file. */
     AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
                       const stdair::Filename_T& iScheduleInputFilename);
+
+    /** Constructor.
+        <br>The init() method is called; see the corresponding documentation
+        for more details.
+        <br>Moreover, as no reference on any output stream is given,
+        it is assumed that the StdAir log service has already been
+        initialised with the proper log output stream by some other
+        methods in the calling chain (for instance, when the AIRSCHED_Service
+        is itself being initialised by another library service such as
+        SIMCRS_Service).
+        @param const stdair::Date_T& Date for the beginning of analysis.
+        @param const stdair::Filename_T& Filename of the input schedule file. 
+        @param const stdair::Filename_T& Filename of the input O&D file. */
+    AIRSCHED_Service (stdair::STDAIR_ServicePtr_T ioSTDAIR_ServicePtr,
+                      const stdair::Filename_T&, const stdair::Filename_T&);
     
     /** Destructor. */
     ~AIRSCHED_Service();
@@ -112,6 +153,13 @@ namespace AIRSCHED {
         simulator, is parsed and the inventories are generated accordingly.
         @param const stdair::Filename_T& Filename of the input schedule file. */
     void init (const stdair::Filename_T& iScheduleInputFilename);
+    
+    /** Initialise.
+        <br>The CSV file, describing the airline schedules for the
+        simulator, is parsed and the inventories are generated accordingly.
+        @param const stdair::Filename_T& Filename of the input schedule file. 
+        @param const stdair::Filename_T& Filename of the input O&D file. */
+    void init (const stdair::Filename_T&, const stdair::Filename_T&);
         
     /** Finaliser. */
     void finalise ();

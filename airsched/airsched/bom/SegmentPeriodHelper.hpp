@@ -21,7 +21,7 @@ namespace AIRSCHED {
     // ////////// Business Methods /////////
     /** Fill the attributes of the given segment-period with the cabins
         and classes. */
-    static void fill (stdair::SegmentPeriod&, const SegmentStruct_T&);
+    static void fill (stdair::SegmentPeriod&, const SegmentStruct&);
     
     /** Fill the attributes of the given segment-period with the list of used
         legs. */

@@ -124,12 +124,12 @@ namespace AIRSCHED {
     // origin-destination set and reachable-universe.
     const stdair::FlightPeriod& lFlightPeriod =
       stdair::BomManager::getParent<stdair::FlightPeriod> (ioSegmentPeriod);
-    const stdair::PeriodStruct_T& lPeriodOfFlight = lFlightPeriod.getPeriod();
+    const stdair::PeriodStruct& lPeriodOfFlight = lFlightPeriod.getPeriod();
     // The departure period of the segment is the departure period of
     // the flight plus the boarding date offset of the segment.
     const stdair::DateOffset_T& lBoardingDateOffset = 
       ioSegmentPeriod.getBoardingDateOffset();
-    const stdair::PeriodStruct_T lPeriodOfSegment =
+    const stdair::PeriodStruct lPeriodOfSegment =
       lPeriodOfFlight.addDateOffset (lBoardingDateOffset);
     const stdair::Duration_T& lBoardingTime = ioSegmentPeriod.getBoardingTime();
     const stdair::Duration_T& lElapsed = ioSegmentPeriod.getElapsedTime();

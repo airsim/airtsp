@@ -108,7 +108,7 @@ namespace AIRSCHED {
     // to the destination. If it does not exist, then create one.
     OriginDestinationSet* lOriginDestinationSet_ptr =
       stdair::BomManager::getObjectPtr<OriginDestinationSet>(ioReachableUniverse,
-                                                            lDestination);
+                                                             lDestination);
     if (lOriginDestinationSet_ptr == NULL) {
       OriginDestinationSetKey lKey (lDestination);
       lOriginDestinationSet_ptr =

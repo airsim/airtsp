@@ -4,6 +4,7 @@
 // STL
 #include <cassert>
 // StdAir
+#include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
@@ -11,6 +12,7 @@
 #include <airsched/command/OnDPeriodGenerator.hpp>
 
 namespace AIRSCHED {
+
   namespace OnDParserHelper {
 
     // //////////////////////////////////////////////////////////////////////
@@ -336,22 +338,32 @@ namespace AIRSCHED {
   /////////////////////////////////////////////////////////////////////////
 
   // //////////////////////////////////////////////////////////////////////
-  OnDPeriodFileParser::
-  OnDPeriodFileParser (const stdair::Filename_T& iFilename,
-                       stdair::BomRoot& ioBomRoot)
+  OnDPeriodFileParser::OnDPeriodFileParser (const stdair::Filename_T& iFilename,
+                                            stdair::BomRoot& ioBomRoot)
     : _filename (iFilename), _bomRoot (ioBomRoot) {
     init();
   }
     
   // //////////////////////////////////////////////////////////////////////
   void OnDPeriodFileParser::init() {
+    // Check that the file exists and is readable
+    const bool doesExistAndIsReadable =
+      stdair::BasFileMgr::doesExistAndIsReadable (_filename);
+
+    if (doesExistAndIsReadable == false) {
+      throw OnDInputFileNotFoundException ("The O&D file " + _filename
+                                           + " does not exist or can not be read");
+    }
+    
     // Open the file
     _startIterator = iterator_t (_filename);
 
-    // Check the filename exists and can be open
+    // Check that the filename exists and can be open
     if (!_startIterator) {
-      STDAIR_LOG_DEBUG ("The file " << _filename << " can not be open."
-                       << std::endl);
+      STDAIR_LOG_DEBUG ("The O&D file " << _filename << " can not be open."
+                        << std::endl);
+      throw OnDInputFileNotFoundException ("The file " + _filename
+                                           + " does not exist or can not be read");
     }
       
     // Create an EOF iterator

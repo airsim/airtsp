@@ -4,6 +4,7 @@
 // STL
 #include <cassert>
 // StdAir
+#include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
@@ -640,15 +641,25 @@ namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
   void FlightPeriodFileParser::init() {
+    // Check that the file exists and is readable
+    const bool doesExistAndIsReadable =
+      stdair::BasFileMgr::doesExistAndIsReadable (_filename);
+
+    if (doesExistAndIsReadable == false) {
+      throw ScheduleInputFileNotFoundException ("The schedule file " + _filename
+                                                + " does not exist or can not be read");
+    }
+    
     // Open the file
     _startIterator = iterator_t (_filename);
 
     // Check the filename exists and can be open
     if (!_startIterator) {
-      STDAIR_LOG_ERROR ("The file " << _filename << " can not be open."
+      STDAIR_LOG_ERROR ("The schedule file " << _filename << " can not be open."
                           << std::endl);
 
-      throw stdair::FileNotFoundException();
+      throw ScheduleInputFileNotFoundException ("The file " + _filename
+                                                + " does not exist or can not be read");
     }
 
     // Create an EOF iterator

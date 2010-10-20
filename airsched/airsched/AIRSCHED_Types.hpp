@@ -16,6 +16,17 @@ namespace AIRSCHED {
 
    // ///////// Exceptions ///////////
   class RootException : public std::exception {
+  public:
+    /** Constructors. */
+    RootException (const std::string& iWhat) : _what (iWhat) {}
+    RootException () : _what ("No more details") {}
+    /** Destructor. */
+    virtual ~RootException() throw() {}
+    /** Give the details of the exception. */
+    const char* what() const throw() { return _what.c_str(); } 
+  protected:
+    /** Details for the exception. */
+    std::string _what;
   };
 
   class NonInitialisedServiceException : public RootException {
@@ -24,26 +35,47 @@ namespace AIRSCHED {
   class MemoryAllocationException : public RootException {
   };
 
-  class ObjectNotFoundException : public RootException {
+  class BOMObjectNotFoundException : public RootException {
   };
 
-  class InventoryNotFoundException : public RootException {
+  class InventoryNotFoundException : public BOMObjectNotFoundException {
   };
 
-  class FlightDateNotFoundException : public RootException {
+  class FlightDateNotFoundException : public BOMObjectNotFoundException {
   };
 
-  class SegmentDateNotFoundException : public RootException {
+  class SegmentDateNotFoundException : public BOMObjectNotFoundException {
   };
 
-  class SegmentCabinNotFoundException : public RootException {
+  class SegmentCabinNotFoundException : public BOMObjectNotFoundException {
   };
 
-  class LegDateNotFoundException : public RootException {
+  class LegDateNotFoundException : public BOMObjectNotFoundException {
   };
 
-  class LegCabinNotFoundException : public RootException {
+  class LegCabinNotFoundException : public BOMObjectNotFoundException {
   };
+
+  class FileException : public RootException {
+  public:
+    /** Constructor. */
+    FileException (const std::string& iWhat) : RootException (iWhat) {}
+  };
+
+  class OnDInputFileNotFoundException : public FileException {
+  public:
+    /** Constructor. */
+    OnDInputFileNotFoundException (const std::string& iWhat)
+      : FileException (iWhat) {}
+  };
+
+  class ScheduleInputFileNotFoundException : public FileException {
+  public:
+    /** Constructor. */
+    ScheduleInputFileNotFoundException (const std::string& iWhat)
+      : FileException (iWhat) {}
+  };
+
 
   // /////////////// Log /////////////
   /** Level of logs. */

@@ -97,7 +97,8 @@ namespace AIRSCHED {
 
       // Transform the date pair (i.e., the date range) into a date period
       _onDPeriod._datePeriod =
-        DatePeriod_T (_onDPeriod._dateRangeStart, _onDPeriod._dateRangeEnd);
+        stdair::DatePeriod_T (_onDPeriod._dateRangeStart,
+                              _onDPeriod._dateRangeEnd);
         
       // Reset the number of seconds
       _onDPeriod._itSeconds = 0;

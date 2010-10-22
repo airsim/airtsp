@@ -206,10 +206,11 @@ namespace AIRSCHED {
     // Check that the file path given as input corresponds to an actual file
     const bool doesExistAndIsReadable =
       stdair::BasFileMgr::doesExistAndIsReadable (iScheduleInputFilename);
+
     if (doesExistAndIsReadable == false) {
-      STDAIR_LOG_ERROR ("The schedule input file, '" << iScheduleInputFilename
-                        << "', can not be retrieved on the file-system");
-      throw stdair::FileNotFoundException();
+      throw ScheduleInputFileNotFoundException
+        ("The schedule file " + iScheduleInputFilename
+         + " does not exist or can not be read");
     }
 
     // Retrieve the AirSched service context
@@ -250,10 +251,10 @@ namespace AIRSCHED {
     // Check that the file path given as input corresponds to an actual file
     const bool doesExistAndIsReadable =
       stdair::BasFileMgr::doesExistAndIsReadable (iODInputFilename);
+
     if (doesExistAndIsReadable == false) {
-      STDAIR_LOG_ERROR ("The schedule input file, '" << iODInputFilename
-                        << "', can not be retrieved on the file-system");
-      throw stdair::FileNotFoundException();
+      throw OnDInputFileNotFoundException ("The O&D file " + iODInputFilename
+                                           + " does not exist or can not be read");
     }
 
     // Retrieve the AirSched service context

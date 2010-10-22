@@ -36,10 +36,10 @@ namespace AIRSCHED {
 
     std::string dAirport;
     std::string aAirport;
-    Date_T depDate;
-    Duration_T depTime;
-    Duration_T arTime;
-    Duration_T dur;
+    stdair::Date_T depDate;
+    stdair::Duration_T depTime;
+    stdair::Duration_T arTime;
+    stdair::Duration_T dur;
     bool Ref;
     std::string airline;
     std::string cabin;

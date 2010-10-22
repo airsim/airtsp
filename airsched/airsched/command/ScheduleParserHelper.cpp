@@ -647,6 +647,9 @@ namespace AIRSCHED {
       stdair::BasFileMgr::doesExistAndIsReadable (_filename);
 
     if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The schedule file " << _filename
+                        << " does not exist or can not be read.");
+      
       throw ScheduleInputFileNotFoundException ("The schedule file " + _filename
                                                 + " does not exist or can not be read");
     }

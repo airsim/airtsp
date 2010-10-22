@@ -352,6 +352,9 @@ namespace AIRSCHED {
       stdair::BasFileMgr::doesExistAndIsReadable (_filename);
 
     if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The O&D file " << _filename
+                        << " does not exist or can not be read.");
+      
       throw OnDInputFileNotFoundException ("The O&D file " + _filename
                                            + " does not exist or can not be read");
     }

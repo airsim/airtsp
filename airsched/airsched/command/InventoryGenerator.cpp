@@ -54,7 +54,7 @@ namespace AIRSCHED {
       getObjectPtr<stdair::FlightPeriod> (*lInventory_ptr, 
                                          lFlightPeriodKey.toString());
     if (lFlightPeriod_ptr != NULL) {
-      throw stdair::ObjectCreationgDuplicationException ();
+      throw stdair::ObjectCreationgDuplicationException ("");
     }
     assert (lFlightPeriod_ptr == NULL);
 

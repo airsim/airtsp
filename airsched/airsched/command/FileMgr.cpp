@@ -23,9 +23,9 @@ namespace AIRSCHED {
     // Open the input file
     std::ifstream inputFile (iInputFileName.c_str());
     if (! inputFile) {
-      STDAIR_LOG_ERROR ("Can not open input file \"" << iInputFileName
-                        << "\"");
-      throw stdair::FileNotFoundException();
+      std::ostringstream oMessage;
+      oMessage << "Can not open input file \"" << iInputFileName << "\"";
+      throw stdair::FileNotFoundException (oMessage.str());
     }
     
     char buffer[80];

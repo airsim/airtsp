@@ -7,8 +7,8 @@
 // STL
 #include <set>
 #include <vector>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 
 namespace AIRSCHED {
 

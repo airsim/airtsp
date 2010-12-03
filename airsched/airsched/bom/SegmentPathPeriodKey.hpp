@@ -4,14 +4,16 @@
 // //////////////////////////////////////////////////////////////////////
 // Import section
 // //////////////////////////////////////////////////////////////////////
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_date_time_types.hpp>
 #include <stdair/bom/KeyAbstract.hpp>
 #include <stdair/bom/PeriodStruct.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/bom/SegmentPathPeriodTypes.hpp>
 
 namespace AIRSCHED {
+
   /** Key of SegmentPathPeriod. */
   struct SegmentPathPeriodKey : public stdair::KeyAbstract {
     

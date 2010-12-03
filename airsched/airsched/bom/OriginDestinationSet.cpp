@@ -3,6 +3,7 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
+#include <sstream>
 // AIRSCHED
 #include <airsched/bom/OriginDestinationSet.hpp>
 

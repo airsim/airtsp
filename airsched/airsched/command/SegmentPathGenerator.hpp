@@ -7,7 +7,7 @@
 // STL
 #include <vector>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/command/CmdAbstract.hpp>
 // AirSched
 #include <airsched/AIRSCHED_Types.hpp>

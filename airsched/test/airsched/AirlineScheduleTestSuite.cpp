@@ -5,7 +5,6 @@
 // CppUnit
 #include <extracppunit/CppUnitCore.hpp>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -26,7 +25,6 @@
 #include <stdair/factory/FacBomManager.hpp>
 #include <stdair/service/Logger.hpp>
 // AirSched
-//#include <airsched/factory/FacSupervisor.hpp>
 #include <airsched/command/Simulator.hpp>
 #include <airsched/AIRSCHED_Service.hpp>
 // AirSched Test Suite

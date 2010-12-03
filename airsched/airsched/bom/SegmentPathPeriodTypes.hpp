@@ -9,8 +9,9 @@
 #include <map>
 #include <vector>
 #include <list>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
+#include <stdair/bom/key_types.hpp>
 
 namespace AIRSCHED {
 
@@ -30,7 +31,7 @@ namespace AIRSCHED {
 
   /** Define the vector of boarding date offsets of the member segments of
       a segment path compare to the boarding date of the first segment. */
-  typedef std::vector <stdair::DateOffset_T> DateOffsetList_T;
+  typedef std::vector<stdair::DateOffset_T> DateOffsetList_T;
   
 }
 #endif // __AIRSCHED_BOM_SEGMENTPATHPERIODTYPES_HPP

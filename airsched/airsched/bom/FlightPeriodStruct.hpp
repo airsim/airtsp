@@ -6,11 +6,11 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 #include <stdair/bom/DoWStruct.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/bom/LegCabinStruct.hpp>
 #include <airsched/bom/LegStruct.hpp>
 #include <airsched/bom/SegmentStruct.hpp>

@@ -2,13 +2,12 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
-#include <iostream>
 #include <istream>
 #include <sstream>
 #include <fstream>
-// Boost (Extended STL)
-#include <boost/date_time/gregorian/gregorian.hpp>
 // StdAir
+#include <stdair/stdair_date_time_types.hpp>
+#include <stdair/stdair_exceptions.hpp>
 #include <stdair/service/Logger.hpp>
 // AirSched
 #include <airsched/AIRSCHED_Types.hpp>

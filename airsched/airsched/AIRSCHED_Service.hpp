@@ -5,10 +5,10 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/AIRSCHED_Types.hpp>
 
 // Forward declarations.

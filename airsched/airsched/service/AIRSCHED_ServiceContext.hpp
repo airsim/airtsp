@@ -8,9 +8,10 @@
 #include <string>
 // Boost
 #include <boost/shared_ptr.hpp>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
-// AIRSCHED
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_service_types.hpp>
+// AirSched
 #include <airsched/AIRSCHED_Types.hpp>
 #include <airsched/service/ServiceAbstract.hpp>
 

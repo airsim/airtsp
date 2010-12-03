@@ -7,7 +7,7 @@
 // STL
 #include <string>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/command/CmdAbstract.hpp>
 
 // Forward declarations.
@@ -20,12 +20,13 @@ namespace AIRSCHED {
   /** Class wrapping the parser entry point. */
   class ScheduleParser : public stdair::CmdAbstract {
   public:
-    /** Parses the CSV file describing the airline schedules for the
+    /** Parse the CSV file describing the airline schedules for the
         simulator, and generates the inventories accordingly.
         @param const stdair::Filename_T& The file-name of the CSV-formatted 
         schedule input file.
         @param stdair::BomRoot& Root of the BOM tree. */
-    static void generateInventories(const stdair::Filename_T&, stdair::BomRoot&);
+    static void generateInventories (const stdair::Filename_T&,
+                                     stdair::BomRoot&);
   };
 }
 #endif // __AIRSCHED_CMD_SCHEDULEPARSER_HPP

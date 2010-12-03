@@ -7,10 +7,10 @@
 // STL
 #include <string>
 #include <vector>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/bom/FareFamilyStruct.hpp>
 
 // Forward declarations

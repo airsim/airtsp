@@ -7,10 +7,10 @@
 // STL
 #include <string>
 #include <vector>
-// STDAIR
-#include <stdair/STDAIR_Types.hpp>
+// StdAir
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
-// AIRSCHED
+// AirSched
 #include <airsched/bom/SegmentCabinStruct.hpp>
 
 // Forward declarations
@@ -19,6 +19,7 @@ namespace stdair {
 }
 
 namespace AIRSCHED {
+  
   /** Utility Structure for the parsing of Segment structures. */
   struct SegmentStruct : public stdair::StructAbstract {
     // Attributes

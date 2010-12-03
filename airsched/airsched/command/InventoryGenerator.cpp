@@ -3,10 +3,10 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <cassert>
-// BOOST
+// Boost
 #include <boost/date_time/date_iterator.hpp>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
+#include <stdair/stdair_basic_types.hpp>
 #include <stdair/basic/BasConst_Inventory.hpp>
 #include <stdair/bom/BomManager.hpp>
 #include <stdair/bom/BomRoot.hpp>
@@ -21,6 +21,7 @@
 #include <airsched/command/InventoryGenerator.hpp>
 
 namespace AIRSCHED {
+  
   // ////////////////////////////////////////////////////////////////////
   void InventoryGenerator::
   createFlightPeriod (stdair::BomRoot& ioBomRoot,

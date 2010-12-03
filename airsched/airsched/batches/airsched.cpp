@@ -11,7 +11,6 @@
 #include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
 // StdAir
-#include <stdair/STDAIR_Types.hpp>
 #include <stdair/STDAIR_Service.hpp>
 #include <stdair/bom/BookingRequestStruct.hpp>
 #include <stdair/bom/TravelSolutionStruct.hpp>
@@ -320,77 +319,73 @@ parseBookingRequest (const std::string& iRequestOption) {
 // ///////// M A I N ////////////
 int main (int argc, char* argv[]) {
 
-  try {
+  // A booking request should be given as command-line option
+  bool readBookingRequestFromCmdLine;
     
-    // A booking request should be given as command-line option
-    bool readBookingRequestFromCmdLine;
+  // Input file name
+  stdair::Filename_T lInputFilename;
+
+  // Output log File
+  std::string lLogFilename;
+
+  // Booking request string
+  std::string lBookingRequestString;
     
-    // Input file name
-    stdair::Filename_T lInputFilename;
+  // Call the command-line option parser
+  const int lOptionParserStatus = 
+    readConfiguration (argc, argv, readBookingRequestFromCmdLine,
+                       lInputFilename, lLogFilename, lBookingRequestString);
 
-    // Output log File
-    std::string lLogFilename;
+  if (lOptionParserStatus == K_AIRSCHED_EARLY_RETURN_STATUS) {
+    return 0;
+  }
 
-    // Booking request string
-    std::string lBookingRequestString;
-    
-    // Call the command-line option parser
-    const int lOptionParserStatus = 
-      readConfiguration (argc, argv, readBookingRequestFromCmdLine,
-                         lInputFilename, lLogFilename, lBookingRequestString);
+  // Set the log parameters
+  std::ofstream logOutputFile;
+  // Open and clean the log outputfile
+  logOutputFile.open (lLogFilename.c_str());
+  logOutputFile.clear();
 
-    if (lOptionParserStatus == K_AIRSCHED_EARLY_RETURN_STATUS) {
-      return 0;
-    }
+  // Initialise the AirSched service object
+  const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
+  AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
 
-    // Set the log parameters
-    std::ofstream logOutputFile;
-    // Open and clean the log outputfile
-    logOutputFile.open (lLogFilename.c_str());
-    logOutputFile.clear();
+  // DEBUG
+  STDAIR_LOG_DEBUG ("Welcome to Air-Sched");
 
-    // Initialise the AirSched service object
-    const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-    AIRSCHED::AIRSCHED_Service airschedService (lLogParams, lInputFilename);
+  // Check wether or not a booking request is given as a command-line option
+  if (readBookingRequestFromCmdLine == true) {
+    // Create a booking request
+    const stdair::BookingRequestStruct& lBookingRequest =
+      parseBookingRequest (lBookingRequestString);
+
+    // Create a booking request
+    /*
+      const airsched::SearchString_T& lSearchStringStruct =
+      airsched::parseBookingRequest (lBookingRequestString);
+      STDAIR_LOG_DEBUG ("Booking request: " << lSearchStringStruct.display());
+    */
 
     // DEBUG
-    STDAIR_LOG_DEBUG ("Welcome to Air-Sched");
+    STDAIR_LOG_DEBUG ("Booking request: " << lBookingRequest);
 
-    // Check wether or not a booking request is given as a command-line option
-    if (readBookingRequestFromCmdLine == true) {
-      // Create a booking request
-      const stdair::BookingRequestStruct& lBookingRequest =
-        parseBookingRequest (lBookingRequestString);
-
-      // Create a booking request
-      /*
-      const airsched::SearchString_T& lSearchStringStruct =
-        airsched::parseBookingRequest (lBookingRequestString);
-      STDAIR_LOG_DEBUG ("Booking request: " << lSearchStringStruct.display());
-      */
-
-      // DEBUG
-      STDAIR_LOG_DEBUG ("Booking request: " << lBookingRequest);
-
-      // Get the corresponding travel solutions
-      // stdair::TravelSolutionList_T lTravelSolutionList;
-      // airschedService.getTravelSolutions (lTravelSolutionList,
-      //                                     lBookingRequest);
+    // Get the corresponding travel solutions
+    // stdair::TravelSolutionList_T lTravelSolutionList;
+    // airschedService.getTravelSolutions (lTravelSolutionList,
+    //                                     lBookingRequest);
        
-    } else {
-      // DEBUG
-      STDAIR_LOG_DEBUG ("AirSched will just display the parsed schedule for "
-                        << lInputFilename
-                        << " after having built the corresponding BOM tree.");
+  } else {
+    // DEBUG
+    STDAIR_LOG_DEBUG ("AirSched will just display the parsed schedule for "
+                      << lInputFilename
+                      << " after having built the corresponding BOM tree.");
 
-      // Start a mini-simulation
-      // airschedService.simulate();
-    }
+    // Start a mini-simulation
+    // airschedService.simulate();
+  }
 
-    // Close the Log outputFile
-    logOutputFile.close();
-
-  } CATCH_ALL_EXCEPTIONS
+  // Close the Log outputFile
+  logOutputFile.close();
 
   return 0;	
 }

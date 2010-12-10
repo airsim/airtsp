@@ -1,17 +1,24 @@
-# AirSched top directory
+## test/airsched sub-directory
 include $(top_srcdir)/Makefile.common
-include $(srcdir)/core/sources.mk
-
-## Source directory
 
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = basic bom factory command service core config batches
+##
+SUBDIRS =
 
-#EXTRA_DIST = config_msvc.h
 EXTRA_DIST =
+##
 
+check_PROGRAMS = AirlineScheduleTestSuite
+TESTS = $(check_PROGRAMS)
+XFAIL_TESTS = #
 
-# Header files
-nobase_pkginclude_HEADERS = $(airsched_service_h_sources)
-#nobase_nodist_pkginclude_HEADERS = $(top_builddir)/@PACKAGE@/config.h
+AirlineScheduleTestSuite_SOURCES = AirlineScheduleTestSuite.hpp \
+								AirlineScheduleTestSuite.cpp
+AirlineScheduleTestSuite_CXXFLAGS= $(BOOST_CFLAGS) $(CPPUNIT_CFLAGS) \
+	$(EXTRACC_CFLAGS) $(STDAIR_CFLAGS)
+AirlineScheduleTestSuite_LDADD = 
+AirlineScheduleTestSuite_LDFLAGS = $(BOOST_LIBS) $(CPPUNIT_LIBS) \
+	$(EXTRACC_LIBS) $(STDAIR_LIBS) \
+	$(top_builddir)/airsched/core/libairsched.la
+

@@ -16,5 +16,5 @@ config/lt~obsolete.m4
 config/missing
 configure
 airsched/config.h.in*
-test/airsched/FQTTestSuite_results.xml
+test/airsched/AirlineScheduleTestSuite_results.xml
 

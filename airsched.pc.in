@@ -11,8 +11,9 @@ mandir=@mandir@
 infodir=@infodir@
 
 Name: @PACKAGE_PRETTY_NAME@
-Description: C++ Simulated Travel-Oriented Distribution System Library
+Description: C++ Simulated Airline Schedule Manager Library
 Version: @PACKAGE_VERSION@
 URL: http://sourceforge.net/projects/@PACKAGE@/
 Libs: -L${libdir} -l@PACKAGE@ @LDFLAGS@ @LIBS@
 Cflags: -I${includedir}
+

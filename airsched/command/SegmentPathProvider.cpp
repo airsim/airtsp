@@ -86,7 +86,7 @@ namespace AIRSCHED {
                         const SegmentPathPeriod& iSegmentPathPeriod,
                         const stdair::BookingRequestStruct& iBookingRequest) {
     // Create a new travel solution.
-    stdair::SegmentPath_T lSegmentPath;
+    stdair::TravelSolutionStruct lTravelSolution;
     
     // Browse the list of segments and retrieve the necessary informations
     // for identifying the corresponding segment-date.
@@ -129,7 +129,7 @@ namespace AIRSCHED {
 
       ++itOffset;
     }
-    ioSegmentPathList.push_back (lSegmentPath);
+    ioTravelSolutionList.push_back (lTravelSolution);
   }
 
 }

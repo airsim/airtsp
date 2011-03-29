@@ -31,10 +31,20 @@ namespace AIRSCHED {
 
   /**
    * @brief Class representing the root of the schedule-related BOM tree.
+   *
+   * It is the pending, in the schedule universe, of the stdair::Inventory
+   * class. It corresponds to all the destinations, which can be reached
+   * from a given geographical point. That latter is an airport for now,
+   * and its key (airport code) is specified by the ReachableUniverseKey
+   * object.
    */
   class ReachableUniverse : public stdair::BomAbstract {
+    /**
+     * Friend classes.
+     */
     template <typename BOM> friend class stdair::FacBom;
     friend class stdair::FacBomManager;
+    friend class SegmentPathGenerator;
     friend class boost::serialization::access;
 
   public:
@@ -55,31 +65,31 @@ namespace AIRSCHED {
     }
 
     /**
-     * Get the parent object.
-     */
-    stdair::BomAbstract* const getParent() const {
-      return _parent;
-    }
-    
-    /**
-     * Get the (origin) airport (part of the primary key).
+     * Get the (origin) airport (i.e., the primary key).
      */
     const stdair::AirportCode_T& getOrigin() const {
       return _key.getBoardingPoint();
     }
 
     /**
-     * Get the SegmentPathPeriodListList.
+     * Get the parent (i.e., the BomRoot) object.
      */
-    const SegmentPathPeriodListList_T& getSegmentPathPeriodListList() const {
-      return _segmentPathPeriodListList;
+    stdair::BomAbstract* const getParent() const {
+      return _parent;
     }
-
+    
     /**
-     * Get the map of children holders.
+     * Get the map of children holders (OriginDestinationSet objects).
      */
     const stdair::HolderMap_T& getHolderMap() const {
       return _holderMap;
+    }
+
+    /**
+     * Get the vector of SegmentPathPeriodLightList objects.
+     */
+    const SegmentPathPeriodListList_T& getSegmentPathPeriodListList() const {
+      return _segmentPathPeriodListList;
     }
 
 
@@ -116,14 +126,6 @@ namespace AIRSCHED {
     
 
   public:
-    // //////////// Business Methods //////////////
-    /**
-     * Add a segment path period to the dedicated list.
-     */
-    void addSegmentPathPeriod (const SegmentPathPeriod&);    
-           
-
-  public:
     // /////////// (Boost) Serialisation support methods /////////
     /**
      * Serialisation.
@@ -142,7 +144,7 @@ namespace AIRSCHED {
   protected:
     // ////////// Constructors and destructors /////////
     /**
-     * Default constructor.
+     * Main constructor.
      */
     ReachableUniverse (const Key_T&);
 
@@ -171,19 +173,19 @@ namespace AIRSCHED {
     Key_T _key;
 
     /**
-     * Pointer on the parent class (BomRoot).
+     * Pointer on the parent (BomRoot) object.
      */
     stdair::BomAbstract* _parent;
 
     /**
-     * Map holding the children ( objects).
+     * Map holding the children (OriginDestinationSet objects).
      */
     stdair::HolderMap_T _holderMap;
     
     /**
-     * The list of lists of SegmentPathPeriods, used solely for the
-     * construction of the main list of SegmentPathPeriods within the
-     * ReachableUniverseStructure.
+     * The list (actually, a vector) of lists of SegmentPathPeriods,
+     * used solely for the construction of the main list of
+     * SegmentPathPeriods within the ReachableUniverseStructure.
      */
     SegmentPathPeriodListList_T _segmentPathPeriodListList;
   };

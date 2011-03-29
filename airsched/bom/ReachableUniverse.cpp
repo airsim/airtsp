@@ -45,30 +45,6 @@ namespace AIRSCHED {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void ReachableUniverse::
-  addSegmentPathPeriod (const SegmentPathPeriod& iSegmentPathPeriod) {
-    const stdair::NbOfSegments_T& lNbOfSegments =
-      iSegmentPathPeriod.getNbOfSegments ();
-    assert (lNbOfSegments > 0
-            && lNbOfSegments <= stdair::MAXIMAL_NUMBER_OF_SEGMENTS_IN_OND);
-
-    // If needed, initialise the list of lists with empty fixed-length
-    // segment path period lists.
-    while (_segmentPathPeriodListList.size() < lNbOfSegments) {
-      SegmentPathPeriodLightList_T lSegmentPathPeriodLightList;
-      _segmentPathPeriodListList.push_back (lSegmentPathPeriodLightList);
-    }
-
-    // Retrieve the i-fixed-length segment path period list (i = number of
-    // segments).
-    SegmentPathPeriodLightList_T& lSegmentPathPeriodLightList =
-      _segmentPathPeriodListList.at (lNbOfSegments-1);
-
-    // Add the SegmentPathPeriod to that fixed-length-path list.
-    lSegmentPathPeriodLightList.push_back (&iSegmentPathPeriod);
-  }
-  
-  // ////////////////////////////////////////////////////////////////////
   void ReachableUniverse::serialisationImplementation() {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
@@ -83,7 +59,7 @@ namespace AIRSCHED {
   template<class Archive>
   void ReachableUniverse::serialize (Archive& ioArchive,
                                      const unsigned int iFileVersion) {
-    //ioArchive & _key;
+    ioArchive & _key;
   }
 
 }

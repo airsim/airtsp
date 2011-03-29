@@ -3,6 +3,7 @@
 
 \section toc Table of Contents
 - \ref intro
+- \ref dependencies
 - \ref pkgconfig
 - \ref airsched_config
 - \ref autotools
@@ -17,6 +18,18 @@ programs with the AirSched library. The first one employs the \c
 http://pkgconfig.freedesktop.org/</a>), whereas the second one uses \c
 `airsched-config' script. These methods are shortly described below.
 
+\section dependencies Dependencies
+
+The AirSched library depends on several other C++ components.
+
+\subsection stdairdep StdAir
+Among them, as for now, only StdAir has been packaged. The support for StdAir
+is taken in charge by a dedicated M4 macro file (namely, <tt>`stdair.m4'</tt>), 
+from the configuration script (generated thanks to <tt>`configure.ac'</tt>).
+
+\image html airsched_dependencies.png "AirSched Dependencies"
+\image rtf airsched_dependencies.png "AirSched Dependencies"
+\image latex airsched_dependencies.png "AirSched Dependencies" width=15cm
 
 \section pkgconfig Using the pkg-config command
 

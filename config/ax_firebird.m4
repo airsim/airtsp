@@ -118,7 +118,12 @@ AC_DEFUN([AX_LIB_FIREBIRD],
 #  error Firebird version is too old
 #endif
                     ]]
+<<<<<<< HEAD
+                )
+                ],
+=======
                 )],
+>>>>>>> trunk
                 [
                 AC_MSG_RESULT([yes])
                 success="yes"

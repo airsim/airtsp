@@ -77,9 +77,6 @@ test "x$enable_exceptions" != xno && enable_exceptions=yes
 # Set the data directory for AirSched
 pkgdatadir="${datadir}/airsched"
 AC_SUBST(pkgdatadir)
-# Set the directory for data samples exported by AirSched
-sampledir="${pkgdatadir}/samples"
-AC_SUBST(sampledir)
 
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
@@ -326,10 +323,13 @@ AC_CONFIG_FILES(
 	airsched/factory/Makefile
 	airsched/command/Makefile
 	airsched/service/Makefile
-	airsched/core/Makefile
 	airsched/config/Makefile
+	airsched/config/airsched-paths.hpp
+	airsched/core/Makefile
 	airsched/batches/Makefile
 	man/Makefile
+	man/doxygen_man1.cfg
+	man/doxygen_man3.cfg
 	doc/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile

@@ -66,10 +66,6 @@ namespace AIRSCHED {
     stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
       initStdAirService (iLogParams, iDBParams);
     
-    // Initialise the STDAIR service handler
-    stdair::STDAIR_ServicePtr_T lSTDAIR_Service_ptr =
-      initStdAirService (iLogParams);
-    
     // Initialise the service context
     initServiceContext();
     

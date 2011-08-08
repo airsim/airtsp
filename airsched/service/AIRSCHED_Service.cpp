@@ -248,23 +248,6 @@ namespace AIRSCHED {
       //
       lSTDAIR_Service.buildSampleBom();
     }
-    assert (_airschedServiceContext != NULL);
-
-    // Retrieve the STDAIR service object from the (AirSched) service context
-    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
-      *_airschedServiceContext;
-    stdair::STDAIR_Service& lSTDAIR_Service =
-      lAIRSCHED_ServiceContext.getSTDAIR_Service();
-
-    // Delegate the BOM building to the dedicated service
-    lSTDAIR_Service.buildSampleBom();
-  }
-
-  // ////////////////////////////////////////////////////////////////////
-  std::string AIRSCHED_Service::
-  jsonExport (const stdair::AirlineCode_T& iAirlineCode,
-              const stdair::FlightNumber_T& iFlightNumber,
-              const stdair::Date_T& iDepartureDate) const {
 
     /**
      * 2. Delegate the complementary building of objects and links by the

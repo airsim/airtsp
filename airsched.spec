@@ -2,7 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           airsched
-Version:        0.1.0
+Version:        99.99.99
 Release:        1%{?dist}
 
 Summary:        C++ Simulated Airline Schedule Manager Library
@@ -106,6 +106,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Sep 17 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 99.99.99-1
+- Upstream update
+
 * Sat Aug 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.0-1
 - First RPM release
 

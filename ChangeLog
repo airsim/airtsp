@@ -1,0 +1,6 @@
+
+	* Sat Aug 20 2011 Denis Arnaud <denis_arnaud at users dot sourceforge.net> 0.1.0
+	- First release. AirSched is able to calculate travel solutions
+	for any incoming booking request, thanks to the batch
+	(airsched). An interactive utility has still to be implemented.
+

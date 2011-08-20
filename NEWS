@@ -1,0 +1,7 @@
+
+* 2011-08-20:
+- Version 0.1.0
+- First release. AirSched is able to calculate travel solutions for
+  any incoming booking request, thanks to the batch (airsched). An
+  interactive utility has still to be implemented.
+

@@ -8,11 +8,15 @@
   - \ref ug_build_binaries
   - \ref ug_build_and_run_tests
   - \ref ug_install_project
-- \ref ug_bom_tree
+- \ref ug_inputfile
+- \ref ug_bom_bom
+ - \ref ug_bom_build 
+ - \ref ug_bom_display 
+- \ref ug_bom_structure
  - \ref ug_bom_network
  - \ref ug_bom_schedule
 - \ref ug_extending_bom_tree
-
+- \ref ug_procedure
 
 \section ug_introduction Introduction
 
@@ -25,20 +29,207 @@ to start using \c AirSched.
 
 \subsection ug_get_source Get the AirSched library
 
+Clone locally the full
+<a href="http://air-sched.git.sourceforge.net/git/gitweb.cgi?p=airsched/air-sched;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
+\verbatim 
+cd ~
+mkdir -p dev/sim
+cd ~/dev/sim
+git clone git://air-sched.git.sourceforge.net/gitroot/air-sched/air-sched airschedgit
+cd airschedgit
+git checkout trunk
+\endverbatim 
+
 \subsection ug_build_binaries Build the AirSched project
-To run the configuration script the first time, go to the
-top directory (where the AirSched package has been un-packed), and issue
-either of the following two commands, depending on whether the AirSched
-project has been checked out from the Subversion repository or
-downloaded as a tar-ball package from the Sourceforge Web site:
- - <tt>./autogen.sh</tt>
- - <tt>./configure</tt>
+
+Link with StdAir, create the distribution package (say, 0.5.0) and compile 
+using the following commands:
+\verbatim 
+cd ~/dev/sim/airschedgit
+rm -rf build && mkdir -p build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=~/dev/deliveries/airsched-0.5.0 \
+ -DWITH_STDAIR_PREFIX=~/dev/deliveries/stdair-stable \
+ -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
+make
+\endverbatim 
 
 \subsection ug_build_and_run_tests Build and Run the Tests
 
+After building the AirSched project, the following commands run the tests:
+\verbatim 
+cd ~/dev/sim/airschedgit
+cd build
+make check
+\endverbatim 
+
+As a result, you should obtain a similar report:
+
+\verbatim 
+[  0%] Built target hdr_cfg_airsched
+[ 96%] Built target airschedlib
+[100%] Built target AirlineScheduleTestSuitetst
+Scanning dependencies of target check_airschedtst
+Test project /home/dan/dev/sim/airsched/airschedgithub/build/test/airsched
+    Start 1: AirlineScheduleTestSuitetst
+1/1 Test #1: AirlineScheduleTestSuitetst ......   Passed    0.15 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.40 sec
+[100%] Built target check_airschedtst
+Scanning dependencies of target check
+[100%] Built target check
+\endverbatim 
+
 \subsection ug_install_project Install the AirSched Project (Binaries, Documentation)
 
-\section ug_bom_tree Exploring the Predefined BOM Tree
+After the step \ref ug_build_binaries, to install the library and its header 
+files, type:
+\verbatim 
+cd ~/dev/sim/airschedgit
+cd build
+make install
+\endverbatim
+
+You can check that the executables and other required files have been copied 
+into the given final directory: 
+
+\verbatim 
+cd ~dev/deliveries/airsched-0.5.0
+\endverbatim
+
+To generate the AirSched project documentation, the commands are:
+
+\verbatim 
+cd ~/dev/sim/airschedgit
+cd build
+make doc
+\endverbatim
+The AirSched project documentation is available in the following formats: HTML, 
+LaTeX. 
+Those documents are available in a subdirectory:
+
+\verbatim 
+cd ~/dev/sim/airschedgit
+cd build
+cd doc
+\endverbatim
+
+\section ug_inputfile Input file of AirSched Project 
+
+The schedule input file structure should look like the following sample:
+
+\dontinclude scheduleInputFile.ref 
+\until 10;
+
+Each line, beyond the header, represents a schedule entry, i.e., the
+specification of a given flight-period (see \c AIRSCHED::FlightPeriodStruct).
+The fields are as follows:
+- Flights section
+ - AirlineCode (e.g., \c BA)
+ - FlightNumber (e.g., \c 9)
+ - Start of the flight departure period (e.g., \c 2007-04-20)
+ - End of the flight departure period (e.g., \c 2007-06-30)
+ - Day-Of-the-Week for the flight departure period (DOW) (e.g., \c 0000011)
+ - Leg section
+ - Segment section
+- Leg section
+ - BoardPoint (e.g., \c LHR)
+ - OffPoint (e.g., \c BKK)
+ - BoardTime (e.g., \c 22:00)
+ - ArrivalTime (e.g., \c 15:15)
+ - ArrivalDateOffSet (e.g., \c  +1)
+ - ElapsedTime (e.g., \c 11:15)
+ - Leg-cabin section
+- Leg-cabin section
+ - Cabin code (e.g., \c F, \c J, \c W or \c Y)
+ - Capacity (e.g., respectively \c 5, \c 12, \c 20 or \c 300)
+- Segment section
+ - Specificity flag:
+  - \c 0 means that all the segments behave the same way, i.e., have
+    got the same dressing (distribution and order of the booking
+    classes per cabin)
+  - \c 1 means that each segment bahave differently. The full
+    specification of each of those segments must therefore be given.
+ - Segment-cabin section
+ - Fare family section
+- Segment-cabin section
+ - Cabin code (e.g., \c F, \c J, \c W or \c Y)
+ - List of (one-letter-code) booking classes for the cabin (e.g,
+   respectively \c FA, \c JCDI, \c WT or \c YBHKMLSQ)
+- Fare family section
+ - Fare family code (e.g., \c 1)
+ - List of (one-letter-code) booking classes for the fare family (e.g,
+   respectively \c FA, \c JCDI, \c WT or \c YBHKMLSQ)
+
+Some fare input examples (including the example above named <a
+href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=blob_plain;f=samples/schedule03.csv;hb=trunk">schedule03.csv</a>)
+are given in the <a
+href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=tree;f=samples;hb=trunk">StdAir
+project</a>.
+
+\section ug_bom_bom The schedule BOM Tree
+
+The schedule-related Business Object Model (BOM) tree is a structure
+allowing to store all the \c AIRSCHED::FlightPeriodStruct objects of
+the simulation. That is why parsing an input file, containing the
+specification for all the flight-periods, is more convenient (\see the
+previous section \ref ug_inputfile).
+
+As it may be time consuming, and it for sure requires some know-how,
+to first build such a schedule input file, a small sample BOM tree is
+provided by default when needed.
+
+\subsection ug_bom_build Build of the schedule BOM tree 
+
+First, a BOM root object (i.e., a root for all the classes in the project)
+is instantiated by the <tt>stdair::STDAIR_ServiceContext</tt> context object,
+when the <tt>stdair::STDAIR_Service</tt> is itself instantiated (during the
+instantiation of the <tt>AIRSCHED::AIRSCHED_Service</tt> object).
+
+The corresponding \c type (class) <tt>stdair::BomRoot</tt> is defined in the
+StdAir library.
+
+Then, the BOM root can be either constructed thanks to the 
+<tt>AIRSCHED::AIRSCHED_Service::buildSampleBom()</tt> method:
+
+\dontinclude AIRSCHED_Service.hpp
+\skipline buildSampleBom
+
+or can be constructed using the schedule input file described above thanks to
+the
+<tt>AIRSCHED::AIRSCHED_Service::parseAndLoad (const stdair::Filename_T&)</tt>
+method:
+
+\dontinclude AIRSCHED_Service.hpp
+\skipline parseAndLoad 
+
+\subsection ug_bom_display Display of the schedule BOM tree 
+
+\note That feature (of BOM tree display) has not been implemented yet.
+      Do not hesitate to <a
+      href="https://sourceforge.net/apps/trac/air-sched/newticket">open
+      a ticket</a> if you would like to have it implemented more quickly.
+
+The schedule BOM tree can be displayed as done in the 
+<tt>batches::airsched.cpp</tt> program:
+\dontinclude airsched.cpp
+\skipline lBOMCSVDump
+\line lBOMCSVDump
+
+When the default BOM tree is used (<tt>-b/--builtin</tt> option of the main
+program <tt>airsched.cpp</tt>), the schedule BOM tree display (for now,
+corresponding to <a
+href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=blob_plain;f=samples/schedule03.csv;hb=trunk">schedule01.csv</a>
+parsed by
+<a
+href="http://airinv.git.sourceforge.net/git/gitweb.cgi?p=airinv/airinv;a=blob_plain;f=airinv/batches/parseInventory.cpp;hb=trunk">AIRINV::parseInventory</a>)
+should look like:
+
+\include bomTreeDisplay.ref
+
+\section ug_bom_structure Exploring the Predefined BOM Tree
 
 \image html airsched_bom_tree.png "AirSched BOM tree"
 \image rtf airsched_bom_tree.png "AirSched BOM tree"
@@ -59,5 +250,14 @@ airline IT arena.
 - \c stdair::OnDPeriod
 
 \section ug_extending_bom_tree Extending the BOM Tree
+
+\section ug_procedure The travel solution calculation procedure
+
+The project AirSched aims at calculating a list of <a
+href="http://stdair.sourceforge.net/TravelSolutionStruct_8hpp.html">
+travel solutions</a> for every incoming <a
+href="http://stdair.sourceforge.net/BookingRequestStruct_8hpp.html">
+booking request</a>.
+
 
 */

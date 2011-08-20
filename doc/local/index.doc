@@ -51,7 +51,7 @@
 - <a href="http://soci.sourceforge.net/">SOCI (C++ DB API)</a>
 
 
-\section social_sponsorship Support SimFQT
+\section social_sponsorship Support AirSched
 \htmlonly
 <table width="100%">
  <tr>
@@ -100,7 +100,7 @@ Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,
 
 \note
 \anchor N
-(N) - The SimFQT library is \b NOT intended, in any way, to be used by
+(N) - The AirSched library is \b NOT intended, in any way, to be used by
 airlines for production systems.
 
 \htmlonly

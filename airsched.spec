@@ -2,6 +2,7 @@
 %global mydocs __tmp_docdir
 #
 Name:           airsched
+%global sfname  air-sched
 Version:        99.99.99
 Release:        1%{?dist}
 
@@ -9,8 +10,8 @@ Summary:        C++ Simulated Airline Schedule Manager Library
 
 Group:          System Environment/Libraries 
 License:        LGPLv2+
-URL:            http://sourceforge.net/projects/%{name}/
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+URL:            http://sourceforge.net/projects/%{sfname}/
+Source0:        http://downloads.sourceforge.net/%{sfname}/%{name}-%{version}.tar.bz2
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  cmake, python-devel

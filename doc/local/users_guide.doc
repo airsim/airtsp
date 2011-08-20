@@ -30,7 +30,7 @@ to start using \c AirSched.
 \subsection ug_get_source Get the AirSched library
 
 Clone locally the full
-<a href="http://air-sched.git.sourceforge.net/git/gitweb.cgi?p=airsched/air-sched;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
+<a href="http://air-sched.git.sourceforge.net/git/gitweb.cgi?p=air-sched/air-sched;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
 \verbatim 
 cd ~
 mkdir -p dev/sim

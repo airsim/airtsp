@@ -2,7 +2,7 @@
 #-------------------------------------------------------------------
 AC_PREREQ(2.59)
 AC_COPYRIGHT([Copyright (C) 2007-2011  Denis Arnaud <denis_arnaud@users.sourceforge.net>])
-AC_INIT([AIRSCHED],[0.1.0],[denis_arnaud@users.sourceforge.net],[airsched])
+AC_INIT([AIRSCHED],[0.1.1],[denis_arnaud@users.sourceforge.net],[airsched])
 AC_CONFIG_HEADER([airsched/config.h])
 AC_CONFIG_SRCDIR([airsched/basic/BasConst.cpp])
 AC_CONFIG_AUX_DIR([config])

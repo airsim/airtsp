@@ -3,7 +3,7 @@
 #
 Name:           airsched
 %global sfname  air-sched
-Version:        0.1.0
+Version:        0.1.1
 Release:        1%{?dist}
 
 Summary:        C++ Simulated Airline Schedule Manager Library
@@ -110,6 +110,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Aug 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.1-1
+- Upstream update
+- Took into account the feedback from the review request (bug 732205)
+
 * Sat Aug 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.0-1
 - First RPM release
 

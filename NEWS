@@ -1,4 +1,9 @@
 
+* 2011-08-21:
+- Version 0.1.1
+- Just added a small description within the README file.
+- Took into account the feedback from the review request (bug 732205)
+
 * 2011-08-20:
 - Version 0.1.0
 - First release. AirSched is able to calculate travel solutions for

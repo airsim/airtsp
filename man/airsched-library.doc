@@ -20,10 +20,9 @@ increased functionality, speed and accuracy. In particular the
 Boost (C++ Standard Extensions: http://www.boost.org) library is used.
 
 The library covers the following areas:
-- Calculation of fare from statistics on tickets/coupons
-- Fare rules: storage, engine, management
-- Retrieval of fares for specific booking requests or product assesment
-- Fare rule sets: storage, engine, management
+- Network/graph generation
+- Calculation of travel solutions from airline schedules/networks
+- Flight-preiods: storage, engine, management
 
 \section sec_see_also SEE ALSO
  \b airsched(1), \b airsched-config(1)

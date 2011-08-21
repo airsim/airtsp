@@ -13,7 +13,7 @@ Boost (C++ Standard Extensions: http://www.boost.org) library is used.
 
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
-The Sourceforge Subversion repository is to be found here:
+The Sourceforge Git repository may be cloned as following:
 git clone ssh://air-sched.git.sourceforge.net/gitroot/air-sched/air-sched airschedgit
 cd airschedgit
 git checkout trunk

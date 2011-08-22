@@ -17,7 +17,6 @@ include $(top_srcdir)/airsched/batches/sources.mk
 #
 include $(top_srcdir)/doc/local/sources.mk
 include $(top_srcdir)/doc/tutorial/sources.mk
-include $(top_srcdir)/doc/tutorial/src/sources.mk
 
 SUBDIRS = images tutorial local
 

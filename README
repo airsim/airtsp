@@ -1,30 +1,69 @@
 
-Building the library and test binary from Subversion repository:
-----------------------------------------------------------------
-The Sourceforge Subversion repository is to be found here:
-svn co https://travelccm.svn.sourceforge.net/svnroot/travelccm/trunk/travelccm travelccmsvn
+Summary:
+--------
+AirSched aims at providing a clean API and a simple implementation, as
+a C++ library, of an Airline Schedule Management System. It is intended
+to be used in simulated environments only: it is not designed to work
+in the real-world of Airline IT operations.
 
-Then, you need the following packages (Fedora Core 6 names here, 
+AirSched makes an extensive use of existing open-source libraries for
+increased functionality, speed and accuracy. In particular the
+Boost (C++ Standard Extensions: http://www.boost.org) library is used.
+
+
+Getting and installing from the Fedora/CentOS/RedHat distribution:
+------------------------------------------------------------------
+Just use Yum:
+yum -y install airsched-devel airsched-doc
+
+You can also get the RPM packages (which may work on Linux
+distributions like Novel Suse and Mandriva) from the Fedora repository
+(e.g., for Fedora 16, 
+http://fr2.rpmfind.net/linux/fedora/releases/16/Everything/)
+
+
+Building the library and test binary from Git repository:
+----------------------------------------------------------------
+The Sourceforge Git repository may be cloned as following:
+git clone ssh://air-sched.git.sourceforge.net/gitroot/air-sched/air-sched airschedgit
+cd airschedgit
+git checkout trunk
+
+Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
-  * libtool, autoconf, automake
-  * gettext-devel
+  * cmake
   * gcc-c++
+  * stdair-devel
   * boost-devel
-  * doxygen
-  * tetex-latex (optional)
+  * zeromq-devel
+  * readline-devel
+  * soci-mysql-devel
+  * python-devel
+  * gettext-devel (optional)
+  * doxygen, ghostscript, graphviz and tetex-latex (optional)
   * rpm-build (optional)
 
 Building the library and test binary from the tarball:
 ------------------------------------------------------
-The latest stable source tarball (travelccm*.tar.gz or .bz2) can be found here:
-http://sourceforge.net/project/showfiles.php?group_id=261639
+The latest stable source tarball (airsched*.tar.gz or .bz2) can be found here:
+http://sourceforge.net/project/showfiles.php?group_id=261633
 
-Then, as usual, you can just type the following sequence:
-"./configure --prefix=/home/travelccm/dev/deliveries/travelccm-0.1.0 && make && make check"
-Of course, if you want to install the library (libtravelccm*.so*), 
-just type: "make install".
+Then, as usual:
+* To configure the project, type something like:
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/airsched-99.99.99 \
+   -DWITH_STDAIR_PREFIX=/home/user/dev/deliveries/stdair-stable \
+   -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
+* To build the project, type:
+  make
+* To test the project, type:
+  make check
+* To install the library (libairsched*.so*) and the binary (airsched),
+  just type:
+  make install
+* To package the source files, type:
+  make dist
+* To package the binary and the (HTML and PDF) documentation:
+  make package
 
-See the INSTALL file for more details.
-
-Denis Arnaud (May 2009)
-
+Denis Arnaud (August 2011)

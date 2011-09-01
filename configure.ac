@@ -52,6 +52,7 @@ esac
 save_CFLAGS="$CFLAGS"
 save_CXXFLAGS="$CXXFLAGS"
 save_FFLAGS="$FFLAGS"
+AC_LANG_SOURCE(C++)
 AC_PROG_CXX
 AC_PROG_CXXCPP
 CXXFLAGS="$save_CXXFLAGS"
@@ -76,9 +77,6 @@ test "x$enable_exceptions" != xno && enable_exceptions=yes
 # Set the data directory for AirSched
 pkgdatadir="${datadir}/airsched"
 AC_SUBST(pkgdatadir)
-# Set the directory for data samples exported by AirSched
-sampledir="${pkgdatadir}/samples"
-AC_SUBST(sampledir)
 
 # Check for info pages
 AC_ARG_ENABLE(info-doc, 
@@ -160,7 +158,10 @@ AX_SOCI([3.0])
 # -----------------------------------------------------------------------------
 # Support for StdAir (): http://sf.net/projects/stdair
 # -----------------------------------------------------------------------------
-AM_PATH_STDAIR([0.10.0])
+AM_PATH_STDAIR([0.34.0])
+# Set the directory for data samples exported by StdAir
+sampledir="${STDAIR_SAMPLE_DIR}"
+AC_SUBST(sampledir)
 
 # -------------------------------------------------------------------
 # Support for documentation
@@ -322,18 +323,18 @@ AC_CONFIG_FILES(
 	airsched/factory/Makefile
 	airsched/command/Makefile
 	airsched/service/Makefile
-	airsched/core/Makefile
 	airsched/config/Makefile
+	airsched/config/airsched-paths.hpp
+	airsched/core/Makefile
 	airsched/batches/Makefile
 	man/Makefile
+	man/doxygen_man1.cfg
+	man/doxygen_man3.cfg
 	doc/Makefile
 	doc/images/Makefile
 	doc/tutorial/Makefile
-	doc/tutorial/src/Makefile
 	doc/local/Makefile
 	doc/doxygen_html.cfg
-	samples/Makefile
-	samples/RDS01/Makefile
 	test/Makefile
 	test/architecture/Makefile
 	test/airsched/Makefile

@@ -81,12 +81,15 @@ BOOST_AUTO_TEST_CASE (airsched_simple_inventory_sell) {
   logOutputFile.open (lLogFilename.c_str());
   logOutputFile.clear();
 
+  // Instantiate the AirSched service
   const stdair::BasLogParams lLogParams (stdair::LOG::DEBUG, logOutputFile);
-  AIRSCHED::AIRSCHED_Service airschedService (lLogParams,
-                                              lScheduleInputFilename);
+  AIRSCHED::AIRSCHED_Service airschedService (lLogParams);
+
+  // Build the BOM tree from parsing input files
+  airschedService.parseAndLoad (lScheduleInputFilename);
 
   // Create an empty booking request structure
-  // TODO: fill the booking request structure from the input parameters
+  // \todo: fill the booking request structure from the input parameters
   const stdair::AirportCode_T lOrigin ("NCE");
   const stdair::AirportCode_T lDestination ("BKK");
   const stdair::AirportCode_T lPOS ("NCE");
@@ -119,7 +122,7 @@ BOOST_AUTO_TEST_CASE (airsched_simple_inventory_sell) {
   airschedService.buildSegmentPathList (lTravelSolutionList, lBookingRequest);
   const unsigned int lNbOfTravelSolutions = lTravelSolutionList.size();
   
-  // TODO: change the expected number of travel solutions to the actual number
+  // \todo: change the expected number of travel solutions to the actual number
   const unsigned int lExpectedNbOfTravelSolutions = 4;
   
   // DEBUG

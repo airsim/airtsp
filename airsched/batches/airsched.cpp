@@ -116,7 +116,7 @@ int readConfiguration (int argc, char* argv[],
      "Filename for the logs")
     ("read_booking_request,r",
      "Indicates that a booking request is given as a command-line option. That latter must then be given with the -b/--bkg_req option")
-    ("bkg_req,b",
+    ("bkg_req,q",
      boost::program_options::value< WordList_T >(&lWordList)->multitoken(),
      "Booking request word list (e.g. 'NCE BKK NCE 2007-04-21 2007-04-21 10:00:00 C 1 DF RO 5 NONE 10:0:0 2000.0 20.0'), which should be located at the end of the command line (otherwise, the other options would be interpreted as part of that booking request word list)")
     ;

@@ -76,7 +76,7 @@
 AirSched is a C++ library of classes and functions modeling airline
 schedules, for instance allowing to retrieve all the flight-based
 travel solutions corresponding to a given pair of origin and
-destination points. \ref N
+destination points. AirSched mainly targets simulation purposes. \ref N
  
 AirSched makes an extensive use of existing open-source libraries for
 increased functionality, speed and accuracy. In particular <a
@@ -101,7 +101,12 @@ Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,
 \note
 \anchor N
 (N) - The AirSched library is \b NOT intended, in any way, to be used by
-airlines for production systems.
+airlines for production systems. If you want to report issue, bug or 
+feature request, or if you just want to give feedback, have a look on 
+the right-hand side of this page for the preferred reporting methods.
+In any case, please do not contact Amadeus directly for any matter 
+related to AirSched.
+
 
 \htmlonly
 </div>

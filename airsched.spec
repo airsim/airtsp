@@ -3,7 +3,7 @@
 #
 Name:           airsched
 %global sfname  air-sched
-Version:        0.1.1
+Version:        0.1.2
 Release:        1%{?dist}
 
 Summary:        C++ Simulated Airline Schedule Manager Library
@@ -46,7 +46,9 @@ programs using %{name}, you will need to install %{name}-devel.
 %package        doc
 Summary:        HTML documentation for the %{name} library
 Group:          Documentation
-%{?fedora:BuildArch:      noarch}
+%if 0%{?fedora} || 0%{?rhel} > 5
+BuildArch:      noarch
+%endif
 BuildRequires:  tex(latex)
 BuildRequires:  doxygen, ghostscript
 
@@ -110,9 +112,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 26 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.2-1
+- Upstream update
+
 * Sat Aug 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.1-1
 - Upstream update
-- Took into account the feedback from the review request (bug 732205)
+- Took into account the feedback from various review requests (bugs #732205,
+  #728649, #732218)
 
 * Sat Aug 20 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.0-1
 - First RPM release

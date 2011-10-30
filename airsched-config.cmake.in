@@ -1,20 +1,23 @@
 #
 # Config file for the AirSched package. It defines the following variables:
+#  AIRSCHED_VERSION      - version of AirSched
+#  AIRSCHED_BINARY_DIRS  - binary directories for AirSched
 #  AIRSCHED_INCLUDE_DIRS - include directories for AirSched
 #  AIRSCHED_LIBRARY_DIRS - library directories for AirSched (normally not used!)
-#  AIRSCHED_BINARY_DIRS  - binary directories for AirSched (normally not used!)
 #  AIRSCHED_LIBRARIES    - libraries to link against
 #  AIRSCHED_EXECUTABLES  - the AirSched binaries/executables
 
 # Tell the user project where to find AirSched headers and libraries
+set (AIRSCHED_VERSION "@PACKAGE_VERSION@")
+set (AIRSCHED_BINARY_DIRS "@AIRSCHED_BIN_DIR@")
 set (AIRSCHED_INCLUDE_DIRS "@AIRSCHED_INCLUDE_DIRS@")
 set (AIRSCHED_LIBRARY_DIRS "@AIRSCHED_LIB_DIR@")
-set (AIRSCHED_BINARY_DIRS "@AIRSCHED_BIN_DIR@")
 
-# Library dependencies for AirSched (contains definitions for the AirSched IMPORTED
-# targets)
+# Library dependencies for AirSched (contains definitions for the AirSched
+# IMPORTED targets)
 include ("@AIRSCHED_CMAKE_DIR@/airsched-library-depends.cmake")
 
-# These are the AirSched IMPORTED targets, created by airsched-library-depends.cmake
-set (AIRSCHED_LIBRARIES airraclib airschedlib)
+# These are the AirSched IMPORTED targets, created by
+# airsched-library-depends.cmake
+set (AIRSCHED_LIBRARIES airschedlib)
 set (AIRSCHED_EXECUTABLES airsched)

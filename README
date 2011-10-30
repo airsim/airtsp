@@ -11,6 +11,17 @@ increased functionality, speed and accuracy. In particular the
 Boost (C++ Standard Extensions: http://www.boost.org) library is used.
 
 
+Getting and installing from the Fedora/CentOS/RedHat distribution:
+------------------------------------------------------------------
+Just use Yum:
+yum -y install airsched-devel airsched-doc
+
+You can also get the RPM packages (which may work on Linux
+distributions like Novel Suse and Mandriva) from the Fedora repository
+(e.g., for Fedora 16, 
+http://fr2.rpmfind.net/linux/fedora/releases/16/Everything/)
+
+
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
 The Sourceforge Git repository may be cloned as following:
@@ -40,7 +51,7 @@ http://sourceforge.net/project/showfiles.php?group_id=261633
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/airsched-0.1.1 \
+  cmake -DCMAKE_INSTALL_PREFIX=/home/user/dev/deliveries/airsched-0.1.2 \
    -DWITH_STDAIR_PREFIX=/home/user/dev/deliveries/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
 * To build the project, type:
@@ -55,4 +66,4 @@ Then, as usual:
 * To package the binary and the (HTML and PDF) documentation:
   make package
 
-Denis Arnaud (August 2011)
+Denis Arnaud (October 2011)

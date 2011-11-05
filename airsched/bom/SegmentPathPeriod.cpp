@@ -56,11 +56,14 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void SegmentPathPeriod::serialisationImplementation() {
+  void SegmentPathPeriod::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentPathPeriod::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -72,6 +75,17 @@ namespace AIRSCHED {
                                      const unsigned int iFileVersion) {
     ioArchive & _key;
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template
+  void SegmentPathPeriod::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                        unsigned int);
+  template
+  void SegmentPathPeriod::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                        unsigned int);
+  // ////////////////////////////////////////////////////////////////////
 
   // ////////////////////////////////////////////////////////////////////
   stdair::SegmentPeriod* SegmentPathPeriod::getLastSegmentPeriod () const {

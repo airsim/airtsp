@@ -2,6 +2,7 @@
 // Import section
 // //////////////////////////////////////////////////////////////////////
 // STL
+#include <cassert>
 #include <sstream>
 // Boost.Serialization
 #include <boost/archive/text_iarchive.hpp>
@@ -79,11 +80,14 @@ namespace AIRSCHED {
   }
   
   // ////////////////////////////////////////////////////////////////////
-  void SegmentPathPeriodKey::serialisationImplementation() {
+  void SegmentPathPeriodKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void SegmentPathPeriodKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;
@@ -102,5 +106,16 @@ namespace AIRSCHED {
     std::string lElapsedStr = boost::posix_time::to_simple_string (_elapsed);
     ioArchive & lBTStr & lElapsedStr & _nbOfAirlines;
   }
+
+  // ////////////////////////////////////////////////////////////////////
+  // Explicit template instantiation
+  namespace ba = boost::archive;
+  template
+  void SegmentPathPeriodKey::serialize<ba::text_oarchive> (ba::text_oarchive&,
+                                                           unsigned int);
+  template
+  void SegmentPathPeriodKey::serialize<ba::text_iarchive> (ba::text_iarchive&,
+                                                           unsigned int);
+  // ////////////////////////////////////////////////////////////////////
 
 }

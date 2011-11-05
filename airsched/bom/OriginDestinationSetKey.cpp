@@ -54,11 +54,14 @@ namespace AIRSCHED {
   }
 
   // ////////////////////////////////////////////////////////////////////
-  void OriginDestinationSetKey::serialisationImplementation() {
+  void OriginDestinationSetKey::serialisationImplementationExport() const {
     std::ostringstream oStr;
     boost::archive::text_oarchive oa (oStr);
     oa << *this;
+  }
 
+  // ////////////////////////////////////////////////////////////////////
+  void OriginDestinationSetKey::serialisationImplementationImport() {
     std::istringstream iStr;
     boost::archive::text_iarchive ia (iStr);
     ia >> *this;

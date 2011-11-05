@@ -181,7 +181,8 @@ namespace AIRSCHED {
      * Serialisation helper (allows to be sure the template method is
      * instantiated).
      */
-    void serialisationImplementation();
+    void serialisationImplementationExport() const;
+    void serialisationImplementationImport();
 
 
   private:

@@ -1,4 +1,7 @@
 
+	* Fri Nov 04 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.3
+	- The code is now compatible with g++ 4.1 and Boost 1.33.
+
 	* Wed Oct 26 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.2
 	- Updated the CMake build macros, so as to support CMake-2.6 (and
 	not only CMake-2.8).

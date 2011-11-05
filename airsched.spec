@@ -3,14 +3,14 @@
 #
 Name:           airsched
 %global sfname  air-sched
-Version:        0.1.2
+Version:        0.1.3
 Release:        1%{?dist}
 
 Summary:        C++ Simulated Airline Schedule Manager Library
 
 Group:          System Environment/Libraries 
 License:        LGPLv2+
-URL:            http://sourceforge.net/projects/%{sfname}/
+URL:            http://%{sfname}.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{sfname}/%{name}-%{version}.tar.bz2
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
@@ -112,6 +112,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Nov 04 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.3-1
+- Upstream update
+
 * Wed Oct 26 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.2-1
 - Upstream update
 

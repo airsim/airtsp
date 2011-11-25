@@ -89,6 +89,10 @@ int readConfiguration (int argc, char* argv[],
                        stdair::Filename_T& ioInputFilename,
                        std::string& ioLogFilename,
                        std::string& ioBookingRequestString) {
+
+  // Default for the built-in input
+  ioIsBuiltin = K_AIRSCHED_DEFAULT_BUILT_IN_INPUT;
+  
   // Default for the booking request mode (whether it is read from command-line)
   ioReadBookingRequestFromCmdLine = K_AIRSCHED_DEFAULT_BOOKING_REQUEST_MODE;
 

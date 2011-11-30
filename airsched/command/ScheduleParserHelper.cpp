@@ -8,8 +8,11 @@
 #include <stdair/bom/BomRoot.hpp>
 #include <stdair/service/Logger.hpp>
 // AIRSCHED
+//#define BOOST_SPIRIT_DEBUG
 #include <airsched/command/ScheduleParserHelper.hpp>
 #include <airsched/command/InventoryGenerator.hpp>
+
+namespace bsc = boost::spirit::classic;
 
 namespace AIRSCHED {
 
@@ -470,10 +473,13 @@ namespace AIRSCHED {
     FlightPeriodParser::definition<ScannerT>::
     definition (FlightPeriodParser const& self) {
 
-      flight_period_list = *( boost::spirit::classic::comment_p("//")
-                              | boost::spirit::classic::comment_p("/*", "*/")
-                              | flight_period )
+      flight_period_list = *(not_to_be_parsed
+                             | flight_period )
         ;
+
+      not_to_be_parsed =bsc::
+        lexeme_d[bsc::comment_p("//") |bsc::comment_p("/*", "*/")
+                 |bsc::eol_p];
       
       flight_period = flight_key
         >> +( ';' >> leg )
@@ -482,7 +488,7 @@ namespace AIRSCHED {
         ;
 
       flight_period_end =
-        boost::spirit::classic::ch_p(';')
+       bsc::ch_p(';')
         ;
       
       flight_key = airline_code
@@ -492,27 +498,24 @@ namespace AIRSCHED {
         >> ';' >> dow[storeDow(self._flightPeriod)]
         ;
 
-      airline_code = boost::spirit::classic::
+      airline_code =bsc::
         lexeme_d[(airline_code_p)[storeAirlineCode(self._flightPeriod)] ]
         ;
         
-      flight_number = boost::spirit::classic::
+      flight_number =bsc::
         lexeme_d[(flight_number_p)[storeFlightNumber(self._flightPeriod)] ]
         ;
 
-      date = boost::spirit::classic::
-        lexeme_d[(year_p)[boost::spirit::classic::
-                          assign_a(self._flightPeriod._itYear)]
+      date =bsc::
+        lexeme_d[(year_p)[bsc::assign_a(self._flightPeriod._itYear)]
                  >> '-'
-                 >> (month_p)[boost::spirit::classic::
-                              assign_a(self._flightPeriod._itMonth)]
+                 >> (month_p)[bsc::assign_a(self._flightPeriod._itMonth)]
                  >> '-'
-                 >> (day_p)[boost::spirit::classic::
-                            assign_a(self._flightPeriod._itDay)]
+                 >> (day_p)[bsc::assign_a(self._flightPeriod._itDay)]
                  ]
         ;
 
-      dow = boost::spirit::classic::lexeme_d[ dow_p ]
+      dow =bsc::lexeme_d[ dow_p ]
         ;
       
       leg = leg_key >> ';' >> leg_details >> +( ';' >> leg_cabin_details )
@@ -534,26 +537,21 @@ namespace AIRSCHED {
         >> time[storeElapsedTime(self._flightPeriod)]
         ;
         
-      time = boost::spirit::classic::
-        lexeme_d[(hours_p)[boost::spirit::classic::
-                           assign_a(self._flightPeriod._itHours)]
+      time =bsc::
+        lexeme_d[(hours_p)[bsc::assign_a(self._flightPeriod._itHours)]
                  >> ':'
-                 >> (minutes_p)[boost::spirit::classic::
-                                assign_a(self._flightPeriod._itMinutes)]
-                 >> !(':' 
-                      >> (seconds_p)[boost::spirit::classic::
-                                     assign_a(self._flightPeriod._itSeconds)])
+                 >> (minutes_p)[bsc::assign_a(self._flightPeriod._itMinutes)]
+                 >> !(':'
+                      >> (seconds_p)[bsc::assign_a(self._flightPeriod._itSeconds)])
                  ]
         ;
 
-      date_offset = boost::spirit::classic::ch_p('/')
-        >> (int1_p)[boost::spirit::classic::
-                    assign_a(self._flightPeriod._dateOffset)]
+      date_offset =bsc::ch_p('/')
+        >> (int1_p)[bsc::assign_a(self._flightPeriod._dateOffset)]
         ;          
         
       leg_cabin_details = (cabin_code_p)[storeLegCabinCode(self._flightPeriod)]
-        >> ';' >> (boost::spirit::classic::
-                   ureal_p)[storeCapacity(self._flightPeriod)]
+        >> ';' >> (bsc::ureal_p)[storeCapacity(self._flightPeriod)]
         ;
         
       segment_key =
@@ -566,12 +564,12 @@ namespace AIRSCHED {
         generic_segment | specific_segment_list
         ;
 
-      generic_segment = boost::spirit::classic::
+      generic_segment =bsc::
         ch_p('0')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_cabin_details)
         ;
 
-      specific_segment_list = boost::spirit::classic::
+      specific_segment_list =bsc::
         ch_p('1')[storeSegmentSpecificity(self._flightPeriod)]
         >> +(';' >> segment_key >> full_segment_cabin_details)
         ;
@@ -595,6 +593,7 @@ namespace AIRSCHED {
       // BOOST_SPIRIT_DEBUG_NODE (FlightPeriodParser);
       BOOST_SPIRIT_DEBUG_NODE (flight_period_list);
       BOOST_SPIRIT_DEBUG_NODE (flight_period);
+      BOOST_SPIRIT_DEBUG_NODE (not_to_be_parsed);
       BOOST_SPIRIT_DEBUG_NODE (flight_period_end);
       BOOST_SPIRIT_DEBUG_NODE (flight_key);
       BOOST_SPIRIT_DEBUG_NODE (airline_code);
@@ -618,7 +617,7 @@ namespace AIRSCHED {
 
     // //////////////////////////////////////////////////////////////////
     template<typename ScannerT>
-    boost::spirit::classic::rule<ScannerT> const&
+   bsc::rule<ScannerT> const&
     FlightPeriodParser::definition<ScannerT>::start() const {
       return flight_period_list;
     }
@@ -683,10 +682,10 @@ namespace AIRSCHED {
     // Launch the parsing of the file and, thanks to the doEndFlight
     // call-back structure, the building of the whole BomRoot BOM
     // (i.e., including Inventory, FlightDate, LegDate, SegmentDate, etc.)
-    boost::spirit::classic::parse_info<iterator_t> info =
-      boost::spirit::classic::parse (_startIterator, _endIterator, lFPParser, 
-                            boost::spirit::classic::space_p);
-
+    bsc::parse_info<iterator_t> info =
+      bsc::parse (_startIterator, _endIterator, lFPParser,
+                  bsc::space_p - bsc::eol_p);
+  
     // Retrieves whether or not the parsing was successful
     oResult = info.hit;
       

@@ -6,7 +6,6 @@
 // //////////////////////////////////////////////////////////////////////
 // STL
 #include <string>
-// #define BOOST_SPIRIT_DEBUG
 // StdAir
 #include <stdair/command/CmdAbstract.hpp>
 // AirSched
@@ -258,8 +257,8 @@ namespace AIRSCHED {
 
         // Instantiation of rules
         boost::spirit::classic::rule<ScannerT> flight_period_list, flight_period,
-          flight_period_end, flight_key, airline_code, flight_number,
-          date, dow, time, date_offset,
+          not_to_be_parsed, flight_period_end, flight_key, airline_code,
+          flight_number, date, dow, time, date_offset,
           leg, leg_key, leg_details, leg_cabin_details,
           segment_section, segment_key, full_segment_cabin_details,
           segment_cabin_details, full_family_cabin_details,

@@ -319,6 +319,14 @@ parseBookingRequest (const std::string& iRequestOption) {
   // Value of time (e.g., 20.0)
   ++tok_iter; assert (tok_iter != tokens.end());
   const stdair::PriceValue_T iValueOfTime = 20.0;
+  
+  // Change fee acceptation (e.g., true)
+  ++tok_iter; assert (tok_iter != tokens.end());
+  const stdair::ChangeFees_T iChangeFees = true;
+  
+  // Non refundable acceptation (e.g., true)
+  ++tok_iter; assert (tok_iter != tokens.end());
+  const stdair::NonRefundable_T iNonRefundable = true;
 
   // Build and return the booking request structure
   return stdair::BookingRequestStruct (iOrigin,
@@ -328,7 +336,8 @@ parseBookingRequest (const std::string& iRequestOption) {
                                        iChannel, iTripType, iStayDuration,
                                        iFrequentFlyerType,
                                        iPreferredDepartureTime, iWTP,
-                                       iValueOfTime);
+                                       iValueOfTime, iChangeFees,
+                                       iNonRefundable);
 }
 
 // ///////// M A I N ////////////

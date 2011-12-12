@@ -106,6 +106,9 @@ BOOST_AUTO_TEST_CASE (airsched_simple_inventory_sell) {
   const stdair::Duration_T lPreferredDepartureTime (boost::posix_time::hours(10));
   const stdair::WTP_T lWTP (2000.0);
   const stdair::PriceValue_T lValueOfTime (20.0);
+  const stdair::ChangeFees_T lChangeFees (true);
+  const stdair::NonRefundable_T lNonRefundable (true);
+                                        
   const stdair::BookingRequestStruct lBookingRequest (lOrigin, lDestination,
                                                       lPOS,
                                                       lPreferredDepartureDate,
@@ -115,7 +118,9 @@ BOOST_AUTO_TEST_CASE (airsched_simple_inventory_sell) {
                                                       lTripType, lStayDuration,
                                                       lFrequentFlyerType,
                                                       lPreferredDepartureTime,
-                                                      lWTP, lValueOfTime);
+                                                      lWTP, lValueOfTime,
+                                                      lChangeFees,
+                                                      lNonRefundable);
     
   //
   stdair::TravelSolutionList_T lTravelSolutionList;

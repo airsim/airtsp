@@ -271,9 +271,9 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   std::string AIRSCHED_Service::
-  jsonExport (const stdair::AirlineCode_T& iAirlineCode,
-              const stdair::FlightNumber_T& iFlightNumber,
-              const stdair::Date_T& iDepartureDate) const {
+  jsonExportFlightDateObjects (const stdair::AirlineCode_T& iAirlineCode,
+			       const stdair::FlightNumber_T& iFlightNumber,
+			       const stdair::Date_T& iDepartureDate) const {
 
     // Retrieve the AirSched service context
     if (_airschedServiceContext == NULL) {
@@ -289,8 +289,9 @@ namespace AIRSCHED {
       lAIRSCHED_ServiceContext.getSTDAIR_Service();
 
     // Delegate the JSON export to the dedicated service
-    return lSTDAIR_Service.jsonExport (iAirlineCode, iFlightNumber,
-                                       iDepartureDate);
+    return lSTDAIR_Service.jsonExportFlightDateObjects (iAirlineCode,
+							iFlightNumber,
+							iDepartureDate);
   }
   
   // //////////////////////////////////////////////////////////////////////

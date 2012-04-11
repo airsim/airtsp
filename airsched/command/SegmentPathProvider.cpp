@@ -16,6 +16,7 @@
 #include <stdair/bom/TravelSolutionStruct.hpp>
 #include <stdair/service/Logger.hpp>
 // AirSched
+#include <airsched/basic/BasConst_General.hpp>
 #include <airsched/bom/ReachableUniverse.hpp>
 #include <airsched/bom/OriginDestinationSet.hpp>
 #include <airsched/bom/SegmentPathPeriod.hpp>
@@ -75,6 +76,17 @@ namespace AIRSCHED {
       const SegmentPathPeriod* lCurrentSegmentPath_ptr = *itSegmentPath;
       assert (lCurrentSegmentPath_ptr != NULL);
       if (lCurrentSegmentPath_ptr->isDepartureDateValid(lPreferedDepartureDate)){
+        const stdair::DateTime_T lRequestDateTime =
+          iBookingRequest.getRequestDateTime();
+        const stdair::Duration_T& lBoardingTime =
+          lCurrentSegmentPath_ptr->getBoardingTime();
+        const stdair::DateTime_T lDepartureDateTime (lPreferedDepartureDate,
+                                                     lBoardingTime);
+        const bool IsDepartureDateValid =
+          ((lRequestDateTime + MINIMUM_TIME_BETWEEN_REQUEST_AND_DEPARTURE) <= lDepartureDateTime);
+        if (IsDepartureDateValid == false) {
+            return;
+        }
         buildSegmentPathList (ioTravelSolutionList, *lCurrentSegmentPath_ptr,
                               iBookingRequest);
       }

@@ -175,7 +175,7 @@ namespace AIRSCHED {
 
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  parseAndLoad (const stdair::Filename_T& iScheduleInputFilename) {
+  parseAndLoad (const stdair::ScheduleFilePath& iScheduleInputFilePath) {
 
     // Retrieve the BOM root object.
     assert (_airschedServiceContext != NULL);
@@ -187,7 +187,7 @@ namespace AIRSCHED {
 
     // Parse the schedule input file, and generate the Inventories
     stdair::BasChronometer lINVGeneration; lINVGeneration.start();
-    ScheduleParser::generateInventories (iScheduleInputFilename, lBomRoot);
+    ScheduleParser::generateInventories (iScheduleInputFilePath, lBomRoot);
     const double lGenerationMeasure = lINVGeneration.elapsed();
 
     // DEBUG
@@ -196,11 +196,11 @@ namespace AIRSCHED {
   
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
-  parseAndLoad (const stdair::Filename_T& iScheduleInputFilename,
-                const stdair::Filename_T& iODInputFilename) {
+  parseAndLoad (const stdair::ScheduleFilePath& iScheduleInputFilePath,
+                const stdair::ODFilePath& iODInputFilePath) {
 
     // First, build the airline inventories from the schedule file
-    parseAndLoad (iScheduleInputFilename);
+    parseAndLoad (iScheduleInputFilePath);
 
     // Retrieve the BOM tree root
     assert (_airschedServiceContext != NULL);
@@ -212,7 +212,7 @@ namespace AIRSCHED {
 
     // Parse the O&D input file, and generate the O&D periods
     stdair::BasChronometer lOnDGeneration; lOnDGeneration.start();
-    OnDParser::generateOnDPeriods (iODInputFilename, lBomRoot);
+    OnDParser::generateOnDPeriods (iODInputFilePath, lBomRoot);
     const double lGenerationMeasure = lOnDGeneration.elapsed();
 
     // DEBUG

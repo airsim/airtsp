@@ -386,7 +386,8 @@ int main (int argc, char* argv[]) {
 
   } else {
     // Build the BOM tree from parsing input files
-    airschedService.parseAndLoad (lInputFilename);
+    const stdair::ScheduleFilePath lScheduleFilePath (lInputFilename);
+    airschedService.parseAndLoad (lScheduleFilePath);
   }
 
   // Check wether or not a booking request is given as a command-line option

@@ -13,21 +13,23 @@
 namespace AIRSCHED {
 
   // //////////////////////////////////////////////////////////////////////
-  void OnDParser::generateOnDPeriods (const stdair::Filename_T& iFilename,
+  void OnDParser::generateOnDPeriods (const stdair::ODFilePath& iODFilename,
                                       stdair::BomRoot& ioBomRoot) {
+
+    const stdair::Filename_T lFilename = iODFilename.name();
 
     // Check that the file path given as input corresponds to an actual file
     const bool doesExistAndIsReadable =
-      stdair::BasFileMgr::doesExistAndIsReadable (iFilename);
+      stdair::BasFileMgr::doesExistAndIsReadable (lFilename);
 
     if (doesExistAndIsReadable == false) {
-      throw OnDInputFileNotFoundException ("The O&D file " + iFilename
+      throw OnDInputFileNotFoundException ("The O&D file " + lFilename
                                            + " does not exist or can not be "
                                            "read");
     }
 
     // Initialise the O&D-Period file parser.
-    OnDPeriodFileParser lOnDPeriodParser (iFilename, ioBomRoot);
+    OnDPeriodFileParser lOnDPeriodParser (lFilename, ioBomRoot);
 
     // Parse the CSV-formatted O&D input file, and generate the
     // corresponding O&D-Period for the airlines.

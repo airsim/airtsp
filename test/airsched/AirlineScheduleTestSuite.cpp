@@ -86,7 +86,8 @@ BOOST_AUTO_TEST_CASE (airsched_simple_inventory_sell) {
   AIRSCHED::AIRSCHED_Service airschedService (lLogParams);
 
   // Build the BOM tree from parsing input files
-  airschedService.parseAndLoad (lScheduleInputFilename);
+  const stdair::ScheduleFilePath lScheduleFilePath (lScheduleInputFilename);
+  airschedService.parseAndLoad (lScheduleFilePath);
 
   // Create an empty booking request structure
   // \todo: fill the booking request structure from the input parameters

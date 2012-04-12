@@ -7,9 +7,8 @@
 // StdAir
 #include <stdair/stdair_basic_types.hpp>
 #include <stdair/stdair_service_types.hpp>
+#include <stdair/stdair_file.hpp>
 #include <stdair/bom/TravelSolutionTypes.hpp>
-// AirSched
-#include <airsched/AIRSCHED_Types.hpp>
 
 /// Forward declarations
 namespace stdair {
@@ -85,9 +84,9 @@ namespace AIRSCHED {
      * The CSV file, describing the airline schedule for the
      * simulator, is parsed and instantiated in memory accordingly.
      *
-     * @param const stdair::Filename_T& Filename of the input schedule file.
+     * @param const stdair::ScheduleFilePath& Filename of the input schedule file.
      */
-    void parseAndLoad (const stdair::Filename_T& iScheduleInputFilename);
+    void parseAndLoad (const stdair::ScheduleFilePath&);
 
     /**
      * Parse the schedule and O&D input files, and load them into memory.
@@ -95,11 +94,11 @@ namespace AIRSCHED {
      * The CSV files, describing the airline schedule and the O&Ds for
      * the simulator, are parsed and instantiated in memory accordingly.
      *
-     * @param const stdair::Filename_T& Filename of the input schedule file.
-     * @param const stdair::Filename_T& Filename of the input O&D file.
+     * @param const stdair::ScheduleFilePath& Filename of the input schedule file.
+     * @param const stdair::ODFilePath& Filename of the input O&D file.
      */
-    void parseAndLoad (const stdair::Filename_T& iScheduleFilename,
-                       const stdair::Filename_T& iODInputFilename);
+    void parseAndLoad (const stdair::ScheduleFilePath&,
+                       const stdair::ODFilePath&);
 
     /**
      * Destructor.

@@ -176,22 +176,53 @@ namespace AIRSCHED {
   // ////////////////////////////////////////////////////////////////////
   void AIRSCHED_Service::
   parseAndLoad (const stdair::ScheduleFilePath& iScheduleInputFilePath) {
-
-    // Retrieve the BOM root object.
+    
+    // Retrieve the BOM tree root
     assert (_airschedServiceContext != NULL);
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
-      *_airschedServiceContext;
+      *_airschedServiceContext; 
+    const bool doesOwnStdairService =
+      lAIRSCHED_ServiceContext.getOwnStdairServiceFlag();
+
+    // Retrieve the StdAir service object from the (AirSched) service context
     stdair::STDAIR_Service& lSTDAIR_Service =
       lAIRSCHED_ServiceContext.getSTDAIR_Service();
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    stdair::BomRoot& lPersistentBomRoot = 
+      lSTDAIR_Service.getPersistentBomRoot();
 
-    // Parse the schedule input file, and generate the Inventories
+    /**
+     * 1. Parse the schedule input file, and generate the Inventories
+     */
     stdair::BasChronometer lINVGeneration; lINVGeneration.start();
-    ScheduleParser::generateInventories (iScheduleInputFilePath, lBomRoot);
+    ScheduleParser::generateInventories (iScheduleInputFilePath, 
+					 lPersistentBomRoot);  
+    /**
+     * 2. Delegate the complementary building of objects and links by the
+     *    appropriate levels/components
+     * 
+     * \note: Currently, no more things to do by AirSched at that stage,
+     *        as there is no child
+     */
+  
+    /**
+     * 3. Build the complementary links.
+     */
+    buildComplementaryLinks (lPersistentBomRoot);
+
     const double lGenerationMeasure = lINVGeneration.elapsed();
+    
+    /**
+     * 4. Have AirSched clone the whole persistent BOM tree, only when the 
+     *    StdAir service is owned by the current component (AirSched here).
+     */
+    if (doesOwnStdairService == true) {
+ 
+      //
+      clonePersistentBom ();
+    } 
 
     // DEBUG
-    STDAIR_LOG_DEBUG ("Inventory generation time: " << lGenerationMeasure);
+    STDAIR_LOG_DEBUG ("Inventory generation time: " << lGenerationMeasure); 
   }
   
   // ////////////////////////////////////////////////////////////////////
@@ -205,15 +236,48 @@ namespace AIRSCHED {
     // Retrieve the BOM tree root
     assert (_airschedServiceContext != NULL);
     AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
-      *_airschedServiceContext;
+      *_airschedServiceContext; 
+    const bool doesOwnStdairService =
+      lAIRSCHED_ServiceContext.getOwnStdairServiceFlag();
+
+    // Retrieve the StdAir service object from the (AirSched) service context
     stdair::STDAIR_Service& lSTDAIR_Service =
       lAIRSCHED_ServiceContext.getSTDAIR_Service();
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
+    stdair::BomRoot& lPersistentBomRoot = 
+      lSTDAIR_Service.getPersistentBomRoot();
 
-    // Parse the O&D input file, and generate the O&D periods
+    /**
+     * 1. Parse the O&D input file, and generate the O&D periods
+     */
     stdair::BasChronometer lOnDGeneration; lOnDGeneration.start();
-    OnDParser::generateOnDPeriods (iODInputFilePath, lBomRoot);
-    const double lGenerationMeasure = lOnDGeneration.elapsed();
+    OnDParser::generateOnDPeriods (iODInputFilePath, lPersistentBomRoot);
+    const double lGenerationMeasure = lOnDGeneration.elapsed();  
+
+    /**
+     * 2. Delegate the complementary building of objects and links by the
+     *    appropriate levels/components
+     * 
+     * \note: Currently, no more things to do by AirSched at that stage,
+     *        as there is no child
+     */
+
+    /**
+     * 3. Have AirSched clone the whole persistent BOM tree, only when the 
+     *    StdAir service is owned by the current component (AirSched here).
+     */
+    if (doesOwnStdairService == true) {
+ 
+      //
+      lSTDAIR_Service.clonePersistentBom ();
+    }  
+
+    /**
+     * 4. Build the complementary objects/links for the current component (here,
+     *    AirSched)
+     */
+    stdair::BomRoot& lBomRoot = 
+      lSTDAIR_Service.getBomRoot();
+    buildComplementaryLinks (lBomRoot);
 
     // DEBUG
     STDAIR_LOG_DEBUG ("O&D generation time: " << lGenerationMeasure);
@@ -260,13 +324,76 @@ namespace AIRSCHED {
     /**
      * 3. Build the complementary objects/links for the current component (here,
      *    AirSched)
-     *
-     *    AirSched has to build the network from the schedule.
-     *    \note: that operation is also invoked by the
-     *    ScheduleParser::generateInventories() in parseAndLoad().
      */
-    stdair::BomRoot& lBomRoot = lSTDAIR_Service.getBomRoot();
-    SegmentPathGenerator::createSegmentPathNetwork (lBomRoot);
+    stdair::BomRoot& lPersistentBomRoot = 
+      lSTDAIR_Service.getPersistentBomRoot();
+    buildComplementaryLinks (lPersistentBomRoot);
+    
+    /**
+     * 4. Have AirSched clone the whole persistent BOM tree, only when the 
+     *    StdAir service is owned by the current component (AirSched here).
+     */
+    if (doesOwnStdairService == true) {
+ 
+      //
+      clonePersistentBom ();
+    }
+  } 
+
+  // ////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::clonePersistentBom () { 
+
+    // Retrieve the AirSched service context
+    if (_airschedServiceContext == NULL) {
+      throw stdair::NonInitialisedServiceException ("The AirSched service has "
+                                                    "not been initialised");
+    }
+    assert (_airschedServiceContext != NULL);
+
+    // Retrieve the AirSched service context and whether it owns the Stdair
+    // service
+    AIRSCHED_ServiceContext& lAIRSCHED_ServiceContext =
+      *_airschedServiceContext;
+    const bool doesOwnStdairService =
+      lAIRSCHED_ServiceContext.getOwnStdairServiceFlag();
+
+    // Retrieve the StdAir service object from the (AirSched) service context
+    stdair::STDAIR_Service& lSTDAIR_Service =
+      lAIRSCHED_ServiceContext.getSTDAIR_Service(); 
+
+    /**
+     * 1. Have StdAir clone the whole persistent BOM tree, only when the StdAir
+     *    service is owned by the current component (AirSched here).
+     */
+    if (doesOwnStdairService == true) {
+ 
+      //
+      lSTDAIR_Service.clonePersistentBom ();
+    }
+  
+    /**
+     * 2. Delegate the complementary building of objects and links to the
+     *    appropriate command
+     */
+    stdair::BomRoot& lBomRoot = 
+      lSTDAIR_Service.getBomRoot();
+    buildComplementaryLinks (lBomRoot); 
+  }  
+
+  // ////////////////////////////////////////////////////////////////////
+  void AIRSCHED_Service::buildComplementaryLinks (stdair::BomRoot& ioBomRoot) {
+ 
+    // Retrieve the AirSched service context
+    if (_airschedServiceContext == NULL) {
+      throw stdair::NonInitialisedServiceException ("The AirSched service has "
+                                                    "not been initialised");
+    }
+    assert (_airschedServiceContext != NULL);
+
+    /**
+     *  AirSched has to build the network from the schedule.
+     */
+    SegmentPathGenerator::createSegmentPathNetwork (ioBomRoot); 
   }
 
   // ////////////////////////////////////////////////////////////////////

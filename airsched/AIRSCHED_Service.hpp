@@ -13,6 +13,7 @@
 /// Forward declarations
 namespace stdair {
   class STDAIR_Service;
+  class BomRoot;
   struct BasLogParams;
   struct BasDBParams;
   struct BookingRequestStruct;
@@ -115,7 +116,17 @@ namespace AIRSCHED {
      * another for AF). Each inventory contains one flight. One of
      * those flights has two legs (and therefore three segments).
      */
-    void buildSampleBom();
+    void buildSampleBom(); 
+
+    /**
+     * Clone the persistent BOM object.
+     */
+    void clonePersistentBom (); 
+
+    /**
+     * Build all the complementary links in the given bom root object.
+     */
+    void buildComplementaryLinks (stdair::BomRoot&); 
 
     /**
      * Calculate and return a list of travel solutions corresponding to

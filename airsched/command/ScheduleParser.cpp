@@ -37,9 +37,6 @@ namespace AIRSCHED {
     // Parse the CSV-formatted schedule input file, and generate the
     // corresponding Inventories for the airlines.
     lFlightPeriodParser.generateInventories();
-    
-    // Build the network from the schedule.
-    SegmentPathGenerator::createSegmentPathNetwork (ioBomRoot);
   }
 
 }

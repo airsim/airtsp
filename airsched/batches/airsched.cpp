@@ -321,11 +321,11 @@ parseBookingRequest (const std::string& iRequestOption) {
   const stdair::PriceValue_T iValueOfTime = 20.0;
   
   // Change fee acceptation (e.g., true)
-  ++tok_iter; assert (tok_iter != tokens.end());
+  //++tok_iter; assert (tok_iter != tokens.end());
   const stdair::ChangeFees_T iChangeFees = true;
   
   // Non refundable acceptation (e.g., true)
-  ++tok_iter; assert (tok_iter != tokens.end());
+  //++tok_iter; assert (tok_iter != tokens.end());
   const stdair::NonRefundable_T iNonRefundable = true;
 
   // Build and return the booking request structure

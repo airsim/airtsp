@@ -38,6 +38,7 @@ namespace AIRSCHED {
                                        iterator_t iStrEnd) const { 
       const stdair::AirlineCode_T lAirlineCode (iStr, iStrEnd);
       _flightPeriod._airlineCode = lAirlineCode;
+      //STDAIR_LOG_DEBUG ("Airline code: " << lAirlineCode);
                 
       // As that's the beginning of a new flight, the list of legs
       // must be reset
@@ -53,6 +54,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeFlightNumber::operator() (unsigned int iNumber) const { 
       _flightPeriod._flightNumber = iNumber;
+      //STDAIR_LOG_DEBUG ("Flight number: " << iNumber);
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -103,6 +105,7 @@ namespace AIRSCHED {
     void storeDow::operator() (iterator_t iStr, iterator_t iStrEnd) const {
       stdair::DOW_String_T lDow (iStr, iStrEnd);
       _flightPeriod._dow = lDow;
+      //STDAIR_LOG_DEBUG ("DOW: " << lDow);
     }
       
     // //////////////////////////////////////////////////////////////////
@@ -219,7 +222,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeLegCabinCode::operator() (char iChar) const { 
       _flightPeriod._itLegCabin._cabinCode = iChar; 
-      //std::cout << "Cabin code: " << iChar << std::endl;
+      //STDAIR_LOG_DEBUG ("Cabin code: " << iChar);
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -231,7 +234,7 @@ namespace AIRSCHED {
     // //////////////////////////////////////////////////////////////////
     void storeCapacity::operator() (double iReal) const { 
       _flightPeriod._itLegCabin._capacity = iReal; 
-      //std::cout << "Capacity: " << iReal << std::endl;
+      //STDAIR_LOG_DEBUG ("Capacity: " << iReal);
 
       // The capacity is the last (according to the arrival order
       // within the schedule input file) detail of the leg cabin. Hence,
@@ -340,6 +343,33 @@ namespace AIRSCHED {
       std::ostringstream ostr;
       ostr << iCode;
       _flightPeriod._itSegmentCabin._itFamilyCode = ostr.str(); 
+    }    
+
+    // //////////////////////////////////////////////////////////////////
+    storeFRAT5CurveKey::
+    storeFRAT5CurveKey (FlightPeriodStruct& ioFlightPeriod)
+      : ParserSemanticAction (ioFlightPeriod) {
+    }
+    
+    // //////////////////////////////////////////////////////////////////
+    void storeFRAT5CurveKey::operator() (iterator_t iStr,
+                                         iterator_t iStrEnd) const { 
+      const std::string lKey (iStr, iStrEnd);
+      _flightPeriod._itSegmentCabin._itFRAT5CurveKey = lKey;
+      //STDAIR_LOG_DEBUG ("FRAT5 key: " << lKey);
+    } 
+
+    // //////////////////////////////////////////////////////////////////
+    storeFFDisutilityCurveKey::
+    storeFFDisutilityCurveKey (FlightPeriodStruct& ioFlightPeriod)
+      : ParserSemanticAction (ioFlightPeriod) {
+    }
+    
+    // //////////////////////////////////////////////////////////////////
+    void storeFFDisutilityCurveKey::operator() (iterator_t iStr,
+                                                iterator_t iStrEnd) const { 
+      const std::string lKey (iStr, iStrEnd);
+      _flightPeriod._itSegmentCabin._itFFDisutilityCurveKey = lKey;
     }
 
     // //////////////////////////////////////////////////////////////////
@@ -353,7 +383,9 @@ namespace AIRSCHED {
                                     iterator_t iStrEnd) const {
       std::string lClasses (iStr, iStrEnd);
       FareFamilyStruct lFareFamily(_flightPeriod._itSegmentCabin._itFamilyCode,
-                                     lClasses);
+                                   _flightPeriod._itSegmentCabin._itFRAT5CurveKey,
+                                   _flightPeriod._itSegmentCabin._itFFDisutilityCurveKey,
+                                   lClasses);
 
       // The list of classes is the last (according to the arrival order
       // within the schedule input file) detail of the segment cabin. Hence,
@@ -451,6 +483,9 @@ namespace AIRSCHED {
 
     /** Family code parser */
     int1_p_t family_code_p;
+    
+    /** Key Parser: repeat_p(1,10)[chset_p("0-9A-Z")] */
+    repeat_p_t key_p (chset_t("0-9A-Z").derived(), 1, 10);
       
     /** Class Code List Parser: repeat_p(1,26)[chset_p("A-Z")] */
     repeat_p_t class_code_list_p (chset_t("A-Z").derived(), 1, 26);
@@ -586,6 +621,10 @@ namespace AIRSCHED {
 
       family_cabin_details =
         (family_code_p)[storeFamilyCode(self._flightPeriod)]
+        >> ';'
+        >> (key_p)[storeFRAT5CurveKey(self._flightPeriod)]
+        >> ';'
+        >> (key_p)[storeFFDisutilityCurveKey(self._flightPeriod)]
         >> ';'
         >> (class_code_list_p)[storeFClasses(self._flightPeriod)]
         ;

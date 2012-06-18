@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 // StdAir
-#include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 // AirSched
 #include <airsched/bom/FareFamilyStruct.hpp>
@@ -26,6 +26,8 @@ namespace AIRSCHED {
     stdair::CabinCode_T _cabinCode;
     stdair::ClassList_String_T _classes;
     stdair::FamilyCode_T _itFamilyCode;
+    stdair::CurveKey_T _itFRAT5CurveKey;
+    stdair::CurveKey_T _itFFDisutilityCurveKey;
     FareFamilyStructList_T _fareFamilies;
 
     /** Fill the SegmentCabin objects with the attributes of the

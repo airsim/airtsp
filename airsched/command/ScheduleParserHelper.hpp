@@ -179,6 +179,22 @@ namespace AIRSCHED {
       /** Actor Function (functor). */
       void operator() (int iCode) const;
     };
+  
+    /** Store the FRAT5 curve key. */
+    struct storeFRAT5CurveKey : public ParserSemanticAction {
+      /** Actor Constructor. */
+      storeFRAT5CurveKey (FlightPeriodStruct&);
+      /** Actor Function (functor). */
+      void operator() (iterator_t iStr, iterator_t iStrEnd) const;
+    };
+  
+    /** Store the FFDisutility curve key. */
+    struct storeFFDisutilityCurveKey : public ParserSemanticAction {
+      /** Actor Constructor. */
+      storeFFDisutilityCurveKey (FlightPeriodStruct&);
+      /** Actor Function (functor). */
+      void operator() (iterator_t iStr, iterator_t iStrEnd) const;
+    };
 
     /** Store the parsed list of class codes (for families). */
     struct storeFClasses : public ParserSemanticAction {

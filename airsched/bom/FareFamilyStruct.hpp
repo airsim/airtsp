@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 // StdAir
-#include <stdair/stdair_basic_types.hpp>
+#include <stdair/stdair_inventory_types.hpp>
 #include <stdair/basic/StructAbstract.hpp>
 
 namespace AIRSCHED {
@@ -17,11 +17,14 @@ namespace AIRSCHED {
   struct FareFamilyStruct : public stdair::StructAbstract {
     // Attributes
     stdair::FamilyCode_T _familyCode;
+    stdair::CurveKey_T _frat5CurveKey;
+    stdair::CurveKey_T _ffDisutilityCurveKey;
     stdair::ClassList_String_T _classes;
 
     /** Constructors. */
     FareFamilyStruct (const stdair::FamilyCode_T&,
-                        const stdair::ClassList_String_T&);
+                      const stdair::CurveKey_T&, const stdair::CurveKey_T&,
+                      const stdair::ClassList_String_T&);
       
     /** Give a description of the structure (for display purposes). */
     const std::string describe() const;

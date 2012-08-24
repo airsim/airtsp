@@ -7,6 +7,7 @@
 // StdAir
 #include <stdair/basic/BasFileMgr.hpp>
 #include <stdair/bom/BomRoot.hpp>
+#include <stdair/service/Logger.hpp>
 // AirSched
 #include <airsched/command/SegmentPathGenerator.hpp>
 #include <airsched/command/ScheduleParserHelper.hpp>
@@ -26,6 +27,8 @@ namespace AIRSCHED {
       stdair::BasFileMgr::doesExistAndIsReadable (lFilename);
 
     if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The schedule input file, '" << lFilename
+                        << "', can not be retrieved on the file-system");
       throw ScheduleInputFileNotFoundException ("The schedule file " + lFilename
                                                 + " does not exist or can not "
                                                 "be read");

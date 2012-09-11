@@ -5,6 +5,7 @@
 #include <cassert>
 // StdAir
 #include <stdair/basic/BasFileMgr.hpp>
+#include <stdair/service/Logger.hpp>
 #include <stdair/bom/BomRoot.hpp>
 // AirSched
 #include <airsched/command/OnDParserHelper.hpp>
@@ -23,6 +24,8 @@ namespace AIRSCHED {
       stdair::BasFileMgr::doesExistAndIsReadable (lFilename);
 
     if (doesExistAndIsReadable == false) {
+      STDAIR_LOG_ERROR ("The O&D input file, '" << lFilename
+                        << "', can not be retrieved on the file-system");
       throw OnDInputFileNotFoundException ("The O&D file " + lFilename
                                            + " does not exist or can not be "
                                            "read");

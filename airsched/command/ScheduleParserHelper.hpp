@@ -89,6 +89,22 @@ namespace AIRSCHED {
       void operator() (iterator_t iStr, iterator_t iStrEnd) const;
     };
 
+    /** Store the parsed operating airline code. */
+    struct storeOperatingAirlineCode : public ParserSemanticAction {
+      /** Actor Constructor. */
+      storeOperatingAirlineCode (FlightPeriodStruct&);
+      /** Actor Function (functor). */
+      void operator() (iterator_t iStr, iterator_t iStrEnd) const;
+    };
+  
+    /** Store the parsed operating flight number. */
+    struct storeOperatingFlightNumber : public ParserSemanticAction {
+      /** Actor Constructor. */
+      storeOperatingFlightNumber (FlightPeriodStruct&);
+      /** Actor Function (functor). */
+      void operator() (unsigned int iNumber) const;
+    };
+
     /** Store the boarding time. */
     struct storeBoardingTime : public ParserSemanticAction {
       /** Actor Constructor. */
@@ -275,7 +291,7 @@ namespace AIRSCHED {
         boost::spirit::classic::rule<ScannerT> flight_period_list, flight_period,
           not_to_be_parsed, flight_period_end, flight_key, airline_code,
           flight_number, date, dow, time, date_offset,
-          leg, leg_key, leg_details, leg_cabin_details,
+          leg, leg_key, operating_leg_details, leg_details, leg_cabin_details,
           segment_section, segment_key, full_segment_cabin_details,
           segment_cabin_details, full_family_cabin_details,
           family_cabin_details, generic_segment, specific_segment_list;

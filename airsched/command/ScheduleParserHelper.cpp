@@ -154,6 +154,32 @@ namespace AIRSCHED {
     }
 
     // //////////////////////////////////////////////////////////////////
+    storeOperatingAirlineCode::
+    storeOperatingAirlineCode (FlightPeriodStruct& ioFlightPeriod)
+      : ParserSemanticAction (ioFlightPeriod) {
+    }
+    
+    // //////////////////////////////////////////////////////////////////
+    void storeOperatingAirlineCode::operator() (iterator_t iStr,
+                                                iterator_t iStrEnd) const { 
+      const stdair::AirlineCode_T lAirlineCode (iStr, iStrEnd);
+      _flightPeriod._itLeg._airlineCode = lAirlineCode;
+      //STDAIR_LOG_DEBUG ("Airline code: " << lAirlineCode);
+    }
+
+    // //////////////////////////////////////////////////////////////////
+    storeOperatingFlightNumber::
+    storeOperatingFlightNumber (FlightPeriodStruct& ioFlightPeriod)
+      : ParserSemanticAction (ioFlightPeriod) {
+    }
+
+    // //////////////////////////////////////////////////////////////////
+    void storeOperatingFlightNumber::operator() (unsigned int iNumber) const { 
+      _flightPeriod._itLeg._flightNumber = iNumber;
+      //STDAIR_LOG_DEBUG ("Flight number: " << iNumber);
+    }
+
+    // //////////////////////////////////////////////////////////////////
     storeBoardingTime::
     storeBoardingTime (FlightPeriodStruct& ioFlightPeriod)
       : ParserSemanticAction (ioFlightPeriod) {
@@ -553,13 +579,21 @@ namespace AIRSCHED {
       dow =bsc::lexeme_d[ dow_p ]
         ;
       
-      leg = leg_key >> ';' >> leg_details >> +( ';' >> leg_cabin_details )
+      leg = !( operating_leg_details >> ';' )
+        >> leg_key
+        >> ';' >> leg_details
+        >> +( ';' >> leg_cabin_details )
         ;
 	 
-      leg_key =
-        (airport_p)[storeLegBoardingPoint(self._flightPeriod)]
+      leg_key = (airport_p)[storeLegBoardingPoint(self._flightPeriod)]
         >> ';'
         >> (airport_p)[storeLegOffPoint(self._flightPeriod)]
+        ;
+
+      operating_leg_details =
+        bsc::lexeme_d[(airline_code_p)[storeOperatingAirlineCode(self._flightPeriod)] ]
+        >> ";"
+        >> bsc::lexeme_d[(flight_number_p)[storeOperatingFlightNumber(self._flightPeriod)] ]
         ;
 	 
       leg_details =

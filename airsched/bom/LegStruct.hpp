@@ -23,6 +23,8 @@ namespace AIRSCHED {
   /** Utility Structure for the parsing of Leg structures. */
   struct LegStruct : public stdair::StructAbstract {
     // Attributes
+    stdair::AirlineCode_T _airlineCode;
+    stdair::FlightNumber_T _flightNumber;
     stdair::AirportCode_T _boardingPoint;
     stdair::DateOffset_T _boardingDateOffset;
     stdair::Duration_T _boardingTime;

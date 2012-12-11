@@ -56,7 +56,7 @@ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airsched-0.1.4 \
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airsched-1.00.0 \
    -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON \
    ${LIBSUFFIX_4_CMAKE} ..
@@ -68,7 +68,7 @@ Then, as usual:
   just type:
   make install
   cd ${INSTALL_BASEDIR}
-  rm -f airsched-stable && ln -s airsched-0.1.4 airsched-stable
+  rm -f airsched-stable && ln -s airsched-1.00.0 airsched-stable
   cd -
 * To package the source files, type:
   make dist

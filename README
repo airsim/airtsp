@@ -79,7 +79,7 @@ Then, as usual:
 * To browse the (just installed, if enabled) HTML documentation:
   midori file://${INSTALL_BASEDIR}/airsched-99.99.99/share/doc/airsched-99.99.99/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/airsched-stable/share/doc/airsched-99.99.99/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/airsched-99.99.99/share/doc/airsched-99.99.99/html/refman.pdf
 * To run the local binary version:
   ./airsched/airsched -b
 * To run the installed version:

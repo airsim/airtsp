@@ -119,8 +119,8 @@ struct UnitTestConfig {
       lOrigin = "SIN";
       lDestination = "BKK";
       lPOS = "SIN";
-      lPreferredDepartureDate = boost::gregorian::from_string ("2009/02/02");
-      lRequestDate = boost::gregorian::from_string ("2009/01/01");
+      lPreferredDepartureDate = boost::gregorian::from_string ("2012/06/04");
+      lRequestDate = boost::gregorian::from_string ("2012/01/01");
     }
     
   }

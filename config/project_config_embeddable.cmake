@@ -2,7 +2,7 @@
 ## CMake Macros for an embeddable project
 ##
 ## Author: Denis Arnaud
-## Date: July 2011
+## Date: June 2013
 #######################################################################
 
 
@@ -382,9 +382,9 @@ macro (get_external_libs)
       get_travelccm (${_arg_version})
     endif (${_arg_lower} STREQUAL "travelccm")
 
-    if (${_arg_lower} STREQUAL "airsched")
-      get_airsched (${_arg_version})
-    endif (${_arg_lower} STREQUAL "airsched")
+    if (${_arg_lower} STREQUAL "airtsp")
+      get_airtsp (${_arg_version})
+    endif (${_arg_lower} STREQUAL "airtsp")
 
     if (${_arg_lower} STREQUAL "airrac")
       get_airrac (${_arg_version})
@@ -1032,37 +1032,37 @@ macro (get_travelccm)
 
 endmacro (get_travelccm)
 
-# ~~~~~~~~~~ AirSched ~~~~~~~~~
-macro (get_airsched)
+# ~~~~~~~~~~ AirTSP ~~~~~~~~~
+macro (get_airtsp)
   unset (_required_version)
   if (${ARGC} GREATER 0)
     set (_required_version ${ARGV0})
-    message (STATUS "Requires AirSched-${_required_version}")
+    message (STATUS "Requires AirTSP-${_required_version}")
   else (${ARGC} GREATER 0)
-    message (STATUS "Requires AirSched without specifying any version")
+    message (STATUS "Requires AirTSP without specifying any version")
   endif (${ARGC} GREATER 0)
 
-  find_package (AirSched ${_required_version} REQUIRED
-	HINTS ${WITH_AIRSCHED_PREFIX})
-  if (AirSched_FOUND)
+  find_package (AirTSP ${_required_version} REQUIRED
+	HINTS ${WITH_AIRTSP_PREFIX})
+  if (AirTSP_FOUND)
     #
-    message (STATUS "Found AirSched version: ${AIRSCHED_VERSION}")
+    message (STATUS "Found AirTSP version: ${AIRTSP_VERSION}")
 
     # Update the list of include directories for the project
-    include_directories (${AIRSCHED_INCLUDE_DIRS})
+    include_directories (${AIRTSP_INCLUDE_DIRS})
 
     # Update the list of dependencies for the project
-    set (PROJ_DEP_LIBS_FOR_LIB ${PROJ_DEP_LIBS_FOR_LIB} ${AIRSCHED_LIBRARIES})
+    set (PROJ_DEP_LIBS_FOR_LIB ${PROJ_DEP_LIBS_FOR_LIB} ${AIRTSP_LIBRARIES})
 
-  else (AirSched_FOUND)
-    set (ERROR_MSG "The AirSched library cannot be found. If it is installed")
+  else (AirTSP_FOUND)
+    set (ERROR_MSG "The AirTSP library cannot be found. If it is installed")
     set (ERROR_MSG "${ERROR_MSG} in a in a non standard directory, just invoke")
-    set (ERROR_MSG "${ERROR_MSG} 'cmake' specifying the -DWITH_AIRSCHED_PREFIX=")
-    set (ERROR_MSG "${ERROR_MSG}<AirSched install path> variable.")
+    set (ERROR_MSG "${ERROR_MSG} 'cmake' specifying the -DWITH_AIRTSP_PREFIX=")
+    set (ERROR_MSG "${ERROR_MSG}<AirTSP install path> variable.")
     message (FATAL_ERROR "${ERROR_MSG}")
-  endif (AirSched_FOUND)
+  endif (AirTSP_FOUND)
 
-endmacro (get_airsched)
+endmacro (get_airtsp)
 
 # ~~~~~~~~~~ AirRAC ~~~~~~~~~
 macro (get_airrac)
@@ -2608,19 +2608,19 @@ macro (display_travelccm)
   endif (TravelCCM_FOUND)
 endmacro (display_travelccm)
 
-# AirSched
-macro (display_airsched)
-  if (AirSched_FOUND)
+# AirTSP
+macro (display_airtsp)
+  if (AirTSP_FOUND)
     message (STATUS)
-    message (STATUS "* AirSched:")
-    message (STATUS "  - AIRSCHED_VERSION .............. : ${AIRSCHED_VERSION}")
-    message (STATUS "  - AIRSCHED_BINARY_DIRS .......... : ${AIRSCHED_BINARY_DIRS}")
-    message (STATUS "  - AIRSCHED_EXECUTABLES .......... : ${AIRSCHED_EXECUTABLES}")
-    message (STATUS "  - AIRSCHED_LIBRARY_DIRS ......... : ${AIRSCHED_LIBRARY_DIRS}")
-    message (STATUS "  - AIRSCHED_LIBRARIES ............ : ${AIRSCHED_LIBRARIES}")
-    message (STATUS "  - AIRSCHED_INCLUDE_DIRS ......... : ${AIRSCHED_INCLUDE_DIRS}")
-  endif (AirSched_FOUND)
-endmacro (display_airsched)
+    message (STATUS "* AirTSP:")
+    message (STATUS "  - AIRTSP_VERSION .............. : ${AIRTSP_VERSION}")
+    message (STATUS "  - AIRTSP_BINARY_DIRS .......... : ${AIRTSP_BINARY_DIRS}")
+    message (STATUS "  - AIRTSP_EXECUTABLES .......... : ${AIRTSP_EXECUTABLES}")
+    message (STATUS "  - AIRTSP_LIBRARY_DIRS ......... : ${AIRTSP_LIBRARY_DIRS}")
+    message (STATUS "  - AIRTSP_LIBRARIES ............ : ${AIRTSP_LIBRARIES}")
+    message (STATUS "  - AIRTSP_INCLUDE_DIRS ......... : ${AIRTSP_INCLUDE_DIRS}")
+  endif (AirTSP_FOUND)
+endmacro (display_airtsp)
 
 # AirRAC
 macro (display_airrac)
@@ -2858,7 +2858,7 @@ macro (display_status)
   display_sevmgr ()
   display_trademgen ()
   display_travelccm ()
-  display_airsched ()
+  display_airtsp ()
   display_airrac ()
   display_rmol ()
   display_airinv ()

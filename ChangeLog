@@ -1,3 +1,6 @@
+* Sat Jun 08 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.0
+- Renamed from AirSched into AirTSP, for trademark issue with Pancor
+
 * Tue Dec 11 2012 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.00.0
 - Open source release.
 - [Dev] Added FRAT5 curve and Fare Family disutility curve in the schedule

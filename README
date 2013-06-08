@@ -73,7 +73,7 @@ Then, as usual:
   just type:
   make install
   cd ${INSTALL_BASEDIR}
-  rm -f airsched-stable && ln -s airsched-1.00.0 airsched-stable
+  rm -f airtsp-stable && ln -s airtsp-1.01.0 airtsp-stable
   cd -
 * To package the source files, type:
   make dist

@@ -61,7 +61,7 @@ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=64"
 Then, as usual:
 * To configure the project, type something like:
   mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-1.01.0 \
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-1.01.1 \
    -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
    -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
@@ -73,16 +73,16 @@ Then, as usual:
   just type:
   make install
   cd ${INSTALL_BASEDIR}
-  rm -f airtsp-stable && ln -s airtsp-1.01.0 airtsp-stable
+  rm -f airtsp-stable && ln -s airtsp-1.01.1 airtsp-stable
   cd -
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/airtsp-1.01.0/share/doc/airtsp-1.01.0/html/index.html
+  midori file://${INSTALL_BASEDIR}/airtsp-1.01.1/share/doc/airtsp-1.01.1/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/airtsp-1.01.0/share/doc/airtsp-1.01.0/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/airtsp-1.01.1/share/doc/airtsp-1.01.1/html/refman.pdf
 * To run the local binary version:
   ./airtsp/airtsp -b
 * To run the installed version:

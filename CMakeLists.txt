@@ -9,7 +9,7 @@ include (config/project_config_embeddable.cmake)
 # Project info
 set_project_names (airtsp AirTSP)
 set_project_brief ("C++ Simulated Airline Travel Solution Provider Library")
-set_project_versions (1 01 0)
+set_project_versions (1 01 1)
 
 ##
 # Project options

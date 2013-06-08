@@ -20,35 +20,35 @@
 
 \section ug_introduction Introduction
 
-The \c AirSched library contains classes for airline business management.
-This document does not cover all the aspects of the \c AirSched library. It 
+The \c AirTSP library contains classes for airline business management.
+This document does not cover all the aspects of the \c AirTSP library. It 
 does however explain the most important things you need to know in order
-to start using \c AirSched. 
+to start using \c AirTSP. 
 
 \section ug_get_started Get Started
 
-\subsection ug_get_source Get the AirSched library
+\subsection ug_get_source Get the AirTSP library
 
 Clone locally the full
-<a href="http://air-sched.git.sourceforge.net/git/gitweb.cgi?p=air-sched/air-sched;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
+<a href="http://airtsp.git.sourceforge.net/git/gitweb.cgi?p=airtsp/airtsp;a=tree;h=refs/heads/trunk;hb=trunk">Git project</a>:
 \verbatim 
 cd ~
 mkdir -p dev/sim
 cd ~/dev/sim
-git clone git://air-sched.git.sourceforge.net/gitroot/air-sched/air-sched airschedgit
-cd airschedgit
+git clone git://airtsp.git.sourceforge.net/gitroot/airtsp/airtsp airtspgit
+cd airtspgit
 git checkout trunk
 \endverbatim 
 
-\subsection ug_build_binaries Build the AirSched project
+\subsection ug_build_binaries Build the AirTSP project
 
 Link with StdAir, create the distribution package (say, 0.5.0) and compile 
 using the following commands:
 \verbatim 
-cd ~/dev/sim/airschedgit
+cd ~/dev/sim/airtspgit
 rm -rf build && mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=~/dev/deliveries/airsched-0.5.0 \
+cmake -DCMAKE_INSTALL_PREFIX=~/dev/deliveries/airtsp-0.5.0 \
  -DWITH_STDAIR_PREFIX=~/dev/deliveries/stdair-stable \
  -DCMAKE_BUILD_TYPE:STRING=Debug -DINSTALL_DOC:BOOL=ON ..
 make
@@ -56,9 +56,9 @@ make
 
 \subsection ug_build_and_run_tests Build and Run the Tests
 
-After building the AirSched project, the following commands run the tests:
+After building the AirTSP project, the following commands run the tests:
 \verbatim 
-cd ~/dev/sim/airschedgit
+cd ~/dev/sim/airtspgit
 cd build
 make check
 \endverbatim 
@@ -66,28 +66,28 @@ make check
 As a result, you should obtain a similar report:
 
 \verbatim 
-[  0%] Built target hdr_cfg_airsched
-[ 96%] Built target airschedlib
+[  0%] Built target hdr_cfg_airtsp
+[ 96%] Built target airtsplib
 [100%] Built target AirlineScheduleTestSuitetst
-Scanning dependencies of target check_airschedtst
-Test project /home/dan/dev/sim/airsched/airschedgithub/build/test/airsched
+Scanning dependencies of target check_airtsptst
+Test project /home/dan/dev/sim/airtsp/airtspgithub/build/test/airtsp
     Start 1: AirlineScheduleTestSuitetst
 1/1 Test #1: AirlineScheduleTestSuitetst ......   Passed    0.15 sec
 
 100% tests passed, 0 tests failed out of 1
 
 Total Test time (real) =   0.40 sec
-[100%] Built target check_airschedtst
+[100%] Built target check_airtsptst
 Scanning dependencies of target check
 [100%] Built target check
 \endverbatim 
 
-\subsection ug_install_project Install the AirSched Project (Binaries, Documentation)
+\subsection ug_install_project Install the AirTSP Project (Binaries, Documentation)
 
 After the step \ref ug_build_binaries, to install the library and its header 
 files, type:
 \verbatim 
-cd ~/dev/sim/airschedgit
+cd ~/dev/sim/airtspgit
 cd build
 make install
 \endverbatim
@@ -96,27 +96,27 @@ You can check that the executables and other required files have been copied
 into the given final directory: 
 
 \verbatim 
-cd ~dev/deliveries/airsched-0.5.0
+cd ~dev/deliveries/airtsp-0.5.0
 \endverbatim
 
-To generate the AirSched project documentation, the commands are:
+To generate the AirTSP project documentation, the commands are:
 
 \verbatim 
-cd ~/dev/sim/airschedgit
+cd ~/dev/sim/airtspgit
 cd build
 make doc
 \endverbatim
-The AirSched project documentation is available in the following formats: HTML, 
+The AirTSP project documentation is available in the following formats: HTML, 
 LaTeX. 
 Those documents are available in a subdirectory:
 
 \verbatim 
-cd ~/dev/sim/airschedgit
+cd ~/dev/sim/airtspgit
 cd build
 cd doc
 \endverbatim
 
-\section ug_inputfile Input file of AirSched Project 
+\section ug_inputfile Input file of AirTSP Project 
 
 The schedule input file structure should look like the following sample:
 
@@ -124,7 +124,7 @@ The schedule input file structure should look like the following sample:
 \until 10;
 
 Each line, beyond the header, represents a schedule entry, i.e., the
-specification of a given flight-period (see \c AIRSCHED::FlightPeriodStruct).
+specification of a given flight-period (see \c AIRTSP::FlightPeriodStruct).
 The fields are as follows:
 - Flights section
  - AirlineCode (e.g., \c BA)
@@ -172,7 +172,7 @@ project</a>.
 \section ug_bom_bom The schedule BOM Tree
 
 The schedule-related Business Object Model (BOM) tree is a structure
-allowing to store all the \c AIRSCHED::FlightPeriodStruct objects of
+allowing to store all the \c AIRTSP::FlightPeriodStruct objects of
 the simulation. That is why parsing an input file, containing the
 specification for all the flight-periods, is more convenient (\see the
 previous section \ref ug_inputfile).
@@ -186,40 +186,40 @@ provided by default when needed.
 First, a BOM root object (i.e., a root for all the classes in the project)
 is instantiated by the <tt>stdair::STDAIR_ServiceContext</tt> context object,
 when the <tt>stdair::STDAIR_Service</tt> is itself instantiated (during the
-instantiation of the <tt>AIRSCHED::AIRSCHED_Service</tt> object).
+instantiation of the <tt>AIRTSP::AIRTSP_Service</tt> object).
 
 The corresponding \c type (class) <tt>stdair::BomRoot</tt> is defined in the
 StdAir library.
 
 Then, the BOM root can be either constructed thanks to the 
-<tt>AIRSCHED::AIRSCHED_Service::buildSampleBom()</tt> method:
+<tt>AIRTSP::AIRTSP_Service::buildSampleBom()</tt> method:
 
-\dontinclude AIRSCHED_Service.hpp
+\dontinclude AIRTSP_Service.hpp
 \skipline buildSampleBom
 
 or can be constructed using the schedule input file described above thanks to
 the
-<tt>AIRSCHED::AIRSCHED_Service::parseAndLoad (const stdair::Filename_T&)</tt>
+<tt>AIRTSP::AIRTSP_Service::parseAndLoad (const stdair::Filename_T&)</tt>
 method:
 
-\dontinclude AIRSCHED_Service.hpp
+\dontinclude AIRTSP_Service.hpp
 \skipline parseAndLoad 
 
 \subsection ug_bom_display Display of the schedule BOM tree 
 
 \note That feature (of BOM tree display) has not been implemented yet.
       Do not hesitate to <a
-      href="https://sourceforge.net/apps/trac/air-sched/newticket">open
+      href="https://sourceforge.net/apps/trac/airtsp/newticket">open
       a ticket</a> if you would like to have it implemented more quickly.
 
 The schedule BOM tree can be displayed as done in the 
-<tt>batches::airsched.cpp</tt> program:
-\dontinclude airsched.cpp
+<tt>batches::airtsp.cpp</tt> program:
+\dontinclude airtsp.cpp
 \skipline lBOMCSVDump
 \line lBOMCSVDump
 
 When the default BOM tree is used (<tt>-b/--builtin</tt> option of the main
-program <tt>airsched.cpp</tt>), the schedule BOM tree display (for now,
+program <tt>airtsp.cpp</tt>), the schedule BOM tree display (for now,
 corresponding to <a
 href="http://stdair.git.sourceforge.net/git/gitweb.cgi?p=stdair/stdair;a=blob_plain;f=samples/schedule03.csv;hb=trunk">schedule01.csv</a>
 parsed by
@@ -231,17 +231,17 @@ should look like:
 
 \section ug_bom_structure Exploring the Predefined BOM Tree
 
-\image html airsched_bom_tree.png "AirSched BOM tree"
-\image rtf airsched_bom_tree.png "AirSched BOM tree"
-\image latex airsched_bom_tree.png "AirSched BOM tree" width=15cm
+\image html airtsp_bom_tree.png "AirTSP BOM tree"
+\image rtf airtsp_bom_tree.png "AirTSP BOM tree"
+\image latex airtsp_bom_tree.png "AirTSP BOM tree" width=15cm
 
-\c AirSched predefines a BOM (Business Object Model) tree specific to the
+\c AirTSP predefines a BOM (Business Object Model) tree specific to the
 airline IT arena.
 
 \subsection ug_bom_network Airline Network BOM Tree
-- \c AIRSCHED::ReachableUniverse
-- \c AIRSCHED::OriginDestinationSet
-- \c AIRSCHED::SegmentPathPeriod
+- \c AIRTSP::ReachableUniverse
+- \c AIRTSP::OriginDestinationSet
+- \c AIRTSP::SegmentPathPeriod
 
 \subsection ug_bom_schedule Airline Schedule BOM Tree
 - \c stdair::Inventory
@@ -253,7 +253,7 @@ airline IT arena.
 
 \section ug_procedure The travel solution calculation procedure
 
-The project AirSched aims at calculating a list of <a
+The project AirTSP aims at calculating a list of <a
 href="http://stdair.sourceforge.net/TravelSolutionStruct_8hpp.html">
 travel solutions</a> for every incoming <a
 href="http://stdair.sourceforge.net/BookingRequestStruct_8hpp.html">

@@ -1,11 +1,11 @@
 /*! 
-\page linking Linking with AirSched
+\page linking Linking with AirTSP
 
 \section toc Table of Contents
 - \ref intro
 - \ref dependencies
 - \ref pkgconfig
-- \ref airsched_config
+- \ref airtsp_config
 - \ref autotools
 - \ref dynamiclinking
 
@@ -13,23 +13,23 @@
 \section intro Introduction
 
 There are two convenient methods of linking your
-programs with the AirSched library. The first one employs the \c
+programs with the AirTSP library. The first one employs the \c
 `pkg-config' command (see <a href="http://pkgconfig.freedesktop.org/">
 http://pkgconfig.freedesktop.org/</a>), whereas the second one uses \c
-`airsched-config' script. These methods are shortly described below.
+`airtsp-config' script. These methods are shortly described below.
 
 \section dependencies Dependencies
 
-The AirSched library depends on several other C++ components.
+The AirTSP library depends on several other C++ components.
 
 \subsection stdairdep StdAir
 Among them, as for now, only StdAir has been packaged. The support for StdAir
 is taken in charge by a dedicated M4 macro file (namely, <tt>`stdair.m4'</tt>), 
 from the configuration script (generated thanks to <tt>`configure.ac'</tt>).
 
-\image html airsched_dependencies.png "AirSched Dependencies"
-\image rtf airsched_dependencies.png "AirSched Dependencies"
-\image latex airsched_dependencies.png "AirSched Dependencies" width=15cm
+\image html airtsp_dependencies.png "AirTSP Dependencies"
+\image rtf airtsp_dependencies.png "AirTSP Dependencies"
+\image latex airtsp_dependencies.png "AirTSP Dependencies" width=15cm
 
 \section pkgconfig Using the pkg-config command
 
@@ -41,38 +41,38 @@ options. The syntax of the \c `pkg-config' is as follows:
 pkg-config <options> <library_name>  
 \endcode
 
-For instance, assuming that you need to compile an AirSched based program
+For instance, assuming that you need to compile an AirTSP based program
 <tt>`my_prog.cpp'</tt>, you should use the following command:
 
 \code
-g++ `pkg-config --cflags airsched` -o my_prog my_prog.cpp `pkg-config --libs airsched`
+g++ `pkg-config --cflags airtsp` -o my_prog my_prog.cpp `pkg-config --libs airtsp`
 \endcode  
 
 For more information see the \c `pkg-config' man pages.
 
 
-\section airsched_config Using the airsched-config script
+\section airtsp_config Using the airtsp-config script
 
-AirSched provides a shell script called \c `airsched-config`, which is
+AirTSP provides a shell script called \c `airtsp-config`, which is
 installed by default in \c `$prefix/bin'
 (\c `/usr/local/bin') directory. It can be used to simplify
-compilation and linking of AirSched based programs. The usage of this
+compilation and linking of AirTSP based programs. The usage of this
 script is quite similar to the usage of the \c `pkg-config' command.
 
 Assuming that you need to compile the program \c `my_prog.cpp'
 you can now do that with the following command:
 
 \code
-g++ `airsched-config --cflags` -o my_prog_opt my_prog.cpp `airsched-config --libs`
+g++ `airtsp-config --cflags` -o my_prog_opt my_prog.cpp `airtsp-config --libs`
 \endcode
 
-A list of \c `airsched-config' options can be obtained by typing:
+A list of \c `airtsp-config' options can be obtained by typing:
 
 \code
-airsched-config --help
+airtsp-config --help
 \endcode
 
-If the \c `airsched-config' command is not found by your shell, you should add
+If the \c `airtsp-config' command is not found by your shell, you should add
 its location \c `$prefix/bin' to the \c PATH environment variable, e.g.:
 
 \code
@@ -82,29 +82,29 @@ export PATH=/usr/local/bin:$PATH
 
 \section autotools M4 macro for the GNU Autotools
 
-A M4 macro file is delivered with AirSched, namely `airsched.m4', which
+A M4 macro file is delivered with AirTSP, namely `airtsp.m4', which
 can be found in, e.g., `/usr/share/aclocal'. When used by a
-`configure' script, thanks to he <tt>`AM_PATH_AirSched'</tt> macro
+`configure' script, thanks to he <tt>`AM_PATH_AirTSP'</tt> macro
 (specified in the M4 macro file), the following Makefile variables are
 then defined:
-- <tt>`AirSched_VERSION'</tt> (e.g., defined to 0.23.0)
-- <tt>`AirSched_CFLAGS'</tt> (e.g., defined to <tt>`-I${prefix}/include'</tt>)
-- <tt>`AirSched_LIBS'</tt> (e.g., defined to <tt>`-L${prefix}/lib -lairsched'</tt>)
+- <tt>`AirTSP_VERSION'</tt> (e.g., defined to 0.23.0)
+- <tt>`AirTSP_CFLAGS'</tt> (e.g., defined to <tt>`-I${prefix}/include'</tt>)
+- <tt>`AirTSP_LIBS'</tt> (e.g., defined to <tt>`-L${prefix}/lib -lairtsp'</tt>)
 
 
-\section dynamiclinking Using AirSched with dynamic linking
+\section dynamiclinking Using AirTSP with dynamic linking
 
-When using static linking some of the library routines in AirSched are
+When using static linking some of the library routines in AirTSP are
 copied into your executable program. This can lead to unnecessary
 large executables. To avoid having too large executable files you may
 use dynamic linking instead. Dynamic linking means that the actual
 linking is performed when the program is executed. This requires that
-the system is able to locate the shared AirSched library file during your
-program execution. If you install the AirSched library using a non-standard
+the system is able to locate the shared AirTSP library file during your
+program execution. If you install the AirTSP library using a non-standard
 prefix, the \c `LD_LIBRARY_PATH' environment variable might be used to
 inform the linker of the dynamic library location, e.g.:
 \code
-export LD_LIBRARY_PATH=<AirSched installation prefix>/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=<AirTSP installation prefix>/lib:$LD_LIBRARY_PATH
 \endcode
 
 */

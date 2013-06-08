@@ -1,5 +1,5 @@
 /*!
-\mainpage AirSched Documentation
+\mainpage AirTSP Documentation
 
 \htmlonly
 <!-- start of main block -->
@@ -22,23 +22,23 @@
 - \ref howto_release
 - \ref authors
 
-\section at_sourceforge AirSched at SourceForge
-- <a href="http://sourceforge.net/projects/air-sched/">Project page</a>
-- <a href="http://sourceforge.net/project/showfiles.php?group_id=261633">Download AirSched</a>
-- <a href="https://sourceforge.net/apps/trac/air-sched/newticket">Open a ticket
+\section at_sourceforge AirTSP at SourceForge
+- <a href="http://sourceforge.net/projects/airtsp/">Project page</a>
+- <a href="http://sourceforge.net/project/showfiles.php?group_id=261633">Download AirTSP</a>
+- <a href="https://sourceforge.net/apps/trac/airtsp/newticket">Open a ticket
   for a bug or feature</a>
 - <a href="http://sourceforge.net/mail/?group_id=261633">Mailing lists</a>
-- <a href="https://sourceforge.net/apps/phpbb/air-sched/">Forums</a>
-  - <a href="https://sourceforge.net/apps/phpbb/air-sched/viewforum.php?f=1">Discuss
+- <a href="https://sourceforge.net/apps/phpbb/airtsp/">Forums</a>
+  - <a href="https://sourceforge.net/apps/phpbb/airtsp/viewforum.php?f=1">Discuss
   about Development issues</a>
-  - <a href="https://sourceforge.net/apps/phpbb/air-sched/viewforum.php?f=2">Ask
+  - <a href="https://sourceforge.net/apps/phpbb/airtsp/viewforum.php?f=2">Ask
   for Help</a>
-  - <a href="https://sourceforge.net/apps/phpbb/air-sched/viewforum.php?f=3">Discuss
-  AirSched</a>
+  - <a href="https://sourceforge.net/apps/phpbb/airtsp/viewforum.php?f=3">Discuss
+  AirTSP</a>
 
 
-\section development AirSched Development
-- <a href="http://air-sched.git.sourceforge.net/git/gitweb.cgi?p=air-sched/air-sched;a=tree;h=refs/heads/trunk;hb=trunk">Git Repository</a> (Subversion is deprecated)
+\section development AirTSP Development
+- <a href="http://airtsp.git.sourceforge.net/git/gitweb.cgi?p=airtsp/airtsp;a=tree;h=refs/heads/trunk;hb=trunk">Git Repository</a> (Subversion is deprecated)
 - \ref coding_rules
 - \ref documentation
 - \ref test
@@ -51,7 +51,7 @@
 - <a href="http://soci.sourceforge.net/">SOCI (C++ DB API)</a>
 
 
-\section social_sponsorship Support AirSched
+\section social_sponsorship Support AirTSP
 \htmlonly
 <table width="100%">
  <tr>
@@ -71,25 +71,25 @@
 <!-- end of right margin -->
 \endhtmlonly
 
-\section about About AirSched
+\section about About AirTSP
 
-AirSched is a C++ library of classes and functions modeling airline
+AirTSP is a C++ library of classes and functions modeling airline
 schedules, for instance allowing to retrieve all the flight-based
 travel solutions corresponding to a given pair of origin and
-destination points. AirSched mainly targets simulation purposes. \ref N
+destination points. AirTSP mainly targets simulation purposes. \ref N
  
-AirSched makes an extensive use of existing open-source libraries for
+AirTSP makes an extensive use of existing open-source libraries for
 increased functionality, speed and accuracy. In particular <a
 href="http://www.boost.org">Boost</a> (<em>C++ STL Extensions</em>) library is
 used.
 
-The AirSched project originates from the department of Operational Research 
+The AirTSP project originates from the department of Operational Research 
 and Innovation at <a href="http://www.amadeus.com">Amadeus</a>, Sophia 
-Antipolis, France. AirSched is released under the terms of the <a 
+Antipolis, France. AirTSP is released under the terms of the <a 
 href="http://www.gnu.org/licenses/lgpl.html">GNU Lesser General Public
 License</a> (LGPLv2.1) for you to enjoy.
 
-AirSched should work on
+AirTSP should work on
 <a href="http://en.wikipedia.org/wiki/GNU/Linux">GNU/Linux</a>,
 <a href="http://www.sun.com/software/solaris/">Sun Solaris</a>,
 Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,
@@ -100,12 +100,12 @@ Microsoft Windows (with <a href="http://www.cygwin.com/">Cygwin</a>,
 
 \note
 \anchor N
-(N) - The AirSched library is \b NOT intended, in any way, to be used by
+(N) - The AirTSP library is \b NOT intended, in any way, to be used by
 airlines for production systems. If you want to report issue, bug or 
 feature request, or if you just want to give feedback, have a look on 
 the right-hand side of this page for the preferred reporting methods.
 In any case, please do not contact Amadeus directly for any matter 
-related to AirSched.
+related to AirTSP.
 
 
 \htmlonly

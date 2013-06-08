@@ -1,0 +1,23 @@
+#
+# Config file for the AirTSP package. It defines the following variables:
+#  AIRTSP_VERSION      - version of AirTSP
+#  AIRTSP_BINARY_DIRS  - binary directories for AirTSP
+#  AIRTSP_INCLUDE_DIRS - include directories for AirTSP
+#  AIRTSP_LIBRARY_DIRS - library directories for AirTSP (normally not used!)
+#  AIRTSP_LIBRARIES    - libraries to link against
+#  AIRTSP_EXECUTABLES  - the AirTSP binaries/executables
+
+# Tell the user project where to find AirTSP headers and libraries
+set (AIRTSP_VERSION "@PACKAGE_VERSION@")
+set (AIRTSP_BINARY_DIRS "@AIRTSP_BIN_DIR@")
+set (AIRTSP_INCLUDE_DIRS "@AIRTSP_INCLUDE_DIRS@")
+set (AIRTSP_LIBRARY_DIRS "@AIRTSP_LIB_DIR@")
+
+# Library dependencies for AirTSP (contains definitions for the AirTSP
+# IMPORTED targets)
+include ("@AIRTSP_CMAKE_DIR@/airtsp-library-depends.cmake")
+
+# These are the AirTSP IMPORTED targets, created by
+# airtsp-library-depends.cmake
+set (AIRTSP_LIBRARIES airtsplib)
+set (AIRTSP_EXECUTABLES airtsp)

@@ -9,11 +9,14 @@ sampledir=@sampledir@
 docdir=@docdir@
 mandir=@mandir@
 infodir=@infodir@
+version=@PACKAGE_VERSION@
+package_name=@PACKAGE@
+package_pretty_name=@PACKAGE_PRETTY_NAME@
 
-Name: @PACKAGE_PRETTY_NAME@
-Description: C++ Simulated Airline Travel Solution Provider Library
-Version: @PACKAGE_VERSION@
-URL: http://sourceforge.net/projects/@PACKAGE@/
-Libs: -L${libdir} -l@PACKAGE@ @LDFLAGS@ @LIBS@
+Name: $package_pretty_name
+Description: C++ Simulated Airline Travel Solution Provider (TSP) Library
+Version: $version
+URL: http://sourceforge.net/projects/${package_name}/
+Libs: -L${libdir} -l${package_name} @LDFLAGS@ @LIBS@
 Cflags: -I${includedir}
 

@@ -1,3 +1,6 @@
+* Sat Jun 07 2014 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.2
+- Future version.
+
 * Mon Aug 12 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.1
 - airtsp-config now supports multilib (32 and 64bit versions).
 

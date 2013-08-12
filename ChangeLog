@@ -1,5 +1,5 @@
-* Sat Jun 07 2014 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.1
-- Future version
+* Mon Aug 12 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.1
+- airtsp-config now supports multilib (32 and 64bit versions).
 
 * Sat Jun 08 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.0
 - Renamed from AirSched into AirTSP, for trademark issue with Pancor
@@ -7,9 +7,9 @@
 * Tue Dec 11 2012 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.00.0
 - Open source release.
 - [Dev] Added FRAT5 curve and Fare Family disutility curve in the schedule
-  input file (needed by the Fare Family implementation).
+input file (needed by the Fare Family implementation).
 - [Dev] Added the operating leg description for marketing flights in the
-  schedule input file.
+schedule input file.
 - [Build] Test coverage option with gcov.
 
 * Mon Dec 05 2011 Denis Arnaud <denis.arnaud_fedora@m4x.org> 0.1.4

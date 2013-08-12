@@ -1,6 +1,6 @@
-* 2014-06-07:
+* 2013-08-12:
 - Version 1.01.1
-- Future version.
+- airtsp-config now supports multilib (32 and 64bit versions).
 
 * 2013-06-08:
 - Version 1.01.0

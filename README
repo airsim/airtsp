@@ -23,30 +23,34 @@ yum -y install airtsp-devel airtsp-doc
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(e.g., for Fedora 18, 
-http://fr2.rpmfind.net/linux/fedora/releases/18/Everything/)
+(e.g., for Fedora 22,
+http://fr2.rpmfind.net/linux/fedora/releases/22/Everything/)
 
 
 Building the library and test binary from Git repository:
 ----------------------------------------------------------------
-The Sourceforge Git repository may be cloned as following:
-git clone ssh://git.code.sf.net/p/airsim/airtsp/code airtspgit
-cd airtspgit
-git checkout trunk
+The Git repository may be cloned as following:
+$ git clone git@github.com:airsim/airtsp.git airtspgit # through SSH
+$ git clone https://github.com/airsim/airtsp.git # if the firewall filters SSH
+$ cd airtspgit
+$ git checkout trunk
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
   * cmake
   * gcc-c++
   * stdair-devel
-  * boost-devel
-  * zeromq-devel
-  * readline-devel, ncurses-devel
+  * boost-devel / libboost-dev
+  * python-devel / python-dev
+  * gettext-devel / gettext-dev
+  * sqlite3-devel / libsqlite3-dev
+  * readline-devel / readline-dev
+  * ncurses-devel
   * soci-mysql-devel
-  * python-devel
-  * gettext-devel (optional)
-  * doxygen, ghostscript, graphviz and tetex-latex (optional)
+  * doxygen, ghostscript, graphviz
+  * tetex-latex (optional)
   * rpm-build (optional)
+
 
 Building the library and test binary from the tarball:
 ------------------------------------------------------
@@ -62,8 +66,8 @@ export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
 Then, as usual:
 * To configure the project, type something like:
-  mkdir build && cd build
-  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-${TREP_VER} \
+$ mkdir build && cd build
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$TREP_VER \
    -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
    -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
@@ -71,8 +75,7 @@ Then, as usual:
   make
 * To test the project, type:
   make check
-* To install the library (libairtsp*.so*) and the binary (airtsp),
-  just type:
+* To install the library (libairtsp*.so*) and the binary (airtsp), just type:
   make install
   cd ${INSTALL_BASEDIR}
   rm -f airtsp-stable && ln -s airtsp-${TREP_VER} airtsp-stable
@@ -82,13 +85,12 @@ Then, as usual:
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/airtsp-${TREP_VER}/share/doc/airtsp-${TREP_VER}/html/index.html
+  midori file://${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/airtsp-${TREP_VER}/share/doc/airtsp-${TREP_VER}/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/refman.pdf
 * To run the local binary version:
   ./airtsp/airtsp -b
 * To run the installed version:
-  ${INSTALL_BASEDIR}/airtsp-stable/bin/airtsp -b
+  ${INSTALL_BASEDIR}/airtsp-$TREP_VER/bin/airtsp -b
 
-Denis Arnaud (August 2013)
-
+Denis Arnaud (May 2015)

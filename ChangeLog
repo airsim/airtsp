@@ -1,5 +1,5 @@
-* Sat Jun 07 2014 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.2
-- Future version.
+* Sat Jun 13 2015 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.2
+- Aligned with StdAir for CMake helper files.
 
 * Mon Aug 12 2013 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.1
 - airtsp-config now supports multilib (32 and 64bit versions).

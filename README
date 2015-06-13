@@ -46,7 +46,7 @@ but names may vary according to distributions):
   * sqlite3-devel / libsqlite3-dev
   * readline-devel / readline-dev
   * ncurses-devel
-  * soci-mysql-devel
+  * soci-mysql-devel, soci-sqlite3-devel
   * doxygen, ghostscript, graphviz
   * tetex-latex (optional)
   * rpm-build (optional)
@@ -60,14 +60,14 @@ http://sourceforge.net/projects/airsim/files/AirTSP/
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export TREP_VER=1.01.2
+export AIRTSP_VER=1.01.2
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
 Then, as usual:
 * To configure the project, type something like:
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$TREP_VER \
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
    -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
    -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
@@ -78,19 +78,19 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$TREP_VER \
 * To install the library (libairtsp*.so*) and the binary (airtsp), just type:
   make install
   cd ${INSTALL_BASEDIR}
-  rm -f airtsp-stable && ln -s airtsp-${TREP_VER} airtsp-stable
+  rm -f airtsp-stable && ln -s airtsp-${AIRTSP_VER} airtsp-stable
   cd -
 * To package the source files, type:
   make dist
 * To package the binary and the (HTML and PDF) documentation:
   make package
 * To browse the (just installed, if enabled) HTML documentation:
-  midori file://${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/index.html
+  midori file://${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/share/doc/airtsp/html/index.html
 * To browse the (just installed, if enabled) PDF documentation:
-  evince ${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/refman.pdf
+  evince ${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/share/doc/airtsp/html/refman.pdf
 * To run the local binary version:
   ./airtsp/airtsp -b
 * To run the installed version:
-  ${INSTALL_BASEDIR}/airtsp-$TREP_VER/bin/airtsp -b
+  ${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/bin/airtsp -b
 
 Denis Arnaud (May 2015)

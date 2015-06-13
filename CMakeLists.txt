@@ -25,7 +25,11 @@ set_project_options (on on off)
 #####################################
 #
 packaging_init (${PROJECT_NAME})
-packaging_set_summary ("${PROJECT_NAME} aims at providing a clean API and a simple implementation, as a C++ library, of an Airline Schedule Management System. It is intended to be used in simulated environments only: it is not designed to work in the real-world of Airline IT operations.
+packaging_set_summary (
+"${PROJECT_NAME} aims at providing a clean API and a simple implementation,
+as a C++ library, of an Airline Schedule Management System.
+It is intended to be used in simulated environments only:
+it is not designed to work in the real-world of Airline IT operations.
 
 ${PROJECT_NAME} makes an extensive use of existing open-source libraries for
 increased functionality, speed and accuracy. In particular the

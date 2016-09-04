@@ -63,80 +63,70 @@ namespace AIRTSP {
     while (inputFile.getline (buffer, sizeof (buffer), ';')) {
       std::istringstream iStringStr (buffer);
 
-      bool hasRead = false;
-
-      if (i == 1) {
-        hasAllPArams = true;
-      }
-
       if (i>=1 && i<=14) {
-        hasRead = (iStringStr >> dvalStr);
+        iStringStr >> dvalStr;
       }
 
       if (i == 15) {
-        hasRead = (iStringStr >> dval);
+        iStringStr >> dval;
       }
 
-      if (hasRead) {
-        if (i == 1) {
-          dAirport = dvalStr;
+      if (i == 1) {
+        hasAllPArams = true;
+        dAirport = dvalStr;
 
-        } else if (i == 2) {
-          aAirport = dvalStr;
-          // std::cout << "City Pair = '" << dAiport
-          // << "-" << aAirport << "'" << std::endl;
+      } else if (i == 2) {
+        aAirport = dvalStr;
+        // std::cout << "City Pair = '" << dAiport
+        // << "-" << aAirport << "'" << std::endl;
 
-        } else if (i == 3) {
-          depDate = boost::gregorian::from_simple_string (dvalStr);
-          // std::cout << "Date = '" << depDate << "'" << std::endl;
+      } else if (i == 3) {
+        depDate = boost::gregorian::from_simple_string (dvalStr);
+        // std::cout << "Date = '" << depDate << "'" << std::endl;
 
-        } else if (i == 4) {
-          depTime = boost::posix_time::duration_from_string (dvalStr);
+      } else if (i == 4) {
+        depTime = boost::posix_time::duration_from_string (dvalStr);
 
-        } else if (i == 5) {
-          arTime = boost::posix_time::duration_from_string (dvalStr);
+      } else if (i == 5) {
+        arTime = boost::posix_time::duration_from_string (dvalStr);
 
-        } else if (i == 6) {
-          dur = boost::posix_time::duration_from_string (dvalStr);
+      } else if (i == 6) {
+        dur = boost::posix_time::duration_from_string (dvalStr);
 
-        } else if (i == 7) {
-          //if (dvalStr == "refundable fare")
-          //  Ref = true;
-          //else Ref  = false;
+      } else if (i == 7) {
+        //if (dvalStr == "refundable fare")
+        //  Ref = true;
+        //else Ref  = false;
 
-        } else if (i == 8) {
-          airline = dvalStr;
+      } else if (i == 8) {
+        airline = dvalStr;
 
-        } else if (i == 9) {
-          cabin = dvalStr;
+      } else if (i == 9) {
+        cabin = dvalStr;
 
-        } else if (i == 10) {
-          //flightNum = dval;
+      } else if (i == 10) {
+        //flightNum = dval;
 
-        } else if (i == 11) {
-          //fare = dval;
+      } else if (i == 11) {
+        //fare = dval;
 
-        } else if (i == 12) {
-          //lagsNum = dval;
+      } else if (i == 12) {
+        //lagsNum = dval;
 
-        } else if (i == 13) {
-          //if (dvalStr == "Saturday Nigth Stay mandatory")
-          //  SNS = true;
-          //else SNS = false;
+      } else if (i == 13) {
+        //if (dvalStr == "Saturday Nigth Stay mandatory")
+        //  SNS = true;
+        //else SNS = false;
 
-        } else if (i == 14) {
-          //if (dvalStr == "changeable fare")
-          //  change = true;
-          //else change = false;
-          i = 0;
-        }
-
-        //
-        ++i;
-
-      } else {
-        hasAllPArams = false;
+      } else if (i == 14) {
+        //if (dvalStr == "changeable fare")
+        //  change = true;
+        //else change = false;
+        i = 0;
       }
+
+      //
+      ++i;
     }
 
     if (hasAllPArams && i == 1) {

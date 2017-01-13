@@ -23,8 +23,8 @@ yum -y install airtsp-devel airtsp-doc
 
 You can also get the RPM packages (which may work on Linux
 distributions like Novel Suse and Mandriva) from the Fedora repository
-(e.g., for Fedora 22,
-http://fr2.rpmfind.net/linux/fedora/releases/22/Everything/)
+(e.g., for Fedora 25,
+http://fr2.rpmfind.net/linux/fedora/releases/25/Everything/)
 
 
 Building the library and test binary from Git repository:
@@ -60,7 +60,7 @@ http://sourceforge.net/projects/airsim/files/AirTSP/
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export AIRTSP_VER=1.01.2
+export AIRTSP_VER=1.01.3
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 
@@ -93,4 +93,5 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
 * To run the installed version:
   ${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/bin/airtsp -b
 
-Denis Arnaud (May 2015)
+Denis Arnaud (January 2017)
+

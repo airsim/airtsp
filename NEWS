@@ -1,4 +1,9 @@
-* 2014-06-07:
+* 2016-09-04:
+- Version 1.01.3
+- Fixed a compatibility issue with C++11 with std::istringstream.
+  BZ #1307310
+
+* 2015-06-13:
 - Version 1.01.2
 - Aligned with StdAir for CMake helper files.
 

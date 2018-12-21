@@ -402,7 +402,7 @@ namespace AIRTSP {
         SegmentPathPeriod& lSegmentPathPeriod_i = stdair::
           FacBom<SegmentPathPeriod>::instance().create (lSegmentPathPeriodKey_i);
         stdair::FacBomManager::addToList (*lOriginDestinationSet_ptr,
-                                                     lSegmentPathPeriod_i);
+                                          lSegmentPathPeriod_i);
         stdair::FacBomManager::linkWithParent (*lOriginDestinationSet_ptr,
                                                lSegmentPathPeriod_i);
 

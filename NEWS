@@ -1,3 +1,8 @@
+* 2019-01-15:
+- Version 1.01.4
+- CMake nows finds out automatically the right Boost.Python library version
+- Python 3.4 is the new minimum required version
+
 * 2016-09-04:
 - Version 1.01.3
 - Fixed a compatibility issue with C++11 with std::istringstream.

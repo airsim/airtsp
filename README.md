@@ -60,7 +60,7 @@ http://sourceforge.net/projects/airsim/files/AirTSP/
 To customise the following to your environment, you can alter the path
 to the installation directory:
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export AIRTSP_VER=1.01.3
+export AIRTSP_VER=1.01.4
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 

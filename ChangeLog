@@ -1,3 +1,7 @@
+* Tue Jan 15 2019 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.01.4
+- CMake nows finds out automatically the right Boost.Python library version
+- Python 3.4 is the new minimum required version
+
 * Sun Sep 04 2016 Denis Arnaud <denis.arnaud_fedora@m4x.org> 1.01.3
 - Fixed a compatibility issue with C++11 with std::istringstream.
 BZ #1307310

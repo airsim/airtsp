@@ -41,19 +41,17 @@ $ git checkout trunk
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
-  * cmake
-  * gcc-c++
-  * stdair-devel
-  * boost-devel / libboost-dev
-  * python-devel / python-dev
-  * gettext-devel / gettext-dev
-  * sqlite3-devel / libsqlite3-dev
-  * readline-devel / readline-dev
-  * ncurses-devel
-  * soci-mysql-devel, soci-sqlite3-devel
-  * doxygen, ghostscript, graphviz
-  * tetex-latex (optional)
-  * rpm-build (optional)
+* stdair-devel
+* boost-devel / libboost-dev
+* python-devel / python-dev
+* gettext-devel / gettext-dev
+* sqlite3-devel / libsqlite3-dev
+* readline-devel / readline-dev
+* ncurses-devel
+* soci-mysql-devel, soci-sqlite3-devel
+* doxygen, ghostscript, graphviz
+* tetex-latex (optional)
+* rpm-build (optional)
 
 
 Building the library and test binary from the tarball:
@@ -81,11 +79,11 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
 ```
 * To build the project, type:
 ```bash
-  make
+make
 ```
 * To test the project, type:
 ```bash
-  make check
+make check
 ```
 * To install the library (`libairtsp*.so*`) and the binary (`airtsp`), just type:
 ```bash
@@ -96,11 +94,11 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
 ```
 * To package the source files, type:
 ```bash
-  make dist
+make dist
 ```
 * To package the binary and the (HTML and PDF) documentation:
 ```bash
-  make package
+make package
 ```
 * To browse the (just installed, if enabled) HTML documentation:
 ```bash
@@ -112,7 +110,7 @@ $ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
 ```
 * To run the local binary version:
 ```bash
-  ./airtsp/airtsp -b
+./airtsp/airtsp -b
 ```
 * To run the installed version:
 ```bash

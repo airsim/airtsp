@@ -41,19 +41,19 @@ $ git checkout trunk
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
 but names may vary according to distributions):
-  * cmake
-  * gcc-c++
-  * stdair-devel
-  * boost-devel / libboost-dev
-  * python-devel / python-dev
-  * gettext-devel / gettext-dev
-  * sqlite3-devel / libsqlite3-dev
-  * readline-devel / readline-dev
-  * ncurses-devel
-  * soci-mysql-devel
-  * doxygen, ghostscript, graphviz
-  * tetex-latex (optional)
-  * rpm-build (optional)
+* cmake
+* gcc-c++
+* stdair-devel
+* boost-devel / libboost-dev
+* python-devel / python-dev
+* gettext-devel / gettext-dev
+* sqlite3-devel / libsqlite3-dev
+* readline-devel / readline-dev
+* ncurses-devel
+* soci-mysql-devel
+* doxygen, ghostscript, graphviz
+* tetex-latex (optional)
+* rpm-build (optional)
 
 
 Building the library and test binary from the tarball:
@@ -65,7 +65,7 @@ To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR=/home/user/dev/deliveries
-export TREP_VER=99.99.99
+export AIRTSP_VER=99.99.99
 if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 ```
@@ -74,46 +74,46 @@ Then, as usual:
 * To configure the project, type something like:
 ```bash
 $ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$TREP_VER \
-   -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
-   -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
-   -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
+-DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
+-DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
+-DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
 ```
 * To build the project, type:
 ```bash
-  make
+make
 ```
 * To test the project, type:
 ```bash
-  make check
+make check
 ```
 * To install the library (`libairtsp*.so*`) and the binary (`airtsp`), just type:
 ```bash
-  make install
+make install
 ```
 * To package the source files, type:
 ```bash
-  make dist
+make dist
 ```
 * To package the binary and the (HTML and PDF) documentation:
 ```bash
-  make package
+make package
 ```
 * To browse the (just installed, if enabled) HTML documentation:
 ```bash
-  midori file://${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/index.html
+midori file://${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/share/doc/airtsp/html/index.html
 ```
 * To browse the (just installed, if enabled) PDF documentation:
 ```bash
-  evince ${INSTALL_BASEDIR}/airtsp-$TREP_VER/share/doc/airtsp/html/refman.pdf
+evince ${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/share/doc/airtsp/html/refman.pdf
 ```
 * To run the local binary version:
 ```bash
-  ./airtsp/airtsp -b
+./airtsp/airtsp -b
 ```
 * To run the installed version:
 ```bash
-  ${INSTALL_BASEDIR}/airtsp-$TREP_VER/bin/airtsp -b
+${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER/bin/airtsp -b
 ```
 
 Denis Arnaud (May 2015)

@@ -1,22 +1,27 @@
 prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
-datarootdir=@datarootdir@
-datadir=@datadir@
-pkgdatadir=@pkgdatadir@
-sampledir=@sampledir@
-docdir=@docdir@
-mandir=@mandir@
-infodir=@infodir@
-version=@PACKAGE_VERSION@
-package_name=@PACKAGE@
-package_pretty_name=@PACKAGE_PRETTY_NAME@
+exec_prefix=${prefix}
+bindir=${exec_prefix}/bin
+libdir=${exec_prefix}/lib@LIB_SUFFIX@
+libexecdir=${exec_prefix}/libexec
+sbindir=${exec_prefix}/sbin
+sysconfdir=${prefix}/etc
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${datarootdir}
+pkgdatadir=${datarootdir}/@PACKAGE@
+sampledir=${datarootdir}/@PACKAGE@/samples
+docdir=${datarootdir}/doc/@PACKAGE@-@PACKAGE_VERSION@
+mandir=${datarootdir}/man
+infodir=${datarootdir}/info
+htmldir=${docdir}/html
+pdfdir=${docdir}/html
+pkgincludedir=${includedir}/@PACKAGE@
+pkglibdir=${libdir}/@PACKAGE@
+pkglibexecdir=${libexecdir}/@PACKAGE@
 
-Name: $package_pretty_name
-Description: C++ Simulated Airline Travel Solution Provider (TSP) Library
-Version: $version
-URL: http://sourceforge.net/projects/${package_name}/
-Libs: -L${libdir} -l${package_name} @LDFLAGS@ @LIBS@
+Name: @PACKAGE_PRETTY_NAME@
+Description: @PACKAGE_BRIEF@
+Version: @PACKAGE_VERSION@
+URL: http://sourceforge.net/projects/@PACKAGE@/
+Libs: -L${libdir} -l@PACKAGE@ @LDFLAGS@ @LIBS@
 Cflags: -I${includedir}
-

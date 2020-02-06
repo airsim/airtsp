@@ -1,3 +1,7 @@
+* 2020-02-06:
+- Version 1.01.6
+- Fixed pkg-config template
+
 * 2019-07-11:
 - Version 1.01.5
 - CMake support files updated for Python 3.8

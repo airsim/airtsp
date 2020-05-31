@@ -10,7 +10,7 @@ include (config/project_config_embeddable.cmake)
 project (airtsp)
 set_project_names (airtsp AirTSP)
 set_project_brief ("C++ Simulated Airline Travel Solution Provider (TSP) Library")
-set_project_versions (1 01 6)
+set_project_versions (1 01 7)
 
 ##
 # Project options
@@ -46,7 +46,7 @@ packaging_set_other_options (TBZ2 "TBZ2;TGZ")
 ##            Dependencies            ##
 ########################################
 #
-get_external_libs (git "python 3.4" "boost 1.41" "mysql 5.0" "soci 3.0"
+get_external_libs (git "boost 1.41" "mysql 5.0" "soci 3.0"
         readline curses "doxygen 1.4" "gcov 4.6.3" "lcov 1.9"
         "stdair 1.00.0")
 

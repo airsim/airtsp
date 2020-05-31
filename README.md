@@ -1,6 +1,7 @@
+C++ Simulated Airline Travel Solution Provider (TSP) Library
+============================================================
 
-Summary:
---------
+# Summary
 AirTSP is also named AirTSP (TSP standing for Travel Service Provider).
 That project aims at providing a clean API and a simple implementation,
 as a C++ library, of an Airline Schedule Management System. It is intended
@@ -12,31 +13,29 @@ for increased functionality, speed and accuracy. In particular the
 Boost (C++ Standard Extensions: http://www.boost.org) library is used.
 
 AirTSP/AirTSP is the one of the components of the Travel Market Simulator
-(http://www.travel-market-simulator). However, it may be used in a
+(https://travel-sim.org). However, it may be used in a
 stand-alone mode.
 
+# Installation
 
-Getting and installing from the Fedora/CentOS/RedHat distribution:
-------------------------------------------------------------------
+## On Fedora/CentOS/RedHat distribution
 Just use DNF:
 ```bash
-yum -y install airtsp-devel airtsp-doc
+$ dnf -y install airtsp-devel airtsp-doc
 ```
 
 You can also get the RPM packages (which may work on Linux
 distributions like Suse and Mandriva) from the Fedora repository
-(_e.g._, for Fedora 30,
-http://fr2.rpmfind.net/linux/fedora/releases/30/Everything/)
+(_e.g._, for Fedora 32,
+https://fr2.rpmfind.net/linux/RPM/fedora/32/x86_64/)
 
 
-Building the library and test binary from Git repository:
-----------------------------------------------------------------
+## Building the library and test binary from Git repository
 The Git repository may be cloned as following:
 ```bash
 $ git clone git@github.com:airsim/airtsp.git airtspgit # through SSH
 $ git clone https://github.com/airsim/airtsp.git # if the firewall filters SSH
 $ cd airtspgit
-$ git checkout trunk
 ```
 
 Then, you need the following packages (Fedora/RedHat/CentOS names here, 
@@ -54,17 +53,16 @@ but names may vary according to distributions):
 * rpm-build (optional)
 
 
-Building the library and test binary from the tarball:
-------------------------------------------------------
+## Building the library and test binary from the tarball
 The latest stable source tarball (`airtsp*.tar.gz` or `.bz2`) can be found here:
 https://github.com/airsim/airtsp/releases
 
 To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
-export INSTALL_BASEDIR=/home/user/dev/deliveries
-export AIRTSP_VER=1.01.6
-if [ -d /usr/lib64 ]; then LIBSUFFIX=64; fi
+export INSTALL_BASEDIR="${HOME}/dev/deliveries"
+export AIRTSP_VER="1.01.7"
+if [ -d /usr/lib64 ]; then LIBSUFFIX="64"; fi
 export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
 ```
 

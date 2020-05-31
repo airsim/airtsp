@@ -1,3 +1,6 @@
+* Sat May 30 2020 Denis Arnaud <denis.arnaud_fedora at m4x.org> - 1.01.7
+- Removed dependency on Python
+
 * Thu Feb 06 2020 Denis Arnaud <denis_arnaud at users dot sourceforge dot net> - 1.01.6
 - Fixed pkg-config issue
 

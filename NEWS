@@ -1,3 +1,7 @@
+* 2020-05-30:
+- Version 1.01.7
+- Removed dependency on Python
+
 * 2020-02-06:
 - Version 1.01.6
 - Fixed pkg-config template

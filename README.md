@@ -61,19 +61,26 @@ To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
-export AIRTSP_VER="1.01.12"
-if [ -d /usr/lib64 ]; then LIBSUFFIX="64"; fi
-export LIBSUFFIX_4_CMAKE="-DLIB_SUFFIX=$LIBSUFFIX"
+export AIRTSP_VER="1.01.13"
 ```
 
 Then, as usual:
-* To configure the project, type something like:
+* To configure the project
+  * When dependencies are installed in standard directories (_e.g._, `/usr`):
 ```bash
-$ mkdir build && cd build
-$ cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-$AIRTSP_VER \
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-${AIRTSP_VER} \
+   -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
+   -DRUN_GCOV:BOOL=OFF ..
+```
+  * When dependencies are installed in non-standard directories (_e.g._,
+    in the same base directory as of RMOL, that is, `${INSTALL_BASEDIR}`):
+```bash
+  mkdir build && cd build
+  cmake -DCMAKE_INSTALL_PREFIX=${INSTALL_BASEDIR}/airtsp-${AIRTSP_VER} \
    -DWITH_STDAIR_PREFIX=${INSTALL_BASEDIR}/stdair-stable \
    -DCMAKE_BUILD_TYPE:STRING=Debug -DENABLE_TEST:BOOL=ON -DINSTALL_DOC:BOOL=ON \
-   -DRUN_GCOV:BOOL=OFF ${LIBSUFFIX_4_CMAKE} ..
+   -DRUN_GCOV:BOOL=OFF ..
 ```
 * To build the project, type:
 ```bash

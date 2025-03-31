@@ -1,5 +1,9 @@
 * 2025-03-31:
 - Version 1.01.13
+- Fixed a typo in CMake export file
+
+* 2025-03-31:
+- Version 1.01.13
 - Upgraded CMake support files
 
 * 2025-01-27:

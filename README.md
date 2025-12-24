@@ -61,7 +61,7 @@ To customise the following to your environment, you can alter the path
 to the installation directory:
 ```bash
 export INSTALL_BASEDIR="${HOME}/dev/deliveries"
-export AIRTSP_VER="1.01.15"
+export AIRTSP_VER="1.01.16"
 ```
 
 Then, as usual:
